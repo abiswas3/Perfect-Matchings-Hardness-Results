@@ -49,61 +49,17 @@
 \newcommand{\Yes}{\mathsf{Yes}}
 \newcommand{\No}{\mathsf{No}}
 
-% Probability Distributions
-\newcommand{\Domain}{\bit^n}
-\newcommand{\DomainSize}{N}
-\newcommand{\samples}{\highlight{\leftarrowS}} % See top of doc for special symb
-\newcommand{\iidSamples}{\highlight{\xleftarrow{\mathsf{i.i.d}}}}
-\newcommand{\Dist}{\mathcal{D}}
-\newcommand{\Ent}{\mathsf{H}}
-\newcommand{\Uniform}[1]{\mathsf{Uniform}\left[#1\right]}
-\newcommand{\DistSet}[1]{\Delta\left(#1\right)}
-\newcommand{\Support}[1]{\mathsf{Supp}({#1})}
-\newcommand{\SupportSize}[1]{|\Support{#1}|}
-\newcommand{\Mean}[2]{\underset{#1}{\mathbb{E}}\left[#2\right]}
-\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
-\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
-\newcommand{\TV}[1]{d_{\mathsf{TV}}\left(#1\right)}
-\newcommand{\RenyiEnt}[1]{\mathsf{H}_{#1}}
-\newcommand{\MinEnt}{\RenyiEnt{\infty}}
-\newcommand{\ProductDist}[1]{{\overset{#1}\otimes}\Dist}
-\newcommand{\weight}[1]{\mathsf{wt}\left(#1\right)}
+% Graph Commands
+\newcommand{\Graph}{G}
+\newcommand{\Vertices}[1]{V(#1)}
+\newcommand{\Edges}[1]{E(#1)}
+% Degree of vertex (a scalar)
+\newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
 
-% Histograms
-
-\newcommand{\HistFactor}{\tau}
-\newcommand{\BucketIndices}{\mathcal{I}}
-\newcommand{\LoIndex}{L}
-\newcommand{\HiIndex}{\lfloor \frac{\log\DomainSize}{\HistFactor}\rfloor}
-\newcommand{\Bucket}[2]{B_{#1}^{(#2)}}
-\newcommand{\ApproxHistParam}{(\DomainSize, \HistFactor)}
-\newcommand{\DistsToHist}[1]{\mathsf{Hist}^{\ApproxHistParam}(#1)}
-\newcommand{\HistMapsTo}[1]{\mathcal{F}^{\ApproxHistParam}(#1)}
-\newcommand{\ApproxHistTruth}{\{\textcolor{cadmiumgreen}{p}_j\}_{j \in \BucketIndices}}
-\newcommand{\ApproxHistAlleged}{\{\textcolor{red}{\tilde{p}}_j\}_{j \in \BucketIndices}}
-\newcommand{\ApproxHistEmpirical}{\{\textcolor{blue}{\widehat{p}}_j\}_{j \in \BucketIndices}}
-\newcommand{\Mass}[1]{\textcolor{cadmiumgreen}{p}_{#1}}
-\newcommand{\MassEmpirical}[1]{\textcolor{blue}{\widehat{p}}_{#1}}
-\newcommand{\MassAlleged}[1]{\textcolor{red}{\tilde{p}}_{#1}}
-\newcommand{\MassUpper}[2]{\frac{e^{(#1+1)#2}}{\DomainSize}}
-\newcommand{\MassUpperShort}[1]{\frac{e^{(#1+1)\HistFactor}}{\DomainSize}}
-\newcommand{\MassLower}[2]{\frac{e^{#1\HistFactor}}{\DomainSize}}
-\newcommand{\MassLowerShort}[1]{\frac{e^{#1\HistFactor}}{\DomainSize}}
-
-
-% Entropy Gap Protocol
-\newcommand{\gap}{\nu}
-\newcommand{\FlatnessParam}{\beta}
-
-% Interactive Proofs
-\newcommand{\Transcript}{\mathsf{Tr}}
-\newcommand{\Reject}{\mathsf{Reject}}
-\newcommand{\Accept}{\mathsf{Accept}}
-\newcommand{\Protocol}{\Pi}
-\newcommand{\Verifier}{\mathsf{V}}
-\newcommand{\Prover}{\mathsf{P}}
-\newcommand{\ChProver}{\textcolor{red}{\widetilde{\mathsf{P}}}}
-\newcommand{\ChProtocolExpanded}{\Protocol(\ChProver, \Verifier)}
-\newcommand{\ProtocolExpanded}{\Protocol(\Prover, \Verifier)}
-\newcommand{\outProtocol}[1]{\Verifier(#1)}
-
+% Paper specific graph things
+\newcommand{\Family}[1]{\textcolor{purple}{\mathcal{#1}}}
+\newcommand{\SafeStates}{\Family{S}}
+\newcommand{\HardInstance}{H}
+\newcommand{\Embedding}[1]{\sigma\left(#1\right)}
+\newcommand{\Path}[2]{P_{#1 \leftrightarrow #2}}
+\newcommand{\PathSize}{\textcolor{red}{l}}
