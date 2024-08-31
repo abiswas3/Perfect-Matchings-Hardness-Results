@@ -13,7 +13,7 @@
 \newcommand{\en}{\textcolor{ballblue}{n}}
 \newcommand{\dee}{\textcolor{cadmiumgreen}{d}}
 \newcommand{\eigen}{\textcolor{red}{\lambda}}
-\newcommand{\EnDeeLambda}{(\en, \dee, \eigen)}
+\newcommand{\EnDeeLambda}{(n, d, \lambda)}
 
 
 \synctex=1
@@ -93,12 +93,12 @@ Put in definition.
 The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
 
 \begin{definition}[$(p, q)$-non blocking bipartite graphs \citep{nenadov2023routing}]
-Given $p, q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a family $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
+Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a family $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
 
 \begin{enumerate}
 	\item $\emptyset \in \Family{S}$
 	\item If $E'' \subseteq E'$ and $E' \in \Family{S}$, \emph{then}, $E'' \in \Family{S}$.
-	\item Given $E' \in \Family{S}$ such that $|E'| \leq p$, and \emph{any} $v \in A$ with $\degree{E'}{v} < q$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. Substituting these values in Definition \ref{def:poly-calc-refutations} gives rise to a restricted formula. Refuting the restricted formula reduces to refuting the hard instance of \highlight{Buss el al}. Thus, we are done.
+	\item Given $E' \in \Family{S}$ such that $|E'| \leq p$, and \emph{any} $v \in A$ with $\degree{E'}{v} < q$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. 
 \end{enumerate}
 
 \end{definition}
@@ -114,19 +114,22 @@ Fix $a, r \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
 If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to $A$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
 \end{lemma}
 
-\paragraph{Construction:} Given a $\EnDeeLambda$-graph $\Graph$ on an odd number of vertices, define bipartite graph $B$ with $\Vertices{B} = A \cup B \Def \Vertices{G} \cup \Vertices{G}$
+\paragraph{Construction:} Given a $\EnDeeLambda$-graph $\Graph$ on an odd number of vertices, define bipartite graph $\tilde{\Graph}  = A \cup B \Def \Vertices{\Graph} \cup \Vertices{\Graph}$.
+That is, the left and right sides of the bipartite graph have the same vertices as that of the original graph $\Graph$.
+For any $a \in A$ and $b \in B$, $(a,b) \in \Edges{\tilde{\Graph}}$ iff $(a,b) \in \Edges{\Graph}$.
 
-\begin{lemma}[Show that my bipartite graph is non-blocking]
-	
+\begin{lemma}[Show that my bipartite graph is non-blocking]\label{lemma: bipartite-construct-non-block}
+The bipartite graph $\tilde{\Graph}$ constructed above is $(\pee, \qu)$ non-blocking.
 \end{lemma}
 
 \begin{proof}
+\ari{I need to eventually express $\pee$ and $\qu$ as a function of $n, d, \lambda$.}
 	
 \end{proof}
 
 \section{Proof Of Main Result}
 
-\highlight{Potentially use sub-division notation.}
+\ari{Potentially use sub-division notation.}
 
 Let $\Graph$ denote a $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance described by \highlight{Buss et al} that is worst case hard for polynomial calculus.
 Let $\Vertices{\HardInstance} = \Set{h_1, \dots, h_k}$ be the vertices of the hard instance.
@@ -136,10 +139,17 @@ We break down the embedding process into the following steps:
 	\item For each $j \in [k]$, our first task is to map $h_j$ to unique vertices $\Embedding{h_j} \in \Vertices{\Graph}$. 
 	\item Secondly, for each edge $(u,v) \in \Edges{\HardInstance}$, we wish to find a path $\Path{u}{v}$ of odd length $\PathSize$.
 	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
-	\item Let $M$ denote the matching described above. For all $e \in M$, we set $x_e =1$. For all $e \notin M$ that do not involve vertices in $\Embedding{\HardInstance}$, we set $x_e = 0$.
+	\item Let $M$ denote the matching described above. For all $e \in M$, we set $x_e =1$. For all $e \notin M$ that do not involve vertices in $\Embedding{\HardInstance}$, we set $x_e = 0$. Substituting these values in Definition \ref{def:poly-calc-refutations} gives rise to a restricted formula. Refuting the restricted formula reduces to refuting the hard instance of \highlight{Buss el al}. Thus, we are done.
 \end{enumerate}
 
 \subsection{Step 1}
+
+Let $\tilde{\Graph} = A \cup B$ be the bipartite graph defined in the construction of Lemma \ref{lemma: bipartite-construct-non-block}.
+We know that this graph $(\pee, \qu)$ is non-blocking.
+Let $(a_1, \dots, a_k)$ denote an arbitrary ordering of arbitrary vertices in $A$.
+Set $E' = \emptyset$. 
+As $\tilde{\Graph}$ is non-blocking, there exists a collection of \emph{safe states} $\SafeStates$.
+
 
 \subsection{Step 2}
 
