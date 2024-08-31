@@ -1,0 +1,112 @@
+%!TEX root = ./main_source.texx
+\UseRawInputEncoding
+% \usepackage[conf={},createShortEnv]{proofs-end} 
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+
+
+
+% Define colors
+\definecolor{definitioncolor}{RGB}{77,98,152} 
+\definecolor{theoremcolor}{RGB}{255,128,0} % Orange
+\definecolor{lemmacolor}{RGB}{0,150,136} % Green
+% \titleformat{\section}
+%   {\color{sectioncolor}\normalfont\Large\bfseries}
+%   {\color{sectioncolor}\thesection}{1em}{}
+
+% \titleformat{\subsection}
+%   {\color{subsectioncolor}\normalfont\large\bfseries}
+%   {\color{subsectioncolor}\thesubsection}{1em}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition
+% Definition style
+\newtheoremstyle{definitionstyle}
+  {\topsep} % Space above
+  {\topsep} % Space below
+  {} % Body font
+  {} % Indent amount
+  {\bfseries\color{black}} % Theorem head font
+  {} % Punctuation after theorem head
+  {.5em} % Space after theorem head
+  {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
+
+% Define mdframed settings
+\mdfdefinestyle{definitionframe}{
+  linecolor=definitioncolor!40,
+  linewidth=2pt,
+  % frametitlerule=true,
+  % frametitlebackgroundcolor=gray!20,
+  backgroundcolor=definitioncolor!05,
+  roundcorner=5pt,
+  nobreak=true,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+}
+% Definition environment
+\theoremstyle{definitionstyle}
+\newtheorem{lemma}{Lemma}[section]
+\surroundwithmdframed[style=definitionframe]{lemma}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorem
+\NewTcbTheorem{theorem}{Theorem}%
+{colback=white!20,
+colframe=definitioncolor!20,
+coltitle=black,
+fonttitle=\bfseries
+}{theorem}
+
+% \declaretheorem[
+% shaded={bgcolor=azure!15,
+% textwidth=\columnwidth}]{problem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Lemma
+\newcounter{lem}[section] 
+\setcounter{lem}{0}
+\renewcommand{\thelem}{\arabic{section}.\arabic{lem}}
+\newenvironment{definition}[1][]{%
+\refstepcounter{lem}%
+\ifstrempty{#1}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
+{\strut Definition~\thelem};}}
+}%
+{\mdfsetup{%
+frametitle={%
+\tikz[baseline=(current bounding box.east),outer sep=0pt]
+\node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
+{\strut Definition~\thelem:~\textcolor{carminepink}{#1}};}}%
+}%
+\mdfsetup{innertopmargin=10pt,
+linecolor=definitioncolor!40,%
+linewidth=2pt,
+topline=true,
+backgroundcolor=definitioncolor!05,
+rightline=false,
+bottomline=false,
+frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+}
+\begin{mdframed}[]\relax%
+}{\end{mdframed}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\goal}[1]{
+\begin{tcolorbox}[colframe=red!50!black, colback=white!95!black,title=Goal]
+#1
+\end{tcolorbox}    
+}
+
+\newcommand{\remark}[1]{
+\begin{tcolorbox}[colframe=red!50!black, colback=white!95!black,title=Remark]
+#1
+\end{tcolorbox}    
+}
+

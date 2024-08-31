@@ -1,0 +1,94 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry} % Adjust margins as needed
+\input{base_template}
+\input{theorem}
+\input{paper_commands.tex} %These are generic commands (Might move them to %base template)is
+\newcommand{\Degree}[1]{\mathsf{Deg}\left(#1\right)}
+\newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
+\newcommand{\Graph}{G}
+\newcommand{\Vertices}[1]{V(#1)}
+\newcommand{\Edges}[1]{E(#1)}
+\newcommand{\Family}[1]{\textcolor{purple}{\mathcal{#1}}}
+% \newcommand{\PC}{\underset{\texttt{PC}_F}{\vdash}}
+\newcommand{\PC}{\vdash_{\texttt{PC}_F}}
+\newcommand{\SOS}{\vdash_{\texttt{SOS}}}
+
+
+\synctex=1
+% Title
+\title{\textcolor{definitioncolor}{Refuting Perfect Matchings In Expander Graphs Is Also Hard}}
+
+% \author{}
+\author[1]{Ari Biswas}
+\author[2]{Rajko Nenadov}
+\affil[1]{\small University Of Warwick, United Kingdom}
+\affil[2]{\small University Of Auckland, New Zealand}
+
+% ITCS guidelines.
+% Authors should register and submit their paper via the hotcrp submission site, by the above strict deadlines. The font size should be at least 11 point and the paper should be single column. Beyond these, there are no formatting requirements. Authors are required to submit a COI declaration upon submission.
+% Authors should strive to make their paper accessible not only to experts in their subarea, but also to the theory community at large. The submission should include clear proofs of all central claims. In addition, it is strongly recommended that the paper contain, within the first 10 pages, a concise and clear presentation of the merits of the paper, including a discussion of its significance, innovations, and place within (or outside) of our field's scope and literature. The committee will put a premium on writing that conveys clearly, in as simple and straightforward a manner as possible, what the paper accomplishes.
+\date{}
+% \linenumbers
+\begin{document}
+
+\maketitle
+\begin{abstract}
+Todo
+\end{abstract}
+
+\section{Introduction}
+
+
+\begin{theorem}{Main Result}{thm:main-thm}
+There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds asymptotically almost surely for any $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < ??$:
+\begin{enumerate}
+    \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\nicefrac{n}{\log n}}$} 
+    \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\nicefrac{n}{\log n}}$}
+    \item \highlight{add in the frege}
+\end{enumerate}
+
+
+\highlight{Figure out what the condition must be on $\lambda$}
+\end{theorem}
+
+
+\section{Technical Overview}
+
+Put in proof by pictures here.
+
+\begin{definition}
+definition
+\end{definition}
+
+\section{Preliminaries}
+
+\paragraph{Notation} Sets are denoted with upper case normal font e.g, $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g, $\Family{S}$. For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$
+
+\subsection{Proof Complexity Basics}
+
+\subsection{Facts About Graphs}
+
+\section{Embedding Machinery}
+
+The following definitions are from \citep{nenadov2023routing}.
+
+\begin{definition}[$(d,t)$-non blocking bipartite graphs \citep{nenadov2023routing}]
+Given $d, t \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(d,t)$- \emph{non-blocking}, if there exists a family $\Family{S}$ of subsets of E, called the \emph{safe states}, such that the following holds:
+\end{definition}
+
+
+\begin{definition}[$(n,d, \lambda)$-Expander graphs]\label{def:expander-graphs}
+Put in definition.    
+\end{definition}
+
+Next we re-state a lemma is due to \citep[Proposition 1]{feldman1988wide} which describes the properties bipartite graphs must satisfy in order to be non-blocking.
+\begin{lemma}
+
+\end{lemma}
+
+\section{Proof Of Main Result}
+
+\clearpage
+\bibliographystyle{abbrvnat}
+\bibliography{main_paper}
+\end{document}

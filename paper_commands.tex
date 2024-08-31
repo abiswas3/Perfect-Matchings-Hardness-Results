@@ -1,0 +1,109 @@
+% Common stuff that show up in nearly all writeups
+\newcommand{\Def}{\overset{\mathtt{def}}{=}}
+
+\makeatletter
+\newcommand{\smalldollar}{\mathrel{\mathpalette\small@dollar\relax}}
+\newcommand{\small@dollar}[2]{%
+  \vcenter{\hbox{%
+    $#1\textnormal{\fontsize{0.7\dimexpr\f@size pt}{0}\selectfont\$}$%
+  }}%
+}
+\makeatother
+
+% Basic asympototics
+% \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
+% \newcommand{\BigO}[1]{O\left(#1\right)}
+
+\newcommand{\TODO}{\textcolor{orange}{??TODO??}}
+\newcommand{\Set}[1]{\left\{ #1\right\}}
+\newcommand{\RCloseLOpenInterval}[2]{}
+\newcommand{\LCloseROpenInterval}[2]{\left[#1, #2\right)}
+\newcommand{\Interval}[2]{\left[\right]}
+\newcommand{\OpenInterval}[2]{\left(\right)}
+
+\newcommand{\leftarrowS}{\leftarrow\joinrel\smalldollar}
+\newcommand{\rightarrowS}{\smalldollar\joinrel\rightarrow}
+\newcommand{\negl}{\mathtt{negl}}
+\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
+\newcommand{\Eps}{\varepsilon}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\poly}{\mathsf{poly}}
+\newcommand{\Naturals}{\mathbb{N}}
+\newcommand{\Reals}{\mathbb{R}}
+\newcommand{\BigO}[1]{O\left(#1\right)}
+\newcommand{\SmallO}[1]{o\left(#1\right)}
+\newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
+\newcommand{\SmallOmega}[1]{\omega\left(#1\right)}
+
+\newcommand{\FuncDomain}{\mathcal{X}}
+\newcommand{\FuncRange}{\mathcal{Y}}
+\newcommand{\HashFamily}{\mathcal{H}}
+
+% Complexity classes 
+\newcommand{\BPP}{\mathsf{BPP}}
+\newcommand{\NP}{\mathsf{NP}}
+\newcommand{\HVSZK}{\mathsf{HVSZK}}
+\newcommand{\ED}{\mathsf{ED}}
+\newcommand{\SD}{\mathsf{SD}}
+\newcommand{\Yes}{\mathsf{Yes}}
+\newcommand{\No}{\mathsf{No}}
+
+% Probability Distributions
+\newcommand{\Domain}{\bit^n}
+\newcommand{\DomainSize}{N}
+\newcommand{\samples}{\highlight{\leftarrowS}} % See top of doc for special symb
+\newcommand{\iidSamples}{\highlight{\xleftarrow{\mathsf{i.i.d}}}}
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\Ent}{\mathsf{H}}
+\newcommand{\Uniform}[1]{\mathsf{Uniform}\left[#1\right]}
+\newcommand{\DistSet}[1]{\Delta\left(#1\right)}
+\newcommand{\Support}[1]{\mathsf{Supp}({#1})}
+\newcommand{\SupportSize}[1]{|\Support{#1}|}
+\newcommand{\Mean}[2]{\underset{#1}{\mathbb{E}}\left[#2\right]}
+\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
+\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
+\newcommand{\TV}[1]{d_{\mathsf{TV}}\left(#1\right)}
+\newcommand{\RenyiEnt}[1]{\mathsf{H}_{#1}}
+\newcommand{\MinEnt}{\RenyiEnt{\infty}}
+\newcommand{\ProductDist}[1]{{\overset{#1}\otimes}\Dist}
+\newcommand{\weight}[1]{\mathsf{wt}\left(#1\right)}
+
+% Histograms
+
+\newcommand{\HistFactor}{\tau}
+\newcommand{\BucketIndices}{\mathcal{I}}
+\newcommand{\LoIndex}{L}
+\newcommand{\HiIndex}{\lfloor \frac{\log\DomainSize}{\HistFactor}\rfloor}
+\newcommand{\Bucket}[2]{B_{#1}^{(#2)}}
+\newcommand{\ApproxHistParam}{(\DomainSize, \HistFactor)}
+\newcommand{\DistsToHist}[1]{\mathsf{Hist}^{\ApproxHistParam}(#1)}
+\newcommand{\HistMapsTo}[1]{\mathcal{F}^{\ApproxHistParam}(#1)}
+\newcommand{\ApproxHistTruth}{\{\textcolor{cadmiumgreen}{p}_j\}_{j \in \BucketIndices}}
+\newcommand{\ApproxHistAlleged}{\{\textcolor{red}{\tilde{p}}_j\}_{j \in \BucketIndices}}
+\newcommand{\ApproxHistEmpirical}{\{\textcolor{blue}{\widehat{p}}_j\}_{j \in \BucketIndices}}
+\newcommand{\Mass}[1]{\textcolor{cadmiumgreen}{p}_{#1}}
+\newcommand{\MassEmpirical}[1]{\textcolor{blue}{\widehat{p}}_{#1}}
+\newcommand{\MassAlleged}[1]{\textcolor{red}{\tilde{p}}_{#1}}
+\newcommand{\MassUpper}[2]{\frac{e^{(#1+1)#2}}{\DomainSize}}
+\newcommand{\MassUpperShort}[1]{\frac{e^{(#1+1)\HistFactor}}{\DomainSize}}
+\newcommand{\MassLower}[2]{\frac{e^{#1\HistFactor}}{\DomainSize}}
+\newcommand{\MassLowerShort}[1]{\frac{e^{#1\HistFactor}}{\DomainSize}}
+
+
+% Entropy Gap Protocol
+\newcommand{\gap}{\nu}
+\newcommand{\FlatnessParam}{\beta}
+
+% Interactive Proofs
+\newcommand{\Transcript}{\mathsf{Tr}}
+\newcommand{\Reject}{\mathsf{Reject}}
+\newcommand{\Accept}{\mathsf{Accept}}
+\newcommand{\Protocol}{\Pi}
+\newcommand{\Verifier}{\mathsf{V}}
+\newcommand{\Prover}{\mathsf{P}}
+\newcommand{\ChProver}{\textcolor{red}{\widetilde{\mathsf{P}}}}
+\newcommand{\ChProtocolExpanded}{\Protocol(\ChProver, \Verifier)}
+\newcommand{\ProtocolExpanded}{\Protocol(\Prover, \Verifier)}
+\newcommand{\outProtocol}[1]{\Verifier(#1)}
+
