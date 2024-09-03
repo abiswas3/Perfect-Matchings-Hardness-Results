@@ -105,12 +105,17 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 
 
 \paragraph{Some geometric intuition about non-blocking graphs} \highlight{As long as the number of highways is not too large, i.e. less than $q$, I can always add a new destination to the network.}\par
-
+\begin{figure}[h]
+\center
+%\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top},capbesidewidth=4cm}}]{figure}[\FBwidth]
+{\caption{A test figure with its caption side by side}\label{fig:test}}
+{\includegraphics{assets/non-blocking-networks.pdf}}
+\end{figure}
 
 Next, we re-state a lemma by \citep[Proposition 1]{feldman1988wide} which describes the properties bipartite graphs must satisfy to be non-blocking.
 
 \begin{lemma}
-Fix $a, r \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
+Fix $a, r, s \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
 If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to $A$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
 \end{lemma}
 
@@ -137,7 +142,7 @@ We break down the embedding process into the following steps:
 
 \begin{enumerate}
 	\item For each $j \in [k]$, our first task is to map $h_j$ to unique vertices $\Embedding{h_j} \in \Vertices{\Graph}$. 
-	\item Secondly, for each edge $(u,v) \in \Edges{\HardInstance}$, we wish to find a path $\Path{u}{v}$ of odd length $\PathSize$.
+	\item Secondly, for each edge $(u,v) \in \Edges{\HardInstance}$, we wish to find a path $\Path{u}{v}$ of odd length $\PathSize = 2k +1 $ for some $k \in \Naturals$.
 	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
 	\item Let $M$ denote the matching described above. For all $e \in M$, we set $x_e =1$. For all $e \notin M$ that do not involve vertices in $\Embedding{\HardInstance}$, we set $x_e = 0$. Substituting these values in Definition \ref{def:poly-calc-refutations} gives rise to a restricted formula. Refuting the restricted formula reduces to refuting the hard instance of \highlight{Buss el al}. Thus, we are done.
 \end{enumerate}
