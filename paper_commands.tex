@@ -15,6 +15,7 @@
 % \newcommand{\BigO}[1]{O\left(#1\right)}
 
 \newcommand{\TODO}{\textcolor{orange}{??TODO??}}
+\renewcommand{\epsilon}{\varepsilon}
 \newcommand{\Set}[1]{\left\{ #1\right\}}
 \newcommand{\RCloseLOpenInterval}[2]{}
 \newcommand{\LCloseROpenInterval}[2]{\left[#1, #2\right)}
@@ -23,6 +24,7 @@
 
 \newcommand{\leftarrowS}{\leftarrow\joinrel\smalldollar}
 \newcommand{\rightarrowS}{\smalldollar\joinrel\rightarrow}
+\newcommand{\samples}{\highlight{\leftarrowS}}
 \newcommand{\negl}{\mathtt{negl}}
 \newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
 \newcommand{\Eps}{\varepsilon}
@@ -55,12 +57,13 @@
 \newcommand{\Edges}[1]{E(#1)}
 % Degree of vertex (a scalar)
 \newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
+\newcommand{\Neighbourhood}[2]{\Gamma_{#1}\left(#2\right)}
 
 % Paper specific graph things
 \newcommand{\Family}[1]{\textcolor{purple}{\mathcal{#1}}}
 \newcommand{\SafeStates}{\Family{S}}
 \newcommand{\HardInstance}{H}
-\newcommand{\Embedding}[1]{\sigma\left(#1\right)}
+\newcommand{\Embedding}[1]{\mathsf{Embed}\left(#1\right)}
 \newcommand{\Path}[2]{P_{#1 \leftrightarrow #2}}
 \newcommand{\PathSize}{\textcolor{red}{l}}
 

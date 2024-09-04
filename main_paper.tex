@@ -1,6 +1,9 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry} % Adjust margins as needed
 \input{base_template}
+\usepackage{accents}
+\usepackage{calc}
+
 \input{theorem}
 \input{paper_commands.tex} %These are generic commands (Might move them to %base template)is
 \newcommand{\Degree}[1]{\mathsf{Deg}\left(#1\right)}
@@ -14,8 +17,19 @@
 \newcommand{\dee}{\textcolor{cadmiumgreen}{d}}
 \newcommand{\eigen}{\textcolor{red}{\lambda}}
 \newcommand{\EnDeeLambda}{(n, d, \lambda)}
+\newcommand{\Subdivision}[2]{{#1}^{#2}}
+\newcommand{\MinimalDegree}[1]{\delta(#1)}
+%\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
+\newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
 
-
+\newcommand{\DistSet}[1]{\Delta(#1)}
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\EdgesShort}{E}
+%\newcommand{\Mean}[2]{\underset{#1}{\mathbb{E}}\left[#2\right]}
+\newcommand{\Mean}[2]{\mathbb{E}_{#1}\left[#2\right]}
+\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
+\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
+\newcommand{\ExpansionFactor}[1]{\lambda(#1)}
 \synctex=1
 % Title
 \title{\textcolor{definitioncolor}{Refuting Perfect Matchings In Expander Graphs Is Also Hard}}
@@ -64,22 +78,55 @@ definition
 
 \section{Preliminaries}
 
-\paragraph{Notation} Sets are denoted with upper case normal font e.g., $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g., $\Family{S}$. For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
-Given $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
+\paragraph{Notation} Sets are denoted with upper case normal font e.g., $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g., $\Family{S}$. 
 
-\subsection{Proof Complexity Basics}
+
+\begin{definition}[Dependency Graphs]
+	
+\end{definition}
+
+\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution.
+Let $E_1,...,E_n$ be a set of events, and assume that the following hold:
+
+\begin{enumerate}
+	\item $\PProb{E_i}{\Dist} \leq \delta$ for some $\delta \in (0,1)$.
+	\item The degree of the dependency graph given by $E_1, \dots, E_n$ is bounded by $d$
+	\item $d\delta \leq \nicefrac{1}{4}$
+	
+Then, 
+
+\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]	
+\end{enumerate}
+	
+\end{lemma}
+
+\subsection{Proof Complexity Preliminaries}
 
 \begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
 	
 \end{definition}
 
-\subsection{Facts About Graphs}
-\begin{definition}[$\EnDeeLambda$-Expander graphs]\label{def:expander-graphs}
-Put in definition.    
+\subsection{Graph Theory Preliminaries}
+
+For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
+For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
+
+\begin{definition}[Subgraph]\label{def:subgraph}
+A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v1, v2) \in E' \implies (v1, v2) \in V')$.
+	
 \end{definition}
 
-\begin{definition}[Topological minor]\label{def:top-minor}
-Put in definition.    
+\begin{definition}[Sub-divisions]\label{def:subdivisions}
+Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ (such that all these paths are mutually vertex disjoint, except at the end points).	
+\end{definition}
+
+\begin{definition}[Topological Minor]\label{def:topological-minor}
+A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
+\end{definition}
+
+\begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
+Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
+We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
 \end{definition}
 
 
@@ -119,46 +166,91 @@ Fix $a, r, s \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
 If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to $A$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
 \end{lemma}
 
-\paragraph{Construction:} Given a $\EnDeeLambda$-graph $\Graph$ on an odd number of vertices, define bipartite graph $\tilde{\Graph}  = A \cup B \Def \Vertices{\Graph} \cup \Vertices{\Graph}$.
-That is, the left and right sides of the bipartite graph have the same vertices as that of the original graph $\Graph$.
-For any $a \in A$ and $b \in B$, $(a,b) \in \Edges{\tilde{\Graph}}$ iff $(a,b) \in \Edges{\Graph}$.
-
-\begin{lemma}[Show that my bipartite graph is non-blocking]\label{lemma: bipartite-construct-non-block}
-The bipartite graph $\tilde{\Graph}$ constructed above is $(\pee, \qu)$ non-blocking.
-\end{lemma}
-
-\begin{proof}
-\ari{I need to eventually express $\pee$ and $\qu$ as a function of $n, d, \lambda$.}
-	
-\end{proof}
 
 \section{Proof Of Main Result}
 
-\ari{Potentially use sub-division notation.}
+Let $\Graph$ denote a $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance, as described by \highlight{Buss et al} that is worst case hard for the corresponding proof system.
 
-Let $\Graph$ denote a $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance described by \highlight{Buss et al} that is worst case hard for polynomial calculus.
-Let $\Vertices{\HardInstance} = \Set{h_1, \dots, h_k}$ be the vertices of the hard instance.
-We break down the embedding process into the following steps:
 
 \begin{enumerate}
-	\item For each $j \in [k]$, our first task is to map $h_j$ to unique vertices $\Embedding{h_j} \in \Vertices{\Graph}$. 
-	\item Secondly, for each edge $(u,v) \in \Edges{\HardInstance}$, we wish to find a path $\Path{u}{v}$ of odd length $\PathSize = 2k +1 $ for some $k \in \Naturals$.
-	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
-	\item Let $M$ denote the matching described above. For all $e \in M$, we set $x_e =1$. For all $e \notin M$ that do not involve vertices in $\Embedding{\HardInstance}$, we set $x_e = 0$. Substituting these values in Definition \ref{def:poly-calc-refutations} gives rise to a restricted formula. Refuting the restricted formula reduces to refuting the hard instance of \highlight{Buss el al}. Thus, we are done.
+	\item First, we show (via Lemma \ref{lemma:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{fig:partition}. The partition has the property that for each vertex $v \in V$, has roughly $\epsilon d$ neighbours inside $A$ i.e. $|\Neighbourhood{E}{v} \cap A| \approx \epsilon d$, where $\epsilon$ is a small enough constant like 0.1.
+	\item Secondly, we find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize =2k+1$ for some $k = \lceil 1/2\log_{D}n\rceil$ (Note that $\PathSize$ is odd by definition). Next we show (via Lemma \ref{lemma:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $\Graph[A]$.
+	
+%	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
+	\item We show (via Lemma \ref{lemma:perfect-matching}) that $\Graph[B]$ has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Subdivision{H}{\sigma}}$ but not in $M$, set $x_e = 0$.
 \end{enumerate}
 
 \subsection{Step 1}
 
-Let $\tilde{\Graph} = A \cup B$ be the bipartite graph defined in the construction of Lemma \ref{lemma: bipartite-construct-non-block}.
-We know that this graph $(\pee, \qu)$ is non-blocking.
-Let $(a_1, \dots, a_k)$ denote an arbitrary ordering of arbitrary vertices in $A$.
-Set $E' = \emptyset$. 
-As $\tilde{\Graph}$ is non-blocking, there exists a collection of \emph{safe states} $\SafeStates$.
+\begin{figure}
+	\includegraphics{assets/non-blocking-networks.pdf}
+	\caption{Partition \highlight{Change this}}
+	\label{fig:partition}
+\end{figure}
+
+Figure \ref{fig:partition} pictorially describes Lemma \ref{lemma:partition}.
+
+\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\epsilon \in (0,1)$ and a partition of $V$ into sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{a} \cap A| \leq \epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}$,
+where $\delta \in (0,1)$ such that $\delta d \leq 1/4$.	
+\end{lemma}
+
+\begin{proof}We prove the existence of such a partition $A \cup B = V$ using the probabilistic method.
+For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $\epsilon$.
+If $X_i = 1$, then we include $v$ in $A$, else we put $v$ in $B$.
+Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $\Vertices{G}$ into sets $A$ and $B$.
+For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{e \in \Neighbourhood{E}{v}} \Indicator{e \in A}$ denote the random variable that counts how many neighbours of $a$ are in $A$.
+%If $a \in B$, then $Y_a = 0$.
+%Fix $\delta \in (0,1)$ small enough such that $\delta d \leq 1/4$.
+For any $v \in V$, let $E_v = \Indicator{|Y_v -\epsilon d| \geq \sqrt{d/2\log 2/\delta}}$ denote the bad event that $Y_v$ is very far from $\epsilon d$.
+As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \epsilon d$, and that the dependency graph of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
+By Chernoff-Hoeffding, for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq \delta$.
+Finally, by the assumption, $\delta d \leq 1/4$, we can 
+invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall a \in A, \text{ } E_a = 0}{\vec{X}} > 0$.
+\end{proof}
+
+%Let $\tilde{\Graph} = A \cup B$ be the bipartite graph defined in the construction of Lemma \ref{lemma: bipartite-construct-non-block}.
+%We know that this graph $(\pee, \qu)$ is non-blocking.
+%Let $(a_1, \dots, a_k)$ denote an arbitrary ordering of arbitrary vertices in $A$.
+%Set $E' = \emptyset$. 
+%As $\tilde{\Graph}$ is non-blocking, there exists a collection of \emph{safe states} $\SafeStates$.
 
 
 \subsection{Step 2}
 
+\begin{lemma}[Non-blocking]\label{lemma:bipartitie-is-non-blocking}	
+\end{lemma}
+
+\begin{lemma}[Topological Embedding]\label{lemma:top-embedding}	
+\end{lemma}
+
 \subsection{Step 3}
+
+Lemma \ref{lemma:expanders-minimal-matching} is from \citep[Theorem 4.3]{krivelevich2006pseudo}, that says the pseudorandom graphs on an even number of vertices have perfect matchings.
+
+\begin{lemma}\label{lemma:expanders-minimal-matching}
+Let $\Graph$ be an $\EnDeeLambda$ graph with $\lambda \leq d - 2$	and $n$ is even. Then $\Graph$ has a perfect matching.
+\end{lemma}
+
+\begin{lemma}[Perfect Matching On The Outside]\label{lemma:perfect-matching}
+Given $\EnDeeLambda$ graph $\Graph$.
+
+
+ let $A$ and $B$ be the partitioning defined in Lemma \ref{lemma:partition}.
+	
+\end{lemma}
+
+\begin{proof}
+Define $\tilde{d} = 1 - (\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)})$
+\ari{Define things clearly.}
+Let $\tilde{G} = \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$. 
+That is $\tilde{\Graph}$ is a subgraph of $\Graph$ using all vertices in $B$ and the vertices in $A$ that were not used to embed $\Subdivision{H}{\sigma}$.
+As $\ExpansionFactor{\Graph} \leq \lambda$, and $\tilde{\Graph}$ is a subgraph, we have $\ExpansionFactor{\tilde{\Graph}} \leq \lambda$.
+\ari{This is super easy to show using basic linear algebra, I can explicitly prove this if you think it's needed.}
+By lemma \ref{lemma:partition}, we know that the minimal degree of $\MinimalDegree{\tilde{\Graph}} \geq \tilde{d}$.
+Let $\dbtilde{\Graph}$ denote a subgraph of $\tilde{G}$, where for each $v \in \Vertices{\tilde{\Graph}}$ we retain exactly $\tilde{d}$ of its neighbours.
+It is easy to see that $\dbtilde{\Graph}$ is a $(\tilde{n}, \tilde{d}, \lambda)$ pseudorandom graph, where $\tilde{n} = |\Vertices{\tilde{\Graph}}|$ and $n$ is even (since $|\Vertices{\Graph}|$ is odd and $|\Vertices{\Embedding{\Subdivision{H}{\sigma}}}|$ is also odd). 
+As $\lambda \leq \tilde{d} - 2$, we invoke Lemma \ref{lemma:expanders-minimal-matching} to get that $\dbtilde{G}$ has a perfect matching.
+\end{proof}
 
 \section{Related Work}
 
