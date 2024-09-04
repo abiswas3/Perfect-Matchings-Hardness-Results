@@ -22,6 +22,8 @@
 %\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
 \newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
 
+\newcommand{\EdgesAccross}[2]{e_{#2}(#1)}
+
 \newcommand{\DistSet}[1]{\Delta(#1)}
 \newcommand{\Dist}{\mathcal{D}}
 \newcommand{\EdgesShort}{E}
@@ -33,6 +35,10 @@
 \synctex=1
 % Title
 \title{\textcolor{definitioncolor}{Refuting Perfect Matchings In Expander Graphs Is Also Hard}}
+\newcommand{\dApproxLower}{\textcolor{red}{d'}}
+\newcommand{\dApproxExpandedLower}{\textcolor{black}{\epsilon d - \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
+\newcommand{\dApproxExpandedUpper}{\textcolor{black}{\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
+
 
 % \author{}
 \author[1]{Ari Biswas}
@@ -72,9 +78,7 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the foll
 
 Put in proof by pictures here.
 
-\begin{definition}
-definition
-\end{definition}
+
 
 \section{Preliminaries}
 
@@ -133,7 +137,7 @@ We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underse
 \end{definition}
 
 
-\begin{lemma}[Expander Mixing Lemma]
+\begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
 	
 \end{lemma}
 
@@ -154,7 +158,7 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 \end{definition}
 
 
-\paragraph{Some geometric intuition about non-blocking graphs} \highlight{As long as the number of highways is not too large, i.e. less than $q$, I can always add a new destination to the network.}\par
+\paragraph{Why are non-blocking graphs useful} \highlight{Use the get out of jail analysis I wrote down.}\par
 \begin{figure}[h]
 \center
 %\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top},capbesidewidth=4cm}}]{figure}[\FBwidth]
@@ -164,7 +168,7 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 
 Next, we re-state a lemma by \citep[Proposition 1]{feldman1988wide} which describes the properties bipartite graphs must satisfy to be non-blocking.
 
-\begin{lemma}
+\begin{lemma}\label{lemma:condtions-for-non-block}
 Fix $a, r, s \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
 If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to $A$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
 \end{lemma}
@@ -193,7 +197,7 @@ Let $\Graph$ denote a $\EnDeeLambda$-graph on an odd number of vertices, and,  $
 
 Figure \ref{fig:partition} pictorially describes Lemma \ref{lemma:partition}.
 
-\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\epsilon \in (0,1)$ and a partition of $V$ into sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{a} \cap A| \leq \epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}$,
+\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\epsilon \in (0,1)$ and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{a} \cap A| \leq \epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}$,
 where $\delta \in (0,1)$ such that $\delta d \leq 1/4$.	
 \end{lemma}
 
@@ -220,10 +224,32 @@ invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall a
 
 \subsection{Step 2}
 
+Let $G=(V,E)$, be the $\EnDeeLambda$ graph given to us. 
+Let $\epsilon, \delta, A$ and $B$ be as defined by Lemma \ref{lemma:partition}. 
+Define $\dApproxLower \Def \dApproxExpandedLower$.
+Define $E_A \Def \{ (u,v) \in E : u \in A \land v \in A\}$. 
+That is $E_A$ are the edges whose endpoints are fully contained in A, and let $V_A \Def \{ v \in A: \text{$v$ is an endpoint of some $e \in E_A$}\}$ and let $ n_A \Def |V_A|$.
+Now define a bipartite graph $G_A = (V_A \cup V_A)$ such that if $(u,v) \in E_A$, then $(u,v) \in \Edges{G_A}$.
+
 \begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be a $\EnDeeLambda$ graph. Set $D = \nicefrac{d}{\lambda}$. If $\lambda \leq \nicefrac{d}{C_1}$, then construction defined above is $(D, \alpha n)$ non-blocking for some $\alpha \in (0,1)$.
 \end{lemma}
 \begin{proof}
-	
+Let $X$ and $Y$ denote the left and right vertices of the bipartite graph $G_A$.
+Let $a = \frac{\lambda n}{c_1d}$. Consider a subset $S \subseteq X$ of size $1 \leq |S| \leq 2a \leq \frac{\lambda n}{c_1'd}$. 
+Suppose towards contradiction of Lemma \ref{lemma:condtions-for-non-block}, there exists $T \subseteq Y$ of vertices adjacent to $S$ of size $|T| \leq 2(d/\lambda)|X|$.
+
+From Lemma \ref{lemma:partition}, we know that for any $v \in V_A$, $\Neighbourhood{E_A}{v} \geq \dApproxLower$.	
+Therefore, for any $S\subseteq X$ and $T \subseteq Y$, we have 
+
+\begin{equation}
+\EdgesAccross{S, T}{E_A}	\geq |S| \dApproxLower
+\end{equation}
+
+As $G$ is an $\EnDeeLambda$ graph, we have that $G_A$ is a $(n_A, \dApproxLower, \lambda)$ graph.
+By the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}, 
+
+\[ \EdgesAccross{S, T}{E_A}	\leq \frac{\dApproxLower}{n_A}|S||T| + \lambda\sqrt{|S||T|}\]
+
 \end{proof}
 
 \begin{lemma}[Topological Embedding]\label{lemma:top-embedding}	
