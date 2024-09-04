@@ -124,6 +124,9 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
 \end{definition}
 
+Next we define pseudorandom graphs or expander graphs. 
+Throughout this document, it suffices to treat $d$ as a small constant.
+
 \begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
 Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
 We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
@@ -217,11 +220,21 @@ invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall a
 
 \subsection{Step 2}
 
-\begin{lemma}[Non-blocking]\label{lemma:bipartitie-is-non-blocking}	
+\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be a $\EnDeeLambda$ graph. Set $D = \nicefrac{d}{\lambda}$. If $\lambda \leq \nicefrac{d}{C_1}$, then construction defined above is $(D, \alpha n)$ non-blocking for some $\alpha \in (0,1)$.
 \end{lemma}
+\begin{proof}
+	
+\end{proof}
 
 \begin{lemma}[Topological Embedding]\label{lemma:top-embedding}	
 \end{lemma}
+
+\begin{proof}
+For each $h \in \Vertices{H}$, our first task is to define $\Embedding{h} \in \Vertices{G}$.
+
+Le
+	
+\end{proof}
 
 \subsection{Step 3}
 
@@ -231,25 +244,25 @@ Lemma \ref{lemma:expanders-minimal-matching} is from \citep[Theorem 4.3]{krivele
 Let $\Graph$ be an $\EnDeeLambda$ graph with $\lambda \leq d - 2$	and $n$ is even. Then $\Graph$ has a perfect matching.
 \end{lemma}
 
-\begin{lemma}[Perfect Matching On The Outside]\label{lemma:perfect-matching}
-Given $\EnDeeLambda$ graph $\Graph$.
-
-
- let $A$ and $B$ be the partitioning defined in Lemma \ref{lemma:partition}.
-	
+\begin{lemma}\label{lemma:perfect-matching}
+Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from Lemma \ref{lemma:top-embedding}.
+If $\lambda \leq \nicefrac{d}{C}$ for some large enough constant $C > 0$, then the sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ has a perfect matching.	
 \end{lemma}
 
 \begin{proof}
+Let $\epsilon, \delta, A$ and $B$ be as defined in Lemma \ref{lemma:partition}.
 Define $\tilde{d} = 1 - (\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)})$
-\ari{Define things clearly.}
-Let $\tilde{G} = \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$. 
+Let $\Embedding{\Subdivision{H}{\sigma}}$ denote the subgraph of $G$ which represents the topological embedding of $H$ from Lemma \ref{lemma:top-embedding}.
+Define $\tilde{G} = \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$. 
 That is $\tilde{\Graph}$ is a subgraph of $\Graph$ using all vertices in $B$ and the vertices in $A$ that were not used to embed $\Subdivision{H}{\sigma}$.
 As $\ExpansionFactor{\Graph} \leq \lambda$, and $\tilde{\Graph}$ is a subgraph, we have $\ExpansionFactor{\tilde{\Graph}} \leq \lambda$.
-\ari{This is super easy to show using basic linear algebra, I can explicitly prove this if you think it's needed.}
-By lemma \ref{lemma:partition}, we know that the minimal degree of $\MinimalDegree{\tilde{\Graph}} \geq \tilde{d}$.
+%\ari{This is super easy to show using basic linear algebra, I can explicitly prove this if you think it's needed.}
+By lemma \ref{lemma:partition}, we know that the minimal degree $\MinimalDegree{\tilde{\Graph}} \geq \tilde{d}$.
 Let $\dbtilde{\Graph}$ denote a subgraph of $\tilde{G}$, where for each $v \in \Vertices{\tilde{\Graph}}$ we retain exactly $\tilde{d}$ of its neighbours.
 It is easy to see that $\dbtilde{\Graph}$ is a $(\tilde{n}, \tilde{d}, \lambda)$ pseudorandom graph, where $\tilde{n} = |\Vertices{\tilde{\Graph}}|$ and $n$ is even (since $|\Vertices{\Graph}|$ is odd and $|\Vertices{\Embedding{\Subdivision{H}{\sigma}}}|$ is also odd). 
 As $\lambda \leq \tilde{d} - 2$, we invoke Lemma \ref{lemma:expanders-minimal-matching} to get that $\dbtilde{G}$ has a perfect matching.
+As $\dbtilde{G}$ is a sub-graph of $\tilde{G}$ with the same vertex set, $\tilde{G}$ also has a perfect matching.
+\ari{Set $C$ here so that this is less complex}.
 \end{proof}
 
 \section{Related Work}
