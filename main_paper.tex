@@ -22,7 +22,12 @@
 %\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
 \newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
 
+\newcommand{\epsilonA}{\textcolor{ballblue}{\epsilon_a}}
+\newcommand{\epsilonL}{\textcolor{cadmiumgreen}{\epsilon_\lambda}}
+\newcommand{\na}{\textcolor{razzmatazz}{n_A}}
+
 \newcommand{\EdgesAccross}[2]{e_{#2}(#1)}
+\newcommand{\BipartiteG}{G_{A \cup A}}
 
 \newcommand{\DistSet}[1]{\Delta(#1)}
 \newcommand{\Dist}{\mathcal{D}}
@@ -36,9 +41,9 @@
 % Title
 \title{\textcolor{definitioncolor}{Refuting Perfect Matchings In Expander Graphs Is Also Hard}}
 \newcommand{\dApproxLower}{\textcolor{red}{d'}}
-\newcommand{\dApproxExpandedLower}{\textcolor{black}{\epsilon d - \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
+\newcommand{\dApproxExpandedLower}{\textcolor{black}{2\epsilon d}}
 \newcommand{\dApproxExpandedUpper}{\textcolor{black}{\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
-
+%\sqrt{\nicefrac{d}{2}\log (2/\delta)} ; this is the error term
 
 % \author{}
 \author[1]{Ari Biswas}
@@ -176,43 +181,74 @@ If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at le
 
 \section{Proof Of Main Result}
 
-Let $\Graph$ denote a $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance, as described by \highlight{Buss et al} that is worst case hard for the corresponding proof system.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t$ vertices, as described by \citet{buss1999linear}, where the refutal certificate is of degree $\BigOmega{t}$.
 
 
 \begin{enumerate}
-	\item First, we show (via Lemma \ref{lemma:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{fig:partition}. The partition has the property that for each vertex $v \in V$, has roughly $\epsilon d$ neighbours inside $A$ i.e. $|\Neighbourhood{E}{v} \cap A| \approx \epsilon d$, where $\epsilon$ is a small enough constant like 0.1.
-	\item Secondly, we find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize =2k+1$ for some $k = \lceil 1/2\log_{D}n\rceil$ (Note that $\PathSize$ is odd by definition). Next we show (via Lemma \ref{lemma:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $\Graph[A]$.
+	\item First, we show (via Lemma \ref{lemma:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, has roughly $\epsilon d$ neighbours inside $A$ i.e. $|\Neighbourhood{E}{v} \cap A| \approx \epsilon d$, where $\epsilon$ is a small enough constant. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where the we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
+	\item Secondly, we find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$ for some $l = \lceil 1/2\log_{D}n\rceil$ and $\PathSize$ is an odd integer (can be expressed as $\PathSize = 2k+1$ for some $k \in \Naturals$. We show (via Lemma \ref{lemma:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above.
 	
 %	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
-	\item We show (via Lemma \ref{lemma:perfect-matching}) that $\Graph[B]$ has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Subdivision{H}{\sigma}}$ but not in $M$, set $x_e = 0$.
+	\item We show (via Lemma \ref{lemma:perfect-matching}) that the subgraph of $G$ not participating in the topological embedding above, has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Embedding{\Subdivision{H}{\sigma}}}$ but not in $M$, set $x_e = 0$. These assignments imply that the formula for refuting $\PerfectMatching{G}$ can be partially filled up, and we are left with the task of refuting a restricted formula. Refuting this restricted formula is identical to finding a refutation in the original hard instance, and thus the proof complexity for refuting perfect matching for $G$ is $\BigOmega{t}$ where $t$ is the number of vertices in the hard instance $H$. We show that $t = \BigOmega{n\log n}$.
 \end{enumerate}
 
-\subsection{Step 1}
+\subsection{Step 1: Partition $G$ into $A$ and $B$}
 
-\begin{figure}
-	\includegraphics{assets/non-blocking-networks.pdf}
-	\caption{Partition \highlight{Change this}}
-	\label{fig:partition}
-\end{figure}
 
-Figure \ref{fig:partition} pictorially describes Lemma \ref{lemma:partition}.
 
-\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\epsilon \in (0,1)$ and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{a} \cap A| \leq \epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}$,
-where $\delta \in (0,1)$ such that $\delta d \leq 1/4$.	
+%\begin{figure*}[t!]
+%    \centering
+%    \begin{subfigure}[t]{0.5\textwidth}
+%        \centering
+%        \includegraphics{assets/ParitionA.pdf}
+%        \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ and $B$, such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
+%    \end{subfigure}%
+%    ~ 
+%    \begin{subfigure}[t]{0.5\textwidth}
+%        \centering
+%        \includegraphics{assets/PartitionB.pdf}
+%        \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$, and only edges that stay inside $A$ (orange edges). The figure below describes how we construct a bipartite graph $\BipartiteG$ from $G_A$.}
+%    \end{subfigure}
+%%    \caption{Caption place holder}
+%\end{figure*}
+
+\begin{figure*}[t!]
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.7]{assets/ParitionA.pdf}
+        \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ (highlighted in green) and $B$ (highlighted in blue), such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
+        \label{subfig:partitionA}
+    \end{subfigure}%
+    \hspace{1mm}
+    \vrule width 1pt % vertical line
+    \hspace{1mm}
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[scale=0.7]{assets/PartitionB.pdf}
+        \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$ and edges that stay inside $A$ (orange edges), as described in the construction of Step 2. The figure below describes the bipartite graph $\BipartiteG$ we use for the embedding theorem.}
+        \label{subfig:partitionB}        
+    \end{subfigure}
+\end{figure*}
+
+
+%Figure \ref{fig:partition} pictorially describes Lemma \ref{lemma:partition}.
+
+\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\epsilon \in (0,1)$ and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{v} \cap A| \leq 2\epsilon d$.
+%where $\delta \in (0,1)$ such that $\delta d \leq 1/4$.	
 \end{lemma}
 
 \begin{proof}We prove the existence of such a partition $A \cup B = V$ using the probabilistic method.
 For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $\epsilon$.
 If $X_i = 1$, then we include $v$ in $A$, else we put $v$ in $B$.
 Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $\Vertices{G}$ into sets $A$ and $B$.
-For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{e \in \Neighbourhood{E}{v}} \Indicator{e \in A}$ denote the random variable that counts how many neighbours of $a$ are in $A$.
-%If $a \in B$, then $Y_a = 0$.
-%Fix $\delta \in (0,1)$ small enough such that $\delta d \leq 1/4$.
-For any $v \in V$, let $E_v = \Indicator{|Y_v -\epsilon d| \geq \sqrt{d/2\log 2/\delta}}$ denote the bad event that $Y_v$ is very far from $\epsilon d$.
+For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{e \in \Neighbourhood{E}{v}} \Indicator{e \in A}$ denote the random variable that counts how many neighbours of $a$ are also in $A$.\\
+For any $v \in V$, let $E_v = \Indicator{|Y_v - d\epsilon | \geq \sqrt{d/2\log 2/\delta}}$ denote the bad event that $Y_v$ is very far from $\epsilon d$.
 As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \epsilon d$, and that the dependency graph of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
 By Chernoff-Hoeffding, for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq \delta$.
-Finally, by the assumption, $\delta d \leq 1/4$, we can 
-invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall a \in A, \text{ } E_a = 0}{\vec{X}} > 0$.
+Finally, by setting $\delta$ small enough, such that $\delta d \leq 1/4$, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall v \in V, \text{ } E_v = 0}{\vec{X}} > 0$.
+When $E_v = 0$ for all $v \in V$, setting $\epsilon = \sqrt{2 \log(2/\delta)}$, gives us that $|Y_v - d\epsilon | \leq \sqrt{d/2}\sqrt{\log 2/\delta}	 \leq \epsilon d$.
+
 \end{proof}
 
 %Let $\tilde{\Graph} = A \cup B$ be the bipartite graph defined in the construction of Lemma \ref{lemma: bipartite-construct-non-block}.
@@ -222,47 +258,150 @@ invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall a
 %As $\tilde{\Graph}$ is non-blocking, there exists a collection of \emph{safe states} $\SafeStates$.
 
 
-\subsection{Step 2}
+\subsection{Step 2: The Topological Emebedding}
 
 Let $G=(V,E)$, be the $\EnDeeLambda$ graph given to us. 
-Let $\epsilon, \delta, A$ and $B$ be as defined by Lemma \ref{lemma:partition}. 
+Let $\epsilon, A$ and $B$ be as defined by Lemma \ref{lemma:partition}. 
 Define $\dApproxLower \Def \dApproxExpandedLower$.
 Define $E_A \Def \{ (u,v) \in E : u \in A \land v \in A\}$. 
-That is $E_A$ are the edges whose endpoints are fully contained in A, and let $V_A \Def \{ v \in A: \text{$v$ is an endpoint of some $e \in E_A$}\}$ and let $ n_A \Def |V_A|$.
-Now define a bipartite graph $G_A = (V_A \cup V_A)$ such that if $(u,v) \in E_A$, then $(u,v) \in \Edges{G_A}$.
+That is $E_A$ are the edges whose endpoints are fully contained in A (orange edges in Figure \ref{subfig:partitionA}), and $G_A = (A, E_A)$. 
+Define $ \na = |A|$.
+Now define a bipartite graph $\BipartiteG = (V_A \cup V_A)$ such that if $(u,v) \in E_A$, then $(u,v) \in \Edges{\BipartiteG}$.
+As $G$ is an $\EnDeeLambda$ graph, we have that $\BipartiteG$ is a $(\na, \dApproxLower, \lambda)$ graph.
 
-\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be a $\EnDeeLambda$ graph. Set $D = \nicefrac{d}{\lambda}$. If $\lambda \leq \nicefrac{d}{C_1}$, then construction defined above is $(D, \alpha n)$ non-blocking for some $\alpha \in (0,1)$.
+\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph given to us and let $\BipartiteG$ be the bipartite graph described above. 
+%Let $\epsilon$ be the small constant from Lemma \ref{lemma:partition}.
+%Define $\dApproxLower = \dApproxExpandedLower$.
+There exists $\epsilonL, \epsilonA  \in (0,1)$ small enough, such that if $\lambda < \epsilonL \dApproxLower$, then $\BipartiteG$ is $(\frac{\dApproxLower}{\lambda}, \epsilonA\na)$ non-blocking.
 \end{lemma}
-\begin{proof}
-Let $X$ and $Y$ denote the left and right vertices of the bipartite graph $G_A$.
-Let $a = \frac{\lambda n}{c_1d}$. Consider a subset $S \subseteq X$ of size $1 \leq |S| \leq 2a \leq \frac{\lambda n}{c_1'd}$. 
-Suppose towards contradiction of Lemma \ref{lemma:condtions-for-non-block}, there exists $T \subseteq Y$ of vertices adjacent to $S$ of size $|T| \leq 2(d/\lambda)|X|$.
 
-From Lemma \ref{lemma:partition}, we know that for any $v \in V_A$, $\Neighbourhood{E_A}{v} \geq \dApproxLower$.	
-Therefore, for any $S\subseteq X$ and $T \subseteq Y$, we have 
+\begin{proof}
+Let $X$ and $Y$ denote the left and right vertices of the bipartite graph $\BipartiteG$.
+Define $a = \epsilonA\cdot\frac{\lambda \na}{\dApproxLower}$.
+Fix $S \subseteq X$ such that $1 \leq |S| \leq 2a$.
+Suppose towards a contradiction, $G_A$ is \emph{not} non-blocking.
+Then by Lemma \ref{lemma:condtions-for-non-block}, for all $T \subseteq Y$, $\EdgesAccross{S, T}{E_A} \leq (2\dApproxLower/\lambda)|S|$.
+Pick $T^* \subseteq Y$ such that 
 
 \begin{equation}
-\EdgesAccross{S, T}{E_A}	\geq |S| \dApproxLower
+\EdgesAccross{S, T^*}{E_A} \geq |S|\dApproxLower	 \label{eq:lots-edges}
 \end{equation}
 
-As $G$ is an $\EnDeeLambda$ graph, we have that $G_A$ is a $(n_A, \dApproxLower, \lambda)$ graph.
-By the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}, 
+We know $T^*$ exists as $G_A$ is $\dApproxLower$ regular.
+From the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
-\[ \EdgesAccross{S, T}{E_A}	\leq \frac{\dApproxLower}{n_A}|S||T| + \lambda\sqrt{|S||T|}\]
+\begin{align}
+	\EdgesAccross{S, T^*}{E_A} &\leq \frac{\dApproxLower}{\na}|S||T^*| + \lambda\sqrt{|S||T^*|} \\
+	&\leq \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\sqrt{2\lambda \dApproxLower} \label{eq:stepa}\\
+	&< \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\dApproxLower\sqrt{2\epsilonL } \label{eq:stepb}\\
+	&\leq |S|\dApproxLower\left[ \frac{\dApproxLower|S|}{\na\lambda} + \sqrt{2\epsilonL}\right] \\
+	&\leq |S|\dApproxLower\left[ \frac{\epsilonA}{2} + \sqrt{2\epsilonL}\right] \label{eq:stepc}
+\end{align}
+
+
+For Equation \eqref{eq:stepa} We use that $\EdgesAccross{S, T^*}{E_A} \leq (2\dApproxLower/\lambda)|S|$. For Equation \eqref{eq:stepb} we use $\lambda < \epsilonL\dApproxLower$. For Equation \eqref{eq:stepc} we use $|S| \leq 2a$.
+Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2} + \sqrt{2\epsilonL} < 1$, we get a contradiction with Equation \eqref{eq:lots-edges}.
 
 \end{proof}
 
-\begin{lemma}[Topological Embedding]\label{lemma:top-embedding}	
+The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
+Note for every edge in $G_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
+
+\begin{lemma}[Topological Embedding]\label{lemma:top-embedding}
+Let $\epsilonA, \epsilonL \in (0,1)$ be the constants from Lemma \ref{lemma:bipartitie-is-non-blocking}.
+Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices. 
 \end{lemma}
 
 \begin{proof}
-For each $h \in \Vertices{H}$, our first task is to define $\Embedding{h} \in \Vertices{G}$.
+Define $D = \frac{\dApproxLower}{\lambda}$.
+Denote $\Vertices{H} = \{ h_1, \dots, h_t\}$.
+For each $h \in \Vertices{H}$, our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$.
+Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_A}$.
+We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$.
+Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of $\BipartiteG$.
 
-Le
+
+\begin{figure}
+	\center
+	\includegraphics[width=0.9\textwidth]{assets/baseCaseA.pdf }
+	\caption{The figure above describes }
+	\label{fig:baseA}
+\end{figure}	
+
+
+\begin{itemize}
+	\item Set $E' = \emptyset$ to begin with.
+	\item For $a_1 \in X$, ask for $D$ neighbours in $Y$. As $|E'| \leq \epsilonA \na$, and $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, we can find $\tilde{h}_1 \in Y$ such that there is no edge in $|E'|$ is incident on $\tilde{h}_1$. We set $\Embedding{a_1} = \tilde{h}_1$ and $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
+	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. As $|E'| \leq t < \epsilonA\na$, for each $a_j$ we can always find a $\tilde{h}_j$ in $Y$ such that there is an edge $(a_j, \tilde{h}_j)$, and there is no edge in $E'$ that is incident on each $\tilde{h}_j$.
+\end{itemize}
+
+The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1 \log_{D}(\na)$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_A$.
+Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
+We prove the result by induction on $m$.
+
+\subsubsection{Base Case, $m=1$}
+
+\paragraph{Forward Phase} 
+
+Define a set $E'= \emptyset$. 
+Let $e_1 = (u,v)$. Define a set $S_0 = \{\Embedding{u}\}$ and $\tilde{S}_0 = \{ \Embedding{v}\}$.
+Define sets $M_{u}$ and $\tilde{M}_{v}$ to be sets of $s_z = \min\{t, s_{z-1}D\}$ edges in $E_A$ incident to $S_{z-1}$ and $\tilde{S}_{z-1}$ respectively, such that each vertex in $S_{z-1} \subseteq Y$ and $\tilde{S}_{z-1} \subseteq Y$ is incident to \emph{at most one} edge in $E' \cup M_u \cup \tilde{M}_v$.
+We know such sets exist as $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, and by repeatedly applying property 3 of non-blocking graphs, we can always such sets.\\
+
+More concretely, we start with $\Embedding{u} \in X$ and ask for $D$ edges in $E_A$. 
+As $|E'| = 0 < \na \epsilonA$, by the non-blocking property 3, we can always find least one neighbour $w$ in $Y$ such that there is no edge in $E'$ already incident on $w$ (any neighbour suffices).
+$M_u$ consists of $s_1 = \min\{t, |S_0|D\}$ such edges connecting $\Embedding{u}$ to such neighbours.
+$S_1$ is the collection of $s_1$ neighbours. 
+Now, we repeat the process with $\Embedding{v}$, by asking for $D$ neighbours in $Y$, such that there is no edge in $E' \cup M_u$ that is incident on these neighbours.
+We form $\tilde{M}_v$
+(\highlight{See Figure)}.
+Now for each $x \in S_1$, we ask for $D$ neighbours again such that there is no edge in 
+
+
+$M_1$ represents the edges connecting $\Embedding{u}$ to at most $s_1$ many such neighbours, and $S_1$ is the set of these neighbours.
+We repeat the same process by asking for $D$ neighbours of $\Embedding{v}$, and construct $\tilde{M}_1$ and $\tilde{S}_1$.
+For each $(y, \Embedding{v} in \tilde{M}_1$, we require that there is no edge in $E' \cup M_1$ already incident on $y$.
+Now for each $x \in S_1$, we once again ask for $D$ neighbours in $Y$, and construct $M_2$ with at most $s_2$ edges $(x,y)$ such that $y$ is incident on no edge in $E' \cup M_1 \cup \tilde{M}_1$.
+As $k = \BigO{\log n}$, we can always construct sets $M_1, \dots, M_k$ and $\tilde{M_1}, \dots, \tilde{M}_k$.
+Now, the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}) says that there any two nodes $\Embedding{u}$ and $\Embedding{v}$ are connected by a path of size $\PathSize = 2k+1$.
+This implies that there must be an edge $e=(a,b)$ between $S_k$ and $\tilde{S}_k$ (depicted in green in Figure \ref{fig:baseA}).
+
+\paragraph{Base Case, Backwards Phase}
+
+We add $e$ to $E'$, and consider end point $a \in S_k$.
+By how we constructed $M_k$, we know there is an edge $m_k = (a,c)$ connecting $a$ to some vertex $c$ in $M_{k-1}$, such that $a$ has no other edges incident on it. We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
+We add all these edges to $E'$.
+We repeat the same process for the other end point of $b \in S_k'$, to get edges $\tilde{m}_1, \dots, \tilde{m}_k$.
+We add these edges to $E'$ as well. 
+This gives is the situation depicted in Figure \ref{fig:baseB}.
+Thus, we have found an odd length path of length $2k+1=\log_D \na$, connecting $\Embedding{u}$ to $\Embedding{v}$.
+
+\begin{figure}
+	\includegraphics[width=0.9\textwidth
+	]{assets/BaseCaseB.pdf}
+	\caption{Base B}
+	\label{fig:baseB}
+\end{figure}
+
+
+
+\paragraph{Induction Step}
+	
+Assume that we have found paths for $e_1, \dots, e_j$ for $j < m$.
+The situation is described in Figure \ref{fig:induction}.
+The set $E'$ consists of $j$ paths of size $\PathSize$. Therefore $|E'| \leq m*$	
+	
+\begin{figure}
+	\center
+	\includegraphics[width=0.9\textwidth]{assets/InductionStep.pdf}
+	\caption{Induction}
+	\label{fig:induction}
+\end{figure}	
+
 	
 \end{proof}
 
-\subsection{Step 3}
+\subsection{Step 3: Finding A Perfect Matching In The Remainder Of The Graph}
 
 %Lemma \ref{lemma:expanders-minimal-matching} is from \citep[Theorem 4.3]{krivelevich2006pseudo}, that says the pseudorandom graphs on an even number of vertices have perfect matchings.
 
@@ -276,8 +415,9 @@ If $\lambda \leq \nicefrac{d}{C}$ for some large enough constant $C > 0$, then t
 \end{lemma}
 
 \begin{proof}
+\ari{Change notation}
 Let $\epsilon, \delta, A$ and $B$ be as defined in Lemma \ref{lemma:partition}.
-Define $\tilde{d} = 1 - (\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)})$
+Define $\tilde{d} = 1 - (2\epsilon d)$
 Let $\Embedding{\Subdivision{H}{\sigma}}$ denote the subgraph of $G$ which represents the topological embedding of $H$ from Lemma \ref{lemma:top-embedding}.
 Define $\tilde{G} = \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$. 
 That is $\tilde{\Graph}$ is a subgraph of $\Graph$ using all vertices in $B$ and the vertices in $A$ that were not used to embed $\Subdivision{H}{\sigma}$.
