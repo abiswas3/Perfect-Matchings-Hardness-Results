@@ -37,6 +37,10 @@
 \newcommand{\Prob}[1]{\Pr\left[#1 \right]}
 \newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
 \newcommand{\ExpansionFactor}[1]{\lambda(#1)}
+\newcommand{\EmbeddingFunc}{\Psi}
+
+\newcommand{\SizeOfM}[1]{s_{#1}}
+
 \synctex=1
 % Title
 \title{\textcolor{definitioncolor}{Refuting Perfect Matchings In Expander Graphs Is Also Hard}}
@@ -307,18 +311,19 @@ Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2}
 The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
 Note for every edge in $G_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
-\begin{lemma}[Topological Embedding]\label{lemma:top-embedding}
+\begin{lemma}[Topological Embedding]\label{lemma:top-embedding} 
 Let $\epsilonA, \epsilonL \in (0,1)$ be the constants from Lemma \ref{lemma:bipartitie-is-non-blocking}.
 Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices. 
 \end{lemma}
 
 \begin{proof}
-Define $D = \frac{\dApproxLower}{\lambda}$.
-Denote $\Vertices{H} = \{ h_1, \dots, h_t\}$.
-For each $h \in \Vertices{H}$, our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$.
+Define $D = \frac{\dApproxLower}{\lambda} = \frac{2\epsilon d}{\lambda}$ and $k \Def \lceil\log_D[\na]\rceil$.
+Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
+Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_A}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_A$, that defines our topological embedding.
+Our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$ for each $h \in \Vertices{H}$.
 Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_A}$.
 We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$.
-Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of $\BipartiteG$.
+Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of the bipartite graph $\BipartiteG$ described above.
 
 
 \begin{figure}
@@ -330,12 +335,13 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
 
 
 \begin{itemize}
-	\item Set $E' = \emptyset$ to begin with.
-	\item For $a_1 \in X$, ask for $D$ neighbours in $Y$. As $|E'| \leq \epsilonA \na$, and $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, we can find $\tilde{h}_1 \in Y$ such that there is no edge in $|E'|$ is incident on $\tilde{h}_1$. We set $\Embedding{a_1} = \tilde{h}_1$ and $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
-	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. As $|E'| \leq t < \epsilonA\na$, for each $a_j$ we can always find a $\tilde{h}_j$ in $Y$ such that there is an edge $(a_j, \tilde{h}_j)$, and there is no edge in $E'$ that is incident on each $\tilde{h}_j$.
+	\item Define $E' = \emptyset$ to begin with.
+	\item For $a_1 \in X$, ask for $D$ neighbours in $Y$. As $|E'| = 0 \leq \epsilonA \na$, and $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, we can find $\tilde{h}_1 \in Y$ such that there is no edge in $|E'|$ is incident on $\tilde{h}_1$. We set $\Embedding{a_1} = \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
+	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. As $|E'| \leq t < \epsilonA\na$, for each $a_j$ we can always find a $\tilde{h}_j$ in $Y$ such that there is an edge $(a_j, \tilde{h}_j)$, and there is no other edge in $E'$ that is incident on each $\tilde{h}_j$.
 \end{itemize}
 
-The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1 \log_{D}(\na)$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_A$.
+Once this phase is complete, we have mapped every vertex of $H$ to a vertex in $G_A$.
+The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_A$.
 Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
 We prove the result by induction on $m$.
 
@@ -343,28 +349,32 @@ We prove the result by induction on $m$.
 
 \paragraph{Forward Phase} 
 
-Define a set $E'= \emptyset$. 
-Let $e_1 = (u,v)$. Define a set $S_0 = \{\Embedding{u}\}$ and $\tilde{S}_0 = \{ \Embedding{v}\}$.
-Define sets $M_{u}$ and $\tilde{M}_{v}$ to be sets of $s_z = \min\{t, s_{z-1}D\}$ edges in $E_A$ incident to $S_{z-1}$ and $\tilde{S}_{z-1}$ respectively, such that each vertex in $S_{z-1} \subseteq Y$ and $\tilde{S}_{z-1} \subseteq Y$ is incident to \emph{at most one} edge in $E' \cup M_u \cup \tilde{M}_v$.
-We know such sets exist as $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, and by repeatedly applying property 3 of non-blocking graphs, we can always such sets.\\
+Let $e_1 = (u,v)$. Define sets $S_0 = \{\Embedding{u}\}$ and $\tilde{S}_0 = \{ \Embedding{v}\}$, and $M_0 = \emptyset$ and $M_0' = \emptyset$.
+For each $z=1, \dots, k$, we will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows:
 
-More concretely, we start with $\Embedding{u} \in X$ and ask for $D$ edges in $E_A$. 
-As $|E'| = 0 < \na \epsilonA$, by the non-blocking property 3, we can always find least one neighbour $w$ in $Y$ such that there is no edge in $E'$ already incident on $w$ (any neighbour suffices).
-$M_u$ consists of $s_1 = \min\{t, |S_0|D\}$ such edges connecting $\Embedding{u}$ to such neighbours.
-$S_1$ is the collection of $s_1$ neighbours. 
-Now, we repeat the process with $\Embedding{v}$, by asking for $D$ neighbours in $Y$, such that there is no edge in $E' \cup M_u$ that is incident on these neighbours.
-We form $\tilde{M}_v$
-(\highlight{See Figure)}.
-Now for each $x \in S_1$, we ask for $D$ neighbours again such that there is no edge in 
+\begin{tcolorbox}
+Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $\SizeOfM{z} \Def \min\{t/(2k), \SizeOfM{z-1}D\}$ edges in $E_A$ incident to $S_{z-1}$ and $S_{z-1}'$ respectively, such that each vertex in $Y$ is incident to \emph{at most} one edge in $\cup_{i=1}^{z} (M_i \cup M'_i)$.
+Figure \ref{fig:baseA} illustrates this iterative process visually.	\\
+%
+%
+%
+%. For each $x \in S_{j-1} \subseteq X$, ask for at most $D$ edges incident on $x$ in $E_A$. Let $E_j$ denote these edges. For every $e=(x,v) \in E_j$, we include $e \in M_j$, if there is no other edge in $\cup_{i=0}^{j-1} (M_i \cup M'_i)$ that is incident on $v$. Here $v$ is the endpoint in $Y$, and $x$ represents the endpoint in $X$.
+%The set of endpoints of $M_j$ in $Y$ make up $S_j$.
+%Analogously,  we define $M_j'$ as the set of edges incident on $S'_{j-1}$ such that, for end points $v \in Y$, there is no edge in $\cup_{i=0}^{j-1} (M_i \cup M'_i) \cup M_j$.
+%$S'_{j}$ is defined analogously.
 
+\end{tcolorbox}
 
-$M_1$ represents the edges connecting $\Embedding{u}$ to at most $s_1$ many such neighbours, and $S_1$ is the set of these neighbours.
-We repeat the same process by asking for $D$ neighbours of $\Embedding{v}$, and construct $\tilde{M}_1$ and $\tilde{S}_1$.
-For each $(y, \Embedding{v} in \tilde{M}_1$, we require that there is no edge in $E' \cup M_1$ already incident on $y$.
-Now for each $x \in S_1$, we once again ask for $D$ neighbours in $Y$, and construct $M_2$ with at most $s_2$ edges $(x,y)$ such that $y$ is incident on no edge in $E' \cup M_1 \cup \tilde{M}_1$.
-As $k = \BigO{\log n}$, we can always construct sets $M_1, \dots, M_k$ and $\tilde{M_1}, \dots, \tilde{M}_k$.
-Now, the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}) says that there any two nodes $\Embedding{u}$ and $\Embedding{v}$ are connected by a path of size $\PathSize = 2k+1$.
-This implies that there must be an edge $e=(a,b)$ between $S_k$ and $\tilde{S}_k$ (depicted in green in Figure \ref{fig:baseA}).
+Let $M = \cup_{i=1}^k (M_i \cup M'_i)$.
+The reason we can always construct the sets described above sets is that $|M| \leq t < \epsilonA\na$, and as $\BipartiteG$ is $(D, \epsilonA\na)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in Y$, such that $(x,y) \in E_A$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.
+Now as $k = \log_D[\na]$, based on how we select $\SizeOfM{1}, \dots, \SizeOfM{k}$, we have that, $|S_k| = |S_k'|= \frac{t}{k}$.
+By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
+
+\begin{align}
+	\EdgesAccross{S_k, S_k'}{E_A} &\geq \frac{\dApproxLower t^2}{\na k^2} - \lambda \frac{t}{k} > 0 \label{eq:greater}
+\end{align}
+
+Equation \eqref{eq:greater} comes from $\lambda \leq \epsilonL\dApproxLower$.
 
 \paragraph{Base Case, Backwards Phase}
 
@@ -376,27 +386,27 @@ We add these edges to $E'$ as well.
 This gives is the situation depicted in Figure \ref{fig:baseB}.
 Thus, we have found an odd length path of length $2k+1=\log_D \na$, connecting $\Embedding{u}$ to $\Embedding{v}$.
 
-\begin{figure}
-	\includegraphics[width=0.9\textwidth
-	]{assets/BaseCaseB.pdf}
-	\caption{Base B}
-	\label{fig:baseB}
-\end{figure}
-
-
+%\begin{figure}
+%	\includegraphics[width=0.9\textwidth
+%	]{assets/BaseCaseB.pdf}
+%	\caption{Base B}
+%	\label{fig:baseB}
+%\end{figure}
+%
+%
 
 \paragraph{Induction Step}
 	
 Assume that we have found paths for $e_1, \dots, e_j$ for $j < m$.
 The situation is described in Figure \ref{fig:induction}.
 The set $E'$ consists of $j$ paths of size $\PathSize$. Therefore $|E'| \leq m*$	
-	
-\begin{figure}
-	\center
-	\includegraphics[width=0.9\textwidth]{assets/InductionStep.pdf}
-	\caption{Induction}
-	\label{fig:induction}
-\end{figure}	
+%	
+%\begin{figure}
+%	\center
+%	\includegraphics[width=0.9\textwidth]{assets/InductionStep.pdf}
+%	\caption{Induction}
+%	\label{fig:induction}
+%\end{figure}	
 
 	
 \end{proof}
