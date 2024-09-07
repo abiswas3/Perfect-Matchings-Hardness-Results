@@ -39,7 +39,6 @@
 \newcommand{\ExpansionFactor}[1]{\lambda(#1)}
 \newcommand{\EmbeddingFunc}{\Psi}
 
-\newcommand{\SizeOfM}[1]{s_{#1}}
 
 \synctex=1
 % Title
@@ -317,7 +316,7 @@ Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log 
 \end{lemma}
 
 \begin{proof}
-Define $D = \frac{\dApproxLower}{\lambda} = \frac{2\epsilon d}{\lambda}$ and $k \Def \lceil\log_D[\na]\rceil$.
+Define $D = \frac{\dApproxLower}{\lambda} = \frac{2\epsilon d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
 Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_A}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_A$, that defines our topological embedding.
 Our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$ for each $h \in \Vertices{H}$.
@@ -331,7 +330,9 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
     \begin{subfigure}[t]{0.45\textwidth}
         \centering
         \includegraphics[width=0.98\textwidth]{assets/embeddingA.pdf}
-        \caption{TODO.}
+        \caption{The \textcolor{purple}{purple} edges represent the edges in $\cup_{i=1}^j (M_j \cup M_j')$, which we have already included.
+        For any $v$ in $S_j \subseteq X$ (\textcolor{cadmiumgreen}{green vertex}) we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ (shown with \textcolor{cadmiumgreen}{green} and \textcolor{carminepink}{pink} lines). 
+        Of these $D$ edges, by the non-blocking property, we know that there will be at least one edge (in this case there are 3 such edges shown in \textcolor{carminepink}{pink}) such that the endpoints in $Y$ are not connected to any of the \textcolor{purple}{purple} edges. The \textcolor{cadmiumgreen}{green} dotted edges are connected to vertices that are already incident by one of the \textcolor{purple}{purple} edges, and so we cannot use them. We will add the \textcolor{carminepink}{pink} edges will be added to $M_j$.}
         \label{subfig:embeddingA}
     \end{subfigure}%
     \hspace{1mm}
@@ -340,7 +341,11 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
     \begin{subfigure}[t]{0.45\textwidth}
         \centering
         \includegraphics[width=0.98\textwidth]{assets/embeddingB.pdf}
-        \caption{TODO}
+        \caption{We restrict the size of $M_j$ to be $\min\{t, |S_{j-1}|D\}$ edges. As $k = \log_{D}[\na]$, eventually, for some $j \leq k$, we get $t \leq |S_{j-1}|D$.
+        In the above example $M_{j-1}$ has size $D|S_{j-2}|$ but $M_j$ has size $t$. 
+        From then on for all $j \leq i \leq k$, $|M_i|= t$.
+        Furthermore, for $j \leq i \leq k$,  each vertex in $S_i$ will be connected to exactly one vertex in $S_{i+1}$.
+        }
         \label{subfig:embeddingB}        
     \end{subfigure}
 \end{figure*}
@@ -357,68 +362,60 @@ The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex dis
 Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
 We prove the result by induction on $m$.
 
-\subsubsection{Base Case, $m=1$}
+\paragraph{Base case} 
 
-\paragraph{Forward Phase} 
-
-Let $e_1 = (u,v)$. Define sets $S_0 = \{\Embedding{u}\}$ and $\tilde{S}_0 = \{ \Embedding{v}\}$, and $M_0 = \emptyset$ and $M_0' = \emptyset$.
+Let $e_1 = (u,v)$. Define sets $S_0 = \{\Embedding{u}\}$ and $\tilde{S}_0 = \{ \Embedding{v}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
 For each $z=1, \dots, k$, we will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows:
 
 \begin{tcolorbox}
-Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $\SizeOfM{z} \Def \min\{t/(2k), \SizeOfM{z-1}D\}$ edges in $E_A$ incident to $S_{z-1}$ and $S_{z-1}'$ respectively, such that each vertex in $Y$ is incident to \emph{at most} one edge in $\cup_{i=1}^{z} (M_i \cup M'_i)$.
-Figure \ref{fig:baseA} illustrates this iterative process visually.	\\
-%
-%
-%
-%. For each $x \in S_{j-1} \subseteq X$, ask for at most $D$ edges incident on $x$ in $E_A$. Let $E_j$ denote these edges. For every $e=(x,v) \in E_j$, we include $e \in M_j$, if there is no other edge in $\cup_{i=0}^{j-1} (M_i \cup M'_i)$ that is incident on $v$. Here $v$ is the endpoint in $Y$, and $x$ represents the endpoint in $X$.
-%The set of endpoints of $M_j$ in $Y$ make up $S_j$.
-%Analogously,  we define $M_j'$ as the set of edges incident on $S'_{j-1}$ such that, for end points $v \in Y$, there is no edge in $\cup_{i=0}^{j-1} (M_i \cup M'_i) \cup M_j$.
-%$S'_{j}$ is defined analogously.
-
+Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $|S_z| \Def \min\{t, |S_{z-1}|D\}$ edges in $E_A$ incident to $S_{z-1}$ and $S_{z-1}'$ respectively, such that each vertex in $Y$ is incident to \emph{at most} one edge in $\cup_{i=1}^{z} (M_i \cup M'_i)$.\\
+More concretely, fix $1 \leq z \leq k$, and for each $v \in S_z \subseteq X$, we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ via edges in $E_A$.
+As $\BipartiteG$ is $(D, \epsilonA \na)$ non blocking, we know that at least one of these edges will be connected to vertices in $Y$, such that they have no edges in $\cup_{i=1}^{z} (M_i \cup M'_i)$ already incident on them.
+Figure \ref{subfig:embeddingA} illustrates this.\\
+If there are more than one such edges for the vertices in $S_j$, consider at least one edge per vertex $v \in S_j$ to add to $M_j$ and, make sure $|M_j| = \min\{t, |S_{j-1}|D\}$.
+Figure \ref{subfig:embeddingB} illustrates this idea.
+$M'_j$ and $S_j'$ are constructed analogously.
 \end{tcolorbox}
 
 Let $M = \cup_{i=1}^k (M_i \cup M'_i)$.
 The reason we can always construct the sets described above sets is that $|M| \leq t < \epsilonA\na$, and as $\BipartiteG$ is $(D, \epsilonA\na)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in Y$, such that $(x,y) \in E_A$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.
-Now as $k = \log_D[\na]$, based on how we select $\SizeOfM{1}, \dots, \SizeOfM{k}$, we have that, $|S_k| = |S_k'|= \frac{t}{k}$.
+Now as $k = \log_D[\na]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
-	\EdgesAccross{S_k, S_k'}{E_A} &\geq \frac{\dApproxLower t^2}{\na k^2} - \lambda \frac{t}{k} > 0 \label{eq:greater}
+	\EdgesAccross{S_k, S_k'}{E_A} &\geq \frac{\dApproxLower t^2}{\na} - \lambda t \\
+	&= \frac{\na}{\log_D[\na]}\left[\frac{\epsilonA\dApproxLower}{\log_D[\na]} - \lambda \right]\\
+	&> 0 \label{eq:greater}
 \end{align}
 
-Equation \eqref{eq:greater} comes from $\lambda \leq \epsilonL\dApproxLower$.
+Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \frac{\epsilonL\dApproxLower}{\log_D[\na]} < \frac{\epsilonA\dApproxLower}{\log_D[\na]}$.\\
 
-\paragraph{Base Case, Backwards Phase}
-
-We add $e$ to $E'$, and consider end point $a \in S_k$.
-By how we constructed $M_k$, we know there is an edge $m_k = (a,c)$ connecting $a$ to some vertex $c$ in $M_{k-1}$, such that $a$ has no other edges incident on it. We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
-We add all these edges to $E'$.
-We repeat the same process for the other end point of $b \in S_k'$, to get edges $\tilde{m}_1, \dots, \tilde{m}_k$.
+This implies there exists at least one edge $e=(x,y)$ between $S_k$ and $S_k'$.
+By how we constructed $M_k$, we know there is an edge $m_k = (a,x) \in M_k$ connecting $x$ to some vertex $a$ in $S_{k-1}$. We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
+We repeat the same process for the other end point of $y \in S_k'$, to get edges $m'_1, \dots, m'_k$.
 We add these edges to $E'$ as well. 
 This gives is the situation depicted in Figure \ref{fig:baseB}.
-Thus, we have found an odd length path of length $2k+1=\log_D \na$, connecting $\Embedding{u}$ to $\Embedding{v}$.
+Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length $2k+1$, connecting $\Embedding{u}$ to $\Embedding{v}$.
 
-%\begin{figure}
-%	\includegraphics[width=0.9\textwidth
-%	]{assets/BaseCaseB.pdf}
-%	\caption{Base B}
-%	\label{fig:baseB}
-%\end{figure}
-%
-%
+\begin{figure}
+	\includegraphics[width=0.9\textwidth
+	]{assets/BaseCaseB.pdf}
+	\caption{Change this figure}
+	\label{fig:baseB}
+\end{figure}
+
+
 
 \paragraph{Induction Step}
 	
-Assume that we have found paths for $e_1, \dots, e_j$ for $j < m$.
-The situation is described in Figure \ref{fig:induction}.
-The set $E'$ consists of $j$ paths of size $\PathSize$. Therefore $|E'| \leq m*$	
-%	
-%\begin{figure}
-%	\center
-%	\includegraphics[width=0.9\textwidth]{assets/InductionStep.pdf}
-%	\caption{Induction}
-%	\label{fig:induction}
-%\end{figure}	
+Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ for $j < m$.
+Let $P_1, \dots, P_j$ denote these paths.
+Let $E'$ denote the set of all edges in these paths.
+Let $e_{j+1} = (u,v) \in \Edges{H}$.
+Set $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$
+
+The process for finding a path
+%The set $E'$ consists of $j$ paths of size $\PathSize$. Therefore $|E'| \leq m*$	
 
 	
 \end{proof}
