@@ -307,12 +307,16 @@ Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2}
 
 \end{proof}
 
+
 The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
 Note for every edge in $G_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
-\begin{lemma}[Topological Embedding]\label{lemma:top-embedding} 
-Let $\epsilonA, \epsilonL \in (0,1)$ be the constants from Lemma \ref{lemma:bipartitie-is-non-blocking}.
-Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices. 
+\begin{lemma}[Topological Embedding]\label{lemma:top-embedding}
+Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined above, where $|A| = \na$.
+Let $\dApproxLower \Def \dApproxExpandedLower$, and $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices, where $0 < \epsilonL < \epsilonA <1$ are the constants from the partitioning Lemma \ref{lemma:bipartitie-is-non-blocking}. 
+\ari{Define $\sigma$}.
+If $\lambda \leq \frac{\epsilonL\dApproxLower}{\log_D[\na]}$, then $G$ contains $\Subdivision{H}{\sigma}$ as a subgraph.
+
 \end{lemma}
 
 \begin{proof}
@@ -327,20 +331,20 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
 
 \begin{figure*}[t!]
     \centering
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.95\textwidth}
         \centering
-        \includegraphics[width=0.98\textwidth]{assets/embeddingA.pdf}
+        \includegraphics{assets/embeddingA.pdf}
         \caption{The \textcolor{purple}{purple} edges represent the edges in $\cup_{i=1}^j (M_j \cup M_j')$, which we have already included.
         For any $v$ in $S_j \subseteq X$ (\textcolor{cadmiumgreen}{green vertex}) we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ (shown with \textcolor{cadmiumgreen}{green} and \textcolor{carminepink}{pink} lines). 
         Of these $D$ edges, by the non-blocking property, we know that there will be at least one edge (in this case there are 3 such edges shown in \textcolor{carminepink}{pink}) such that the endpoints in $Y$ are not connected to any of the \textcolor{purple}{purple} edges. The \textcolor{cadmiumgreen}{green} dotted edges are connected to vertices that are already incident by one of the \textcolor{purple}{purple} edges, and so we cannot use them. We will add the \textcolor{carminepink}{pink} edges will be added to $M_j$.}
         \label{subfig:embeddingA}
     \end{subfigure}%
     \hspace{1mm}
-    \vrule width 1pt % vertical line
+%    \vrule width 1pt % vertical line
     \hspace{1mm}
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.95\textwidth}
         \centering
-        \includegraphics[width=0.98\textwidth]{assets/embeddingB.pdf}
+        \includegraphics[]{assets/embeddingB.pdf}
         \caption{We restrict the size of $M_j$ to be $\min\{t, |S_{j-1}|D\}$ edges. As $k = \log_{D}[\na]$, eventually, for some $j \leq k$, we get $t \leq |S_{j-1}|D$.
         In the above example $M_{j-1}$ has size $D|S_{j-2}|$ but $M_j$ has size $t$. 
         From then on for all $j \leq i \leq k$, $|M_i|= t$.
@@ -384,7 +388,7 @@ By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
 	\EdgesAccross{S_k, S_k'}{E_A} &\geq \frac{\dApproxLower t^2}{\na} - \lambda t \\
-	&= \frac{\na}{\log_D[\na]}\left[\frac{\epsilonA\dApproxLower}{\log_D[\na]} - \lambda \right]\\
+	&= \frac{\na\epsilonA}{\log_D[\na]}\left[\frac{\epsilonA\dApproxLower}{\log_D[\na]} - \lambda \right]\\
 	&> 0 \label{eq:greater}
 \end{align}
 
@@ -399,8 +403,8 @@ Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length
 
 \begin{figure}
 	\includegraphics[width=0.9\textwidth
-	]{assets/BaseCaseB.pdf}
-	\caption{Change this figure}
+	]{assets/BaseA.pdf}
+	\caption{The figure on top describes the forward phase of finding sets $\{M_i\}_{i\in [k]}$ and $\{M_i'\}_{i\in [k]}$. The figure on top describes the process of backtracking from the edge $e$ that is promised to exist between $S_k$ and $S_k'$.}
 	\label{fig:baseB}
 \end{figure}
 
@@ -409,13 +413,23 @@ Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length
 \paragraph{Induction Step}
 	
 Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ for $j < m$.
-Let $P_1, \dots, P_j$ denote these paths.
+Let $P_1, \dots, P_j$ denote these paths (depicted with \textcolor{carminepink}{pink} edges in Figure \ref{fig:induction}) .
 Let $E'$ denote the set of all edges in these paths.
 Let $e_{j+1} = (u,v) \in \Edges{H}$.
 Set $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$
+Note that $|E'| \leq tk \leq \epsilonA \na$.
+The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case, where now for any $1 \leq i \leq k$, for each node in $S_i$ and $S_i'$ we find a safe neighbour that does not have an incident  edge from $E' \cup (\cup_{i=1}^k (M_i \cup M'_i))$. As $|M| < \epsilonA\na$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
+This concludes the proof.
 
-The process for finding a path
-%The set $E'$ consists of $j$ paths of size $\PathSize$. Therefore $|E'| \leq m*$	
+\begin{figure}
+	\includegraphics[width=0.9\textwidth
+	]{assets/InductionStep.pdf}
+	\caption{The figure above describes the induction step. The nodes in green are already in the embedding and represent paths $P_1, \dots, P_j$ for edges $(u_1, v_1) \dots, (u_j, v_j)$.
+	The nodes in yellow represent candidates for the path for edge $u_{j+1}, v_{j+1}$. 
+	The candidate nodes are constructed identical to the procedure described in the base step of the induction step, where we use the non-blocking property of $\BipartiteG$ to extend with safe neighbours. 
+	}
+	\label{fig:induction}
+\end{figure}
 
 	
 \end{proof}
@@ -435,7 +449,7 @@ If $\lambda \leq \nicefrac{d}{C}$ for some large enough constant $C > 0$, then t
 
 \begin{proof}
 \ari{Change notation}
-Let $\epsilon, \delta, A$ and $B$ be as defined in Lemma \ref{lemma:partition}.
+Let $\epsilon, A$ and $B$ be as defined in Lemma \ref{lemma:partition} (Figure \ref{subfig:partitionA}).
 Define $\tilde{d} = 1 - (2\epsilon d)$
 Let $\Embedding{\Subdivision{H}{\sigma}}$ denote the subgraph of $G$ which represents the topological embedding of $H$ from Lemma \ref{lemma:top-embedding}.
 Define $\tilde{G} = \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$. 
@@ -447,7 +461,7 @@ Let $\dbtilde{\Graph}$ denote a subgraph of $\tilde{G}$, where for each $v \in \
 It is easy to see that $\dbtilde{\Graph}$ is a $(\tilde{n}, \tilde{d}, \lambda)$ pseudorandom graph, where $\tilde{n} = |\Vertices{\tilde{\Graph}}|$ and $n$ is even (since $|\Vertices{\Graph}|$ is odd and $|\Vertices{\Embedding{\Subdivision{H}{\sigma}}}|$ is also odd). 
 As $\lambda \leq \tilde{d} - 2$, we invoke Lemma \ref{lemma:expanders-minimal-matching} to get that $\dbtilde{G}$ has a perfect matching.
 As $\dbtilde{G}$ is a sub-graph of $\tilde{G}$ with the same vertex set, $\tilde{G}$ also has a perfect matching.
-\ari{Set $C$ here so that this is less complex}.
+\ari{Set $\lambda$ here from the embedding lemma and you're done}.
 \end{proof}
 
 \section{Related Work}
