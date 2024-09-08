@@ -161,6 +161,7 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 	\item $\emptyset \in \Family{S}$
 	\item If $E'' \subseteq E'$ and $E' \in \Family{S}$, \emph{then}, $E'' \in \Family{S}$.
 	\item Given $E' \in \Family{S}$ such that $|E'| \leq p$, and \emph{any} $v \in A$ with $\degree{E'}{v} < q$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. 
+ We call $w$ a \emph{safe neighbour} for $v$ given $E'$.
 \end{enumerate}
 
 \end{definition}
