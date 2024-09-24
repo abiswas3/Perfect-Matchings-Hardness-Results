@@ -93,7 +93,7 @@ Put in proof by pictures here.
 \paragraph{Notation} Sets are denoted with upper case normal font e.g., $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g., $\Family{S}$. 
 
 
-\begin{definition}[Dependency Graphs]
+\begin{definition}[Dependency Graphs]\label{def:dep-graphs}
 	
 \end{definition}
 
@@ -185,12 +185,13 @@ If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at le
 
 \section{Proof Of Main Result}
 
-Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t$ vertices, as described by \citet{buss1999linear}, where the refutal certificate is of degree $\BigOmega{t}$.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t$ vertices for polynomial calculus, as described by \citet{buss1999linear}, where the refutal certificate is of degree $\BigOmega{t}$.
+The hardness proof follows from the following steps:
 
 
 \begin{enumerate}
-	\item First, we show (via Lemma \ref{lemma:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, has roughly $\epsilon d$ neighbours inside $A$ i.e. $|\Neighbourhood{E}{v} \cap A| \approx \epsilon d$, where $\epsilon$ is a small enough constant. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where the we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
-	\item Secondly, we find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$ for some $l = \lceil 1/2\log_{D}n\rceil$ and $\PathSize$ is an odd integer (can be expressed as $\PathSize = 2k+1$ for some $k \in \Naturals$. We show (via Lemma \ref{lemma:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above.
+	\item First, we show (via Lemma \ref{lemma:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, it has roughly $\epsilon d$ neighbours inside $A$ i.e. $|\Neighbourhood{E}{v} \cap A| \approx \epsilon d$, where $\epsilon$ is a small enough constant. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
+	\item Secondly, we find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$ for $l = \lceil 1/2\log_{D}n\rceil$ and $\PathSize$ is an odd integer (can be expressed as $\PathSize = 2k+1$ for some $k \in \Naturals$. We show (via Lemma \ref{lemma:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above. \ari{Add in the alternating argument.}
 	
 %	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
 	\item We show (via Lemma \ref{lemma:perfect-matching}) that the subgraph of $G$ not participating in the topological embedding above, has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Embedding{\Subdivision{H}{\sigma}}}$ but not in $M$, set $x_e = 0$. These assignments imply that the formula for refuting $\PerfectMatching{G}$ can be partially filled up, and we are left with the task of refuting a restricted formula. Refuting this restricted formula is identical to finding a refutation in the original hard instance, and thus the proof complexity for refuting perfect matching for $G$ is $\BigOmega{t}$ where $t$ is the number of vertices in the hard instance $H$. We show that $t = \BigOmega{n\log n}$.
@@ -248,7 +249,7 @@ If $X_i = 1$, then we include $v$ in $A$, else we put $v$ in $B$.
 Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $\Vertices{G}$ into sets $A$ and $B$.
 For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{e \in \Neighbourhood{E}{v}} \Indicator{e \in A}$ denote the random variable that counts how many neighbours of $a$ are also in $A$.\\
 For any $v \in V$, let $E_v = \Indicator{|Y_v - d\epsilon | \geq \sqrt{d/2\log 2/\delta}}$ denote the bad event that $Y_v$ is very far from $\epsilon d$.
-As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \epsilon d$, and that the dependency graph of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
+As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \epsilon d$, and observe that the dependency graph (Definition \ref{def:dep-graphs}) of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
 By Chernoff-Hoeffding, for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq \delta$.
 Finally, by setting $\delta$ small enough, such that $\delta d \leq 1/4$, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall v \in V, \text{ } E_v = 0}{\vec{X}} > 0$.
 When $E_v = 0$ for all $v \in V$, setting $\epsilon = \sqrt{2 \log(2/\delta)}$, gives us that $|Y_v - d\epsilon | \leq \sqrt{d/2}\sqrt{\log 2/\delta}	 \leq \epsilon d$.
@@ -328,7 +329,7 @@ Our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$ for each $
 Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_A}$.
 We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$.
 Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of the bipartite graph $\BipartiteG$ described above.
-
+\ari{Add in some intuition as to why we need to do this}
 
 \begin{figure*}[t!]
     \centering
@@ -358,7 +359,7 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
 
 \begin{itemize}
 	\item Define $E' = \emptyset$ to begin with.
-	\item For $a_1 \in X$, ask for $D$ neighbours in $Y$. As $|E'| = 0 \leq \epsilonA \na$, and $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, we can find $\tilde{h}_1 \in Y$ such that there is no edge in $|E'|$ is incident on $\tilde{h}_1$. We set $\Embedding{a_1} = \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
+	\item For $a_1 \in X$, ask for $D$ neighbours in $Y$. As $|E'| = 0 \leq \epsilonA \na$, and $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $|E'|$ is incident on $\tilde{h}_1$. We set $\Embedding{a_1} = \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
 	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. As $|E'| \leq t < \epsilonA\na$, for each $a_j$ we can always find a $\tilde{h}_j$ in $Y$ such that there is an edge $(a_j, \tilde{h}_j)$, and there is no other edge in $E'$ that is incident on each $\tilde{h}_j$.
 \end{itemize}
 
@@ -375,7 +376,7 @@ For each $z=1, \dots, k$, we will define edge sets $\{ M_j\}_{j \in [k]}$ and $ 
 \begin{tcolorbox}
 Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $|S_z| \Def \min\{t, |S_{z-1}|D\}$ edges in $E_A$ incident to $S_{z-1}$ and $S_{z-1}'$ respectively, such that each vertex in $Y$ is incident to \emph{at most} one edge in $\cup_{i=1}^{z} (M_i \cup M'_i)$.\\
 More concretely, fix $1 \leq z \leq k$, and for each $v \in S_z \subseteq X$, we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ via edges in $E_A$.
-As $\BipartiteG$ is $(D, \epsilonA \na)$ non blocking, we know that at least one of these edges will be connected to vertices in $Y$, such that they have no edges in $\cup_{i=1}^{z} (M_i \cup M'_i)$ already incident on them.
+As $\BipartiteG$ is $(D, \epsilonA \na)$ non blocking, we know that at least one of these edges will be a safe edge connecting us to a safe neighbour in $Y$.
 Figure \ref{subfig:embeddingA} illustrates this.\\
 If there are more than one such edges for the vertices in $S_j$, consider at least one edge per vertex $v \in S_j$ to add to $M_j$ and, make sure $|M_j| = \min\{t, |S_{j-1}|D\}$.
 Figure \ref{subfig:embeddingB} illustrates this idea.
@@ -394,6 +395,7 @@ By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 \end{align}
 
 Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \frac{\epsilonL\dApproxLower}{\log_D[\na]} < \frac{\epsilonA\dApproxLower}{\log_D[\na]}$.\\
+\ari{Can this requirement be relaxed or is it inherent in our analysis?}
 
 This implies there exists at least one edge $e=(x,y)$ between $S_k$ and $S_k'$.
 By how we constructed $M_k$, we know there is an edge $m_k = (a,x) \in M_k$ connecting $x$ to some vertex $a$ in $S_{k-1}$. We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
