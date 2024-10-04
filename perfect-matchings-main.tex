@@ -238,9 +238,9 @@ The hardness proof follows from the following steps:
 \end{figure*}
 
 
-%Figure \ref{fig:partition} pictorially describes Lemma \ref{lemma:partition}.
+\ari{Lemma 5.1 should spit out a single $\Eps$ that we use later.}
 
-\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\epsilon \in (0,1)$ and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{v} \cap A| \leq 2\epsilon d$.
+\begin{lemma}\label{lemma:partition}Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\Eps \in (0,1)$ and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $|\Neighbourhood{\EdgesShort}{v} \cap A| \leq 2\epsilon d$.
 %where $\delta \in (0,1)$ such that $\delta d \leq 1/4$.	
 \end{lemma}
 
@@ -459,38 +459,39 @@ If $\lambda \leq \nicefrac{d}{C}$ for some large enough constant $C > 0$, then t
 \end{lemma}
 
 \begin{proof}
-Let $\epsilon, A$ and $B$ be as defined in Lemma \ref{lemma:partition} (Figure \ref{subfig:partitionA}).
-Define $\tilde{d} = 1 - (2\epsilon d)$ and let $\tilde{G}=(\tilde{V}, \tilde{E})$ be short hand for $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
+Let $\PartitionEps = 2\Eps$, where $\Eps$ is as defined in Lemma \ref{lemma:partition} (Figure \ref{subfig:partitionA}).
+Define $\tilde{d} = d - \frac{d\PartitionEps}{2}$ and let $\tilde{G}=(\tilde{V}, \tilde{E})$ be short hand for $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
 Assume that the edge connectivity $\EdgeConnectivity{\tilde{G}}= \tilde{d}$. Then we show using the Tutte criterion that $\tilde{G}$ admits a perfect matching.
 Pick arbitrary $S \subseteq \Vertices{\tilde{G}}$.
 By the guarantees of Lemma \ref{lemma:partition}, the minimal degree of $\tilde{G}$ is $\tilde{d}$. 
 Therefore, the number of edges in the cut between $S$ and $\Complement{S}$ is at most $\tilde{d}|S|$.
-If $\EdgeConnectivity{\tilde{G}} = \tilde{d}$, then by a simple counting argument, it must be that $\OddComponents{\tilde{G}[\tilde{V} \setminus S]} \leq |S|$ (as we need to delete  at least $\tilde{d}$ edges in the cut to disconnect the graph).\\
-
+If $\EdgeConnectivity{\tilde{G}} = \tilde{d}$, then by a simple counting argument, it must be that $\OddComponents{\tilde{G}[\tilde{V} \setminus S]} \leq |S|$ (as we need to delete  at least $\tilde{d}$ edges in the cut to disconnect the graph).
 
 To complete the proof we need to show that $\EdgeConnectivity{\tilde{G}} = \tilde{d}$.
 Let $\tilde{n} = |\tilde{V}|$.
-Pick arbitrary $U \subset \tilde{V}$ such that $|U| \leq \tilde{n}/2$.
-Then we have 
+Pick arbitrary $U \subset \tilde{V} \subset V$ such that $|U| \Def u \leq \tilde{n}/2$.
+As $G$ is an $\EnDeeLambda$ graph, we have
 
 \begin{align}
-\CutEdges{U}{\Complement{U}}{\tilde{E}} &\geq 	\frac{d}{n}u(n-u) - \lambda\sqrt{u(n-u)(1 - u/n)(1- (n-u)/n)} \label{eq:step1}\\
+\CutEdges{U}{\Complement{U}}{E} &\geq 	\frac{d}{n}u(n-u) - \lambda\sqrt{u(n-u)(1 - u/n)(1- (n-u)/n)} \label{eq:step1}\\
 &= \frac{(n-u)}{u}u(d - \ExpansionFactor{G}) \label{eq:step2}\\
 &\geq \frac{u}{2}(d - \ExpansionFactor{G})
 \end{align}
 
 \eqref{eq:step1} comes from the tighter version of the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}), and 
 \eqref{eq:step2} comes from the fact $u \leq n/2$.
+To construct $\tilde{G}$ we delete only a small fraction of edges for each vertex $v \in V$, such that the degree of every vertex $v \in \tilde{V}$ is at least $\tilde{d}$.
+Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we might have to delete to construct $\tilde{G}$ is at most $\frac{\PartitionEps d}{2}\cdot u$.
 
 \begin{align}
-	\CutEdges{U}{\Complement{U}}{\tilde{E}} &\geq 	\CutEdges{U}{\Complement{U}}{\tilde{E}} - \tilde{d}u \\
-&\geq \frac{u}{2}(d - \ExpansionFactor{G}) - \tilde{d}u \\
-&= \frac{u}{2}(d - \tilde{d} - \ExpansionFactor{G}) \label{eq:lambda-assumption} \\
+	\CutEdges{U}{\Complement{U}}{\tilde{E}} &\geq 	\CutEdges{U}{\Complement{U}}{\tilde{E}} - \frac{\PartitionEps d}{2} u \\
+&\geq \frac{u}{2}(d - \ExpansionFactor{G}) - \frac{\PartitionEps d}{2} u \\
+&= \frac{u}{2}\left(d - \ExpansionFactor{G} - \PartitionEps d\right) \label{eq:lambda-assumption} \\
 &\geq \tilde{d}
 \end{align}
 
 
-\eqref{eq:lambda-assumption} comes from the assumption that $\ExpansionFactor{G} \leq d - \tilde{d}  -2$.
+\eqref{eq:lambda-assumption} comes from the assumption that $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$.
 %be an arbitrary subset of size at most $\tilde{n}/2$.\ari{Make sure to define $\tilde{n}$}.
 
 %Let $\Embedding{\Subdivision{H}{\sigma}}$ denote the subgraph of $G$ which represents the topological embedding of $H$ from Lemma \ref{lemma:top-embedding}.
