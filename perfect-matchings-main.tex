@@ -460,16 +460,18 @@ If $\lambda \leq \nicefrac{d}{C}$ for some large enough constant $C > 0$, then t
 
 \begin{proof}
 Let $\PartitionEps = 2\Eps$, where $\Eps$ is as defined in Lemma \ref{lemma:partition} (Figure \ref{subfig:partitionA}).
-Define $\tilde{d} = d - \frac{d\PartitionEps}{2}$ and let $\tilde{G}=(\tilde{V}, \tilde{E})$ be short hand for $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
-Assume that the edge connectivity $\EdgeConnectivity{\tilde{G}}= \tilde{d}$. Then we show using the Tutte criterion that $\tilde{G}$ admits a perfect matching.
+Define $\tilde{d} = d - \Eps d =d - \frac{d\PartitionEps}{2}$ and let $\tilde{G}=(\tilde{V}, \tilde{E})$ be short hand for $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
+Assume that the edge connectivity of $\tilde{G}$, denoted by $\EdgeConnectivity{\tilde{G}}$, is $\tilde{d}$. 
+%Then we show using the Tutte criterion that $\tilde{G}$ admits a perfect matching.
 Pick arbitrary $S \subseteq \Vertices{\tilde{G}}$.
 By the guarantees of Lemma \ref{lemma:partition}, the minimal degree of $\tilde{G}$ is $\tilde{d}$. 
 Therefore, the number of edges in the cut between $S$ and $\Complement{S}$ is at most $\tilde{d}|S|$.
 If $\EdgeConnectivity{\tilde{G}} = \tilde{d}$, then by a simple counting argument, it must be that $\OddComponents{\tilde{G}[\tilde{V} \setminus S]} \leq |S|$ (as we need to delete  at least $\tilde{d}$ edges in the cut to disconnect the graph).
+Thus, by Lemma \ref{lemma:tutte-criterion}, $\tilde{G}$ admits a perfect matching.
 
 To complete the proof we need to show that $\EdgeConnectivity{\tilde{G}} = \tilde{d}$.
-Let $\tilde{n} = |\tilde{V}|$.
-Pick arbitrary $U \subset \tilde{V} \subset V$ such that $|U| \Def u \leq \tilde{n}/2$.
+Let $\tilde{n} \Def |\tilde{V}|$.
+Pick arbitrary $U \subset \tilde{V} \subset V$ such that $|U| \Def u \leq \tilde{n}/2 \leq n/2$.
 As $G$ is an $\EnDeeLambda$ graph, we have
 
 \begin{align}
@@ -480,8 +482,8 @@ As $G$ is an $\EnDeeLambda$ graph, we have
 
 \eqref{eq:step1} comes from the tighter version of the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}), and 
 \eqref{eq:step2} comes from the fact $u \leq n/2$.
-To construct $\tilde{G}$ we delete only a small fraction of edges for each vertex $v \in V$, such that the degree of every vertex $v \in \tilde{V}$ is at least $\tilde{d}$.
-Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we might have to delete to construct $\tilde{G}$ is at most $\frac{\PartitionEps d}{2}\cdot u$.
+To construct $\tilde{G}$, we delete at most $\Eps$ fraction of edges for each vertex $v \in V$, such that the degree of every vertex $v \in \tilde{V}$ is at least $\tilde{d}$.
+Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we might have to delete to construct $\tilde{G}$ is at most $u(\PartitionEps d)/2$.
 
 \begin{align}
 	\CutEdges{U}{\Complement{U}}{\tilde{E}} &\geq 	\CutEdges{U}{\Complement{U}}{\tilde{E}} - \frac{\PartitionEps d}{2} u \\
@@ -491,7 +493,7 @@ Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we m
 \end{align}
 
 
-\eqref{eq:lambda-assumption} comes from the assumption that $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$.
+\eqref{eq:lambda-assumption} comes from the assumption that $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$, which is easily satisfied by the conditions on $\ExpansionFactor{G}$ in the above lemmas.
 %be an arbitrary subset of size at most $\tilde{n}/2$.\ari{Make sure to define $\tilde{n}$}.
 
 %Let $\Embedding{\Subdivision{H}{\sigma}}$ denote the subgraph of $G$ which represents the topological embedding of $H$ from Lemma \ref{lemma:top-embedding}.
