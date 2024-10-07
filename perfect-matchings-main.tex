@@ -193,7 +193,7 @@ The hardness proof follows from the following steps:
 \subsection{Step 1: Partition $G$ into $A$ and $B$}
 
 \begin{lemma}[Multiplicative Chernoff Bound]\label{lemma:mult-chernoff}
-Suppose $X_1, ..., X_n$ are independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_i}$ denote the sum's expected value. Then for any $0 < \delta < 1$
+Suppose $X_1, ..., X_n$ are identical independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_1}$ denote the sum's expected value. Then for any $0 < \delta < 1$
 
 \[ \Prob{|X - \mu| \geq \delta \mu} \leq 2\exp(-\delta^2\mu/3)\]
 	
@@ -236,8 +236,7 @@ Suppose $X_1, ..., X_n$ are independent random variables taking values in $\{0, 
 
 
 \begin{theorem}{Partition Theorem}{partition}
-Let $\alpha = 0.1$ to be a small constant.
-Given a $\EnDeeLambda$ graph $\Graph = (V, E)$, there exists a small constant $\delta \in (0,1)$ and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $ d\alpha(1-\delta)\leq |\Neighbourhood{\EdgesShort}{v} \cap A| \leq d\alpha(1+\delta)$.
+There exists a constant $d_0 \in \Naturals$ and small constants $\delta \in (0,1)$ such that, given a $\EnDeeLambda$ graph $\Graph = (V, E)$, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $ \Eps'd \Def \alpha(1-\delta)d\leq |\Neighbourhood{\EdgesShort}{v} \cap A| \leq \alpha(1+\delta)d \Def \Eps d$ where $\alpha=0.1$ is a small constant.
 
 	
 \end{theorem}
@@ -250,7 +249,7 @@ For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{x 
 For any $\delta \in (0,1)$ and for any $v \in V$, let $E_v = \Indicator{|Y_v - d\alpha | \geq \delta \alpha d}$ denote the bad event that $Y_v$ is bounded away from $\alpha d$ by a multiplicative factor of $\delta$.
 As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \alpha d$, and observe that the dependency graph (Definition \ref{def:dep-graphs}) of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
 By the multiplicative Chernoff bound (Lemma \ref{lemma:mult-chernoff}), for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq 2\exp(-\delta^2\alpha d/3) \Def \beta$.
-We can make $\delta \in (0,1)$ large enough, such that $2\exp(-\delta^2\alpha d/3) \leq 1/(4d)$. Therefore, we have $\beta d \leq 1/4$.
+For large enough $d$ i.e $d > d_0$, for some $d_0$, we can make $\delta \in (0,1)$ large enough, such that $2\exp(-\delta^2\alpha d/3) \leq 1/(4d)$. Therefore, we have $\beta d \leq 1/4$.
 Thus, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall v \in V, \text{ } E_v = 0}{\vec{X}} > 0$
 
 \end{proof}
@@ -272,47 +271,70 @@ Define $E_A \Def \{ (u,v) \in E : u \in A \land v \in A\}$.
 That is $E_A$ are the edges whose endpoints are fully contained in A (orange edges in Figure \ref{subfig:partitionA}), and $G_A = (A, E_A)$. 
 Define $ \na = |A|$.
 Now define a bipartite graph $\BipartiteG = (V_A \cup V_A)$ such that if $(u,v) \in E_A$, then $(u,v) \in \Edges{\BipartiteG}$.
-As $G$ is an $\EnDeeLambda$ graph, we have that $\BipartiteG$ is a $(\na, \dApproxLower, \lambda)$ graph.
 
-\ari{This is wrong; I need to be more direct. Can't use expansion directly}
 \begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph given to us and let $\BipartiteG$ be the bipartite graph described above. 
-%Let $\epsilon$ be the small constant from Lemma \ref{lemma:partition}.
-%Define $\dApproxLower = \dApproxExpandedLower$.
-There exists $\epsilonL, \epsilonA  \in (0,1)$ small enough, such that if $\lambda < \epsilonL \dApproxLower$, then $\BipartiteG$ is $(\frac{\dApproxLower}{\lambda}, \epsilonA\na)$ non-blocking.
+There exists $\epsilonL, \epsilonA  \in (0,1)$ small enough, such that if $\lambda < \epsilonL d$, then $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
 \end{lemma}
 
 \begin{proof}
-Let $X$ and $Y$ denote the left and right vertices of the bipartite graph $\BipartiteG$.
-Define $a = \epsilonA\cdot\frac{\lambda \na}{\dApproxLower}$.
-Fix $S \subseteq X$ such that $1 \leq |S| \leq 2a$.
-Suppose towards a contradiction, $G_A$ is \emph{not} non-blocking.
-Then by Lemma \ref{lemma:condtions-for-non-block}, for all $T \subseteq Y$, $\EdgesAccross{S, T}{E_A} \leq (2\dApproxLower/\lambda)|S|$.
-Pick $T^* \subseteq Y$ such that 
+Let $\BipartiteG = (X \cup Y, E_A)$. 
+Let $\lambda = \ExpansionFactor{G} \leq d/c_2$ where $c_2 > 0$ is a constant to be defined later.
+Set $a = \frac{n\lambda}{2c_1 d}$ for a constant $c_1 > 0$ to be defined later.
+Set $c_1, c_2$ such that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) \leq \EpsLower$, where $\EpsLower$ is as defined in the \nameref{theorem:partition}.
+Pick any $S \subseteq X$ with $|S| \leq 2a = \frac{n\lambda}{c_1 d}$.
+\highlight{Assume towards a contradiction, that there exists a set $T \subseteq Y$, such that 
+$\CutEdges{S}{T}{E_A} < 2|S|\frac{d}{\lambda}$.} 
+By how we constructed $\BipartiteG$, we know that
+\[ \CutEdges{S}{T}{E_A} \geq \EpsLower d.\]
 
-\begin{equation}
-\EdgesAccross{S, T^*}{E_A} \geq |S|\dApproxLower	 \label{eq:lots-edges}
-\end{equation}
-
-We know $T^*$ exists as $G_A$ is $\dApproxLower$ regular.
-From the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
+However, $S$ and $T$ are also subsets of $\Vertices{G}$ and $G$ is a $\EnDeeLambda$ graph.
+From the \nameref{lemma:expanders-mixing-lemma}, we have
 
 \begin{align}
-	\EdgesAccross{S, T^*}{E_A} &\leq \frac{\dApproxLower}{\na}|S||T^*| + \lambda\sqrt{|S||T^*|} \\
-	&\leq \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\sqrt{2\lambda \dApproxLower} \label{eq:stepa}\\
-	&< \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\dApproxLower\sqrt{2\epsilonL } \label{eq:stepb}\\
-	&\leq |S|\dApproxLower\left[ \frac{\dApproxLower|S|}{\na\lambda} + \sqrt{2\epsilonL}\right] \\
-	&\leq |S|\dApproxLower\left[ \frac{\epsilonA}{2} + \sqrt{2\epsilonL}\right] \label{eq:stepc}
+	\CutEdges{S}{T}{E_A} &\leq \frac{d}{n}|S||T| + \lambda\sqrt{|S||T|} \\
+	&< 2\frac{2d^2}{n\lambda}|S|^2 + |S|\sqrt{2\lambda d} \label{eq:assumption}\\
+	&\leq |S|\left(\frac{2d^2}{\lambda n} \frac{n\lambda}{c_1 d} + \sqrt{d\cdot \frac{d}{c_2/2}}\right) \label{eq:assumption-lambda}\\
+	&= |S|d\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) \\
+	&\leq |S|d\EpsLower \label{eq:constants}
 \end{align}
 
 
-For Equation \eqref{eq:stepa} We use that $\EdgesAccross{S, T^*}{E_A} \leq (2\dApproxLower/\lambda)|S|$. For Equation \eqref{eq:stepb} we use $\lambda < \epsilonL\dApproxLower$. For Equation \eqref{eq:stepc} we use $|S| \leq 2a$.
-Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2} + \sqrt{2\epsilonL} < 1$, we get a contradiction with Equation \eqref{eq:lots-edges}.
+\eqref{eq:constants} is a contradiction, so our \highlight{assumption} must have been wrong.
+\eqref{eq:assumption} comes from our \highlight{assumption}.
+\eqref{eq:assumption-lambda} comes from our assumption that $\lambda \leq d/c_2$ and $|S| \leq \frac{n\lambda}{c_1 d}$.
+Finally we get our theorem statement by setting $\epsilonL = 1/c_2$ and $\epsilonA = 1/c_1$.
+
+%Let $X$ and $Y$ denote the left and right vertices of the bipartite graph $\BipartiteG$.
+%Define $a = \epsilonA\cdot\frac{\lambda \na}{\dApproxLower}$.
+%Fix $S \subseteq X$ such that $1 \leq |S| \leq 2a$.
+%Suppose towards a contradiction, $G_A$ is \emph{not} non-blocking.
+%Then by Lemma \ref{lemma:condtions-for-non-block}, for all $T \subseteq Y$, $\EdgesAccross{S, T}{E_A} \leq (2\dApproxLower/\lambda)|S|$.
+%Pick $T^* \subseteq Y$ such that 
+%
+%\begin{equation}
+%\EdgesAccross{S, T^*}{E_A} \geq |S|\dApproxLower	 \label{eq:lots-edges}
+%\end{equation}
+%
+%We know $T^*$ exists as $G_A$ is $\dApproxLower$ regular.
+%From the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
+%
+%\begin{align}
+%	\EdgesAccross{S, T^*}{E_A} &\leq \frac{\dApproxLower}{\na}|S||T^*| + \lambda\sqrt{|S||T^*|} \\
+%	&\leq \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\sqrt{2\lambda \dApproxLower} \label{eq:stepa}\\
+%	&< \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\dApproxLower\sqrt{2\epsilonL } \label{eq:stepb}\\
+%	&\leq |S|\dApproxLower\left[ \frac{\dApproxLower|S|}{\na\lambda} + \sqrt{2\epsilonL}\right] \\
+%	&\leq |S|\dApproxLower\left[ \frac{\epsilonA}{2} + \sqrt{2\epsilonL}\right] \label{eq:stepc}
+%\end{align}
+%
+%
+%For Equation \eqref{eq:stepa} We use that $\EdgesAccross{S, T^*}{E_A} \leq (2\dApproxLower/\lambda)|S|$. For Equation \eqref{eq:stepb} we use $\lambda < \epsilonL\dApproxLower$. For Equation \eqref{eq:stepc} we use $|S| \leq 2a$.
+%Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2} + \sqrt{2\epsilonL} < 1$, we get a contradiction with Equation \eqref{eq:lots-edges}.
 
 \end{proof}
 
 
 The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
-Note for every edge in $G_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
+Note for every edge in $E_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
 \begin{theorem}{Topological Embedding Theorem}{top-embedding}
 Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined above, where $|A| = \na$.
@@ -325,7 +347,7 @@ If $\lambda \leq \frac{\epsilonL\dApproxLower}{\log_D[\na]}$, then $G$ contains 
 
 
 \begin{proof}
-Define $D = \frac{\dApproxLower}{\lambda} = \frac{2\epsilon d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
+Define $D = \frac{d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
 Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_A}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_A$, that defines our topological embedding.
 Our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$ for each $h \in \Vertices{H}$.
@@ -361,49 +383,56 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
 
 
 \begin{itemize}
-	\item Define $E' = \emptyset$ to begin with.
-	\item For $a_1 \in X$, ask for $D$ neighbours in $Y$. As $|E'| = 0 \leq \epsilonA \na$, and $\BipartiteG$ is $(D, \epsilonA \na)$ non-blocking, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $|E'|$ is incident on $\tilde{h}_1$. We set $\Embedding{a_1} = \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
-	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. As $|E'| \leq t < \epsilonA\na$, for each $a_j$ we can always find a $\tilde{h}_j$ in $Y$ such that there is an edge $(a_j, \tilde{h}_j)$, and there is no other edge in $E'$ that is incident on each $\tilde{h}_j$.
+	\item Define $E' = \emptyset$ to begin with, and as $\BipartiteG$ is a $(D, \epsilonA n)$-non blocking bipartite graph (by Lemma \ref{lemma:bipartitie-is-non-blocking}), $E'$ is a \emph{safe} state.
+	\item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. By the non-blocking property, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $E'$ is incident on $\tilde{h}_1$. We set $\Embedding{h_1} = \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
+	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < \epsilonA\na$, for each $a_j$ we can always find a \emph{safe neighbour} $\tilde{h}_j$ in $Y$ such that there is an edge from $a_j$ to $\tilde{h}_j$, and there is no other edge in $E'$ so far, that is incident on each $\tilde{h}_j$.
 \end{itemize}
 
 Once this phase is complete, we have mapped every vertex of $H$ to a vertex in $G_A$.
+That is $\Embedding{h_i} = \tilde{h_i}$ for all $i \in [t]$.
 The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_A$.
 Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
 We prove the result by induction on $m$.
 
 \paragraph{Base case} 
 
-Let $e_1 = (u,v)$. Define sets $S_0 = \{\Embedding{u}\}$ and $\tilde{S}_0 = \{ \Embedding{v}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
+Let $e_1 = (u,v)$. Define sets $S_0 = \{\Embedding{u}\}$ and $S'_0 = \{ \Embedding{v}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
 For each $z=1, \dots, k$, we will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows:
 
 \begin{tcolorbox}
-Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $|S_z| \Def \min\{t, |S_{z-1}|D\}$ edges in $E_A$ incident to $S_{z-1}$ and $S_{z-1}'$ respectively, such that each vertex in $Y$ is incident to \emph{at most} one edge in $\cup_{i=1}^{z} (M_i \cup M'_i)$.\\
+Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $|S_z| \Def \min\{t, |S_{z-1}|D\}$ edges in $E_A$ incident to $S_{z-1}$ and $\S_{z-1}'$ respectively, such these edges are safe with respect to $\cup_{i=1}^{z} (M_i \cup M'_i)$.\\
+
+
 More concretely, fix $1 \leq z \leq k$, and for each $v \in S_z \subseteq X$, we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ via edges in $E_A$.
-As $\BipartiteG$ is $(D, \epsilonA \na)$ non blocking, we know that at least one of these edges will be a safe edge connecting us to a safe neighbour in $Y$.
-Figure \ref{subfig:embeddingA} illustrates this.\\
-If there are more than one such edges for the vertices in $S_j$, consider at least one edge per vertex $v \in S_j$ to add to $M_j$ and, make sure $|M_j| = \min\{t, |S_{j-1}|D\}$.
+As $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, we know that at least one of these edges will be a safe edge connecting us to a safe neighbour in $S_{j+1}$, as long as $|\cup_{i=1}^{z} (M_i \cup M'_i)|$ is not too large.
+Figure \ref{subfig:embeddingA} illustrates this.
+Since $|M_i| \leq t$ and $|M_i'| \leq t$ for all $i \in [k]$, and $k = \log_D n$, we always have $\cup_{i=1}^{z} (M_i \cup M'_i)| \leq 2tk \leq \epsilonA n$.
+If there are more than one safe edges for  vertices in $S_j$, consider at least one safe edge per vertex $v \in S_j$ to add to $M_j$ and, make sure $|M_j| = \min\{t, |S_{j-1}|D\}$.
 Figure \ref{subfig:embeddingB} illustrates this idea.
-$M'_j$ and $S_j'$ are constructed analogously.
+$M'_j$ and $S_j'$ are constructed analogously.\\
+
+
+
 \end{tcolorbox}
 
 Let $M = \cup_{i=1}^k (M_i \cup M'_i)$.
-The reason we can always construct the sets described above sets is that $|M| \leq t < \epsilonA\na$, and as $\BipartiteG$ is $(D, \epsilonA\na)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in Y$, such that $(x,y) \in E_A$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.
-Now as $k = \log_D[\na]$, we have that, $|S_k| = |S_k'|= t$.
+The reason we can always construct the sets described above sets is that $|M| \leq tk < \epsilonA n$, and as $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in S_{j+1}$, such that $(x,y) \in E_A$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.
+Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
-	\EdgesAccross{S_k, S_k'}{E_A} &\geq \frac{\dApproxLower t^2}{\na} - \lambda t \\
-	&= \frac{\na\epsilonA}{\log_D[\na]}\left[\frac{\epsilonA\dApproxLower}{\log_D[\na]} - \lambda \right]\\
+\CutEdges{S_k}{S_k'}{E_A}
+ &\geq \frac{d t^2}{n} - \lambda t \\
 	&> 0 \label{eq:greater}
 \end{align}
 
-Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \frac{\epsilonL\dApproxLower}{\log_D[\na]} < \frac{\epsilonA\dApproxLower}{\log_D[\na]}$.\\
-\ari{Can this requirement be relaxed or is it inherent in our analysis?}
-
+Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \epsilonL d$ (from Lemma \ref{lemma:bipartitie-is-non-blocking}).
 This implies there exists at least one edge $e=(x,y)$ between $S_k$ and $S_k'$.
-By how we constructed $M_k$, we know there is an edge $m_k = (a,x) \in M_k$ connecting $x$ to some vertex $a$ in $S_{k-1}$. We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
+By how we constructed $M_k$, we know there is an edge $m_k = (a,x) \in M_k$ connecting $x$ to some vertex $a$ in $S_{k-1}$. 
+Similarly, there is some edge $m_{k-1} \in M_{k-1}$ that connects $x$ to some vertex in $S_{k-2}$.
+We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
 We repeat the same process for the other end point of $y \in S_k'$, to get edges $m'_1, \dots, m'_k$.
-We add these edges to $E'$ as well. 
+We add these edges to a global edge set $\GlobalEdgeSet$.
 This gives is the situation depicted in Figure \ref{fig:baseB}.
 Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length $2k+1$, connecting $\Embedding{u}$ to $\Embedding{v}$.
 
@@ -420,10 +449,10 @@ Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length
 	
 Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ for $j < m$.
 Let $P_1, \dots, P_j$ denote these paths (depicted with \textcolor{carminepink}{pink} edges in Figure \ref{fig:induction}) .
-Let $E'$ denote the set of all edges in these paths.
-Let $e_{j+1} = (u,v) \in \Edges{H}$.
+Let $\GlobalEdgeSet$ denote the set of all edges in these paths.
+Let $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$.
 Set $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$
-Note that $|E'| \leq tk \leq \epsilonA \na$.
+Note that $\GlobalEdgeSet \leq tk \leq \epsilonA n$.
 The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case, where now for any $1 \leq i \leq k$, for each node in $S_i$ and $S_i'$ we find a safe neighbour that does not have an incident  edge from $E' \cup (\cup_{i=1}^k (M_i \cup M'_i))$. As $|M| < \epsilonA\na$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
 This concludes the proof.
 
