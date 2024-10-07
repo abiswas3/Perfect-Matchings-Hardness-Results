@@ -183,11 +183,11 @@ The hardness proof follows from the following steps:
 
 
 \begin{enumerate}
-	\item First, we show (via Lemma \ref{lemma:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, it has roughly $\epsilon d$ neighbours inside $A$ i.e. $|\Neighbourhood{E}{v} \cap A| \approx \epsilon d$, where $\epsilon$ is a small enough constant. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
-	\item Secondly, we find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$ for $l = \lceil 1/2\log_{D}n\rceil$ and $\PathSize$ is an odd integer (can be expressed as $\PathSize = 2k+1$ for some $k \in \Naturals$. We show (via Lemma \ref{lemma:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above. \ari{Add in the alternating argument.}
+	\item First, we show (via the \nameref{theorem:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, $\Eps'd \leq |\Neighbourhood{E}{v} \cap A| \leq \Eps d$, where $0 <\Eps '< \Eps < 1$ are small constants. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
+	\item Let $D = d/\ExpansionFactor{G}$. We find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$, where $\PathSize = 2k+1$ is an odd integer for $k = \BigO{\log_{D} n}$. We show (via the \nameref{theorem:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above. \ari{Add in the alternating argument.}
 	
 %	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
-	\item We show (via Lemma \ref{lemma:perfect-matching}) that the subgraph of $G$ not participating in the topological embedding above, has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Embedding{\Subdivision{H}{\sigma}}}$ but not in $M$, set $x_e = 0$. These assignments imply that the formula for refuting $\PerfectMatching{G}$ can be partially filled up, and we are left with the task of refuting a restricted formula. Refuting this restricted formula is identical to finding a refutation in the original hard instance, and thus the proof complexity for refuting perfect matching for $G$ is $\BigOmega{t}$ where $t$ is the number of vertices in the hard instance $H$. We show that $t = \BigOmega{n\log n}$.
+	\item We show (via the \nameref{theorem:perfect-matching}) that the subgraph of $G$ not participating in the topological embedding above, has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Embedding{\Subdivision{H}{\sigma}}}$ but not in $M$, set $x_e = 0$. These assignments imply that the formula for refuting $\PerfectMatching{G}$ can be partially filled up, and we are left with the task of refuting a restricted formula. Refuting this restricted formula is identical to finding a refutation in the original hard instance, and thus the proof complexity for refuting perfect matching for $G$ is $\BigOmega{t}$ where $t$ is the number of vertices in the hard instance $H$. We show that $t = \BigOmega{n\log n}$.
 \end{enumerate}
 
 \subsection{Step 1: Partition $G$ into $A$ and $B$}
@@ -314,7 +314,7 @@ Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2}
 The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
 Note for every edge in $G_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
-\begin{theorem}{Topological Embedding}{top-embedding}
+\begin{theorem}{Topological Embedding Theorem}{top-embedding}
 Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined above, where $|A| = \na$.
 Let $\dApproxLower \Def \Eps d$, and $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
 \ari{Define $\sigma$}.
@@ -456,11 +456,13 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
 \end{lemma}
 
 
-\begin{lemma}\label{lemma:perfect-matching}
+\begin{theorem}{Perfect Matching On The Remainder Theorem}{perfect-matching}
 Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from the \nameref{theorem:top-embedding}.
 There exits a small constant $\PartitionEps \in (0,1)$, such that 
 if $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$, then the sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ has a perfect matching.	
-\end{lemma}
+	
+\end{theorem}
+
 
 \begin{proof}
 Let $\PartitionEps = 2\Eps$, where $\Eps$ is as defined above.
