@@ -6,7 +6,7 @@
 
 \input{theorem}
 \input{paper_commands.tex} %These are generic commands (Might move them to %base template)is
-\newcommand{\Degree}[1]{\mathsf{Deg}\left(#1\right)}
+\newcommand{\Degree}[1]{\text{Deg}\left(#1\right)}
 \newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
 
 \newcommand{\Complement}[1]{\overline{#1}}
@@ -67,8 +67,8 @@
 
 \maketitle
 \begin{abstract}
-\highlight{\textbf{Attention Rajko:}} The introduction draft is very rough and I will clean this up.
-This is a first brain dump -- which I will tighten.
+\AttentionRajko{The introduction draft is very rough and I will clean this up.
+This is a first brain dump -- which I will tighten.}
 \end{abstract}
 
 \section{Introduction}
@@ -79,12 +79,13 @@ This is a first brain dump -- which I will tighten.
 	\label{fig:example-proof-systems}
 \end{figure}
 
-In their seminal work \citep{cook1979relative}, Cook an Reckchow prescribed a program for separating $\CoNP$ from $\NP$ (which would also separate $\P$ from $\NP$).
+In their seminal work \citep{cook1979relative}, Cook an Reckchow prescribed a program for separating $\CoNP$ from $\NP$.
 Given a propositional formula $\PropFormula$, the task is to come up with a proof $\Proof$ of the claim that $\PropFormula$ is unsatisfiable.
-If the size of $\Proof$ is $\SmallOmega{\poly(\Size{\PropFormula})}$, then $\CoNP \neq \NP$.
-With no restrictions in place for how we describe a proof, we do not possess the tools to decide which of the above statements is true. 
-However, it is widely believed that $\CoNP \neq \NP$, and thus, as an intermediate step, researchers have invested a significant amount of time proving size lower bounds more restricted proof systems. \ari{CITE SOME SEMINAL WORKS}.
-When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language used to for lines of the proof (\ari{see cite for more details}).
+The holy grail of computer science and mathematics is to prove that the size any such proof $\Proof$ is $\SmallOmega{\poly(\Size{\PropFormula})}$, and thus we can conclude that $\CoNP \neq \NP$.
+With no restrictions in place for the language of how we describe a proof, we are currently no close to proving the above statement. 
+However, it is widely believed that $\CoNP \neq \NP$, and thus, as an intermediate step, over the last 5- years researchers have invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems. \ari{CITE SOME SEMINAL WORKS here}.\par
+When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language that can be used to write down lines of the proof. We refer the reader to \cite{ProofComplexityLecNotesPaul}
+
 A simple example of proof system is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is truth table for the formula.
 For such a proof system, for a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
 However such a proof system is extremely restricted, and to make progress towards the main goal the research community has considered more expressive proof systems \ari{CITE}.
@@ -168,7 +169,7 @@ However, our results differ in the following significant way
 (1) Our embedding techniques make no use of randomness as they need to work for $\EnDeeLambda$ graphs (which can be deterministic constructions).
 
 
-%another special case of Card(𝐺, 𝑡) is the so-called even coloring formula, introduced by Markstr ̈om [48], which is the case when 𝑡 = deg(𝑣)/2.
+%another special case of Card(��, ��) is the so-called even coloring formula, introduced by Markstr ̈om [48], which is the case when �� = deg(��)/2.
 
 
 \section{Technical Overview}
