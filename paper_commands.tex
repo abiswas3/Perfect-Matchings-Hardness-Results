@@ -10,7 +10,7 @@
 }
 \makeatother
 
-
+\newcommand\Bigger[2][7]{\left#2\rule{0mm}{#1truemm}\right.}
 
 % Basic asympototics
 % \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
@@ -35,7 +35,9 @@
 \newcommand{\bit}{\{0,1\}}
 \newcommand{\poly}{\mathsf{poly}}
 \newcommand{\Naturals}{\mathbb{N}}
+\newcommand{\Integers}{\mathbb{Z}}
 \newcommand{\Reals}{\mathbb{R}}
+\newcommand{\Field}{\mathbb{F}}
 \newcommand{\BigO}[1]{O\left(#1\right)}
 \newcommand{\SmallO}[1]{o\left(#1\right)}
 \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
@@ -47,12 +49,21 @@
 
 % Complexity classes 
 \newcommand{\BPP}{\mathsf{BPP}}
+\renewcommand{\P}{\mathsf{P}}
 \newcommand{\NP}{\mathsf{NP}}
+\newcommand{\CoNP}{\mathsf{coNP}}
 \newcommand{\HVSZK}{\mathsf{HVSZK}}
 \newcommand{\ED}{\mathsf{ED}}
 \newcommand{\SD}{\mathsf{SD}}
 \newcommand{\Yes}{\mathsf{Yes}}
 \newcommand{\No}{\mathsf{No}}
+
+
+% Paper specific 
+\newcommand{\PropFormula}{\Phi}
+\newcommand{\Proof}{\pi}
+\newcommand{\Size}[1]{\left|#1\right|}
+\newcommand{\Card}[1]{\mathtt{Card}\left(#1\right)}
 
 % Graph Commands
 \newcommand{\Graph}{G}
