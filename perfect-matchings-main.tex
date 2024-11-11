@@ -263,17 +263,18 @@ Thus, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PP
 
 \subsection{Step 2: The Topological Embedding}
 
-\ari{Revisit this again.}
 Given $\EnDeeLambda$ graph $G=(V,E)$, let $A$ and $B$ be the partition guaranteed by the \ \nameref{theorem:partition}.
-We also have that for all $v \in A$,  $|\Neighbourhood{\EdgesShort}{v} \cap A| \leq d \alpha(1+\delta) = \Eps d$, where $\Eps = (1+ \delta)\alpha$ and $\alpha, \delta \in (0,1)$ are constants as defined in the \nameref{theorem:partition}.
-Define $\dApproxLower \Def \Eps d$.
+We also have that for all $v \in A$,  
+
+\[\alpha(1-\delta) d  \Def \EpsLower d \leq d |\Neighbourhood{\EdgesShort}{v} \cap A| \leq \alpha(1+\delta)d \Def \Eps d \]
+
 Define $E_A \Def \{ (u,v) \in E : u \in A \land v \in A\}$. 
-That is $E_A$ are the edges whose endpoints are fully contained in A (orange edges in Figure \ref{subfig:partitionA}), and $G_A = (A, E_A)$. 
+That is $E_A$ is the set of edges whose endpoints are fully contained in A (orange edges in Figure \ref{subfig:partitionA}), and let $G_A = (A, E_A)$. 
 Define $ \na = |A|$.
 Now define a bipartite graph $\BipartiteG = (V_A \cup V_A)$ such that if $(u,v) \in E_A$, then $(u,v) \in \Edges{\BipartiteG}$.
 
 \begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph given to us and let $\BipartiteG$ be the bipartite graph described above. 
-There exists $\epsilonL, \epsilonA  \in (0,1)$ small enough, such that if $\lambda < \epsilonL d$, then $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
+There exists small constants $\epsilonL, \epsilonA  \in (0,1)$ independent of $d$ and $n$, such that if $\lambda < \epsilonL d$, then $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
 \end{lemma}
 
 \begin{proof}
@@ -340,7 +341,7 @@ Note for every edge in $E_A$, by our construction, we will have a corresponding 
 Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined above, where $|A| = \na$.
 Let $\dApproxLower \Def \Eps d$, and $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
 \ari{Define $\sigma$}.
-If $\lambda \leq \frac{\epsilonL\dApproxLower}{\log_D[\na]}$, then $G$ contains $\Subdivision{H}{\sigma}$ as a subgraph.
+If $\lambda \leq \epsilonL d$, then $G$ contains $\Subdivision{H}{\sigma}$ as a subgraph.
 
 \end{theorem}
 
@@ -361,9 +362,10 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
     \begin{subfigure}[t]{0.95\textwidth}
         \centering
         \includegraphics{assets/embeddingA.pdf}
-        \caption{The \textcolor{purple}{purple} edges represent the edges in $\cup_{i=1}^j (M_j \cup M_j')$, which we have already included.
+        \caption{The \textcolor{purple}{purple} edges represent the edges in $\cup_{i=1}^j (M_j \cup M_j')$, which we have already included in the $\GlobalEdgeSet$.
         For any $v$ in $S_j \subseteq X$ (\textcolor{cadmiumgreen}{green vertex}) we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ (shown with \textcolor{cadmiumgreen}{green} and \textcolor{carminepink}{pink} lines). 
-        Of these $D$ edges, by the non-blocking property, we know that there will be at least one edge (in this case there are 3 such edges shown in \textcolor{carminepink}{pink}) such that the endpoints in $Y$ are not connected to any of the \textcolor{purple}{purple} edges. The \textcolor{cadmiumgreen}{green} dotted edges are connected to vertices that are already incident by one of the \textcolor{purple}{purple} edges, and so we cannot use them. We will add the \textcolor{carminepink}{pink} edges will be added to $M_j$.}
+        Of these $D$ edges, by the non-blocking property, we know that there will be at least one edge (in this case there are 3 such edges shown in \textcolor{carminepink}{pink}) such that the endpoints in $Y$ are not connected to any of the \textcolor{purple}{purple} edges in $\GlobalEdgeSet$ . 
+        The \textcolor{cadmiumgreen}{green} dotted edges are unsafe, so we cannot use them. We will add the safe \textcolor{carminepink}{pink} edges to $M_j$.}
         \label{subfig:embeddingA}
     \end{subfigure}%
     \hspace{1mm}
@@ -375,7 +377,7 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
         \caption{We restrict the size of $M_j$ to be $\min\{t, |S_{j-1}|D\}$ edges. As $k = \log_{D}[\na]$, eventually, for some $j \leq k$, we get $t \leq |S_{j-1}|D$.
         In the above example $M_{j-1}$ has size $D|S_{j-2}|$ but $M_j$ has size $t$. 
         From then on for all $j \leq i \leq k$, $|M_i|= t$.
-        Furthermore, for $j \leq i \leq k$,  each vertex in $S_i$ will be connected to exactly one vertex in $S_{i+1}$.
+        Furthermore, for $j \leq i \leq k$,  each vertex in $S_i$ will be connected to exactly one vertex in $S_{i+1}$ via a safe edge.
         }
         \label{subfig:embeddingB}        
     \end{subfigure}
@@ -439,7 +441,7 @@ Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length
 \begin{figure}
 	\includegraphics[width=0.9\textwidth
 	]{assets/BaseA.pdf}
-	\caption{The figure on top describes the forward phase of finding sets $\{M_i\}_{i\in [k]}$ and $\{M_i'\}_{i\in [k]}$. The figure on top describes the process of backtracking from the edge $e$ that is promised to exist between $S_k$ and $S_k'$.}
+	\caption{In this toy example, $k=3$. The figure on top describes the forward phase of finding sets $\{M_i\}_{i\in [k]}$ and $\{M_i'\}_{i\in [k]}$. The figure below describes the process of backtracking from the edge $e$ that is promised to exist between $S_k$ and $S_k'$.}
 	\label{fig:baseB}
 \end{figure}
 
