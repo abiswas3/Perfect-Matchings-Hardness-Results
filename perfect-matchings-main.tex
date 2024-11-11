@@ -83,24 +83,24 @@ In their seminal work \citep{cook1979relative}, Cook an Reckchow prescribed a pr
 Given a propositional formula $\PropFormula$, the task is to come up with a proof $\Proof$ of the claim that $\PropFormula$ is unsatisfiable.
 The holy grail of computer science and mathematics is to prove that the size any such proof $\Proof$ is $\SmallOmega{\poly(\Size{\PropFormula})}$, and thus we can conclude that $\CoNP \neq \NP$.
 With no restrictions in place for the language of how we describe a proof, we are currently no close to proving the above statement. 
-However, it is widely believed that $\CoNP \neq \NP$, and thus, as an intermediate step, over the last 5- years researchers have invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems. \ari{CITE SOME SEMINAL WORKS here}.
+However, it is widely believed that $\CoNP \neq \NP$, and thus, as an intermediate step, over the last 50 years researchers have invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems. \ari{CITE SOME SEMINAL WORKS here}.
 When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language that can be used to write down lines of the proof. We refer the reader to \cite{ProofComplexityLecNotesPaul} for detailed introduction to proof systems.
-A simple example of a language for describing proofs is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is truth table for the formula.
-For such a proof system, for a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
-However such a proof system is extremely restricted, and to make progress towards the main goal the research community has considered more expressive proof systems \ari{cite many works here}.
+A simple example of a language for describing proofs is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is simply the truth table for the formula.
+For such a proof system, given a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
+However, the above proof system is extremely restricted, and to make progress towards the main goal the research community has considered increasingly more expressive proof systems \ari{cite many works here}.
 Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
-Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-domination, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems are subsume claims about the complexity of proofs lower in the figure.\par
+Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems are subsume claims about the complexity of proofs lower in the figure.\par
 In this work, we focus on the semi-algebraic proof systems of polynomial calculus (PC) and sum of squares (SOS).
 In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n) \in \Field^n$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials must be over the reals.
 We say a proof $\Proof$ is a refutation of $Q$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $Q$. 
-In PC and SOS, the proof $\Proof$ itself expressed as polynomial (see Section \ref{sec:proof-system-prelims} for more details). 
+In PC and SOS, the proof $\Proof$ is itself expressed as polynomial (see Section \ref{sec:proof-system-prelims} for more details). 
 The size of a proof in the above systems is measured by the maximum of degree of the proof polynomial that refutes $Q$.
-We denote the degree of such polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and the goal to prove lower bounds on the degree of this proofs.
-Often one can use semi-algebraic proof systems to describe properties of combinatorial objects like graphs.
-More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$ and system of polynomial constraints $Q = \Card{G, \vec{b}}$ as the following.
+We denote the degree of such polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and the main goal is to study how the complexity of the degree of refutals for a $Q$.
+Often one can use semi-algebraic proof systems to capture constraints of combinatorial objects like graphs.
+More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
-\begin{definition}[Card]\label{def:card}Given a graph $G=(V,E)$, and a vector of constants $\vec{b} = (b_1, \dots, b_{|V|}) \in \Field^{|V|}$, $\Card{G, \vec{b}}$ describes the following system of equations over variables $x_1, \dots, x_{|E|} \in \Field^{|E|}$ 
+\begin{definition}[Card]\label{def:card}Given a graph $G=(V,E)$, and a vector of constants $\vec{b} = (b_1, \dots, b_{|V|}) \in \Field^{|V|}$,
 
 \begin{displaymath}
         \Card{G, \vec{b}}=
@@ -143,8 +143,9 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $b \
 \end{theorem}
 
 
-\paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question, and show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
-More specifically, we show 
+\paragraph{Our Contribution} In this work, we improve upon the result by \citet{Austrin_2022}, and directly answer Buss and Nordstr{\"o}m's question. 
+We show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
+Our main result is stated below.
 
 \begin{theorem}{Main Result}{thm:main-thm}
 There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds asymptotically almost surely for any $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < ??$:
@@ -165,8 +166,6 @@ The main task then is to embed $H$ into $G$ in such a way that that the hardness
 However, our results differ in the following significant way 
 (1) Our embedding techniques make no use of randomness as they need to work for $\EnDeeLambda$ graphs (which can be deterministic constructions).
 
-
-%another special case of Card(��, ��) is the so-called even coloring formula, introduced by Markstr ̈om [48], which is the case when �� = deg(��)/2.
 
 
 \section{Technical Overview}
