@@ -84,14 +84,13 @@ Given a propositional formula $\PropFormula$, the task is to come up with a proo
 The holy grail of computer science and mathematics is to prove that the size any such proof $\Proof$ is $\SmallOmega{\poly(\Size{\PropFormula})}$, and thus we can conclude that $\CoNP \neq \NP$.
 With no restrictions in place for the language of how we describe a proof, we are currently no close to proving the above statement. 
 However, it is widely believed that $\CoNP \neq \NP$, and thus, as an intermediate step, over the last 5- years researchers have invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems. \ari{CITE SOME SEMINAL WORKS here}.\par
-When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language that can be used to write down lines of the proof. We refer the reader to \cite{ProofComplexityLecNotesPaul}
-
-A simple example of proof system is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is truth table for the formula.
+When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language that can be used to write down lines of the proof. We refer the reader to \cite{ProofComplexityLecNotesPaul} for detailed introduction to proof systems.
+A simple example of a language for describing proofs is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is truth table for the formula.
 For such a proof system, for a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
-However such a proof system is extremely restricted, and to make progress towards the main goal the research community has considered more expressive proof systems \ari{CITE}.
-Figure \ref{fig:example-proof-systems} lists these systems and describes the relationships between them.
-Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-domination, and we refer the reader to the \ari{CITE} for more details.}, and lower bounds for such proof systems are stronger results.\par
-Central to this work are proofs that serve as refutations in semi-algebraic proof systems like polynomial calculus (PC) and sum of squares (SOS).
+However such a proof system is extremely restricted, and to make progress towards the main goal the research community has considered more expressive proof systems \ari{cite many works here}.
+Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
+Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-domination, and we refer the reader to the \ari{CITE} for more details.}, and lower bounds for such proof systems are subsume claims about the complexity of proofs lower in the figure.\par
+In this work, we focus on the semi-algebraic proof systems of polynomial calculus (PC) and sum of squares (SOS).
 In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n)$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials are over the reals.
 We say a proof $\pi$ refutes $Q$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field$ that satisfies \emph{all} the polynomial equations in $Q$. 
