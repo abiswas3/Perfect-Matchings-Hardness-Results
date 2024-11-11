@@ -89,7 +89,7 @@ A simple example of a language for describing proofs is that of truth tables i.e
 For such a proof system, for a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
 However such a proof system is extremely restricted, and to make progress towards the main goal the research community has considered more expressive proof systems \ari{cite many works here}.
 Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
-Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-domination, and we refer the reader to the \ari{CITE} for more details.}, and lower bounds for such proof systems are subsume claims about the complexity of proofs lower in the figure.\par
+Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-domination, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems are subsume claims about the complexity of proofs lower in the figure.\par
 In this work, we focus on the semi-algebraic proof systems of polynomial calculus (PC) and sum of squares (SOS).
 In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n)$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials are over the reals.
