@@ -58,11 +58,33 @@ coltitle=black,
 fonttitle=\bfseries
 }{theorem}
 
-\declaretheorem[
-shaded={bgcolor=azure!15,
-textwidth=\columnwidth}]{problem}
+% Define a custom Problem environment using \newtheorem
+\newtheoremstyle{problemstyle} % Define a custom style for "Problem"
+  {}                       % Space above
+  {}                       % Space below
+  {\normalfont}                 % Body font
+  {}                            % Indent
+  {\bfseries}                   % Theorem head font (bold)
+  {}                            % Punctuation after the heading
+  {10pt}                        % Space after the heading
+  {}                            % Theorem head spec (empty for no colon)
 
-
+\theoremstyle{problemstyle}
+\newtheorem*{problem}{Problem}
+% Create a theorem-style environment wrapped in a blue box
+\newenvironment{boxedproblem}
+  {\begin{mdframed}[backgroundcolor=azure!15, linecolor=azure, 
+  % innertopmargin=10pt, innerbottommargin=10pt, innerleftmargin=10pt, innerrightmargin=10pt, 
+  % skipabove=10pt, 
+  % skipbelow=10pt
+  ]
+ \begin{problem}\ignorespaces
+}
+{
+  \end{problem}
+\end{mdframed}
+}
+  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Definition
 \newcounter{lem}[section] 
