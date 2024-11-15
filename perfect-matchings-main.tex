@@ -79,24 +79,25 @@ This is a first brain dump -- which I will tighten.}
 	\label{fig:example-proof-systems}
 \end{figure}
 
-In their seminal work \citep{cook1979relative}, Cook an Reckchow prescribed a program for separating $\CoNP$ from $\NP$.
-Given a propositional formula $\PropFormula$, the task is to come up with a proof $\Proof$ of the claim that $\PropFormula$ is unsatisfiable.
-The holy grail of computer science and mathematics is to prove that the size any such proof $\Proof$ is $\SmallOmega{\poly(\Size{\PropFormula})}$, and thus we can conclude that $\CoNP \neq \NP$.
-With no restrictions in place for the language of how we describe a proof, we are currently no close to proving the above statement. 
-However, it is widely believed that $\CoNP \neq \NP$, and thus, as an intermediate step, over the last 50 years researchers have invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems. \ari{CITE SOME SEMINAL WORKS here}.
-When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language that can be used to write down lines of the proof. We refer the reader to \cite{ProofComplexityLecNotesPaul} for detailed introduction to proof systems.
-A simple example of a language for describing proofs is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is simply the truth table for the formula.
+In their seminal work, \citet{cook1979relative} introduced a program for separating $\CoNP$ from $\NP$.
+Given a propositional formula $\PropFormula$, the task is to study the complexity of proofs for the claim \textit{``that $\PropFormula$ is unsatisfiable''}.
+Showing that there exists no short\footnote{By short we mean polynomial in the size of the instance.} proofs for unsatisfiability would imply $\CoNP \neq \NP$, which would further imply $\P \neq \NP$, resolving one of the most fundamental open problems in computer science and mathematics.
+With no other restrictions for the language with which we describe a proof, we are currently do not possess the tools to show lower bounds for general proof systems. 
+However still, it is widely conjectured that $\CoNP \neq \NP$, and thus, as an intermediate step towards making partial progress, the research community has invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
+When we say restricted proof system, we mean there is a fixed set of axioms and inference rules, and a restriction on the language that can be used to write down lines of the proof. We refer the reader to \citep{krajicek2019proof} for detailed introduction to the formalities of describing a proof system.
+A simple example of a proof system is that of truth tables i.e. given a formula $\PropFormula$, a valid proof is simply the truth table for the formula.
 For such a proof system, given a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
-However, the above proof system is extremely restricted, and to make progress towards the main goal the research community has considered increasingly more expressive proof systems \ari{cite many works here}.
+However, truth tables are very from being general proof systems, and to make progress towards the final goal, the research community has considered increasingly more expressive proof systems such as resolution, bounded depth Frege proof systems, Nullstellensatz etc.
 Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
-Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems are subsume claims about the complexity of proofs lower in the figure.\par
-In this work, we focus on the semi-algebraic proof systems of polynomial calculus (PC) and sum of squares (SOS).
-In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n) \in \Field^n$ as the problem instance.
+We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.
+Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.\par
+In this work, we focus on the semi-algebraic proof systems of polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) \citep{parrilo2000structured, boazCourse}.
+In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n)$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials must be over the reals.
 We say a proof $\Proof$ is a refutation of $Q$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $Q$. 
-In PC and SOS, the proof $\Proof$ is itself expressed as polynomial (see Section \ref{sec:proof-system-prelims} for more details). 
-The size of a proof in the above systems is measured by the maximum of degree of the proof polynomial that refutes $Q$.
-We denote the degree of such polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and the main goal is to study how the complexity of the degree of refutals for a $Q$.
+In PC and SOS, the proof $\Proof$ is itself expressed as polynomial.  
+The size of a proof in the above systems is measured by the maximum of degree of the proof polynomial that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more details).
+We denote the degree of such proof polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and  main goal of the discipline to study how complexity of the degree of refutals for different constraints $Q$.
 Often one can use semi-algebraic proof systems to capture constraints of combinatorial objects like graphs.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
@@ -113,7 +114,7 @@ More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = 
 \end{definition}
 
 For every $e \in E$, if the polynomial equation $x_e(1 - x_e) = 0$ were to be satisfied, then it restricts the domain of the above variables to bits i.e. $x_e \in \bit$ for all $e \in E$.
-Note if there was an assignment of variables in $\vec{x} \in \bit^{|E|}$ that satisfied all the equations in $\Card{G, 1^{|V|}}$, it would imply that the graph $G$ has a perfect matching.  
+Note if there was an assignment of variables in $\vec{x} \in \bit^{|E|}$ that satisfied all the equations in $\Card{G, 1^{|V|}}$, it would imply that the graph $G$ has a perfect matching (given by the edges corresponding to variables with assignment 1).  
 When $|V|$ is odd, we know that any graph $G$ cannot have a perfect matching.
 In other words, $\Card{G, 1^{|V|}}$ cannot be satisfied.
 In this work we are interested in the complexity of PC and SOS refutations for $\Card{G, 1^{|V|}}$  when $|V|$ is odd.
@@ -128,23 +129,25 @@ Do refutations for $\Card{G, \vec{b}}$ for
 polynomial calculus over fields of characteristic $\neq 2$ have large size, when $G$ is an expander graph?
 \end{boxedproblem}
 
-\citet{Austrin_2022} made partial progress on the above problem by showing that the perfect matching principle requires large size on \highlight{random $d$-regular graphs} (for some constant $d$) in the Sum-of-Squares, and Polynomial Calculus.
-More formally they show that 
+\citet{Austrin_2022} made partial progress on the above problem by showing that the perfect matching principle requires large size on \highlight{random $d$-regular graphs} (for some constant $d$) in the Sum-of-Squares and Polynomial Calculus proof systems.
+More formally, they show that 
 
 \begin{theorem}{\citep{Austrin_2022}}{thm:prev-thm}
-There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $b \in [d]$, the following holds asymptotically almost surely over a random $d$-regular graph $G$ on $n$ vertices:
+There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $\vec{b} \in [d]^{\Size{V}}$, the following holds asymptotically almost surely over a random $d$-regular graph $G=(V,E)$ on $n$ vertices:
 \begin{enumerate}
     \item{ $\Degree{\Card{G, \vec{b}} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
     \item{$\Degree{\Card{G, \vec{b}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
 \end{enumerate}
-
-\AttentionRajko{This theorem is copied from the Risse paper. $b$ is given as a scalar but then used in vector form. Are all the coordinates the same or different?}
-
 \end{theorem}
 
+Given a random $d$-regular graph $G$ on $n$ vertices, the authors start with the worst case hard graph $H$ described by \citet{buss1999linear}.
+Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
+The main task then is to \emph{embed} $H$ into $G$ in such a way that that the hardness of $H$ is transferred to $G$.
+One of the features of the embedding theorem above is that the embedding must be random \citep[See Section 6]{Austrin_2022}.
 
 \paragraph{Our Contribution} In this work, we improve upon the result by \citet{Austrin_2022}, and directly answer Buss and Nordstr{\"o}m's question. 
 We show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
+Note that, we prove lower bounds for a larger class of graphs, that includes random $d$-regular graphs as a subset.
 Our main result is stated below.
 
 \begin{theorem}{Main Result}{thm:main-thm}
@@ -154,13 +157,12 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the foll
     \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\nicefrac{n}{\log n}}$}
 \end{enumerate}
 
+\ari{Re-write all the constants in this theorem, once we've vetted all the proofs}.
+
 \end{theorem}
 
 
 Our result also follows the general technique used in \citep{Austrin_2022} with notable differences.
-Given a random $d$-regular graph $G$ on $n$ vertices, the authors start with the worst case hard graph $H$ described by \citet{buss1999linear}.
-Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
-The main task then is to embed $H$ into $G$ in such a way that that the hardness of $H$ is transferred to $G$.
 
 \ari{How are we different, and give a bit more clarity on this.}
 However, our results differ in the following significant way 
