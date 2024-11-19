@@ -143,32 +143,30 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $\ve
 Given a random $d$-regular graph $G$ on $n$ vertices, the authors start with the worst case hard graph $H$ described by \citet{buss1999linear}.
 Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
 The main task then is to \emph{embed} $H$ into $G$ in such a way that that the hardness of $H$ is transferred to $G$.
-One of the features of the embedding theorem above is that the embedding must be random \citep[See Section 6]{Austrin_2022}.
+One of the distinctive features of the embedding techniques used by the authors above is that their embedding must be random \citep[See Section 6]{Austrin_2022}.
+Therefore the host graph is a random $d$-regular graph.
+These techniques do not apply when the host graph $G$ is a $\EnDeeLambda$-graph (from a deterministic construction).
 
-\paragraph{Our Contribution} In this work, we improve upon the result by \citet{Austrin_2022}, and directly answer Buss and Nordstr{\"o}m's question. 
-We show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
-Note that, we prove lower bounds for a larger class of graphs, that includes random $d$-regular graphs as a subset.
+\paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question via embedding theorems that do not rely on randomness.
+Our techniques are inspired by techniques used in the \ari{Say something about networking and non-blocking}.
+To summarise, we show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
+Note that our lower bounds hold for a larger class of graphs, that includes random $d$-regular graphs as a subset.
 Our main result is stated below.
 
-\begin{theorem}{Main Result}{thm:main-thm}
+\begin{theorem}{Main Theorem}{main-thm}
 There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds asymptotically almost surely for any $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < ??$:
 \begin{enumerate}
-    \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\nicefrac{n}{\log n}}$} 
-    \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\nicefrac{n}{\log n}}$}
+    \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
+    \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
 \end{enumerate}
 
 \ari{Re-write all the constants in this theorem, once we've vetted all the proofs}.
 
 \end{theorem}
 
-
-Our result also follows the general technique used in \citep{Austrin_2022} with notable differences.
-
-\ari{How are we different, and give a bit more clarity on this.}
-However, our results differ in the following significant way 
-(1) Our embedding techniques make no use of randomness as they need to work for $\EnDeeLambda$ graphs (which can be deterministic constructions).
-
-
+The rest of the document as is structured as follows. In section \ref{sec:prelims} we describe the requisite background from graph theory and proof complexity required to derive the \nameref{theorem:main-thm}.
+In section \ref{sec:embed-machinery} we review notions and results from the theory of wide-sense nonblocking networks, which will server as our main embedding machinery.
+In Section \ref{sec:main-proof}, we provide the full proof of the main result and in Section \ref{sec:related-work} we summarise prior efforts to show proof complexity lower bounds using embedding techniques.
 
 \section{Technical Overview}
 
@@ -177,6 +175,7 @@ Put in proof by pictures here.
 
 
 \section{Preliminaries}
+\label{sec:prelims}
 
 \paragraph{Notation} Sets are denoted with upper case normal font e.g., $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g., $\Family{S}$. 
 
@@ -231,7 +230,7 @@ We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underse
 
 
 \section{Embedding Machinery}
-
+\label{sec:embed-machinery}
 The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
 
 \begin{definition}[$(p, q)$-non blocking bipartite graphs \citep{nenadov2023routing}]
@@ -264,6 +263,7 @@ If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at le
 
 
 \section{Proof Of Main Result}
+\label{sec:main-proof}
 
 Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t$ vertices for polynomial calculus, as described by \citet{buss1999linear}, where the refutal certificate is of degree $\BigOmega{t}$.
 The hardness proof follows from the following steps:
@@ -633,6 +633,7 @@ Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we m
 \end{proof}
 
 \section{Related Work}
+\label{sec:related-work}
 
 \clearpage
 \bibliographystyle{abbrvnat}
