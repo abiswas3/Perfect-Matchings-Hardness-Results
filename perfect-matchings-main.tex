@@ -80,7 +80,7 @@ This is a first brain dump -- which I will tighten.}
 \end{figure}
 
 In their seminal work, \citet{cook1979relative} introduced a program for separating $\CoNP$ from $\NP$.
-Given a propositional formula $\PropFormula$, the task is to study the complexity of proofs for the claim \textit{``that $\PropFormula$ is unsatisfiable''}.
+Given a propositional formula $\PropFormula$, the task is to study the complexity of proofs for the claim \textit{``$\PropFormula$ is unsatisfiable''}.
 Showing that there exists no short\footnote{By short we mean polynomial in the size of the instance.} proofs for unsatisfiability would imply $\CoNP \neq \NP$, which would further imply $\P \neq \NP$, resolving one of the most fundamental open problems in computer science and mathematics.
 With no other restrictions for the language with which we describe a proof, we are currently do not possess the tools to show lower bounds for general proof systems. 
 However still, it is widely conjectured that $\CoNP \neq \NP$, and thus, as an intermediate step towards making partial progress, the research community has invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
@@ -148,7 +148,7 @@ Therefore the host graph is a random $d$-regular graph.
 These techniques do not apply when the host graph $G$ is a $\EnDeeLambda$-graph (from a deterministic construction).
 
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question via embedding theorems that do not rely on randomness.
-Our techniques are inspired by techniques used in the \ari{Say something about networking and non-blocking}.
+Our techniques are inspired by results from wide sense non blocking networks. \ari{Say something more about this.}
 To summarise, we show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
 Note that our lower bounds hold for a larger class of graphs, that includes random $d$-regular graphs as a subset.
 Our main result is stated below.
