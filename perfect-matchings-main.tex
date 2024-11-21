@@ -73,6 +73,9 @@ This is a first brain dump -- which I will tighten.}
 
 \section{Introduction}
 
+\rajko{I prefer citations with numbers, but if the way you did it is common in CS then leave it as is.}
+\ari{Changed them.}
+
 \begin{figure}
 	\includegraphics{assets/proof-system-relationships.pdf}
 	\caption{The figure above (sourced from \citep[Page 10]{ProofComplexityLecNotes}) depicts proof systems commonly studied by the community and how they relate to each other.}
@@ -100,6 +103,8 @@ The size of a proof in the above systems is measured by the maximum of degree of
 We denote the degree of such proof polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and  main goal of the discipline to study how complexity of the degree of refutals for different constraints $Q$.
 Often one can use semi-algebraic proof systems to capture constraints of combinatorial objects like graphs.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
+
+
 
 \begin{definition}[Card]\label{def:card}Given a graph $G=(V,E)$, and a vector of constants $\vec{b} = (b_1, \dots, b_{|V|}) \in \Field^{|V|}$,
 
@@ -636,6 +641,6 @@ Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we m
 \label{sec:related-work}
 
 \clearpage
-\bibliographystyle{abbrvnat}
+\bibliographystyle{unsrtnat}
 \bibliography{main_paper}
 \end{document}
