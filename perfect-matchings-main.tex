@@ -46,7 +46,7 @@
 
 \synctex=1
 % Title
-\title{\textcolor{definitioncolor}{Refutations Of Perfect Matchings In Expander Graphs Is Hard}}
+\title{Refutations Of Perfect Matchings In Expander Graphs Is Hard}
 \newcommand{\dApproxLower}{\textcolor{red}{d'}}
 \newcommand{\dApproxExpandedLower}{\textcolor{black}{2\epsilon d}}
 \newcommand{\dApproxExpandedUpper}{\textcolor{black}{\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
@@ -73,8 +73,10 @@ This is a first brain dump -- which I will tighten.}
 
 \section{Introduction}
 
-\rajko{I prefer citations with numbers, but if the way you did it is common in CS then leave it as is.}
-\ari{Changed them.}
+
+
+%\rajko{I prefer citations with numbers, but if the way you did it is common in CS then leave it as is.}
+%\ari{Changed them.}
 
 \begin{figure}
 	\includegraphics{assets/proof-system-relationships.pdf}
@@ -115,7 +117,6 @@ More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = 
                 \underset{e \in E}{\sum x_e}= b_{\highlight{v}} & \text{ for every $\highlight{v} \in V$} \\[3mm]
         \end{array}
 \end{displaymath}
-	
 \end{definition}
 
 For every $e \in E$, if the polynomial equation $x_e(1 - x_e) = 0$ were to be satisfied, then it restricts the domain of the above variables to bits i.e. $x_e \in \bit$ for all $e \in E$.
@@ -137,7 +138,7 @@ polynomial calculus over fields of characteristic $\neq 2$ have large size, when
 \citet{Austrin_2022} made partial progress on the above problem by showing that the perfect matching principle requires large size on \highlight{random $d$-regular graphs} (for some constant $d$) in the Sum-of-Squares and Polynomial Calculus proof systems.
 More formally, they show that 
 
-\begin{theorem}{\citep{Austrin_2022}}{thm:prev-thm}
+\begin{theorem}\label{thm:prev-thm}
 There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $\vec{b} \in [d]^{\Size{V}}$, the following holds asymptotically almost surely over a random $d$-regular graph $G=(V,E)$ on $n$ vertices:
 \begin{enumerate}
     \item{ $\Degree{\Card{G, \vec{b}} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
@@ -158,7 +159,7 @@ To summarise, we show that refutations for $\Card{G, \vec{b}}$ have large size f
 Note that our lower bounds hold for a larger class of graphs, that includes random $d$-regular graphs as a subset.
 Our main result is stated below.
 
-\begin{theorem}{Main Theorem}{main-thm}
+\begin{theorem}[Main Theorem]\label{thm-main-thm}
 There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds asymptotically almost surely for any $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < ??$:
 \begin{enumerate}
     \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
@@ -327,7 +328,7 @@ Suppose $X_1, ..., X_n$ are identical independent random variables taking values
 \end{figure*}
 
 
-\begin{theorem}{Partition Theorem}{partition}
+\begin{theorem}[Partition Theorem]\label{thm:partition}
 There exists a constant $d_0 \in \Naturals$ and small constants $\delta \in (0,1)$ such that, given a $\EnDeeLambda$ graph $\Graph = (V, E)$, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $ \Eps'd \Def \alpha(1-\delta)d\leq |\Neighbourhood{\EdgesShort}{v} \cap A| \leq \alpha(1+\delta)d \Def \Eps d$ where $\alpha=0.1$ is a small constant.
 
 	

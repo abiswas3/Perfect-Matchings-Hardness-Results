@@ -5,21 +5,39 @@
 \usepackage[framemethod=TikZ]{mdframed}
 
 
-
-% Define colors
-\definecolor{definitioncolor}{RGB}{77,98,152} 
-\definecolor{theoremcolor}{RGB}{255,128,0} % Orange
-\definecolor{lemmacolor}{RGB}{0,150,136} % Green
-% \titleformat{\section}
-%   {\color{sectioncolor}\normalfont\Large\bfseries}
-%   {\color{sectioncolor}\thesection}{1em}{}
-
-% \titleformat{\subsection}
-%   {\color{subsectioncolor}\normalfont\large\bfseries}
-%   {\color{subsectioncolor}\thesubsection}{1em}{}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Lemma
+% Theorem
+% Define a new theorem style
+\newtheoremstyle{theoremstyle}
+  {\topsep} % Space above
+  {\topsep} % Space below
+  {} % Body font
+  {} % Indent amount
+  {\bfseries\color{black}} % Theorem head font
+  {} % Punctuation after theorem head
+  {.5em} % Space after theorem head
+  {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
+
+% Define mdframed settings for the lemma box
+\mdfdefinestyle{theoremframe}{
+  linecolor=theoremcolor!80,
+  linewidth=2pt,
+  backgroundcolor=theoremcolor!15,
+  roundcorner=5pt,
+  nobreak=true,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+}
+% Apply the custom theorem style
+\theoremstyle{theoremstyle}
+% Define a theorem environment
+\newtheorem{theorem}{Theorem}[section]
+% Automatically surround lemma with mdframed
+\surroundwithmdframed[style=theoremframe]{theorem}
+
+
+
 \newtheoremstyle{definitionstyle}
   {\topsep} % Space above
   {\topsep} % Space below
@@ -30,33 +48,52 @@
   {.5em} % Space after theorem head
   {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
 
-% Define mdframed settings
+% Define mdframed settings for the lemma box
 \mdfdefinestyle{definitionframe}{
-  linecolor=definitioncolor!40,
+  linecolor=definitioncolor!80,
   linewidth=2pt,
-  % frametitlerule=true,
-  % frametitlebackgroundcolor=gray!20,
-  backgroundcolor=definitioncolor!05,
+  backgroundcolor=definitioncolor!45,
   roundcorner=5pt,
   nobreak=true,
   topline=false,
   bottomline=false,
   rightline=false,
 }
-% Definition environment
 \theoremstyle{definitionstyle}
-\newtheorem{lemma}{Lemma}[section]
-\surroundwithmdframed[style=definitionframe]{lemma}
-
+\newtheorem{definition}[theorem]{Definition}
+\surroundwithmdframed[style=definitionframe]{definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Theorem
-\NewTcbTheorem{theorem}{Theorem}%
-{colback=white!20,
-colframe=definitioncolor!20,
-coltitle=black,
-fonttitle=\bfseries
-}{theorem}
+% Lemma
+% Define a new theorem style
+\newtheoremstyle{lemmastyle}
+  {\topsep} % Space above
+  {\topsep} % Space below
+  {} % Body font
+  {} % Indent amount
+  {\bfseries\color{black}} % Theorem head font
+  {} % Punctuation after theorem head
+  {.5em} % Space after theorem head
+  {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
+
+% Define mdframed settings for the lemma box
+\mdfdefinestyle{lemmaframe}{
+  linecolor=theoremcolor!80,
+  linewidth=2pt,
+  backgroundcolor=theoremcolor!05,
+  roundcorner=5pt,
+  nobreak=true,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+}
+% Apply the custom theorem style
+\theoremstyle{lemmastyle}
+\newtheorem{lemma}[theorem]{Lemma}
+% Automatically surround lemma with mdframed
+\surroundwithmdframed[style=lemmaframe]{lemma}
+
+
 
 % Define a custom Problem environment using \newtheorem
 \newtheoremstyle{problemstyle} % Define a custom style for "Problem"
@@ -68,7 +105,6 @@ fonttitle=\bfseries
   {}                            % Punctuation after the heading
   {10pt}                        % Space after the heading
   {}                            % Theorem head spec (empty for no colon)
-
 \theoremstyle{problemstyle}
 \newtheorem*{problem}{Problem}
 % Create a theorem-style environment wrapped in a blue box
@@ -84,38 +120,48 @@ fonttitle=\bfseries
   \end{problem}
 \end{mdframed}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorem
+% \NewTcbTheorem{theorem}{Theorem}%
+% {colback=white!20,
+% colframe=definitioncolor!20,
+% coltitle=black,
+% fonttitle=\bfseries
+% }{theorem}
+
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Definition
-\newcounter{lem}[section] 
-\setcounter{lem}{0}
-\renewcommand{\thelem}{\arabic{section}.\arabic{lem}}
-\newenvironment{definition}[1][]{%
-\refstepcounter{lem}%
-\ifstrempty{#1}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
-{\strut Definition~\thelem};}}
-}%
-{\mdfsetup{%
-frametitle={%
-\tikz[baseline=(current bounding box.east),outer sep=0pt]
-\node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
-{\strut Definition~\thelem:~\textcolor{carminepink}{#1}};}}%
-}%
-\mdfsetup{innertopmargin=10pt,
-linecolor=definitioncolor!40,%
-linewidth=2pt,
-topline=true,
-backgroundcolor=definitioncolor!05,
-rightline=false,
-bottomline=false,
-frametitleaboveskip=\dimexpr-\ht\strutbox\relax
-}
-\begin{mdframed}[]\relax%
-}{\end{mdframed}}
+% \newcounter{lem}[section] 
+% \setcounter{lem}{0}
+% \renewcommand{\thelem}{\arabic{section}.\arabic{lem}}
+% \newenvironment{definition}[1][]{%
+% \refstepcounter{lem}%
+% \ifstrempty{#1}%
+% {\mdfsetup{%
+% frametitle={%
+% \tikz[baseline=(current bounding box.east),outer sep=0pt]
+% \node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
+% {\strut Definition~\thelem};}}
+% }%
+% {\mdfsetup{%
+% frametitle={%
+% \tikz[baseline=(current bounding box.east),outer sep=0pt]
+% \node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
+% {\strut Definition~\thelem:~\textcolor{carminepink}{#1}};}}%
+% }%
+% \mdfsetup{innertopmargin=10pt,
+% linecolor=definitioncolor!40,%
+% linewidth=2pt,
+% topline=true,
+% backgroundcolor=definitioncolor!05,
+% rightline=false,
+% bottomline=false,
+% frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+% }
+% \begin{mdframed}[]\relax%
+% }{\end{mdframed}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
