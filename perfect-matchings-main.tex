@@ -6,39 +6,6 @@
 \synctex=1
 \input{theorem}
 \input{paper_commands.tex} %These are generic commands (Might move them to %base template)is
-\newcommand{\Degree}[1]{\text{Deg}\left(#1\right)}
-\newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
-
-\newcommand{\Complement}[1]{\overline{#1}}
-\newcommand{\EdgeConnectivity}[1]{\kappa'(#1)}
-
-% \newcommand{\PC}{\underset{\texttt{PC}_F}{\vdash}}
-\newcommand{\PC}{\vdash_{\texttt{PC}_F}}
-\newcommand{\SOS}{\vdash_{\texttt{SOS}}}
-\newcommand{\en}{\textcolor{ballblue}{n}}
-\newcommand{\dee}{\textcolor{cadmiumgreen}{d}}
-\newcommand{\eigen}{\textcolor{red}{\lambda}}
-\newcommand{\EnDeeLambda}{(n, d, \lambda)}
-\newcommand{\Subdivision}[2]{{#1}^{#2}}
-\newcommand{\MinimalDegree}[1]{\delta(#1)}
-%\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
-\newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
-
-\newcommand{\epsilonA}{\textcolor{ballblue}{\epsilon_a}}
-\newcommand{\epsilonL}{\textcolor{cadmiumgreen}{\epsilon_\lambda}}
-\newcommand{\na}{\textcolor{razzmatazz}{n_A}}
-
-\newcommand{\BipartiteG}{G_{A \cup A}}
-
-\newcommand{\DistSet}[1]{\Delta(#1)}
-\newcommand{\Dist}{\mathcal{D}}
-\newcommand{\EdgesShort}{E}
-%\newcommand{\Mean}[2]{\underset{#1}{\mathbb{E}}\left[#2\right]}
-\newcommand{\Mean}[2]{\mathbb{E}_{#1}\left[#2\right]}
-\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
-\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
-\newcommand{\ExpansionFactor}[1]{\lambda(#1)}
-\newcommand{\EmbeddingFunc}{\Psi}
 
 % Intro
 %\newcommand{\P}{\mathsf{P}}
@@ -58,9 +25,6 @@
 \affil[1]{\small University Of Warwick, United Kingdom}
 \affil[2]{\small University Of Auckland, New Zealand}
 
-% ITCS guidelines.
-% Authors should register and submit their paper via the hotcrp submission site, by the above strict deadlines. The font size should be at least 11 point and the paper should be single column. Beyond these, there are no formatting requirements. Authors are required to submit a COI declaration upon submission.
-% Authors should strive to make their paper accessible not only to experts in their subarea, but also to the theory community at large. The submission should include clear proofs of all central claims. In addition, it is strongly recommended that the paper contain, within the first 10 pages, a concise and clear presentation of the merits of the paper, including a discussion of its significance, innovations, and place within (or outside) of our field's scope and literature. The committee will put a premium on writing that conveys clearly, in as simple and straightforward a manner as possible, what the paper accomplishes.
 \date{}
 % \linenumbers
 \begin{document}
@@ -82,16 +46,16 @@ This is a first brain dump -- which I will tighten.}
 
 
 Perhaps the most fundamental problem in all of computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
-In their seminal work, \citet{cook1979relative} observed that the above question could only be made mathematically rigorous by first describing the format in which the proof is written, and the rules for checking it.
+To make the above question mathematically precise, in their seminal work, \citet{cook1979relative} observed that we must first describe how to write down a proof, and define the rules for checking it.
 Each set of rules for writing and checking a proof defines a proof system.
-Therefore, more precisely, the question should be restated as ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that $A$ is true?}''
+Therefore, a precise restatement of the question is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that proves $A$?}''
 If we could show that there exists a proof system $S$, such that for any true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$, which would further imply that $\P = \NP$.
 Conversely, if we could show large lower bounds for $A$ in all proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
 Unfortunately, we currently do not possess the tools to show lower such bounds for arbitrary proof systems.
-Thus, as an intermediate step towards making partial progress, the research community has invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
-One example of a simple but inefficient\footnote{When we say inefficient, we mean that proofs of true claims are long in the worst case.} proof system is that of truth tables i.e. given a propositional formula $\PropFormula$ that is a tautology, a valid proof is simply the truth table for the formula.
+Thus, as an intermediate step towards making partial progress towards the grand problem, the research community has invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
+One example of a simple proof system is that of truth tables i.e. given a propositional formula $\PropFormula$ that is a tautology, a valid proof is simply the truth table for the formula.
 Given a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
-Truth tables are very from being general proof systems, and thus, the research community has considered increasingly more expressive proof systems such as resolution, bounded depth Frege proof systems, Nullstellensatz etc.
+Although simple, truth tables are quite inefficient\footnote{When we say inefficient, we mean that proofs of true claims are long in the worst case.} proof systems, and by now know of considerably more expressive proof systems.
 Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.
@@ -103,7 +67,7 @@ We say a proof $\Proof$ is a refutation of $Q$, if it is a proof of the claim (i
 In PC and SOS, the proof $\Proof$ is itself expressed as polynomial, and 
 the size/complexity of the proof is measured by the maximum of degree of the proof polynomial that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more details).
 We denote the degree of such proof polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and  main goal of the discipline to study how complexity of the degree of refutals for different problem instsances $Q$.
-Although algebraic by definition, one can use semi-algebraic proof systems to capture constraints of combinatorial objects like graphs.
+Although algebraic by definition, one can these proof systems to capture constraints of combinatorial objects like graphs.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
 \[
@@ -144,43 +108,40 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $\ve
 Given a random $d$-regular graph $G$ on $n$ vertices (where $n$ is odd), the authors start with a worst case hard graph $H$ described by \citet{buss1999linear}.
 Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
 Their average case hardness result then comes by \emph{embedding} $H$ into $G$ in such a way that that the hardness of $H$ is transferred to $G$.
-Thus, the main contribution of \citet{Austrin_2022} is a new but relatively complex embedding theorem, and a distinctive feature of their result is that the embedding relies on randomness used to sample the regular graph.
-Thus, they give an average case hardness result, as opposed to a worst case lower bound. 
-Furthermore, these techniques do not apply when the host graph $G$ is deterministic, as in the case of deterministic constructions of $\EnDeeLambda$-graphs.
+Thus, the main contribution of \citet{Austrin_2022} is a novel embedding theorem that embeds $H$ as a topological minor into $G \samples \mathcal{G}(n, d)$ with high probability. 
+A distinctive feature of their result is that as the embedding relies on randomness used to sample the regular graph, they can only provide average case lower bounds.
+Therefore, these techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of pseudorandom graphs.
 
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question via showing embedding theorems that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in pseudorandom graphs.
-It should be noted that as pseudorandom graph is \emph{also} a random graph with high probability, our result subsumes the result of \citep{Austrin_2022}.
-A second defining feature of our contribution is the qualitative simplicity of our embedding theorem.
-More precisely, to embed the hard instance $H$ in a random $G=(V,E) \samples \mathcal{G}(n,d)$, Austrin and Risse, first show a partition lemma that divides the vertices into two sets $T$ and $V \setminus T$, such that for any odd sized subset $U \subseteq T$, $V \setminus U$ has a perfect matching.
-
-\highlight{Summarise the enormous work they have to go through.}
-Contrast our results with that of \citep{Austrin_2022}, we show \emph{stronger} lower bounds for a \emph{larger} set of objects using \emph{simpler} proof techniques.
-
-
-Our techniques are inspired by results from wide sense non blocking networks. \ari{Say something more about this.}
-To summarise, we show that refutations for $\Card{G, \vec{b}}$ have large size for Sum-of-Squares and Polynomial Calculus for expander graphs.
-Note that our lower bounds hold for a larger class of graphs, that includes random $d$-regular graphs as a subset.
+It should be noted that as pseudorandom graph is \emph{also} a random graph with high probability, our result subsumes the result of \citet{Austrin_2022}.
+A second defining feature of our contribution is the qualitative simplicity of our hardness result.
+To show their hardness results, Austrin and Risse embed the hard instance $H$ described above in a random $G=(V,E) \samples \mathcal{G}(n,d)$ by first showing a partition lemma that partitions $V$ into two sets $T$ and $V \setminus T$, such that the partition satisfies two properties.
+The first property requires that for any odd sized subset $U \subseteq T$, $V \setminus U$ has a perfect matching.
+This property is used to inherit the hardness of $H$ into $G$, and the authors rely on randomness of sampling random graphs to prove this property.
+In contrast, we show a much simpler way to inherit the hardness of $H$ into any pseudo random graph via a simple application of the Tutte criterion (Lemma \ref{lemma:tutte-criterion}). 
+The second property, requires the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
+Given any graph $H$, \citet{krivelevich2019completeminorsgraphssparse} show if a host graph $\tilde{G}$ is a vertex expander with the above parameters, then $\tilde{G}$ contains $H$ as a minor.
+They describe an iterative algorithm for  embedding the vertices of $H$ into $\tilde{G}$ one while keeping track of the unused vertices of $\tilde{G}$, and discarding bad vertices that lead to bad embeddings and restarting the process of finding good vertices again \ari{Rajko can likely provide a better summary of his own work}.
+To embed $H$ as a topological minor, Austrin and Risse need to find vertex disjoint odd length paths in $\tilde{G}$ for edges in $H$.
+Therefore they map vertices of $H$ to ``star-like'' subgraphs in $\tilde{G}$, which allows the central vertex of the star to be connected to many vertex disjoint paths without incurring collisions.
+In this paper, we show a more direct way to embed $H$ into any pseudorandom graph $\tilde{G}$ using techniques inspired from from wide sense non blocking networks \citep{feldman1988wide}, without relying on extending the machinery introduced by \citet{krivelevich2019completeminorsgraphssparse} which solves a related but different problem.
+In summary, we show \emph{stronger} lower bounds for a \emph{larger} set of objects using \emph{simpler} proof techniques.
 Our main result is stated below.
 
-\begin{theorem}[Main Theorem]\label{thm-main-thm}
-There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds asymptotically almost surely for any $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < ??$:
+\begin{theorem}[Main Theorem]\label{thm:main-thm}
+\highlight{Change this completely}
+There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds  for \emph{any} $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < \highlight{TODO}$:
 \begin{enumerate}
     \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
     \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
 \end{enumerate}
 
-\ari{Re-write all the constants in this theorem, once we've vetted all the proofs}.
-
 \end{theorem}
 
-The rest of the document as is structured as follows. In section \ref{sec:prelims} we describe the requisite background from graph theory and proof complexity required to derive the \nameref{theorem:main-thm}.
-In Section \ref{sec:embed-machinery} we review definitions and results from the theory of wide-sense nonblocking networks, which aid us in the construction of our main embedding theorem.
+The rest of the document as is structured as follows. In section \ref{sec:prelims} we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:main-thm}.
+In Section \ref{sec:embed-machinery}, we review definitions and results from the theory of wide-sense nonblocking networks, which aid us in the construction of our main embedding theorem.
 In Section \ref{sec:main-proof}, we provide the full proof of the main result and in Section \ref{sec:related-work} we describe related results in proof complexity lower bounds using embedding techniques.
-
-\section{Technical Overview}
-
-Put in proof by pictures here.
-
+Finally, we conclude with some open problems that we could not resolve in this work.
 
 
 \section{Preliminaries}
@@ -212,7 +173,7 @@ For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote 
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
 
 \begin{definition}[Subgraph]\label{def:subgraph}
-A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v1, v2) \in E' \implies (v1, v2) \in V')$.
+A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
 	
 \end{definition}
 
@@ -242,7 +203,7 @@ We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underse
 \label{sec:embed-machinery}
 The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
 
-\begin{definition}[$(p, q)$-non blocking bipartite graphs \citep{nenadov2023routing}]
+\begin{definition}[$(p, q)$-non blocking bipartite graphs]
 Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a family $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
 
 \begin{enumerate}
@@ -279,8 +240,8 @@ The hardness proof follows from the following steps:
 
 
 \begin{enumerate}
-	\item First, we show (via the \nameref{theorem:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, $\Eps'd \leq |\Neighbourhood{E}{v} \cap A| \leq \Eps d$, where $0 <\Eps '< \Eps < 1$ are small constants. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
-	\item Let $D = d/\ExpansionFactor{G}$. We find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$, where $\PathSize = 2k+1$ is an odd integer for $k = \BigO{\log_{D} n}$. We show (via the \nameref{theorem:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above. \ari{Add in the alternating argument.}
+	\item First, we show (via Theorem \ref{thm:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $A$ and $B$, as shown in Figure \ref{subfig:partitionA}. The partition has the property that for each vertex $v \in V$, $\Eps'd \leq |\Neighbourhood{E}{v} \cap A| \leq \Eps d$, where $0 <\Eps '< \Eps < 1$ are small universal constants. Given this partitioning, we define consider the subgraph $G_A = (A, E_A)$ where we only include edges with both endpoints in $A$ (see Figure \ref{subfig:partitionB}).
+	\item Let $D = d/\ExpansionFactor{G} \in \Reals$. We find a subdivision $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) = \PathSize$, where $\PathSize = 2k+1$ is an odd integer for $k = \BigO{\log_{D} n}$. We show (via Theorem \ref{thm:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_A$ defined above. As the paths of odd length, we can just assign \highlight{TODO}
 	
 %	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
 	\item We show (via the \nameref{theorem:perfect-matching}) that the subgraph of $G$ not participating in the topological embedding above, has a perfect matching $M$. For all $e \in M$, we set $x_e = 1$ and for all $e \notin \Edges{\Embedding{\Subdivision{H}{\sigma}}}$ but not in $M$, set $x_e = 0$. These assignments imply that the formula for refuting $\PerfectMatching{G}$ can be partially filled up, and we are left with the task of refuting a restricted formula. Refuting this restricted formula is identical to finding a refutation in the original hard instance, and thus the proof complexity for refuting perfect matching for $G$ is $\BigOmega{t}$ where $t$ is the number of vertices in the hard instance $H$. We show that $t = \BigOmega{n\log n}$.
@@ -332,21 +293,19 @@ Suppose $X_1, ..., X_n$ are identical independent random variables taking values
 
 
 \begin{theorem}[Partition Theorem]\label{thm:partition}
-There exists a constant $d_0 \in \Naturals$ and small constants $\delta \in (0,1)$ such that, given a $\EnDeeLambda$ graph $\Graph = (V, E)$, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $ \Eps'd \Def \alpha(1-\delta)d\leq |\Neighbourhood{\EdgesShort}{v} \cap A| \leq \alpha(1+\delta)d \Def \Eps d$ where $\alpha=0.1$ is a small constant.
-
-	
+There exists a constant $d_0 \in \Naturals$ and small constants $\delta \in (0,1)$ such that, given a $\EnDeeLambda$ graph $\Graph = (V, E)$, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $ \Eps'd \Def 0.1(1-\delta)d\leq |\Neighbourhood{\EdgesShort}{v} \cap A| \leq 0.1(1+\delta)d \Def \Eps d$. 
 \end{theorem}
 
 \begin{proof}We prove the existence of such a partition $A \cup B = V$ using the probabilistic method.
-For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $\alpha$.
+For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $\alpha=0.1$.
 If $X_i = 1$, then we include $v$ in $A$, else we put $v$ in $B$.
 Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $V$ into sets $A$ and $B$.
 For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{x \in \Neighbourhood{E}{v}} \Indicator{x \in A}$ denote the random variable that counts how many neighbours of $v$ are also in $A$.\\
 For any $\delta \in (0,1)$ and for any $v \in V$, let $E_v = \Indicator{|Y_v - d\alpha | \geq \delta \alpha d}$ denote the bad event that $Y_v$ is bounded away from $\alpha d$ by a multiplicative factor of $\delta$.
 As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \alpha d$, and observe that the dependency graph (Definition \ref{def:dep-graphs}) of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
 By the multiplicative Chernoff bound (Lemma \ref{lemma:mult-chernoff}), for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq 2\exp(-\delta^2\alpha d/3) \Def \beta$.
-For large enough $d$ i.e $d > d_0$, for some $d_0$, we can make $\delta \in (0,1)$ large enough, such that $2\exp(-\delta^2\alpha d/3) \leq 1/(4d)$. Therefore, we have $\beta d \leq 1/4$.
-Thus, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall v \in V, \text{ } E_v = 0}{\vec{X}} > 0$
+For large enough $d$ i.e $d > d_0$, for some $d_0$, we have that $2\exp(-\delta^2\alpha d/3) \leq 1/(4d)$. Therefore, we have $\beta d \leq 1/4$.
+Thus, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall v \in V, \text{ } E_v = 0}{\vec{X}} > 0$.
 
 \end{proof}
 
@@ -359,7 +318,7 @@ Thus, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PP
 
 \subsection{Step 2: The Topological Embedding}
 
-Given $\EnDeeLambda$ graph $G=(V,E)$, let $A$ and $B$ be the partition guaranteed by the \ \nameref{theorem:partition}.
+Given $\EnDeeLambda$ graph $G=(V,E)$, let $A$ and $B$ be the partition guaranteed by the \ \ref{thm:partition}.
 We also have that for all $v \in A$,  
 
 \[\alpha(1-\delta) d  \Def \EpsLower d \leq d |\Neighbourhood{\EdgesShort}{v} \cap A| \leq \alpha(1+\delta)d \Def \Eps d \]
@@ -433,7 +392,7 @@ Finally we get our theorem statement by setting $\epsilonL = 1/c_2$ and $\epsilo
 The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
 Note for every edge in $E_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
-\begin{theorem}{Topological Embedding Theorem}{top-embedding}
+\begin{theorem}[Topological Embedding Theorem]\label{thm:top-embedding}
 Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined above, where $|A| = \na$.
 Let $\dApproxLower \Def \Eps d$, and $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
 \ari{Define $\sigma$}.
@@ -583,8 +542,8 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
 \end{lemma}
 
 
-\begin{theorem}{Perfect Matching On The Remainder Theorem}{perfect-matching}
-Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from the \nameref{theorem:top-embedding}.
+\begin{theorem}[Perfect Matching On The Remainder Theorem]\label{thm:perfect-matching}
+Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from Theorem \ref{thm:top-embedding}.
 There exits a small constant $\PartitionEps \in (0,1)$, such that 
 if $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$, then the sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ has a perfect matching.	
 	
@@ -597,8 +556,7 @@ Define $\tilde{d} = d - \Eps d =d - \frac{d\PartitionEps}{2}$ and let $\tilde{G}
 Assume that the edge connectivity of $\tilde{G}$, denoted by $\EdgeConnectivity{\tilde{G}}$, is $\tilde{d}$. 
 %Then we show using the Tutte criterion that $\tilde{G}$ admits a perfect matching.
 Pick arbitrary $S \subseteq \Vertices{\tilde{G}}$.
-By the guarantees of the  \nameref{theorem:partition}, 
-the minimal degree of $\tilde{G}$ is $\tilde{d}$. 
+By the guarantees of Theorem \ref{thm:partition}, the minimal degree of $\tilde{G}$ is $\tilde{d}$. 
 Therefore, the number of edges in the cut between $S$ and $\Complement{S}$ is at most $\tilde{d}|S|$.
 If $\EdgeConnectivity{\tilde{G}} = \tilde{d}$, then by a simple counting argument, it must be that $\OddComponents{\tilde{G}[\tilde{V} \setminus S]} \leq |S|$ (as we need to delete  at least $\tilde{d}$ edges in the cut to disconnect the graph).
 Thus, by Lemma \ref{lemma:tutte-criterion}, $\tilde{G}$ admits a perfect matching.

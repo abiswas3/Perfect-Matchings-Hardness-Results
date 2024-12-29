@@ -16,6 +16,7 @@
 % \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
 % \newcommand{\BigO}[1]{O\left(#1\right)}
 
+\renewcommand{\vec}[1]{\mathbf{#1}}
 \newcommand{\TODO}{\textcolor{orange}{??TODO??}}
 \renewcommand{\epsilon}{\varepsilon}
 \newcommand{\Set}[1]{\left\{ #1\right\}}
@@ -63,7 +64,7 @@
 \newcommand{\PropFormula}{\Phi}
 \newcommand{\Proof}{\pi}
 \newcommand{\Size}[1]{\left|#1\right|}
-\newcommand{\Card}[1]{\text{Card}\left(#1\right)}
+\newcommand{\Card}[1]{\text{Card}(#1)}
 
 % Graph Commands
 \newcommand{\Graph}{G}
@@ -74,6 +75,7 @@
 \newcommand{\OddComponents}[1]{q(#1)}
 % Degree of vertex (a scalar)
 \newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
+\newcommand{\MaxDegree}[1]{\Delta(#1)}
 \newcommand{\Neighbourhood}[2]{\Gamma_{#1}\left(#2\right)}
 
 % Paper specific graph things
@@ -91,3 +93,37 @@
 \newcommand{\GlobalEdgeSet}{\textcolor{orange}{\mathcal{E}}}
 
 \newcommand{\PartitionEps}{\textcolor{orange}{\tilde{\epsilon}}}
+
+\newcommand{\Degree}[1]{\text{Deg}\left(#1\right)}
+\newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
+
+\newcommand{\Complement}[1]{\overline{#1}}
+\newcommand{\EdgeConnectivity}[1]{\kappa'(#1)}
+
+% \newcommand{\PC}{\underset{\texttt{PC}_F}{\vdash}}
+\newcommand{\PC}{\vdash_{\texttt{PC}_F}}
+\newcommand{\SOS}{\vdash_{\texttt{SOS}}}
+\newcommand{\en}{\textcolor{ballblue}{n}}
+\newcommand{\dee}{\textcolor{cadmiumgreen}{d}}
+\newcommand{\eigen}{\textcolor{red}{\lambda}}
+\newcommand{\EnDeeLambda}{(n, d, \lambda)}
+\newcommand{\Subdivision}[2]{{#1}^{#2}}
+\newcommand{\MinimalDegree}[1]{\delta(#1)}
+%\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
+\newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
+
+\newcommand{\epsilonA}{\textcolor{ballblue}{\epsilon_a}}
+\newcommand{\epsilonL}{\textcolor{cadmiumgreen}{\epsilon_\lambda}}
+\newcommand{\na}{\textcolor{razzmatazz}{n_A}}
+
+\newcommand{\BipartiteG}{G_{A \cup A}}
+
+\newcommand{\DistSet}[1]{\Delta(#1)}
+\newcommand{\Dist}{\mathcal{D}}
+\newcommand{\EdgesShort}{E}
+%\newcommand{\Mean}[2]{\underset{#1}{\mathbb{E}}\left[#2\right]}
+\newcommand{\Mean}[2]{\mathbb{E}_{#1}\left[#2\right]}
+\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
+\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
+\newcommand{\ExpansionFactor}[1]{\lambda(#1)}
+\newcommand{\EmbeddingFunc}{\Psi}
