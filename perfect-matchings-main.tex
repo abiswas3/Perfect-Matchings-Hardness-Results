@@ -50,7 +50,7 @@ To make the above question mathematically precise, in their seminal work, \citet
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that proves $A$?}''
 If we could show that there exists a proof system $S$, such that for any true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$, which would further imply that $\P = \NP$.
-Conversely, if we could show large lower bounds for $A$ in all proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
+Conversely, if we could show large proof size lower bounds for $A$ in all proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
 Unfortunately, we currently do not possess the tools to show lower such bounds for arbitrary proof systems.
 Thus, as an intermediate step towards making partial progress towards the grand problem, the research community has invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
 One example of a simple proof system is that of truth tables i.e. given a propositional formula $\PropFormula$ that is a tautology, a valid proof is simply the truth table for the formula.
