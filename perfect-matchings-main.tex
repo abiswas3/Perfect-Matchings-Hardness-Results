@@ -45,7 +45,7 @@ This is a first brain dump -- which I will tighten.}
 \end{figure}
 
 
-Perhaps the most fundamental problem in all of computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
+Perhaps the most fundamental problem in all of theorey of computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
 To make the above question mathematically precise, in their seminal work, \citet{cook1979relative} observed that we must first describe how to write down a proof, and define the rules for checking it.
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that proves $A$?}''
@@ -58,8 +58,7 @@ Given a formula on $n$ variables, the size of the proof is $2^n$ and it is easy 
 Although simple, truth tables are quite inefficient\footnote{When we say inefficient, we mean that proofs of true claims are long in the worst case.} proof systems, and by now know of considerably more expressive proof systems.
 Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
-We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.
-
+We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.\par
 In this work, we focus on a semi-algebraic proof systems\footnote{Write a remark about how these also extend to bounded Frege \highlight{TODO}.} like polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
 In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n)$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials must be over the reals.
@@ -74,7 +73,7 @@ More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = 
         \Card{G, \vec{b}}=
         \Bigger[10]\{\begin{array}{@{}cl}
                 x_{\highlight{e}}(1 - x_{\highlight{e}}) = 0 & \text{ for every $\highlight{e} \in E$}\\[3mm]
-                \underset{e \in E}{\sum x_e}= b_{\highlight{v}} & \text{ for every $\highlight{v} \in V$} \\[3mm]
+                \underset{u \in \Neighbourhood{E}{\highlight{v}}}{\sum x_{(u,\highlight{v})}}= b_{\highlight{v}} & \text{ for every $\highlight{v} \in V$} \\[3mm]
         \end{array}
 \]
 
