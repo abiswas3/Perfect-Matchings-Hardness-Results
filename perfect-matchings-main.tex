@@ -13,7 +13,7 @@
 
 \synctex=1
 % Title
-\title{Refutations Of Perfect Matchings In Expander Graphs Is Hard}
+\title{Sum of Squares Refutations of Perfect Matchings In Expander Graphs Is Also Hard}
 \newcommand{\dApproxLower}{\textcolor{red}{d'}}
 \newcommand{\dApproxExpandedLower}{\textcolor{black}{2\epsilon d}}
 \newcommand{\dApproxExpandedUpper}{\textcolor{black}{\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
@@ -31,8 +31,7 @@
 
 \maketitle
 \begin{abstract}
-\AttentionRajko{The introduction draft is very rough and I will clean this up.
-This is a first brain dump -- which I will tighten.}
+\AttentionRajko{The introduction and prelims should be ready for your eyes, as should be the main proof (almost)}
 \end{abstract}
 
 \section{Introduction}
@@ -45,8 +44,9 @@ This is a first brain dump -- which I will tighten.}
 \end{figure}
 
 
-Perhaps the most fundamental problem in all of theorey of computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
-To make the above question mathematically precise, in their seminal work, \citet{cook1979relative} observed that we must first describe how to write down a proof, and define the rules for checking it.
+Perhaps the most fundamental problem in all of theory of computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
+To answer the above question rigorously, in their seminal work, \citet{cook1979relative} observed that we must first describe what constitutes a valid proof?
+That is, we must describe the language used to write down the proof, and what the rules for checking it are.
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that proves $A$?}''
 If we could show that there exists a proof system $S$, such that for any true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$, which would further imply that $\P = \NP$.
@@ -56,10 +56,10 @@ Thus, as an intermediate step towards making partial progress towards the grand 
 One example of a simple proof system is that of truth tables i.e. given a propositional formula $\PropFormula$ that is a tautology, a valid proof is simply the truth table for the formula.
 Given a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
 Although simple, truth tables are quite inefficient\footnote{When we say inefficient, we mean that proofs of true claims are long in the worst case.} proof systems, and by now know of considerably more expressive proof systems.
-Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
+\highlight{Change to pitassi flemming} Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.\par
-In this work, we focus on a semi-algebraic proof systems\footnote{Write a remark about how these also extend to bounded Frege \highlight{TODO}.} like polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
+\highlight{Motivate why these proof systems a little}In this work, we focus on a semi-algebraic proof systems\footnote{Write a remark about how these also extend to bounded Frege \highlight{TODO}.} like polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
 In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n)$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials must be over the reals.
 We say a proof $\Proof$ is a refutation of $Q$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $Q$. 
@@ -81,7 +81,7 @@ For every $e \in E$, if the polynomial equation $x_e(1 - x_e) = 0$ were to be sa
 Note if there was an assignment of variables in $\vec{x} \in \bit^{|E|}$ that satisfied all the equations in $\Card{G, 1^{|V|}}$, it would imply that the graph $G$ has a perfect matching (given by the edges corresponding to variables with assignment 1).  
 When $|V|$ is odd, we know that any graph $G$ cannot have a perfect matching.
 In other words, $\Card{G, 1^{|V|}}$ cannot be satisfied.
-In this work we are interested in the complexity of PC and SOS refutations for $\Card{G, 1^{|V|}}$  when $|V|$ is odd\footnote{\highlight{We are interested in something more general but studying this suffices.}}.
+In this work we are interested in the complexity of PC and SOS refutations for $\Card{G, 1^{|V|}}$  when $|V|$ is odd\footnote{\highlight{We are interested in something more general but studying this suffices.}}. \highlight{USE PM(G) as shorthand.}
 With no further constraints on $G$, generic lower bounds for these refutations in PC or SOS proof systems are not known.
 In their recent manuscript \citep[Open Problem 7.7]{buss2021proof}, Buss and Nordstr{\"o}m asked ``\textit{Are even colouring formulas over expander graphs hard for
 polynomial calculus over fields of characteristic distinct from 2 ?}''
@@ -128,8 +128,8 @@ In summary, we show \emph{stronger} lower bounds for a \emph{larger} set of obje
 Our main result is stated below.
 
 \begin{theorem}[Main Theorem]\label{thm:main-thm}
-\highlight{Change this completely}
-There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds  for \emph{any} $(n, d, \lambda)$-graph $G$ on $n$ vertices, where $n$ is odd and $\lambda < \highlight{TODO}$:
+
+There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds  for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < \highlight{TODO}$:
 \begin{enumerate}
     \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
     \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
@@ -149,54 +149,60 @@ Finally, we conclude with some open problems that we could not resolve in this w
 \paragraph{Notation} Sets are denoted with upper case normal font e.g., $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g., $\Family{S}$. 
 
 
-\begin{definition}[Dependency Graphs]\label{def:dep-graphs}
-	
-\end{definition}
-
-\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution.
-Let $E_1,...,E_n$ be a set of events, and assume that the following hold: (1) The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$, and (2) $\PProb{E_i}{\Dist} \leq \beta$ for some $\beta \leq \frac{1}{4d}$. Then,
-
-\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]	
-	
-\end{lemma}
 
 \subsection{Proof Complexity Preliminaries}
 \label{sec:proof-system-prelims}
+
+Let $\Axioms = \{ p_1 = 0, \dots, p_m = 0\}$ be a set of polynomial equations over variables $\vec{X} = \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n\}$, which we refer to as axioms.
+We will always assume that the axioms $x_i^2 - x_i = 0$ and $\bar{x}_i^2 - \bar{x}_i = 0$ are always included in $\Axioms$ for all $i \in [m]$, which ensures that $x_i \in \bit$ for all $i\in [m]$.
+Additionally, we will also assume that $1 - x_i - \bar{x}_i=0$ is also include for all $i \in [m]$, which ensures that the bar elements are bit complements of the non-bar elements.
+
+\begin{definition}[Sum Of Squares Proofs]\label{def:sum-of-squares} Given a set of equality constraints $\Axioms$, a Sum of Squares (SoS) proof of $h \geq 0$ from $\Axioms$ is a set of polynomials $\Proof = (t_1, \dots, t_m; s_1, \dots, s_A)$ such that 
+
+\[ \sum_{i \in [m]} t_ip_i+ \sum_{i \in [a]} s_i^2 = h\]
+
+The degree of a proof $\Proof$ is 
+
+\[ \Degree{\Proof} \Def \max\left\{\max_{i \in [m]} \Degree{t_i} + \Degree{p_i}, \max_{i \in [a]} 2\Degree{s_i}\right\}\]	
+
+
+\end{definition}
+
+Since we always assume the axioms contain constraints that restrict the variables to a boolean range by adding constraints $x_i^2 - x_i=0$ to the axioms, we can alternatively just work in the ring $\Field[x_1, \dots, \bar{x}_n]/(x_1^2 - x_1, \dots, \bar{x}_n^2 - \bar{x}_n)$ of multilinear polynomials.
+Multi-linearity implies that the degree of any proof can be at most $n$ i.e a proof of degree $\BigOmega{n}$ is the largest lower bound one can hope to achieve.
+
+\begin{definition}[SoS Refutation]
+An SoS refutation of $\Axioms$ is a proof of $-1 \geq 0$ derived from an SoS proof from $\Axioms$. If we let $\Pi$ denote the set of all SoS refutations of $\Axioms$, then  
+
+\[ \Degree{\Axioms \SOS \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
+	
+\end{definition}
+
+Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} based on the following inference rules.
+\begin{enumerate}
+	\item From polynomials $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
+	\item From polynomail $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
+\end{enumerate}
+
 \begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
-	
+A Polynomial Calculus (PC) refutation of $\Axioms$ over is a set of polynomials $\Proof = t_1, \dots, t_l$	such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules. 
+The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i}$. If we let $\Pi$ denote the set of all PC refutations of $\Axioms$, then  
+
+\[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
 \end{definition}
 
-\subsection{Graph Theory Preliminaries}
-
-For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
-For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
-
-\begin{definition}[Subgraph]\label{def:subgraph}
-A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
-	
-\end{definition}
-
-\begin{definition}[Sub-divisions]\label{def:subdivisions}
-Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ (such that all these paths are mutually vertex disjoint, except at the end points).	
-\end{definition}
-
-\begin{definition}[Topological Minor]\label{def:topological-minor}
-A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
-\end{definition}
-
-Next we define pseudorandom graphs or expander graphs. 
-Throughout this document, it suffices to treat $d$ as a small constant.
-
-\begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
-Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
-We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
-\end{definition}
-
-
-\begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
-	
+The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
+\begin{lemma}[Worst Case Hard Instance For PC]Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
 
+The lower bounds for this hard instance $H$ also carry over to SoS refutations, and a formal proof can be found in \citep[Theorem A.3]{Austrin_2022}.
+
+\begin{lemma}[Worst Case Hard Instance For SOS]
+Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that SoS refutations requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
+\end{lemma}
+
+We are given a pseudorandom graph $G$ on an odd number of vertices for $n$ large enough, and we want to show that refuting perfect matchings in the PC and SoS proof system requires large proofs.
+As described earlier, we do this by topologically embedding the above hard instance $H$ into $G$ while preserving the hardness of the original instance.
 
 \section{Embedding Machinery}
 \label{sec:embed-machinery}
@@ -603,7 +609,57 @@ Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we m
 \section{Related Work}
 \label{sec:related-work}
 
-\clearpage
+
+
+
 \bibliographystyle{unsrtnat}
 \bibliography{main_paper}
+\clearpage
+\appendix
+\section{Extra Stuff TO SORT OUT later}
+\subsection{Graph Theory Preliminaries}
+
+\begin{definition}[Dependency Graphs]\label{def:dep-graphs}
+	
+\end{definition}
+
+\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution.
+Let $E_1,...,E_n$ be a set of events, and assume that the following hold: (1) The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$, and (2) $\PProb{E_i}{\Dist} \leq \beta$ for some $\beta \leq \frac{1}{4d}$. Then,
+
+\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]	
+	
+\end{lemma}
+
+
+For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
+For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
+
+\begin{definition}[Subgraph]\label{def:subgraph}
+A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
+	
+\end{definition}
+
+\begin{definition}[Sub-divisions]\label{def:subdivisions}
+Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ (such that all these paths are mutually vertex disjoint, except at the end points).	
+\end{definition}
+
+\begin{definition}[Topological Minor]\label{def:topological-minor}
+A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
+\end{definition}
+
+Next we define pseudorandom graphs or expander graphs. 
+Throughout this document, it suffices to treat $d$ as a small constant.
+
+\begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
+Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
+We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
+\end{definition}
+
+
+\begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
+	
+\end{lemma}
+
+
+
 \end{document}
