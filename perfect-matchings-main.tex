@@ -44,9 +44,9 @@
 \end{figure}
 
 
-Perhaps the most fundamental problem in all of theory of computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
-To answer the above question rigorously, in their seminal work, \citet{cook1979relative} observed that we must first describe what constitutes a valid proof?
-That is, we must describe the language used to write down the proof, and what the rules for checking it are.
+Perhaps the most fundamental problem in computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
+To answer the above question formally, in their seminal work, \citet{cook1979relative} observed that we must first describe what constitutes a valid proof?
+That is, we must describe the language in which the proof is written, and the rules for checking it.
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that proves $A$?}''
 If we could show that there exists a proof system $S$, such that for any true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$, which would further imply that $\P = \NP$.
@@ -55,18 +55,19 @@ Unfortunately, we currently do not possess the tools to show lower such bounds f
 Thus, as an intermediate step towards making partial progress towards the grand problem, the research community has invested a significant amount of time and energy in proving size lower bounds for more restricted proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
 One example of a simple proof system is that of truth tables i.e. given a propositional formula $\PropFormula$ that is a tautology, a valid proof is simply the truth table for the formula.
 Given a formula on $n$ variables, the size of the proof is $2^n$ and it is easy to see that we cannot use shorter proofs.
-Although simple, truth tables are quite inefficient\footnote{When we say inefficient, we mean that proofs of true claims are long in the worst case.} proof systems, and by now know of considerably more expressive proof systems.
-\highlight{Change to pitassi flemming} Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
+Although simple, truth tables are quite inefficient\footnote{A proof system $A$ is more inefficient than a proof system $B$ if proofs of the same claim are longer in $A$ compared to $B$.} proof systems, and by now know of considerably more expressive proof systems.
+\todo{Change this figure to the one in pitassi flemming which includes the relevant proof systems for us} Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.\par
-\highlight{Motivate why these proof systems a little}In this work, we focus on a semi-algebraic proof systems\footnote{Write a remark about how these also extend to bounded Frege \highlight{TODO}.} like polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
+In this work, we focus on a semi-algebraic proof systems like polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
 In a semi-algebraic proof system like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $Q=\{q_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of polynomial equations over $n$ variables $\vec{x} = (x_1, \dots, x_n)$ as the problem instance.
 In PC, the polynomials can be over \emph{any} field $\Field$, and in SOS, the polynomials must be over the reals.
 We say a proof $\Proof$ is a refutation of $Q$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $Q$. 
 In PC and SOS, the proof $\Proof$ is itself expressed as polynomial, and 
 the size/complexity of the proof is measured by the maximum of degree of the proof polynomial that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more details).
 We denote the degree of such proof polynomials with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and  main goal of the discipline to study how complexity of the degree of refutals for different problem instsances $Q$.
-Although algebraic by definition, one can these proof systems to capture constraints of combinatorial objects like graphs.
+Although algebraic by definition, one can these proof systems to capture constraints of combinatorial objects like graphs, and even serve as a proof system for UNSAT.
+In this paper we consider refutations of the perfect matching principle.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
 \[
@@ -79,9 +80,10 @@ More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = 
 
 For every $e \in E$, if the polynomial equation $x_e(1 - x_e) = 0$ were to be satisfied, then it restricts the domain of the above variables to bits i.e. $x_e \in \bit$ for all $e \in E$.
 Note if there was an assignment of variables in $\vec{x} \in \bit^{|E|}$ that satisfied all the equations in $\Card{G, 1^{|V|}}$, it would imply that the graph $G$ has a perfect matching (given by the edges corresponding to variables with assignment 1).  
+When $\vec{b} = 1^{|V|}$, as short hand we denote $\Card{G, \vec{b}}$ as $\PM{G}$.
 When $|V|$ is odd, we know that any graph $G$ cannot have a perfect matching.
 In other words, $\Card{G, 1^{|V|}}$ cannot be satisfied.
-In this work we are interested in the complexity of PC and SOS refutations for $\Card{G, 1^{|V|}}$  when $|V|$ is odd\footnote{\highlight{We are interested in something more general but studying this suffices.}}. \highlight{USE PM(G) as shorthand.}
+In this work we are interested in the complexity of PC and SOS refutations for $\PM{G}$  when $|V|$ is odd. 
 With no further constraints on $G$, generic lower bounds for these refutations in PC or SOS proof systems are not known.
 In their recent manuscript \citep[Open Problem 7.7]{buss2021proof}, Buss and Nordstr{\"o}m asked ``\textit{Are even colouring formulas over expander graphs hard for
 polynomial calculus over fields of characteristic distinct from 2 ?}''
@@ -105,25 +107,29 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $\ve
 \end{theorem}
 
 Given a random $d$-regular graph $G$ on $n$ vertices (where $n$ is odd), the authors start with a worst case hard graph $H$ described by \citet{buss1999linear}.
-Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
+%Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
 Their average case hardness result then comes by \emph{embedding} $H$ into $G$ in such a way that that the hardness of $H$ is transferred to $G$.
 Thus, the main contribution of \citet{Austrin_2022} is a novel embedding theorem that embeds $H$ as a topological minor into $G \samples \mathcal{G}(n, d)$ with high probability. 
-A distinctive feature of their result is that as the embedding relies on randomness used to sample the regular graph, they can only provide average case lower bounds.
-Therefore, these techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of pseudorandom graphs.
+A distinctive feature of their result is that as the embedding relies on randomness used to sample the regular graph, and thus they only provide average case lower bounds.
+These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of pseudorandom graphs.
 
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question via showing embedding theorems that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in pseudorandom graphs.
 It should be noted that as pseudorandom graph is \emph{also} a random graph with high probability, our result subsumes the result of \citet{Austrin_2022}.
 A second defining feature of our contribution is the qualitative simplicity of our hardness result.
-To show their hardness results, Austrin and Risse embed the hard instance $H$ described above in a random $G=(V,E) \samples \mathcal{G}(n,d)$ by first showing a partition lemma that partitions $V$ into two sets $T$ and $V \setminus T$, such that the partition satisfies two properties.
-The first property requires that for any odd sized subset $U \subseteq T$, $V \setminus U$ has a perfect matching.
-This property is used to inherit the hardness of $H$ into $G$, and the authors rely on randomness of sampling random graphs to prove this property.
-In contrast, we show a much simpler way to inherit the hardness of $H$ into any pseudo random graph via a simple application of the Tutte criterion (Lemma \ref{lemma:tutte-criterion}). 
+To show their hardness results, Austrin and Risse embed the hard instance $H$ constructed by \citet{buss1999linear} in a random $d$ regular graph $G \samples \mathcal{G}(n,d)$.
+To do this, they first show a partition lemma that partitions $\Vertices{G}$ into two sets $T$ and $\Vertices{G} \setminus T$, such that the partition satisfies two properties.
+The first property requires that for any odd sized subset $U \subseteq T$, $\Vertices{G} \setminus U$ has a perfect matching.
+This property is used to inherit the hardness of $H$ into $G$ (ensuring that there is no shorter refutation using other parts of the graph), but the authors rely on randomness to prove this result.
+In contrast, we show a much simpler way to inherit the hardness of $H$ into any pseudo random graph (even deterministic constructions) via a simple application of the Tutte criterion (Lemma \ref{lemma:tutte-criterion}). 
 The second property, requires the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
-Given any graph $H$, \citet{krivelevich2019completeminorsgraphssparse} show if a host graph $\tilde{G}$ is a vertex expander with the above parameters, then $\tilde{G}$ contains $H$ as a minor.
-They describe an iterative algorithm for  embedding the vertices of $H$ into $\tilde{G}$ one while keeping track of the unused vertices of $\tilde{G}$, and discarding bad vertices that lead to bad embeddings and restarting the process of finding good vertices again \ari{Rajko can likely provide a better summary of his own work}.
+The primary reason the authors require the second property, is to be able to use a result by \citet{krivelevich2019completeminorsgraphssparse}, which allows us to embed any graph $H$ into a host graph $\tilde{G}$ as a minor, if $\tilde{G}$ is a vertex expander.
+%They describe an iterative algorithm for  embedding the vertices of $H$ into $\tilde{G}$ one while keeping track of the unused vertices of $\tilde{G}$, and discarding bad vertices that lead to bad embeddings and restarting the process of finding good vertices again \ari{Rajko can likely provide a better summary of his own work}.
+However, Austrin and Risse cannot directly use the result in \citep{krivelevich2019completeminorsgraphssparse} as they need to embed $H$ as a \emph{topological} minor in the $d$ random graph $G$.
+Thus, their main technical contribution is a modification of \citet{krivelevich2019completeminorsgraphssparse} to allow for topological embeddings.
 To embed $H$ as a topological minor, Austrin and Risse need to find vertex disjoint odd length paths in $\tilde{G}$ for edges in $H$.
 Therefore they map vertices of $H$ to ``star-like'' subgraphs in $\tilde{G}$, which allows the central vertex of the star to be connected to many vertex disjoint paths without incurring collisions.
-In this paper, we show a more direct way to embed $H$ into any pseudorandom graph $\tilde{G}$ using techniques inspired from from wide sense non blocking networks \citep{feldman1988wide}, without relying on extending the machinery introduced by \citet{krivelevich2019completeminorsgraphssparse} which solves a related but different problem.
+Formally proving the result requires a fairly involved set of tools from spectral graph theory.
+We show a more direct way to embed $H$ into any expander graph using just the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}), and routing lemmas inspired from the theory of wide sense non blocking networks \citep{feldman1988wide}.
 In summary, we show \emph{stronger} lower bounds for a \emph{larger} set of objects using \emph{simpler} proof techniques.
 Our main result is stated below.
 
@@ -146,7 +152,47 @@ Finally, we conclude with some open problems that we could not resolve in this w
 \section{Preliminaries}
 \label{sec:prelims}
 
-\paragraph{Notation} Sets are denoted with upper case normal font e.g., $S$. Families (or collections) of sets are denoted with upper case calligraphic purple text e.g., $\Family{S}$. 
+We need some basic definitions for lemmas for proving existence of objects using the probabilistic method.
+Detailed proofs for these lemmas can be found in \citep[Chapter 1, Chapter 7]{mitzenmacher2017probability}.
+A dependency graph for a set of events $E_1, . . . , E_n$ is a graph $G=(V, E)$ such that $V = \{1,.. . , n\}$ and,  for $i= 1,\dots, n$, event $E_i$ is mutually independent
+of the events $\{E_j | (i, j) \in E\}$. The degree of the dependency graph is the maximum degree of any vertex in the graph.
+
+\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution.
+Let $E_1,...,E_n$ be a set of events, and assume that the following hold: (1) The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$, and (2) $\PProb{E_i}{\Dist} \leq \beta$ for some $\beta \leq \frac{1}{4d}$. Then,
+
+\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]		
+\end{lemma}
+
+\begin{lemma}[Multiplicative Chernoff Bound]\label{lemma:mult-chernoff}
+Suppose $X_1, ..., X_n$ are identical independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_1}$ denote the sum's expected value. Then for any $0 < \delta < 1$
+
+\[ \Prob{|X - \mu| \geq \delta \mu} \leq 2\exp(-\delta^2\mu/3)\]
+	
+\end{lemma}
+
+
+
+\subsection{Graph Theory Preliminaries}
+\label{sec:graph-theory-prelims}
+
+For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
+For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
+We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
+We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
+Next we define pseudorandom graphs or expander graphs. 
+Throughout this document, it suffices to treat $d$ as a small constant.
+
+\begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
+Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
+We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
+\end{definition}
+
+
+\begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
+	
+\end{lemma}
+
+
 
 
 
@@ -201,8 +247,35 @@ The lower bounds for this hard instance $H$ also carry over to SoS refutations, 
 Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that SoS refutations requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
 
-We are given a pseudorandom graph $G$ on an odd number of vertices for $n$ large enough, and we want to show that refuting perfect matchings in the PC and SoS proof system requires large proofs.
-As described earlier, we do this by topologically embedding the above hard instance $H$ into $G$ while preserving the hardness of the original instance.
+An important lemma we will need is that given a set of axioms $\Axioms$ over the ring $\Field[x_1, \dots, x_n]$, a partial assignment of variables can only make refuting $\Axioms$ easier.
+Given a set of $m$ polynomial equality constraints $\Axioms$ over boolean variables $\{x_1, \dots, x_n\}$, let the family of functions $\{f_i: \bit^n \rightarrow \{\True,\False\} \}_{i \in [m]}$, denote predicates for satisfiability for each constraint.
+For example, given $\alpha \in \bit^n$, $f_i(\alpha) = \True$ if the $i$'th polynomial constraint $p_i \in \Axioms$ is satisfied i.e $p_i(\alpha) = 0$.
+We say $\Axioms$ is satisfied if $\exists \alpha \in \bit^n$ such that $f_i(\alpha) = \True \iff p_i(\alpha)=0$ for all $i \in [m]$.
+Given a map $\rho: \{x_1, \dots, x_n \} \rightarrow \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n, 1, 0 \}$, the restriction of a function $f: \bit^n \rightarrow \bit$, denoted by $f|_\rho$, is defined as $f|_\rho(x_1, \dots, x_n) = f(\rho(x_1), \dots, \rho(x_n))$.
+Similarly, the restriction of formula $\Axioms$ is defined as $\Axioms|_\rho = \{f_{1}|_\rho, \dots, f_{m}|_\rho \}$.
+Two formula $\Axioms$ and $\Axioms'$ are equivalent if they are element-wise equal, ignoring any functions that are constantly $\True$.
+For example, $\Axioms = \{f_a, f_b, \True \}$ and $\Axioms' = \{f_a, f_b\}$ are equivalent, denoted as $\Axioms \equiv \Axioms'$.
+
+
+\begin{definition}[Affine Restriction]\label{def:affine-restriction}
+We say that an axiom $\Axioms'$ is an
+affine restriction of $\Axioms$ if there is a map $\rho : \{x_1,\dots,x_n\} \rightarrow \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n, 1, 0 \}$ such that $\Axioms \equiv \Axioms|_{\rho}$.	
+\end{definition}
+
+
+\begin{lemma}\label{lemma:affine_restriction}
+Let $\Axioms, \Axioms'$ be axioms such that $\Axioms'$ is an affine restriction of $\Axioms$, and each axiom
+of $\Axioms$ depends on a constant number of variables, then 
+\begin{enumerate}
+	\item For any field $\Field$ it holds that $\Degree{\Axioms \PC \bot} \in \BigOmega{\Degree{\Axioms' \PC \bot}}$
+	\item $\Degree{\Axioms \SOS \bot} \in \BigOmega{\Degree{\Axioms' \SOS \bot}}$
+\end{enumerate}
+\end{lemma}
+
+What the above lemma says is that if we have a graph $G$ with odd vertices, that has a perfect matching on a subset of even vertices on the graph, then the size of a SoS or PC refutation can only decrease.
+
+%We are given a pseudorandom graph $G$ on an odd number of vertices for $n$ large enough, and we want to show that refuting perfect matchings in the PC and SoS proof system requires large proofs.
+%As described earlier, we do this by topologically embedding the above hard instance $H$ into $G$ while preserving the hardness of the original instance.
 
 \section{Embedding Machinery}
 \label{sec:embed-machinery}
@@ -254,12 +327,6 @@ The hardness proof follows from the following steps:
 
 \subsection{Step 1: Partition $G$ into $A$ and $B$}
 
-\begin{lemma}[Multiplicative Chernoff Bound]\label{lemma:mult-chernoff}
-Suppose $X_1, ..., X_n$ are identical independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_1}$ denote the sum's expected value. Then for any $0 < \delta < 1$
-
-\[ \Prob{|X - \mu| \geq \delta \mu} \leq 2\exp(-\delta^2\mu/3)\]
-	
-\end{lemma}
 
 %\begin{figure*}[t!]
 %    \centering
@@ -623,16 +690,8 @@ Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we m
 	
 \end{definition}
 
-\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution.
-Let $E_1,...,E_n$ be a set of events, and assume that the following hold: (1) The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$, and (2) $\PProb{E_i}{\Dist} \leq \beta$ for some $\beta \leq \frac{1}{4d}$. Then,
-
-\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]	
-	
-\end{lemma}
 
 
-For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
-For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
 
 \begin{definition}[Subgraph]\label{def:subgraph}
 A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
@@ -646,20 +705,6 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 \begin{definition}[Topological Minor]\label{def:topological-minor}
 A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
 \end{definition}
-
-Next we define pseudorandom graphs or expander graphs. 
-Throughout this document, it suffices to treat $d$ as a small constant.
-
-\begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
-Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
-We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
-\end{definition}
-
-
-\begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
-	
-\end{lemma}
-
 
 
 \end{document}
