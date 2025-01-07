@@ -17,7 +17,9 @@
 \usepackage{graphicx} % For including images
 \usepackage{svg}
 \usepackage{xcolor}
-% \usepackage{ulem}
+\usepackage{ulem}
+\usepackage{marginnote} % For margin notes
+
 \usepackage{bbm}
 \usepackage{xspace}
 \usepackage{tabularx}
@@ -72,6 +74,39 @@
 \usepackage{fancyhdr}
 \graphicspath{ {assets/} }
 
+\usepackage{hyperref} 
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=cadmiumgreen,
+    citecolor=carminepink, % Set color for citation links
+    urlcolor=titlecolor % Set color for URL links
+}
+
+\usepackage{cleveref}       % smart cross-referencing
+
+
+\usepackage{framed}
+\usepackage{rotating}
+
+\usepackage[colorinlistoftodos]{todonotes}
+
+% These are for theorems.
+\UseRawInputEncoding
+% \usepackage[conf={},createShortEnv]{proofs-end} 
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+
+% Set margin width and alignment
+\usepackage{marginnote} % For margin notes
+\usepackage{xcolor}     % For colors
+\usepackage{lipsum}     % For dummy text
+
+% Set margin width and alignment
+\renewcommand*{\raggedrightmarginnote}{\raggedright}
+\setlength{\marginparwidth}{2.5cm}
+
+
 
 \definecolor{amber}{rgb}{1.0, 0.49, 0.0}
 \definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
@@ -92,55 +127,20 @@
 \definecolor{subsectioncolor}{RGB}{0,129,255}
 \definecolor{definitioncolor}{rgb}{251, 74, 52}
 \definecolor{theoremcolor}{RGB}{48, 51, 50}
-
-
 % iroshizuku color names
 \definecolor{ama-iro}{RGB}{0, 158, 243.0}
-\definecolor{fuyu-gaki}{RGB}{251, 74, 52}
+\definecolor{fuyu-gaki}{HTML}{C75146} % Persimmon red
 \definecolor{momiji}{RGB}{245, 70, 111}
 \definecolor{hotaru-bi}{RGB}{229,221,58} % yellowish
 \definecolor{kon-peki}{RGB}{1,120,217}
 \definecolor{shin-kai}{RGB}{77,98,152}
 \definecolor{shin-ryoku}{RGB}{1,145,97}
 \definecolor{yama-budo}{RGB}{171,14,122}
+\definecolor{tsutsuji}{HTML}{C71585}  % Magenta-pink for "prove or disprove"
+\definecolor{mizu}{rgb}{0.0, 0.6, 0.8} % Water (light blue)
+\definecolor{kikyou}{rgb}{0.4, 0.4, 0.8} % Bellflower (blueish purple)
 
 \definecolor{theoremcolor}{RGB}{77,98,152}
 \definecolor{definitioncolor}{RGB}{255, 213, 179}
-%\definecolor{examplecolor}{RGB}{210, 229, 205}
 \definecolor{examplecolor}{RGB}{255, 213, 179}
 
-\usepackage{hyperref} 
-
-\hypersetup{
-    colorlinks=true,
-    linkcolor=cadmiumgreen,
-    citecolor=carminepink, % Set color for citation links
-    urlcolor=titlecolor % Set color for URL links
-}
-
-\newcommand{\highlight}[1]{\color{bittersweet} #1 \color{black}}
-\newcommand{\ari}[1]{\textcolor{purple}{\textbf{[Ari]:} #1}}
-\newcommand{\rajko}[1]{\textcolor{purple}{\textbf{[Rajko]:} #1}}
-\newcommand{\AttentionRajko}[1]{\textcolor{orange}{\textbf{Attention Rajko:}}\textcolor{blue}{\quad#1}}
-
-\newcommand{\CC}[1]{\textcolor{carminepink}{\textbf[CC] #1}}
-\newcommand{\CCResolved}[1]{\textcolor{carminepink}{\textbf[CC] \sout{#1}}}
-\usepackage{cleveref}       % smart cross-referencing
-
-
-\usepackage{framed}
-\usepackage{rotating}
-
-\usepackage[colorinlistoftodos]{todonotes}
-% todo leftbar
-% \newenvironment{todo}{ %
-% \def\FrameCommand{\hspace{-2em}%
-% \begin{sideways}%
-% \textcolor{red}{\textsf{\small TODO}}%
-% \end{sideways}%
-% \hspace{0.5em}\textcolor{red}{\vrule width 0.5pt} \hspace{0.5em}}\MakeFramed {\advance\hsize-\width \FrameRestore}}
-% {\endMakeFramed}
-
-
-
-%\newcommand{\email}[1]{\texttt{#1}}
