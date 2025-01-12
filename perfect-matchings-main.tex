@@ -301,7 +301,8 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 \begin{figure}[h]
 \center
 {\caption{The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$. As $E' \subseteq E$ is a safe state that is not too large, by the non blocking property, we are \emph{guranteed} to connect any vertex $v \in L$ to a vertex $w \in R$ such that $(v,w) \notin E'$}
-\label{fig:test}}
+}
+\label{fig:test}
 {\includegraphics{assets/non-blocking-networks.pdf}}
 \end{figure}
 
@@ -348,6 +349,7 @@ The hardness proof follows from the following steps, and is illustrated in Figur
 
 \subsection{Step 1: Partition $G$ into $A$ and $B$}
 
+\ari{Change this to a balanced set -- look into Lemma by Killian and Per}
 
 %\begin{figure*}[t!]
 %    \centering
@@ -621,17 +623,26 @@ This concludes the proof.
 
 \subsection{Step 3: Finding A Perfect Matching In The Remainder Of The Graph}
 
+Before describing the full proof need some definitions from graph theory.
+
 \begin{definition}[Edge Connectivity]\label{def:edge-connectivity}
 The edge connectivity of a graph $G$, denoted with $\EdgeConnectivity{G}$ is the minimum number of edges we must delete from the graph to make it disconnected.	
 \end{definition}
 
-%Lemma \ref{lemma:expanders-minimal-matching} is from \citep[Theorem 4.3]{krivelevich2006pseudo}, that says the pseudorandom graphs on an even number of vertices have perfect matchings.
+\begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
+Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
+\end{lemma}
+\begin{proof}
+  
+\end{proof}
 
-
-\ari{Add subgraph notation}
 \begin{lemma}[Tutte Criterion]\label{lemma:tutte-criterion}
-Let $\OddComponents{G}$ denote the number of odd components in a graph $G=(V,E)$. 
+Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with even number of vertices.
 $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
+\end{lemma}
+
+\begin{lemma}[All Sets Are Good]\label{lemma:d-connected-sets-have-no-bad-sets}
+
 \end{lemma}
 
 
@@ -643,55 +654,25 @@ if $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$, then the sub-graph $\Grap
 \end{theorem}
 
 
-\begin{proof}
-Let $\PartitionEps = 2\Eps$, where $\Eps$ is as defined above.
-Define $\tilde{d} = d - \Eps d =d - \frac{d\PartitionEps}{2}$ and let $\tilde{G}=(\tilde{V}, \tilde{E})$ be short hand for $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
-Assume that the edge connectivity of $\tilde{G}$, denoted by $\EdgeConnectivity{\tilde{G}}$, is $\tilde{d}$. 
-%Then we show using the Tutte criterion that $\tilde{G}$ admits a perfect matching.
-Pick arbitrary $S \subseteq \Vertices{\tilde{G}}$.
-By the guarantees of Theorem \ref{thm:partition}, the minimal degree of $\tilde{G}$ is $\tilde{d}$. 
-Therefore, the number of edges in the cut between $S$ and $\Complement{S}$ is at most $\tilde{d}|S|$.
-If $\EdgeConnectivity{\tilde{G}} = \tilde{d}$, then by a simple counting argument, it must be that $\OddComponents{\tilde{G}[\tilde{V} \setminus S]} \leq |S|$ (as we need to delete  at least $\tilde{d}$ edges in the cut to disconnect the graph).
-Thus, by Lemma \ref{lemma:tutte-criterion}, $\tilde{G}$ admits a perfect matching.
+\begin{proof}Let $\RemGraph \Def  \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
+  Let $A$ and $B$ denote the balanced sets from Theorem \ref{thm:partition}.
+  In this proof, we describe vertices in $A$ as red nodes, and vertices in $B$ as green nodes.
+  Assume towards a contradiction that $\RemGraph$ does \highlight{not} admit a perfect matching.
+This implies that there exists a bad set $\BadSet$ such that $\OddComponents{\RemGraph \setminus \BadSet} > |\BadSet|$.
+Now,  we know from Lemma \ref{lemma:edge-connectivity-pseudorandom} that $G$ is $d$ edge connected, therefore by Lemma \ref{lemma:d-connected-sets-have-no-bad-sets} we get that $\OddComponents{G \setminus \BadSet} \leq |\BadSet|$.  
+Also as $\Embedding{\Subdivision{H}{\sigma}}$ is a connected subgraph contained entirely in $B$, it must be entirely contained in one of the connected components connected to $\BadSet$ (\highlight{See figure}).
+We denote this connected component with $U$.
+Now for $\RemGraph$ to \highlight{not} admit a perfect matching, deleting edges incident on $\Embedding{\Subdivision{H}{\sigma}}$ must cause $U$ to split into more than 1 disconnected components, which causes $\OddComponents{\RemGraph \setminus \BadSet}$ to cross over the threshold $|\BadSet|$ (\highlight{see figure}).
+Without loss of generality, we assume that $\OddComponents{G \setminus \BadSet} = |\BadSet|$, and deleting $\Embedding{\Subdivision{H}{\sigma}}$ from $G$, splits $U$ into 2 disconnected components, and therfore we get 
+$\OddComponents{\RemGraph \setminus \BadSet} =  |\BadSet|+1$, which implies $\BadSet$ is a bad set, and $\RemGraph$ does not admit a perfect matching.
 
-To complete the proof we need to show that $\EdgeConnectivity{\tilde{G}} = \tilde{d}$.
-Let $\tilde{n} \Def |\tilde{V}|$.
-Pick arbitrary $U \subset \tilde{V} \subset V$ such that $|U| \Def u \leq \tilde{n}/2 \leq n/2$.
-As $G$ is an $\EnDeeLambda$ graph, we have
+\highlight{The picture looks like this --  use above figure for this}.
 
-\begin{align}
-\CutEdges{U}{\Complement{U}}{E} &\geq 	\frac{d}{n}u(n-u) - \lambda\sqrt{u(n-u)(1 - u/n)(1- (n-u)/n)} \label{eq:step1}\\
-&= \frac{(n-u)}{u}u(d - \ExpansionFactor{G}) \label{eq:step2}\\
-&\geq \frac{u}{2}(d - \ExpansionFactor{G})
-\end{align}
+For $U$ to split at least two connected components, we need the scenario depicted by Figure \highlight{This is figure 2}.
+Let us denote with $X$ and $Y$ the vertices of the components connected to $\Embedding{\Subdivision{H}{\sigma}}$.
+If $U$ has to split into at least 2 components, there can be no edge between $X$ and $Y$.
+But as $A$ and $B$ are balanced sets, and $G$ is an $\EnDeeLambda$ graph, \textit{we show that this is imppossible}, thereby giving us the contradiction we are looking for.
 
-\eqref{eq:step1} comes from the tighter version of the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}), and 
-\eqref{eq:step2} comes from the fact $u \leq n/2$.
-To construct $\tilde{G}$, we delete at most $\Eps$ fraction of edges for each vertex $v \in V$, such that the degree of every vertex $v \in \tilde{V}$ is at least $\tilde{d}$.
-Therefore, the number of edges across $U$ and $\Complement{U}$ based on $E$ we might have to delete to construct $\tilde{G}$ is at most $u(\PartitionEps d)/2$.
-
-\begin{align}
-	\CutEdges{U}{\Complement{U}}{\tilde{E}} &\geq 	\CutEdges{U}{\Complement{U}}{\tilde{E}} - \frac{\PartitionEps d}{2} u \\
-&\geq \frac{u}{2}(d - \ExpansionFactor{G}) - \frac{\PartitionEps d}{2} u \\
-&= \frac{u}{2}\left(d - \ExpansionFactor{G} - \PartitionEps d\right) \label{eq:lambda-assumption} \\
-&\geq \tilde{d}
-\end{align}
-
-
-\eqref{eq:lambda-assumption} comes from the assumption that $\ExpansionFactor{G} \leq d - \PartitionEps d - 2$, which is easily satisfied by the conditions on $\ExpansionFactor{G}$ in the above lemmas.
-%be an arbitrary subset of size at most $\tilde{n}/2$.\ari{Make sure to define $\tilde{n}$}.
-
-%Let $\Embedding{\Subdivision{H}{\sigma}}$ denote the subgraph of $G$ which represents the topological embedding of $H$ from Lemma \ref{lemma:top-embedding}.
-%Define . 
-%That is $\tilde{\Graph}$ is a subgraph of $\Graph$ using all vertices in $B$ and the vertices in $A$ that were not used to embed $\Subdivision{H}{\sigma}$.
-%As $\ExpansionFactor{\Graph} \leq \lambda$, and $\tilde{\Graph}$ is a subgraph, we have $\ExpansionFactor{\tilde{\Graph}} \leq \lambda$.
-%%\ari{This is super easy to show using basic linear algebra, I can explicitly prove this if you think it's needed.}
-%By lemma \ref{lemma:partition}, we know that the minimal degree $\MinimalDegree{\tilde{\Graph}} \geq \tilde{d}$.
-%Let $\dbtilde{\Graph}$ denote a subgraph of $\tilde{G}$, where for each $v \in \Vertices{\tilde{\Graph}}$ we retain exactly $\tilde{d}$ of its neighbours.
-%It is easy to see that $\dbtilde{\Graph}$ is a $(\tilde{n}, \tilde{d}, \lambda)$ pseudorandom graph, where $\tilde{n} = |\Vertices{\tilde{\Graph}}|$ and $n$ is even (since $|\Vertices{\Graph}|$ is odd and $|\Vertices{\Embedding{\Subdivision{H}{\sigma}}}|$ is also odd). 
-%As $\lambda \leq \tilde{d} - 2$, we invoke Lemma \ref{lemma:expanders-minimal-matching} to get that $\dbtilde{G}$ has a perfect matching.
-%As $\dbtilde{G}$ is a sub-graph of $\tilde{G}$ with the same vertex set, $\tilde{G}$ also has a perfect matching.
-%\ari{Set $\lambda$ here from the embedding lemma and you're done}.
 \end{proof}
 
 \section{Related Work}
