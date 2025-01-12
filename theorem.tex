@@ -1,10 +1,3 @@
-%!TEX root = ./main_source.texx
-\UseRawInputEncoding
-% \usepackage[conf={},createShortEnv]{proofs-end} 
-\usepackage{thmtools}
-\usepackage[framemethod=TikZ]{mdframed}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theorem
 % Define a new theorem style
@@ -92,77 +85,19 @@
 \newtheorem{lemma}[theorem]{Lemma}
 % Automatically surround lemma with mdframed
 \surroundwithmdframed[style=lemmaframe]{lemma}
+\newtheorem{claim}[theorem]{Claim}
+% Automatically surround lemma with mdframed
+\surroundwithmdframed[style=definitionframe]{claim}
+
+% Define custom environments for Question and Open Problem
+% \newenvironment{question}
+%   {\reversemarginpar
+%    \marginnote{\textbf{\textcolor{fuyu-gaki}{Question:}}}}
+%  {}
+
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{colframe=fuyu-gaki, colback=mizu!10, coltitle=white, title={Problem }, sharp corners, boxrule=0.8mm, width=0.9\textwidth, boxsep=2mm, left=3mm, right=3mm, top=2mm, bottom=2mm, breakable}
 
 
-
-% Define a custom Problem environment using \newtheorem
-\newtheoremstyle{problemstyle} % Define a custom style for "Problem"
-  {}                       % Space above
-  {}                       % Space below
-  {\normalfont}                 % Body font
-  {}                            % Indent
-  {\bfseries}                   % Theorem head font (bold)
-  {}                            % Punctuation after the heading
-  {10pt}                        % Space after the heading
-  {}                            % Theorem head spec (empty for no colon)
-\theoremstyle{problemstyle}
-\newtheorem*{problem}{Problem}
-% Create a theorem-style environment wrapped in a blue box
-\newenvironment{boxedproblem}
-  {\begin{mdframed}[backgroundcolor=azure!15, linecolor=azure, 
-  % innertopmargin=10pt, innerbottommargin=10pt, innerleftmargin=10pt, innerrightmargin=10pt, 
-  % skipabove=10pt, 
-  % skipbelow=10pt
-  ]
- \begin{problem}\ignorespaces
-}
-{
-  \end{problem}
-\end{mdframed}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Theorem
-% \NewTcbTheorem{theorem}{Theorem}%
-% {colback=white!20,
-% colframe=definitioncolor!20,
-% coltitle=black,
-% fonttitle=\bfseries
-% }{theorem}
-
-  
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Definition
-% \newcounter{lem}[section] 
-% \setcounter{lem}{0}
-% \renewcommand{\thelem}{\arabic{section}.\arabic{lem}}
-% \newenvironment{definition}[1][]{%
-% \refstepcounter{lem}%
-% \ifstrempty{#1}%
-% {\mdfsetup{%
-% frametitle={%
-% \tikz[baseline=(current bounding box.east),outer sep=0pt]
-% \node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
-% {\strut Definition~\thelem};}}
-% }%
-% {\mdfsetup{%
-% frametitle={%
-% \tikz[baseline=(current bounding box.east),outer sep=0pt]
-% \node[anchor=east,rectangle,fill=definitioncolor!10,draw=definitioncolor!90, thick]
-% {\strut Definition~\thelem:~\textcolor{carminepink}{#1}};}}%
-% }%
-% \mdfsetup{innertopmargin=10pt,
-% linecolor=definitioncolor!40,%
-% linewidth=2pt,
-% topline=true,
-% backgroundcolor=definitioncolor!05,
-% rightline=false,
-% bottomline=false,
-% frametitleaboveskip=\dimexpr-\ht\strutbox\relax
-% }
-% \begin{mdframed}[]\relax%
-% }{\end{mdframed}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\goal}[1]{
