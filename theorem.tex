@@ -30,6 +30,33 @@
 \surroundwithmdframed[style=theoremframe]{theorem}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Remark
+\newtheoremstyle{remarkstyle}
+  {\topsep} % Space above
+  {\topsep} % Space below
+  {} % Body font
+  {} % Indent amount
+  {\bfseries\color{black}} % Theorem head font
+  {} % Punctuation after theorem head
+  {0.5em} % Space after theorem head
+  {} % Theorem head spec (can be left empty, meaning ‘normal’)
+
+% Define mdframed settings for the lemma box
+\mdfdefinestyle{remarkframe}{
+  linecolor=fuyu-gaki!80,
+  linewidth=2pt,
+  backgroundcolor=fuyu-gaki!15,
+  roundcorner=5pt,
+  nobreak=true,
+  topline=false,
+  bottomline=false,
+  rightline=false,
+}
+% Apply the custom theorem style
+\theoremstyle{remarkstyle}
+\newtheorem{remark}{Remark}
+\surroundwithmdframed[style=remarkframe]{remark}
 
 \newtheoremstyle{definitionstyle}
   {\topsep} % Space above
@@ -95,19 +122,13 @@
 %    \marginnote{\textbf{\textcolor{fuyu-gaki}{Question:}}}}
 %  {}
 
-\newtcolorbox[auto counter, number within=section]{problem}[2][]{colframe=fuyu-gaki, colback=mizu!10, coltitle=white, title={Problem }, sharp corners, boxrule=0.8mm, width=0.9\textwidth, boxsep=2mm, left=3mm, right=3mm, top=2mm, bottom=2mm, breakable}
+\newtcolorbox[auto counter, number within=section]{problem}[2][]{colframe=fuyu-gaki, colback=mizu!10, coltitle=white, title={Problem }, sharp corners, boxrule=0.8mm, width=0.99\textwidth, boxsep=2mm, left=3mm, right=3mm, top=2mm, bottom=2mm, breakable}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\goal}[1]{
 \begin{tcolorbox}[colframe=red!50!black, colback=white!95!black,title=Goal]
-#1
-\end{tcolorbox}    
-}
-
-\newcommand{\remark}[1]{
-\begin{tcolorbox}[colframe=red!50!black, colback=white!95!black,title=Remark]
 #1
 \end{tcolorbox}    
 }
