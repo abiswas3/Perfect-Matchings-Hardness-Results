@@ -28,7 +28,7 @@
 
 \maketitle
 \begin{abstract}
-\ari{The introduction and prelims should be ready for your eyes, as should be the main proof (almost)}
+\ari{Under heavy re-factoring. Do not look yet!}
 \end{abstract}
 
 \section{Introduction}
@@ -333,7 +333,6 @@ The hardness proof follows from the following steps, and is illustrated in Figur
 
 \subsection{Step 1: Balanced Partitions}
 
-\ari{Change this to a balanced set -- look into Lemma by Killian and Per}
 
 % \begin{figure*}[t!]
 %     \centering
@@ -401,13 +400,17 @@ The existence of a balanced partition will prove useful in showing that the resi
 \end{definition}
 
 
-\begin{theorem}[Balanced Partition Theorem]\label{thm:partition}
+The proof for the following theorem is a textbook application of the  \nameref{lemma:lll} along with the Chernoff bound.
+We re-derive this for completeness.
+Our contribution will lie in how we use the existence of such balanced partitions to get a perfect matching in the residual graph in Theorem \ref{thm:partition|}.
+
+\begin{theorem}[Balanced Edges Partition Theorem]\label{thm:partition}
 For every $0 < \epsilon < c < 1$, there exists a constant $d_0 \in \BigOTilde{c/\epsilon^2}$, such that, given a $d$-regular graph $\Graph = (V, E)$ on $n$ vertices, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into $(c, \epsilon)$ balanced sets $\red{A}$ and $\green{B}$. 
 \end{theorem}
 
-
-
-
+\begin{proof}
+Copy from notebook.  
+\end{proof}
 
 \subsection{Step 2: The Topological Embedding}
 
