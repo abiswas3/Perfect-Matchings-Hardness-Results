@@ -13,9 +13,7 @@
 \synctex=1
 % Title
 \title{Sum of Squares Refutations of Perfect Matchings In Expander Graphs Is Hard}
-\newcommand{\dApproxLower}{\textcolor{red}{d'}}
-\newcommand{\dApproxExpandedLower}{\textcolor{black}{2\epsilon d}}
-\newcommand{\dApproxExpandedUpper}{\textcolor{black}{\epsilon d + \sqrt{\nicefrac{d}{2}\log (2/\delta)}}}
+
 %\sqrt{\nicefrac{d}{2}\log (2/\delta)} ; this is the error term
 
 % \author{}
@@ -157,22 +155,7 @@ Finally, in Section \ref{sec:conclusion} we conclude with some open problems tha
 \label{sec:prelims}
 
 We review some basic tooling used for proving existence of objects using the probabilistic method.
-Detailed proofs for these lemmas can be found in \citep[Chapter 1, Chapter 7]{mitzenmacher2017probability}.
-A dependency graph for a set of events $E_1, . . . , E_n$ is a graph $G=(V, E)$ such that $V = \{1,.. . , n\}$ and,  for $i= 1,\dots, n$, event $E_i$ is mutually independent
-of the events $\{E_j | (i, j) \notin E\}$. The degree of the dependency graph is the maximum degree of any vertex in the graph.
 
-\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution over bit strings of finite length.
-Let $E_1,...,E_n$ be a set of events, and assume that the following hold: (1) The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$, and (2) $\PProb{E_i}{\Dist} \leq \beta$ for some $\beta \leq \frac{1}{4d}$. Then,
-
-\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]		
-\end{lemma}
-
-\begin{lemma}[Multiplicative Chernoff Bound]\label{lemma:mult-chernoff}
-Suppose $X_1, ..., X_n$ are identical independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_1}$ denote the sum's expected value. Then for any $0 < \delta < 1$
-
-\[ \Prob{|X - \mu| \geq \delta \mu} \leq 2\exp(-\delta^2\mu/3)\]
-	
-\end{lemma}
 
 
 
@@ -242,12 +225,12 @@ The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i
 \end{definition}
 
 The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
-\begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
+\begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
 
 The lower bounds for this hard instance $H$ also carry over to SoS refutations, and a formal proof can be found in \citep[Theorem A.3]{Austrin_2022}.
 
-\begin{lemma}[Worst Case Hard Instance For SOS]
+\begin{lemma}[Worst Case Hard Instance For SOS]\label{lemma:worst-case-instance-sos}
 Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that SoS refutations requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
 
@@ -311,7 +294,7 @@ Next, we re-state a lemma by \citep[Proposition 1]{feldman1988wide} which descri
 
 \begin{lemma}\label{lemma:condtions-for-non-block}
 Fix $a, r, s \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
-If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to $A$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
+If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to some vertex in $S$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
 \end{lemma}
 
 
@@ -348,102 +331,117 @@ The hardness proof follows from the following steps, and is illustrated in Figur
 
 \end{enumerate}
 
-\subsection{Step 1: Partition $G$ into $A$ and $B$}
+\subsection{Step 1: Balanced Partitions}
 
 \ari{Change this to a balanced set -- look into Lemma by Killian and Per}
 
-%\begin{figure*}[t!]
-%    \centering
-%    \begin{subfigure}[t]{0.5\textwidth}
-%        \centering
-%        \includegraphics{assets/ParitionA.pdf}
-%        \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ and $B$, such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
-%    \end{subfigure}%
-%    ~ 
-%    \begin{subfigure}[t]{0.5\textwidth}
-%        \centering
-%        \includegraphics{assets/PartitionB.pdf}
-%        \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$, and only edges that stay inside $A$ (orange edges). The figure below describes how we construct a bipartite graph $\BipartiteG$ from $G_A$.}
-%    \end{subfigure}
-%%    \caption{Caption place holder}
-%\end{figure*}
-
-\begin{figure*}[t!]
-    \centering
-    \begin{subfigure}[t]{0.45\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{assets/ParitionA.pdf}
-        \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ (highlighted in green) and $B$ (highlighted in blue), such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
-        \label{subfig:partitionA}
-    \end{subfigure}%
-    \hspace{1mm}
-    \vrule width 1pt % vertical line
-    \hspace{1mm}
-    \begin{subfigure}[t]{0.45\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{assets/PartitionB.pdf}
-        \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$ and edges that stay inside $A$ (orange edges), as described in the construction of Step 2. The figure below describes the bipartite graph $\BipartiteG$ we use for the embedding theorem.}
-        \label{subfig:partitionB}        
-    \end{subfigure}
-\end{figure*}
+% \begin{figure*}[t!]
+%     \centering
+%     \begin{subfigure}[t]{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=0.8\textwidth]{assets/ParitionA.pdf}
+%         \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ (highlighted in green) and $B$ (highlighted in blue), such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
+%         \label{subfig:partitionA}
+%     \end{subfigure}%
+%     \hspace{1mm}
+%     \vrule width 1pt % vertical line
+%     \hspace{1mm}
+%     \begin{subfigure}[t]{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=0.8\textwidth]{assets/PartitionB.pdf}
+%         \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$ and edges that stay inside $A$ (orange edges), as described in the construction of Step 2. The figure below describes the bipartite graph $\BipartiteG$ we use for the embedding theorem.}
+%         \label{subfig:partitionB}        
+%     \end{subfigure}
+% \end{figure*}
 
 
-\begin{theorem}[Partition Theorem]\label{thm:partition}
-There exists a constant $d_0 \in \Naturals$ and small constants $\delta \in (0,1)$ such that, given a $\EnDeeLambda$ graph $\Graph = (V, E)$, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into disjoint sets $A$ and $B$, such that, we have for every $v \in V$, $ \Eps'd \Def 0.1(1-\delta)d\leq |\Neighbourhood{\EdgesShort}{v} \cap A| \leq 0.1(1+\delta)d \Def \Eps d$. 
+These lemmas are referenced from \citet[Chapter 1, Chapter 7]{mitzenmacher2017probability}.
+A dependency graph for a set of events $E_1, . . . , E_n$ is a graph $G=(V, E)$ such that $V = \{1,.. . , n\}$ and,  for $i= 1,\dots, n$, event $E_i$ is mutually independent
+of the events $\{E_j | (i, j) \notin E\}$. The degree of the dependency graph is the maximum degree of any vertex in the graph.
+
+
+\begin{lemma}[Multiplicative Chernoff Bound]\label{lemma:mult-chernoff}
+Suppose $X_1, ..., X_n$ are identical independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_1}$ denote the sum's expected value. Then for any $0 < \delta < 1$
+
+\[ \Prob{|X - \mu| \geq \delta \mu} \leq 2\exp(-\delta^2\mu/3)\]
+	
+\end{lemma}
+
+
+
+
+\begin{lemma}[Lov\`asz Local Lemma]\label{lemma:lll}Let $\Dist \in \DistSet{\bit^*}$ be a discrete probability distribution over bit strings of finite length.
+  Let $E_1,...,E_n$ be a set of events, and assume that the following hold:
+\begin{enumerate}
+\item The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$.
+
+\item For all $i \in [n]$, $\PProb{E_i}{\Dist} \leq \beta$
+
+\item $\beta \leq \frac{1}{4d}$, then 
+  
+\end{enumerate}
+
+\[ \PProb{\overset{n}{ \underset{i=1}{\cap}} \hspace{0.1cm}  \overline{E_i}}{\Dist} > 0\]		
+
+
+\end{lemma}
+
+A balanced partition of the vertices a graph $G$ into sets $\RedA$ and $\GreenB$ is one where both sets are roughly equal in size, and have roughly the same number of edges incident on them.
+Here roughly equal implies the ratio of the sizes are a universal constant independent of the size of the graph $G$.
+The existence of a balanced partition will prove useful in showing that the residual graph has a perfect matching.
+
+\begin{definition}[Balanced Sets]\label{defn:balanced-cuts}
+  A $(c, \epsilon)$-degree balanced cut of a graph $G$ is apartition $\RedA \cup \GreenB$ ofthe $n$ vertices of $G$ such that:
+
+  \begin{enumerate}
+  \item $||\RedA| - cn| \leq \epsilon n$
+  \item For every vertex $u \in \Vertices{G}$,  $cd - \epsilon d \leq \Neighbourhood{E}{v} \cap \RedA \leq cd + \epsilon d $
+    \end{enumerate}
+    
+\end{definition}
+
+
+\begin{theorem}[Balanced Partition Theorem]\label{thm:partition}
+For every $0 < \epsilon < c < 1$, there exists a constant $d_0 \in \BigOTilde{c/\epsilon^2}$, such that, given a $d$-regular graph $\Graph = (V, E)$ on $n$ vertices, with $d \in [d_0, n-1]$, there exists and a partition of $V$ into $(c, \epsilon)$ balanced sets $\red{A}$ and $\green{B}$. 
 \end{theorem}
 
-\begin{proof}We prove the existence of such a partition $A \cup B = V$ using the probabilistic method.
-For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $\alpha=0.1$.
-If $X_i = 1$, then we include $v$ in $A$, else we put $v$ in $B$.
-Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $V$ into sets $A$ and $B$.
-For any $v \in V$, let $Y_v = |\Neighbourhood{\EdgesShort}{v} \cap A| = \sum_{x \in \Neighbourhood{E}{v}} \Indicator{x \in A}$ denote the random variable that counts how many neighbours of $v$ are also in $A$.\\
-For any $\delta \in (0,1)$ and for any $v \in V$, let $E_v = \Indicator{|Y_v - d\alpha | \geq \delta \alpha d}$ denote the bad event that $Y_v$ is bounded away from $\alpha d$ by a multiplicative factor of $\delta$.
-As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = \alpha d$, and observe that the dependency graph (Definition \ref{def:dep-graphs}) of events $\{ E_v \}_{v \in V}$ has max-degree at most $d$.
-By the multiplicative Chernoff bound (Lemma \ref{lemma:mult-chernoff}), for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq 2\exp(-\delta^2\alpha d/3) \Def \beta$.
-For large enough $d$ i.e $d > d_0$, for some $d_0$, we have that $2\exp(-\delta^2\alpha d/3) \leq 1/(4d)$. Therefore, we have $\beta d \leq 1/4$.
-Thus, we can invoke the Lov\`asz Local Lemma (Lemma \ref{lemma:lll}) to get $\PProb{\forall v \in V, \text{ } E_v = 0}{\vec{X}} > 0$.
 
-\end{proof}
 
-%Let $\tilde{\Graph} = A \cup B$ be the bipartite graph defined in the construction of Lemma \ref{lemma: bipartite-construct-non-block}.
-%We know that this graph $(\pee, \qu)$ is non-blocking.
-%Let $(a_1, \dots, a_k)$ denote an arbitrary ordering of arbitrary vertices in $A$.
-%Set $E' = \emptyset$. 
-%As $\tilde{\Graph}$ is non-blocking, there exists a collection of \emph{safe states} $\SafeStates$.
 
 
 \subsection{Step 2: The Topological Embedding}
 
-Given $\EnDeeLambda$ graph $G=(V,E)$, let $A$ and $B$ be the partition guaranteed by the \ \ref{thm:partition}.
-We also have that for all $v \in A$,  
+Given $\EnDeeLambda$ graph $G=(V,E)$, let $A$ and $B$ be the partition guaranteed by the \ref{thm:partition}.
+Throughout the rest of the proof, we will assume $c=3/4$ and $\epsilon=1/16$.
+  Reviewing the properties of a balanced sets with $c=3/4$ and $\epsilon=1/16$, we have that every vertex $u \in V$, has at least $11d/16$ \red{red} neighbours and at least $3d/16$ \green{green} neigbours.
+  Similarly, every $u \in V$ has at most $13d/16$ \red{red} neighbours, and at most $5d/16$ \green{green} neighbours.
 
-\[\alpha(1-\delta) d  \Def \EpsLower d \leq d |\Neighbourhood{\EdgesShort}{v} \cap A| \leq \alpha(1+\delta)d \Def \Eps d \]
 
-Define $E_A \Def \{ (u,v) \in E : u \in A \land v \in A\}$. 
-That is $E_A$ is the set of edges whose endpoints are fully contained in A (orange edges in Figure \ref{subfig:partitionA}), and let $G_A = (A, E_A)$. 
-Define $ \na = |A|$.
-Now define a bipartite graph $\BipartiteG = (V_A \cup V_A)$ such that if $(u,v) \in E_A$, then $(u,v) \in \Edges{\BipartiteG}$.
+Define $E_{\GreenB} \Def \{ (\green{u},\green{v}) \in E : \green{u} \in B \land \green{v} \in B\}$. 
+That is $E_{\green{B}}$ is the set of edges whose endpoints are fully contained in B (they have \green{green} endpoints), and let $G_{\green{B}} \Def (\GreenB, E_{\green{B}})$. 
+Define $ \na = |\GreenB|$.
+Now define a bipartite graph $\BipartiteG = (\GreenB \cup \GreenB, \Edges{\BipartiteG})$ such that if $(u,v) \in E_{\GreenB}$, then $(u,v) \in \Edges{\BipartiteG}$ (\todo{see figure}).
 
-\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph given to us and let $\BipartiteG$ be the bipartite graph described above. 
-There exists small constants $\epsilonL, \epsilonA  \in (0,1)$ independent of $d$ and $n$, such that if $\lambda < \epsilonL d$, then $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
+\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph given to us and let $\BipartiteG$ be the bipartite graph constructed using the balanced partition theorem. 
+There exists small universal constants $\epsilonL, \epsilonA  \in (0,1)$ independent of $d$ and $n$, such that if $\lambda < \epsilonL d$, then $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
 \end{lemma}
 
 \begin{proof}
-Let $\BipartiteG = (X \cup Y, E_A)$. 
-Let $\lambda = \ExpansionFactor{G} \leq d/c_2$ where $c_2 > 0$ is a constant to be defined later.
-Set $a = \frac{n\lambda}{2c_1 d}$ for a constant $c_1 > 0$ to be defined later.
-Set $c_1, c_2$ such that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) \leq \EpsLower$, where $\EpsLower$ is as defined in Theorem \ref{thm:partition}.
+Let $\BipartiteG \Def (X \cup Y, E_{\GreenB})$. 
+Let $\lambda \Def \ExpansionFactor{G} \leq d/c_2$ where $c_2 > 0$ is a constant to be defined shortly.
+Set $a = \frac{n\lambda}{2c_1 d}$ for a constant $c_1 > 0$ to be defined next.
+Set $c_1, c_2$ such that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) \leq \frac{3}{16}$.
 Pick any $S \subseteq X$ with $|S| \leq 2a = \frac{n\lambda}{c_1 d}$.
-\highlight{Assume towards a contradiction, that there exists a set $T \subseteq Y$, such that 
-$\CutEdges{S}{T}{E_A} < 2|S|\frac{d}{\lambda}$.} 
-By how we constructed $\BipartiteG$, we know that
-\[ \CutEdges{S}{T}{E_A} \geq \EpsLower d.\]
+\emph{Assume towards a contradiction that $\BipartiteG$ is \highlight{NOT} non-blocking.
+  Then there exists a set $T \subseteq Y$, adjacent to some vertex in $S$ such that $|T| < |S|(\frac{d}{\lambda}+\frac{d}{\lambda})$.} 
+By the balanced cut property we know that, every \green{green} node is connected to at least $\frac{3}{16}d$ \green{green} nodes (and $E_{\GreenB}$ consists of all edges with two \green{green} endpoints) i.e.
+\[ \CutEdges{S}{T}{E_{\GreenB}} \geq \frac{3}{16}d.\]
 
 However, $S$ and $T$ are also subsets of $\Vertices{G}$ and $G$ is a $\EnDeeLambda$ graph.
 From the \nameref{lemma:expanders-mixing-lemma}, we have
 
 \begin{align}
-	\CutEdges{S}{T}{E_A} &\leq \frac{d}{n}|S||T| + \lambda\sqrt{|S||T|} \\
+	\CutEdges{S}{T}{E_{\GreenB}} &\leq \frac{d}{n}|S||T| + \lambda\sqrt{|S||T|} \\
 	&< 2\frac{2d^2}{n\lambda}|S|^2 + |S|\sqrt{2\lambda d} \label{eq:assumption}\\
 	&\leq |S|\left(\frac{2d^2}{\lambda n} \frac{n\lambda}{c_1 d} + \sqrt{d\cdot \frac{d}{c_2/2}}\right) \label{eq:assumption-lambda}\\
 	&= |S|d\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) \\
@@ -456,43 +454,25 @@ From the \nameref{lemma:expanders-mixing-lemma}, we have
 \eqref{eq:assumption-lambda} comes from our assumption that $\lambda \leq d/c_2$ and $|S| \leq \frac{n\lambda}{c_1 d}$.
 Finally we get our theorem statement by setting $\epsilonL = 1/c_2$ and $\epsilonA = 1/c_1$.
 
-%Let $X$ and $Y$ denote the left and right vertices of the bipartite graph $\BipartiteG$.
-%Define $a = \epsilonA\cdot\frac{\lambda \na}{\dApproxLower}$.
-%Fix $S \subseteq X$ such that $1 \leq |S| \leq 2a$.
-%Suppose towards a contradiction, $G_A$ is \emph{not} non-blocking.
-%Then by Lemma \ref{lemma:condtions-for-non-block}, for all $T \subseteq Y$, $\EdgesAccross{S, T}{E_A} \leq (2\dApproxLower/\lambda)|S|$.
-%Pick $T^* \subseteq Y$ such that 
-%
-%\begin{equation}
-%\EdgesAccross{S, T^*}{E_A} \geq |S|\dApproxLower	 \label{eq:lots-edges}
-%\end{equation}
-%
-%We know $T^*$ exists as $G_A$ is $\dApproxLower$ regular.
-%From the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
-%
-%\begin{align}
-%	\EdgesAccross{S, T^*}{E_A} &\leq \frac{\dApproxLower}{\na}|S||T^*| + \lambda\sqrt{|S||T^*|} \\
-%	&\leq \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\sqrt{2\lambda \dApproxLower} \label{eq:stepa}\\
-%	&< \frac{\dApproxLower^2}{\na \lambda}|S|^2 + |S|\dApproxLower\sqrt{2\epsilonL } \label{eq:stepb}\\
-%	&\leq |S|\dApproxLower\left[ \frac{\dApproxLower|S|}{\na\lambda} + \sqrt{2\epsilonL}\right] \\
-%	&\leq |S|\dApproxLower\left[ \frac{\epsilonA}{2} + \sqrt{2\epsilonL}\right] \label{eq:stepc}
-%\end{align}
-%
-%
-%For Equation \eqref{eq:stepa} We use that $\EdgesAccross{S, T^*}{E_A} \leq (2\dApproxLower/\lambda)|S|$. For Equation \eqref{eq:stepb} we use $\lambda < \epsilonL\dApproxLower$. For Equation \eqref{eq:stepc} we use $|S| \leq 2a$.
-%Setting $\epsilonA$ and $\epsilonL$ small enough such that  $\frac{\epsilonA}{2} + \sqrt{2\epsilonL} < 1$, we get a contradiction with Equation \eqref{eq:lots-edges}.
-
 \end{proof}
 
+With the non-blocking nature of $\BipartiteG$ established, the next step is to embed hard instance $H$ as topological minor of $\GreenB$ as described in the overview.
+Note for every edge in $E_{\GreenB}$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
-The next step is to topologically embed hard instance $H$ into the subgraph $G_A = (A, E_A)$.
-Note for every edge in $E_A$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
+\begin{definition}[Sub-divisions]\label{def:subdivisions}
+Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ (such that all these paths are mutually vertex disjoint, except at the end points).	
+\end{definition}
+
+\begin{definition}[Topological Minor]\label{def:topological-minor}
+A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
+\end{definition}
+
+\todo{$\Eps$ undefines}
 \begin{theorem}[Topological Embedding Theorem]\label{thm:top-embedding}
-Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined above, where $|A| = \na$.
-Let $\dApproxLower \Def \Eps d$, and $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil$ vertices, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
-\ari{Define $\sigma$}.
-If $\lambda \leq \epsilonL d$, then $G$ contains $\Subdivision{H}{\sigma}$ as a subgraph.
+Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined from the balanced partition theorem, where $|\GreenB| = \na$.
+Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil = \BigO{\frac{n}{\log n}}$ vertices known to exist in Lemma \ref{lemma:worst-case-instance-PC}, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
+If $\lambda \leq \epsilonL d$, then $G$ contains a subdivision of $H$, denoted by $\Subdivision{H}{\sigma}$ as a subgraph.
 
 \end{theorem}
 
@@ -501,12 +481,12 @@ If $\lambda \leq \epsilonL d$, then $G$ contains $\Subdivision{H}{\sigma}$ as a 
 \begin{proof}
 Define $D = \frac{d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
-Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_A}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_A$, that defines our topological embedding.
-Our first task is to find a unique $\Embedding{h} \in \Vertices{G_A}$ for each $h \in \Vertices{H}$.
-Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_A}$.
-We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$.
-Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of the bipartite graph $\BipartiteG$ described above.
-\ari{Add in some intuition as to why we need to do this}
+Define $\sigma(e) \Def \PathSize \Def 2k+1$ for all $e \in \Edges{H}$.
+Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_{\GreenB}$, that defines our topological embedding.
+Our first task is to find a unique $\Embedding{h} \in \Vertices{G_{\GreenB}}$ for each $h \in \Vertices{H}$.
+Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_{\GreenB}}$.
+Let $X=\Vertices{G_{\GreenB}}$ and $Y=\Vertices{G_{\GreenB}}$ denote the left and right sides of the bipartite graph $\BipartiteG$ described above.
+We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$: 
 
 \begin{figure*}[t!]
     \centering
@@ -535,64 +515,74 @@ Let $X=\Vertices{G_A}$ and $Y=\Vertices{G_A}$ denote the left and right sides of
 \end{figure*}
 
 
+
+
 \begin{itemize}
-	\item Define $E' = \emptyset$ to begin with, and as $\BipartiteG$ is a $(D, \epsilonA n)$-non blocking bipartite graph (by Lemma \ref{lemma:bipartitie-is-non-blocking}), $E'$ is a \emph{safe} state.
-	\item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. By the non-blocking property, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $E'$ is incident on $\tilde{h}_1$. We set $\Embedding{h_1} = \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
-	\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < \epsilonA\na$, for each $a_j$ we can always find a \emph{safe neighbour} $\tilde{h}_j$ in $Y$ such that there is an edge from $a_j$ to $\tilde{h}_j$, and there is no other edge in $E'$ so far, that is incident on each $\tilde{h}_j$.
+\item Define $E' = \emptyset$ to begin with, and as $\BipartiteG$ is a $(D, \epsilonA n)$-non blocking bipartite graph (by Lemma \ref{lemma:bipartitie-is-non-blocking}), $E'$ is a \emph{safe} state.
+  
+\item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. By the non-blocking property, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $E'$ is incident on $\tilde{h}_1$. We set $\Embedding{h_1} \Def \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
+  
+\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < \epsilonA\na$, for each $a_j$ we can always find a \emph{safe neighbour} $\Embedding{h_j} \Def \tilde{h}_j$ in $Y$ such that there is an edge from $a_j$ to $\tilde{h}_j$, and there is no other edge in $E'$ so far, that is incident on each $\tilde{h}_j$.
+  
 \end{itemize}
 
-Once this phase is complete, we have mapped every vertex of $H$ to a vertex in $G_A$.
-That is $\Embedding{h_i} = \tilde{h_i}$ for all $i \in [t]$.
-The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_A$.
+Once this phase is complete, we have mapped every vertex of $H$ to a vertex in $G_{\GreenB}$.
+That is we have defined $\Embedding{h_i}$ for all $i \in [t]$.
+The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_{\GreenB}$.
 Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
 We prove the result by induction on $m$.
 
 \paragraph{Base case} 
 
-Let $e_1 = (u,v)$. Define sets $S_0 = \{\Embedding{u}\}$ and $S'_0 = \{ \Embedding{v}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
-For each $z=1, \dots, k$, we will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows:
+Let $e_1 = (u_1,v_1)$. Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
+Define a global edge set and set it to $\GlobalEdgeSet \Def \emptyset$.
+We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows:
 
-\begin{tcolorbox}
-Fix $ 1 \leq z \leq k$, iteratively, let $M_z$ and $M'_z$ be the sets of $|S_z| \Def \min\{t, |S_{z-1}|D\}$ edges in $E_A$ incident to $S_{z-1}$ and $\S_{z-1}'$ respectively, such these edges are safe with respect to $\cup_{i=1}^{z} (M_i \cup M'_i)$.\\
+For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process:
+
+\begin{itemize}
+\item {For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $E_{\GreenB}$.
+    With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add exactly one \emph{safe} neigbour of $x$, denoted here with $y$, to $S_{j}$, and add the edge $(x,y)$ to $M_j$. Refer to Figure \ref{subfig:embeddingA} for a visual depiction of this process.
+    We discuss below why such a safe edge always exists.}
+  
+\item{Now there might be other safe neigbours for $x \in S_j$ apart from the one we just added. Add these neighbours to $S_j$, and the edges to $M_j$ as long the size of $M_j \leq \min\{t, |S_{z-1}|D\}$.
+    Thus, the two extreme cases are the every $x \in S_{j-1}$ gets $D$ neighbours in $S_j$, or every $x \in S_{j}$ gets \emph{exactly} one neighour in $S_j$.
+For any index $i \leq k$, once a set $|S_i|=t$, for all remaining indices $j > i$, $S_j$'s are of size $t$ as well, with exactly one edge incident on each $a \in S_j$ from $S_{j-1}$. Figure \ref{subfig:embeddingB} illustrates this idea.
+  }
+
+\item{\textbf{Why is there always a safe neighbour}: Let $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$.
+The reason we can always construct the sets described above sets is that $|M| \leq 2tk < \epsilonA n$, and as $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in S_{j+1}$, such that $(x,y) \in E_{\GreenB}$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.}  
 
 
-More concretely, fix $1 \leq z \leq k$, and for each $v \in S_z \subseteq X$, we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ via edges in $E_A$.
-As $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, we know that at least one of these edges will be a safe edge connecting us to a safe neighbour in $S_{j+1}$, as long as $|\cup_{i=1}^{z} (M_i \cup M'_i)|$ is not too large.
-Figure \ref{subfig:embeddingA} illustrates this.
-Since $|M_i| \leq t$ and $|M_i'| \leq t$ for all $i \in [k]$, and $k = \log_D n$, we always have $\cup_{i=1}^{z} (M_i \cup M'_i)| \leq 2tk \leq \epsilonA n$.
-If there are more than one safe edges for  vertices in $S_j$, consider at least one safe edge per vertex $v \in S_j$ to add to $M_j$ and, make sure $|M_j| = \min\{t, |S_{j-1}|D\}$.
-Figure \ref{subfig:embeddingB} illustrates this idea.
-$M'_j$ and $S_j'$ are constructed analogously.\\
+\end{itemize}
 
 
 
-\end{tcolorbox}
-
-Let $M = \cup_{i=1}^k (M_i \cup M'_i)$.
-The reason we can always construct the sets described above sets is that $|M| \leq tk < \epsilonA n$, and as $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in S_{j+1}$, such that $(x,y) \in E_A$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.
 Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
-\CutEdges{S_k}{S_k'}{E_A}
+\CutEdges{S_k}{S_k'}{E_{\GreenB}}
  &\geq \frac{d t^2}{n} - \lambda t \\
 	&> 0 \label{eq:greater}
 \end{align}
 
 Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \epsilonL d$ (from Lemma \ref{lemma:bipartitie-is-non-blocking}).
-This implies there exists at least one edge $e=(x,y)$ between $S_k$ and $S_k'$.
-By how we constructed $M_k$, we know there is an edge $m_k = (a,x) \in M_k$ connecting $x$ to some vertex $a$ in $S_{k-1}$. 
-Similarly, there is some edge $m_{k-1} \in M_{k-1}$ that connects $x$ to some vertex in $S_{k-2}$.
-We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k e$.
-We repeat the same process for the other end point of $y \in S_k'$, to get edges $m'_1, \dots, m'_k$.
+This implies there exists at least one edge $e^\star=(x^\star,y^\star) \in \CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$.
+By how we constructed $M_k$, we know that $x^\star$ was the safe neighbour of some node $a \in S_{k-1}$.
+Let $m_k \Def (a,x^\star) \in M_k$ be the connecting edge.
+Similarly, there is some edge $m_{k-1} \in M_{k-1}$ that connects some vertex in $S_{k-2}$ to $a$ with a safe edge.
+We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k, e^\star$.
+We repeat the same process for the other end point of $y \in S_k'$, to get edges $e^\star, m'_1, \dots, m'_k$.
 We add these edges to a global edge set $\GlobalEdgeSet$.
-This gives is the situation depicted in Figure \ref{fig:baseB}.
-Thus, we have found an odd length path $m_1\dots m_k e m_1'\dots m_k'$ of length $2k+1$, connecting $\Embedding{u}$ to $\Embedding{v}$.
+Thus, we have found an odd length path $m_1\dots m_k e^\star m_1'\dots m_k'$ of length $2k+1$, connecting $\Embedding{u}$ to $\Embedding{v}$.
+ Figure \ref{fig:baseB} illustrates everything discussed so far pictorially.
 
 \begin{figure}
 	\includegraphics[width=0.9\textwidth
 	]{assets/BaseA.pdf}
-	\caption{In this toy example, $k=3$. The figure on top describes the forward phase of finding sets $\{M_i\}_{i\in [k]}$ and $\{M_i'\}_{i\in [k]}$. The figure below describes the process of backtracking from the edge $e$ that is promised to exist between $S_k$ and $S_k'$.}
+	\caption{In this toy example, $k=3$. The figure on top describes the forward phase of finding sets $\{M_i\}_{i\in [k]}$ and $\{M_i'\}_{i\in [k]}$. The figure below describes the process of backtracking from the edge $e$ that is promised to exist between $S_k$ and $S_k'$.
+    All the edges in pink are added to the global set $\GlobalEdgeSet$.}
 	\label{fig:baseB}
 \end{figure}
 
@@ -604,9 +594,12 @@ Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ fo
 Let $P_1, \dots, P_j$ denote these paths (depicted with \textcolor{carminepink}{pink} edges in Figure \ref{fig:induction}) .
 Let $\GlobalEdgeSet$ denote the set of all edges in these paths.
 Let $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$.
-Set $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$
-Note that $\GlobalEdgeSet \leq tk \leq \epsilonA n$.
-The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case, where now for any $1 \leq i \leq k$, for each node in $S_i$ and $S_i'$ we find a safe neighbour that does not have an incident  edge from $E' \cup (\cup_{i=1}^k (M_i \cup M'_i))$. As $|M| < \epsilonA\na$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
+So far by induction we have $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$.
+Note that $\GlobalEdgeSet \leq tk < \epsilonA n$.
+The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case.
+We add $u_{j+1}$ to $S_0$ and $v_{j+1}$ to $S_0'$.
+Now we to add new nodes to $S_{1}$ and $S_{1}'$, we ask for $D$ neighbours of $u_{j+1}$ and $v_{j+1}$.
+Then we add at least one safe neighbour of each to $S_1$ and $S_1'$ respectively. As $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, and $|M| < \epsilonA\na$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
 This concludes the proof.
 
 \begin{figure}
@@ -614,7 +607,8 @@ This concludes the proof.
 	]{assets/InductionStep.pdf}
 	\caption{The figure above describes the induction step. The nodes in green are already in the embedding and represent paths $P_1, \dots, P_j$ for edges $(u_1, v_1) \dots, (u_j, v_j)$.
 	The nodes in yellow represent candidates for the path for edge $u_{j+1}, v_{j+1}$. 
-	The candidate nodes are constructed identical to the procedure described in the base step of the induction step, where we use the non-blocking property of $\BipartiteG$ to extend with safe neighbours. 
+	The candidate nodes are constructed identical to the procedure described in the base step of the induction step, where we use the non-blocking property of $\BipartiteG$ to extend with safe neighbours.
+    Once we find a blue edge between $S_k$ and $S_k'$, we backtrack like we did in the base case to find the path $\Path{\Embedding{u_{j+1}}}{\Embedding{v_{j+1}}}$.
 	}
 	\label{fig:induction}
 \end{figure}
@@ -705,9 +699,8 @@ This means there \emph{MUST} be at least 1 edge between $X$ and $Y$.
 \section{Extra Stuff TO SORT OUT later}
 \subsection{Graph Theory Preliminaries}
 
-\begin{definition}[Dependency Graphs]\label{def:dep-graphs}
-	
-\end{definition}
+$\CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$ define\todo{do}
+
 
 
 
@@ -717,13 +710,6 @@ A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subs
 	
 \end{definition}
 
-\begin{definition}[Sub-divisions]\label{def:subdivisions}
-Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ (such that all these paths are mutually vertex disjoint, except at the end points).	
-\end{definition}
-
-\begin{definition}[Topological Minor]\label{def:topological-minor}
-A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
-\end{definition}
 
 
 \end{document}

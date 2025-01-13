@@ -9,7 +9,7 @@
   }}%
 }
 \makeatother
-
+\renewcommand{\emph}[1]{\textit{#1}}
 \newcommand\Bigger[2][7]{\left#2\rule{0mm}{#1truemm}\right.}
 
 % Basic asympototics
@@ -31,8 +31,8 @@
 \newcommand{\negl}{\mathtt{negl}}
 \newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
 \newcommand{\Eps}{\textcolor{red}{\varepsilon}}
-\newcommand{\EpsLower}{c-\epsilon}
-\newcommand{\EpsUpper}{c-\epsilon}
+\newcommand{\EpsLower}{\textcolor{shin-kai}{\varepsilon'}}
+\newcommand{\EpsUpper}{\textcolor{shin-kai}{\varepsilon}}
 \renewcommand{\tilde}[1]{\widetilde{#1}}
 \newcommand{\bit}{\{0,1\}}
 \newcommand{\poly}{\mathsf{poly}}
@@ -41,6 +41,7 @@
 \newcommand{\Reals}{\mathbb{R}}
 \newcommand{\Field}{\mathbb{F}}
 \newcommand{\BigO}[1]{O\left(#1\right)}
+\newcommand{\BigOTilde}[1]{\tilde{O}\left(#1\right)}
 \newcommand{\SmallO}[1]{o\left(#1\right)}
 \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
 \newcommand{\SmallOmega}[1]{\omega\left(#1\right)}
@@ -69,9 +70,10 @@
 
 % Graph Commands
 \newcommand{\Graph}{G}
-\newcommand{\Vertices}[1]{V(#1)}
-\newcommand{\Edges}[1]{E(#1)}
+\newcommand{\Vertices}[1]{\mathsf{V}(#1)}
+\newcommand{\Edges}[1]{\mathsf{E}(#1)}
 \newcommand{\CutEdges}[3]{e(#1 \leftrightarrow #2; #3)}
+\newcommand{\CutEdgesSet}[3]{\mathsf{E}(#1 \leftrightarrow #2; #3)}
 \newcommand{\EdgesAccross}[2]{e_{#2}(#1)}
 \newcommand{\OddComponents}[1]{q(#1)}
 % Degree of vertex (a scalar)
@@ -116,9 +118,9 @@
 
 \newcommand{\epsilonA}{\textcolor{ballblue}{\epsilon_a}}
 \newcommand{\epsilonL}{\textcolor{cadmiumgreen}{\epsilon_\lambda}}
-\newcommand{\na}{\textcolor{razzmatazz}{n_A}}
+\newcommand{\na}{\green{n_B}}
 
-\newcommand{\BipartiteG}{G_{A \cup A}}
+
 
 \newcommand{\DistSet}[1]{\Delta(#1)}
 \newcommand{\Dist}{\mathcal{D}}
@@ -148,3 +150,6 @@
 \newcommand{\green}[1]{\textcolor{shin-ryoku}{#1}}
 \newcommand{\RedNodes}[1]{\red{\text{Red}}(#1)}
 \newcommand{\GreenNodes}[1]{\green{\text{Green}}(#1)}
+\newcommand{\GreenB}{\green{B}}
+\newcommand{\RedA}{\red{A}}
+\newcommand{\BipartiteG}{G_{\GreenB \cup \GreenB}}
