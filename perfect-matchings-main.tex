@@ -306,29 +306,29 @@ If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at le
 \section{Proof Of Main Result}
 \label{sec:main-proof}
 
-Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for polynomial calculus known to exist as per Lemma \ref{lemma:worst-case-instance}.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for polynomial calculus known to exist as per Lemma \ref{lemma:worst-case-instance-PC}.
 The hardness proof follows from the following steps, and is illustrated in Figure \ref{fig:proof-outline}.
 
 
 \begin{figure}
   \includegraphics[width=0.8\textwidth]{assets/proof-sketch.pdf}
-  \caption{Proof sketch, \highlight{ADD in a sketch}}
+  \caption{The figure above above outlines the steps of the proof. First we partition the vertices of $G$ into balanced sets $\RedA$ and $\GreenB$. After that, we topologically embed the hard instance $H$ such that every path representing an edge of $e$ in the embedding is of odd size. This ensures that the graph restricted to the embedding is hard to refute. Next we show that the induced subgraph (referred to as the residual graph $\RemGraph = G[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$) has a perfect matching. This  implies that the hardness to refute matchings in $G$ is transferred to the hardness of refuting $H$.} 
 	\label{fig:proof-outline}
 \end{figure}
 
 \begin{enumerate}
-\item{First, we show (via Theorem \ref{thm:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $\RedA$ and $\GreenB$, as shown in Figure \highlight{TODO}, of roughly equal size.
+\item{First, we show (via Theorem \ref{thm:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $\RedA$ and $\GreenB$, as shown in Figure \ref{fig:partition}, of roughly equal size.
     Apart from $\RedA$ and $\GreenB$ being roughly the same size, the partition has the property that for each vertex $v \in V$ has roughly the same number of neighbours in $\RedA$ and $\GreenB$.
     We formalise what ``roughly'' equal means in Section \ref{sec:partition-lemma}.
-    Given this partitioning, we will topologically embed $H$ into the subgraph $G_{\GreenB}$ which is described by the edges where both endpoints lie in $\GreenB$. See Figure \highlight{TODO}.
+    Given this partitioning, we will topologically embed $H$ into the subgraph $G_{\GreenB}$ which is described by the edges of $G$ where both endpoints lie in $\GreenB$. 
   }
   
-\item{Let $D = d/\lambda \in \Reals$. We find a subdivision  $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e) \Def \PathSize \Def 2k+1$ for $k = \BigO{\log_{D} n}$.
+\item{Let $D = d/\lambda \in \Reals$. We find a subdivision  $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e)  \Def 2k+1$ for $k = \BigO{\log_{D} n}$.
     We show (via Theorem \ref{thm:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_{\GreenB}$ defined above.
     Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ denote the topological embedding of $H$ into $G_{\GreenB}$, and $G_{\EmbeddingFunc}$ embedded subgraph.
     For each edge $(u,v) \in \Edges{H}$, let $\Path{\Embedding{u}}{\Embedding{v}}$ denote the vertex disjoint odd length path in $\Subdivision{H}{\sigma}$ we construct using Theorem \ref{thm:top-embedding}.
     Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-    To see why, map each variable $y_e$ for $e \in \Path{u}{v}$ alternatingly to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $u$ and $v$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
+    To see why, map each variable $y_e$ for $e \in \Path{u}{v}$ alternatingly to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
 }
 	
 	
@@ -347,8 +347,6 @@ The hardness proof follows from the following steps, and is illustrated in Figur
 	If it easy to see that $\PM{G} \equiv \PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\PM{G} \in \BigOmega{|\Vertices{H}|} = \BigOmega{\frac{n}{\log n}}$. 
 
   \end{enumerate}
-
-  \highlight{Write an in summary block}
 
 \subsection{Step 1: Balanced Partitions}
 \label{sec:partition-lemma}
@@ -394,7 +392,7 @@ A balanced partition or cut of graph $G$ into sets $\RedA$ and $\GreenB$ is one 
         \centering
         \includegraphics[width=\textwidth]{assets/partition-a.pdf}
         \caption{}
-      \label{fig:before-deletions}
+      \label{fig:partition}
     \end{subfigure}%
     \hspace{1mm}
     \hspace{1mm}    
@@ -402,9 +400,9 @@ A balanced partition or cut of graph $G$ into sets $\RedA$ and $\GreenB$ is one 
         \centering
         \includegraphics[width=\textwidth]{assets/partition-b.pdf}
         \caption{}
-      \label{fig:after-deletions}        
+      \label{fig:bipartite}        
     \end{subfigure}
-    \caption{\small The figure above describes the partitioning of the vertices of the graph $G$ into two sets $\RedA$ and $\GreenB$, such that for every vertex $v \in \Vertices{G}$, has roughly equal number of edges in $\RedA$ and $\GreenB$. The subgraph $G_{\GreenB}$ obtained by including vertices in $\GreenB$ and edges that stay inside $\GreenB$.}
+    \caption{\small The figure above describes the partitioning of the vertices of the graph $G$ into two sets $\RedA$ and $\GreenB$, such that for every vertex $v \in \Vertices{G}$ has at least $11d/16$ \red{red} neighbours and at most $13d/16$ \red{red} neigbhours. The subgraph $G_{\GreenB}$ obtained by including vertices in $\GreenB$ and edges that stay inside $\GreenB$. The figure on the right, depicts how the subgraph $G_{\GreenB}$ can be expressed as a bipartite graph $\BipartiteG$.}
     \hspace{1mm}     
 \end{figure*}
 
@@ -454,7 +452,7 @@ Given $\EnDeeLambda$ graph $G=(V,E)$, let $\RedA$ and $
 Define $E_{\GreenB} \Def \{ (\green{u},\green{v}) \in E : \green{u} \in \GreenB \land \green{v} \in \GreenB\}$. 
 That is $E_{\green{B}}$ is the set of edges whose endpoints are fully contained in B (they have \green{green} endpoints), and let $G_{\green{B}}$ be the subgraph defined by the edges $E_{\GreenB}$. 
 Define $ \na \Def |G_{\GreenB}|$, which by the balancedness of the partition we have is \highlight{TODO}.
-Now define a bipartite graph $\BipartiteG$ with vertices $\Vertices{\GreenB} \cup \Vertices{\GreenB}$ and $\Edges{\BipartiteG})=E_{\GreenB}$.
+Now define a bipartite graph $\BipartiteG$ with vertices $\Vertices{\GreenB} \cup \Vertices{\GreenB}$ and $\Edges{\BipartiteG})=E_{\GreenB}$ (See Figure \ref{fig:bipartite}).
 That is the left and right vertices of $\BipartiteG$ are copies of $G_{\GreenB}$ and for every edge $(u,v) \in E_{\GreenB}$, there is a corresponding copy $(u,v) \in \Edges{\BipartiteG}$.
 
 \begin{remark}
