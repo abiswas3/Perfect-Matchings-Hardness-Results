@@ -346,24 +346,6 @@ The hardness proof follows from the following steps, and is illustrated in Figur
 
 \subsection{Step 1: Balanced Partitions}
 \label{sec:partition-lemma}
-% \begin{figure*}[t!]
-%     \centering
-%     \begin{subfigure}[t]{0.45\textwidth}
-%         \centering
-%         \includegraphics[width=0.8\textwidth]{assets/ParitionA.pdf}
-%         \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ (highlighted in green) and $B$ (highlighted in blue), such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
-%         \label{subfig:partitionA}
-%     \end{subfigure}%
-%     \hspace{1mm}
-%     \vrule width 1pt % vertical line
-%     \hspace{1mm}
-%     \begin{subfigure}[t]{0.45\textwidth}
-%         \centering
-%         \includegraphics[width=0.8\textwidth]{assets/PartitionB.pdf}
-%         \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$ and edges that stay inside $A$ (orange edges), as described in the construction of Step 2. The figure below describes the bipartite graph $\BipartiteG$ we use for the embedding theorem.}
-%         \label{subfig:partitionB}        
-%     \end{subfigure}
-% \end{figure*}
 
 
 These lemmas are referenced from \citet[Chapter 1, Chapter 7]{mitzenmacher2017probability}.
@@ -658,21 +640,33 @@ Before describing the full proof, we need some definitions from graph theory.
 Proofs for Lemma \ref{lemma:edge-connectivity-pseudorandom} and Lemma \ref{lemma:d-connected-sets-have-no-bad-sets} can be found textbooks \citep{krivelevich2006pseudo}, but we re-derive them as it aids in the understanding of our proof for Theorem \ref{thm:perfect-matching}.
 
 \begin{definition}[Edge Connectivity]\label{def:edge-connectivity}
-The edge connectivity of a graph $G$, denoted with $\EdgeConnectivity{G}$ is the minimum number of edges we must delete from the graph to make it disconnected.	
+The edge connectivity of a graph $G$, denoted with $\EdgeConnectivity{G}$ is the minimum number of edges we must delete from the graph to make it disconnected i.e $\EdgeConnectivity{G} = \min_{S \subseteq \Vertices{G}} \CutEdges{S}{\Complement{S}}{\Edges{G}}$
 \end{definition}
 
 \begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
 Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
 \end{lemma}
 \begin{proof}
-TODO  
+  We want to show that for all $S \subseteq \Vertices{G}$ of size $1 \leq \Size{S} \leq \frac{n}{2}$, we have $\CutEdges{S}{\Complement{S}}{\Edges{G}} \geq d$.
+  When $1\leq \Size{S} \leq d$, as $G$ is $d$ regular, every vertex in $S$ must have at least $d- \Size{S} + 1$ edges poking out poking out $S$.
+  Thus, the total edges out of $S$ is $\Size{S}(d- \Size{S} + 1)$ which has minimal value $d$.
+  If $d \leq \Size{S} \leq \frac{n}{2}$, use the tight version of the expander mixing lemma, and combined with the  fact that $d- \lambda > 2$ and $(n-\Size{S})$ is smallest when $\Size{S} = n/2$ to get the bound
+
+  \begin{align*}
+    \CutEdges{S}{\Complement{S}}{\Edges{G}} &\geq \frac{d\Size{S}(n-\Size{S})}{n} - \lambda\sqrt{\Size{S}(n-\Size{S}) (1 - \frac{\Size{S}}{n}) (1 - \frac{n-\Size{S}}{n})   }\\
+                                            &=  (d-\lambda)(\Size{S}\frac{(n-\Size{S})}{2}) \\
+                                              &\geq d
+    \end{align*}
+  
 \end{proof}
 
 \begin{lemma}\label{lemma:d-connected-sets-have-no-bad-sets}
   If $G$ has edge connectivity $\EdgeConnectivity{G} = d$, and $G$ is $d$-regular, then $\forall S \in \Vertices{G}$, $\OddComponents{G \setminus S} \leq |S|$.
 \end{lemma}
 \begin{proof}
- TODO 
+  As $G$ is $d$ regular, any set $S$ has at most $d\Size{S}$ edges incident on it.
+  By lemma \ref{lemma:edge-connectivity-pseudorandom}, as $\EdgeConnectivity{G} = d$, every component that connects to $S$ must have at least $d$ edges.
+  Therefore the maximum number of components we can have is $\Size{S}$.
 \end{proof}
 
 \begin{lemma}[Tutte Criterion]\label{lemma:tutte-criterion}
@@ -687,42 +681,97 @@ Then the induced sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma
 	
 \end{theorem}
 
+\begin{figure*}
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{assets/stock.png}
+        \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ (highlighted in green) and $B$ (highlighted in blue), such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
+       \label{fig:before-deletions}
+    \end{subfigure}%
+    \hspace{1mm}
+    \vrule width 1pt % vertical line
+    \hspace{1mm}
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{assets/stock.png}
+        \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$ and edges that stay inside $A$ (orange edges), as described in the construction of Step 2. The figure below describes the bipartite graph $\BipartiteG$ we use for the embedding theorem.}
+       \label{fig:after-deletions}        
+    \end{subfigure}
+\end{figure*}
 
-\begin{proof}Let $\RemGraph \Def  \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$.
+
+\begin{proof}Let $\RemGraph \Def  \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ and $\Size{\Vertices{\RemGraph}}\Def \SizeRemGraph$.
   Let $\RedA$ and $\GreenB$ denote the balanced sets from Theorem \ref{thm:partition}.
   We refer the reader to Remark \ref{remark:edge-dist} for a review of how the many red and green neighbours each vertex in $G$ has.
-\textit{\highlight{Assume} towards a contradiction that $\RemGraph$ does \textbf{not} admit a perfect matching.}
-This implies that there exists a bad set $\BadSet$ such that $\OddComponents{\RemGraph \setminus \BadSet} > |\BadSet|$.
+\textit{\highlight{Assume towards a contradiction} that $\RemGraph$ does \textbf{not} admit a perfect matching.}
+By the \nameref{lemma:tutte-criterion}, this implies that there exists a bad set $\BadSet$ such that $\OddComponents{\RemGraph \setminus \BadSet} > |\BadSet|$.
+Note that if $\Size{\BadSet} \geq \SizeRemGraph/2$, then by simple counting argument $\OddComponents{\RemGraph \setminus \BadSet} \leq |\BadSet|$ (there are not enough vertices left in $\RemGraph$ to make more than $\SizeRemGraph$ connected components).\\
+So we can assume that $\Size{\BadSet} \leq \SizeRemGraph/2$.
 Now, we know from Lemma \ref{lemma:edge-connectivity-pseudorandom} that $G$ is $d$ edge connected, therefore by Lemma  \ref{lemma:d-connected-sets-have-no-bad-sets} we get that for any set $S \subseteq \Vertices{G}$, we have $\OddComponents{G \setminus S} \leq |S|$.  
-Also as $\Embedding{\Subdivision{H}{\sigma}}$ is a connected subgraph contained entirely in $B$, it must be entirely contained in one of the connected components connected to $\BadSet$. Figure \ref{fig:before-deletions} illustrates what we have described above pictorially.
+Also as $\Embedding{\Subdivision{H}{\sigma}}$ is a connected\footnote{The proof also works if the embedding being removed is not connected, but the presence of connectedness makes the proof simpler to write.} subgraph contained entirely in $\GreenB$, it must be entirely contained in one of the connected components connected to $\BadSet$. Figure \ref{fig:before-deletions} illustrates what we have described above pictorially.
+We denote this connected component with $U$.
+Now for $\RemGraph$ to \highlight{not} admit a perfect matching, the process of deleting edges incident on $\Embedding{\Subdivision{H}{\sigma}}$ and $\BadSet$ must at some point cause $U$ to split into more than 1 disconnected components, which causes $\OddComponents{\RemGraph \setminus \BadSet}$ to cross over the threshold $|\BadSet|$.
+Figure \ref{fig:after-deletions} describes this event.
+To arrive at our \textit{\highlight{contradiction}}, we will show that there there \emph{must} be at least one edge between newly formed disconnected components, which contradicts the claim that they are disconnected components, which completes our proof.
+
+Let $X$ and $Y$ denote a partition of $\Vertices{\RemGraph} \setminus \BadSet$ suc that $\Size{X} \geq \Size{\BadSet}/4$ and $\Size{Y} \geq \Size{\BadSet}/4$.
+(See Figure \ref{fig:contradiction} for a reference).
+This is always possible given $\Size{\BadSet} \leq \SizeRemGraph/2$.
+Without loss of generality let $\Size{Y} \leq \Size{X}$.
+Then $\Size{Y} < (\SizeRemGraph-|\BadSet|)/2$.
+By the balanced partition theorem, every vertex in $Y$ has at least $\frac{11d}{16}$ \red{red} neighbours in $\RemGraph$.
+To see why observe that removing $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ does not affect the red edge distribution, as $\Embedding{\Subdivision{H}{\sigma}}$ is composed entirely of \green{green} vertices.
+So there \emph{MUST} be at least $\frac{11d}{16}\Size{Y}$ edges incident on $Y$ (where we count edges with both end-points in $Y$ twice).
+
+\begin{equation}\label{eq:edge-lower-bound}
+  \CutEdges{Y}{Y}{\Edges{\RemGraph}} \geq \frac{11d}{16}\Size{Y}
+\end{equation}
+
+Now by the \nameref{lemma:expanders-mixing-lemma} with relations to edges in the orignal graph $G$,
+
+\begin{align}
+  \CutEdges{Y}{Y}{\Edges{G}}  &\leq \frac{d}{n}\Size{Y}^2 + \lambda\Size{Y} \\
+  &\leq \frac{d}{\SizeRemGraph}\Size{Y}^2 + \epsilonL d \Size{Y} \label{eq:why}
+\end{align}
+
+Where Equation \eqref{eq:why} comes from the fact that $\SizeRemGraph \leq n$ and our spectral assumption that $\lambda \leq \epsilonL d$.
+Also by the expander mixing lemma,
+
+\begin{align}
+  \CutEdges{\BadSet}{Y}{\Edges{G}}  &\leq \frac{d}{n}\Size{\BadSet}\Size{Y} + \lambda\sqrt{\Size{Y}\Size{\BadSet}} \\
+                                    &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + \epsilonL d\sqrt{\Size{Y}\Size{\BadSet}} \\
+  &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 2\epsilonL d\Size{Y} \label{eq:why2}
+\end{align}
+
+Step \eqref{eq:why2} comes from the assumption that $\Size{\BadSet} \leq 4\Size{Y}$. Combining equations \eqref{eq:why} and \eqref{eq:why2}, gives us the total number of edges incident on $Y$ either from $\BadSet$ or edges incident from $Y$ itself (i.e these edges have both endpoints in $Y$) is $\frac{d}{\SizeRemGraph}\Size{Y}^2 +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}$.
+
+\begin{align}
+ \text{Total edges in $\RemGraph$ incident on $Y$ from $\BadSet$ and $Y$} &\leq \frac{d\Size{Y}^2}{\SizeRemGraph} +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}\\[3pt]                                                                          &\leq  \frac{d\Size{Y}}{\SizeRemGraph}\frac{(\SizeRemGraph - \Size{\BadSet})}{2} + \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y} \label{eq:why3}\\[3pt]
+                                                                          &= \frac{d\Size{Y}}{2} + \frac{d\Size{\BadSet}\Size{Y}}{2\SizeRemGraph} +3\epsilonL d\Size{Y}\\[3pt]
+                                                                          &\leq \frac{d\Size{Y}}{2} + \frac{d\Size{Y}}{4} +3\epsilonL d\Size{Y}  \label{eq:why4}\\
+                                                                            &< \frac{11d}{16}\Size{Y} \label{eq:edge-upperbound}
+\end{align}
+
+Equation \eqref{eq:why3} comes from  $\Size{Y} < (\SizeRemGraph - \Size{\BadSet})/2$.
+Equation \eqref{eq:why4} comes from the assumption that $\Size{\BadSet} \leq \SizeRemGraph/2$.
+The lower bound on the edges incident on $Y$ given in Equation \eqref{eq:edge-lower-bound} strictly greater than the upper bound in Equation \eqref{eq:edge-upperbound}.
+This implies that there \highlight{MUST} be edges incident on $Y$ from sets that are neither $Y$ or $\BadSet$.
+Therefore, there must be an edge from $X$ into $Y$.
+This means $X$ and $Y$ cannot be disconnected as we \highlight{assumed}.
+We have our contradiction.
+
+
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\textwidth]{assets/stock.png}
-  \caption{Setup Before deletions}
-  \label{fig:before-deletions}
+  \caption{Partition with edge}
+ \label{fig:contradiction}
 \end{figure}
 
-We denote this connected component with $U$.
-Now for $\RemGraph$ to \highlight{not} admit a perfect matching, the process of deleting edges incident on $\Embedding{\Subdivision{H}{\sigma}}$ must at some point cause $U$ to split into more than 1 disconnected components, which causes $\OddComponents{\RemGraph \setminus \BadSet}$ to cross over the threshold $|\BadSet|$.
-Without loss of generality, we \highlight{assume} that $\OddComponents{G \setminus \BadSet} = |\BadSet|$, and deleting edges incident on  $\Embedding{\Subdivision{H}{\sigma}}$ splits $U$ into 2 disconnected components, and therfore we get 
-$\OddComponents{\RemGraph \setminus \BadSet} =  |\BadSet|+1$,  and therefore $\RemGraph$ does not admit a perfect matching.
-We refer the reader to Figure \highlight{same fig} for a visual illustration of this process.\\
 
-% For $U$ to split into at least two connected components as we delete edges incident on $\Embedding{\Subdivision{H}{\sigma}}$, we need the scenario depicted by Figure \highlight{This is figure 2}.
-Denote $X \subset U$ and $Y \subset U$ as the vertices of two the components connected to $\Embedding{\Subdivision{H}{\sigma}}$.
-If $U$ has to split into at least 2 components, there cannot be any edges between $X$ and $Y$ (if there was, deleting edges incicent on  $\Embedding{\Subdivision{H}{\sigma}}$ and $\BadSet$ would not increase the number of disconnected components).
-But as $A$ and $B$ are balanced sets, and $G$ is an $\EnDeeLambda$ graph, \textit{we show that we can always find at least one edge between $X$ and $Y$}, thereby giving us the contradiction we are looking for.\\
 
-By Theorem \ref{thm:partition}, we have that every \green{green} $
-\green{v} \in \Embedding{\Subdivision{H}{\sigma}}$ has at least $\frac{11}{16}d$ \red{red} neighbours in $X \cup Y \cup \BadSet$.
-Similarly, every \red{red} vertex $\red{u} \in \Vertices{G}$ has at most $\frac{5}{16}d$ \green{green} neighbours.
-This implies, $|\RedNodes{X \cup Y \cup \BadSet}| \in  \BigO{|\Embedding{\Subdivision{H}{\sigma}}|} = \BigO{\frac{n}{\log n}}$.
-Now, by our \highlight{assumption}, before we started deleting edges we had $\OddComponents{G \setminus \BadSet} = |\BadSet|$.
-This means that there can be most $d$ edges between $\BadSet$ and $U$ (if it was anymore, then it would imply the edges in the cuts between $\BadSet$ and the other connected components would drop below $d$, which by Lemma \ref{lemma:edge-connectivity-pseudorandom} is not possible).
-This implies $\RedNodes{X \cup Y} = \BigO{\frac{n}{\log n}}$.
-As $\RedNodes{X \cup Y}$ is a large and $G$ is an $\EnDeeLambda$ graph, by the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}) it is not possible to partition $\RedNodes{X \cup Y}$ into 2 disconnected components.
-This means there \emph{MUST} be at least 1 edge between $X$ and $Y$.
-\ari{Do you see a better way to say the last statement?}
+
 \end{proof}
 
 \section{Related Work}
@@ -738,16 +787,12 @@ This means there \emph{MUST} be at least 1 edge between $X$ and $Y$.
 \section{Extra Stuff TO SORT OUT later}
 \subsection{Graph Theory Preliminaries}
 
-$\CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$ define\todo{do}
+% $\CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$ define\todo{do}
 
-
-
-
-
-\begin{definition}[Subgraph]\label{def:subgraph}
-A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
+% \begin{definition}[Subgraph]\label{def:subgraph}
+% A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
 	
-\end{definition}
+% \end{definition}
 
 
 

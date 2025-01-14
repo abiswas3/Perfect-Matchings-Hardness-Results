@@ -11,7 +11,7 @@ MAIN_FILE = perfect-matchings-main
 all: $(MAIN_FILE).pdf
 
 # Create the PDF from the LaTeX and BibTeX files
-$(MAIN_FILE).pdf: $(MAIN_FILE).tex
+$(MAIN_FILE).pdf: *tex
 	$(LATEX) $(MAIN_FILE).tex
 	bib_shortener $(MAIN_FILE)
 	bibtex-tidy $(MAIN_FILE).bib

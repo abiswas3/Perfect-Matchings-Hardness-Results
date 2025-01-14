@@ -65,7 +65,7 @@
 % Paper specific 
 \newcommand{\PropFormula}{\Phi}
 \newcommand{\Proof}{\pi}
-\newcommand{\Size}[1]{\left|#1\right|}
+\newcommand{\Size}[1]{|#1|}
 \newcommand{\Card}[1]{\text{Card}(#1)}
 
 % Graph Commands
@@ -73,6 +73,11 @@
 \newcommand{\Vertices}[1]{\mathsf{V}(#1)}
 \newcommand{\Edges}[1]{\mathsf{E}(#1)}
 \newcommand{\CutEdges}[3]{e(#1 \leftrightarrow #2; #3)}
+\newcommand{\IncidentEdges}[1]{\mathsf{E}(\rightarrow #1)}
+
+
+
+
 \newcommand{\CutEdgesSet}[3]{\mathsf{E}(#1 \leftrightarrow #2; #3)}
 \newcommand{\EdgesAccross}[2]{e_{#2}(#1)}
 \newcommand{\OddComponents}[1]{q(#1)}
@@ -142,7 +147,7 @@
 \newcommand{\axiom}{q}
 \newcommand{\PM}[1]{\text{PM}(#1)}
 
-\newcommand{\RemGraph}{\textcolor{red}{\tilde{G}}}
+\newcommand{\RemGraph}{G'}
 \newcommand{\BadSet}{\textcolor{blue}{\hat{S}}}
 \newcommand{\ari}[1]{\textcolor{kon-peki}{Ari: }#1}
 \newcommand{\highlight}[1]{\textcolor{kon-peki}{#1}}
@@ -154,3 +159,4 @@
 \newcommand{\GreenB}{\green{B}}
 \newcommand{\RedA}{\red{A}}
 \newcommand{\BipartiteG}{G_{\GreenB \cup \GreenB}}
+\newcommand{\SizeRemGraph}{n'}
