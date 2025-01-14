@@ -288,11 +288,12 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 
 
 \begin{figure}[h]
-\center
-{\caption{The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$. As $E' \subseteq E$ is a safe state that is not too large, by the non blocking property, we are \emph{guranteed} to connect any vertex $v \in L$ to a vertex $w \in R$ that has no incident edges from $E'$.}
+  \center
+  {\includegraphics{assets/non-blocking-networks.pdf}}
+{\caption{\small The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$. As $E' \subseteq E$ is a safe state that is not too large, by the non blocking property, we are \emph{guranteed} to connect any vertex $v \in L$ to a vertex $w \in R$ that has no incident edges from $E'$.}
 }
 \label{fig:test}
-{\includegraphics{assets/non-blocking-networks.pdf}}
+
 \end{figure}
 
 Next, we re-state a lemma by \citep[Proposition 1]{feldman1988wide} which describes the properties bipartite graphs must satisfy to be non-blocking.
@@ -698,26 +699,6 @@ Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $
 Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices.
 $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
 \end{lemma}
-
-% \begin{figure*}
-%     \centering
-%     \begin{subfigure}[t]{0.45\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{assets/part-a.pdf}
-%         \caption{}
-%        \label{fig:before-deletions}
-%     \end{subfigure}%
-%     \hspace{1mm}
-%     \hspace{1mm}    
-%     \begin{subfigure}[t]{0.45\textwidth}
-%         \centering
-%         \includegraphics[width=\textwidth]{assets/part-b.pdf}
-%         \caption{}
-%        \label{fig:after-deletions}        
-%      \end{subfigure}
-%     \hspace{1mm}     
-% \end{figure*}
-
 \begin{figure*}
     \centering
     \begin{subfigure}[t]{0.3\textwidth}
