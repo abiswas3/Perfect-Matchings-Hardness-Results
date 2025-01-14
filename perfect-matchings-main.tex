@@ -176,7 +176,12 @@ We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underse
 
 
 \begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
-	
+  Given an $\EnDeeLambda$ graph $G$ for any $S, T \subseteq \Vertices{G}$ we have
+\begin{align*}
+  \CutEdges{S}{T}{\Edges{G}} &\geq \frac{d\Size{S}\Size{T}}{n} - \lambda\sqrt{\Size{S}\Size{T} (1 - \frac{\Size{S}}{n}) (1 - \frac{\Size{T}}{n})   }	\\
+  &\geq \frac{d\Size{S}\Size{T}}{n} - \lambda\sqrt{\Size{S}\Size{T} }
+\end{align*}
+  
 \end{lemma}
 
 
@@ -284,7 +289,7 @@ Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E
 
 \begin{figure}[h]
 \center
-{\caption{The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$. As $E' \subseteq E$ is a safe state that is not too large, by the non blocking property, we are \emph{guranteed} to connect any vertex $v \in L$ to a vertex $w \in R$ such that $(v,w) \notin E'$}
+{\caption{The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$. As $E' \subseteq E$ is a safe state that is not too large, by the non blocking property, we are \emph{guranteed} to connect any vertex $v \in L$ to a vertex $w \in R$ that has no incident edges from $E'$.}
 }
 \label{fig:test}
 {\includegraphics{assets/non-blocking-networks.pdf}}
@@ -382,6 +387,27 @@ Suppose $X_1, ..., X_n$ are identical independent random variables taking values
 Next we describe what it means to have a balanced cut of $G$.
 A balanced partition or cut of graph $G$ into sets $\RedA$ and $\GreenB$ is one where both sets are roughly equal in size, and have roughly the same number of edges incident on them.
 
+\begin{figure*}
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/partition-a.pdf}
+        \caption{}
+      \label{fig:before-deletions}
+    \end{subfigure}%
+    \hspace{1mm}
+    \hspace{1mm}    
+    \begin{subfigure}[t]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/partition-b.pdf}
+        \caption{}
+      \label{fig:after-deletions}        
+    \end{subfigure}
+    \caption{\small The figure above describes the partitioning of the vertices of the graph $G$ into two sets $\RedA$ and $\GreenB$, such that for every vertex $v \in \Vertices{G}$, has roughly equal number of edges in $\RedA$ and $\GreenB$. The subgraph $G_{\GreenB}$ obtained by including vertices in $\GreenB$ and edges that stay inside $\GreenB$.}
+    \hspace{1mm}     
+\end{figure*}
+
+
 \begin{definition}[Balanced Sets]\label{defn:balanced-cuts}
   A $(c, \epsilon)$-degree balanced cut of a graph $G$ is apartition $\RedA \cup \GreenB$ ofthe $n$ vertices of $G$ such that:
 
@@ -392,14 +418,13 @@ A balanced partition or cut of graph $G$ into sets $\RedA$ and $\GreenB$ is one 
     
 \end{definition}
 
-\begin{tcolorbox}
-  Throughout the rest of this proof we describe  vertices in $\red{A}$ as \red{red} nodes, and vertices in $\green{B}$ as \green{green} nodes.
-  For any set $X$, we use notation $\RedNodes{X} \Def X \cap A$ and $\GreenNodes{X} \Def X \cap B$ to denote the red and green nodes in $X$ respectively.
-\end{tcolorbox}
+\begin{remark}
+  Throughout the rest of this document, for any $(c, \epsilon)$ balanced partition $\RedA \cup \GreenB$ of any graph $G$,  we describe vertices in $\RedA$ as \red{red} nodes, and vertices in $\GreenB$ as \green{green} nodes.
+\end{remark}
 
 The proof for the following theorem is a textbook application of the  \nameref{lemma:lll} along with the Chernoff bound.
 We re-derive this for completeness.
-The contribution lies in how we use the balanced partition to get a perfect matching in the residual graph in Theorem \ref{thm:partition}.
+The main contribution lies in how we use the balanced partition to get a perfect matching in the residual graph in Theorem \ref{thm:partition}.
 
 \begin{lemma}[Pseudorandom Graphs Have Balanced Cuts]\label{thm:partition}
 For every $0 < c < 1$, and $\epsilon > 0$, there exists a constant $d_0 \in \BigOTilde{c/\epsilon^2}$, such that, given a $d$-regular graph $\Graph = (V, E)$ on $n$ vertices, with $d \in [d_0, n-1]$, there exists and a  sets $\red{A}$ and $\green{B}$ is a $(c, \epsilon)$ balanced cut of $G$.
@@ -427,8 +452,7 @@ Given $\EnDeeLambda$ graph $G=(V,E)$, let $\RedA$ and $
 \GreenB$ be the partition guaranteed by the \ref{thm:partition}.
 Define $E_{\GreenB} \Def \{ (\green{u},\green{v}) \in E : \green{u} \in \GreenB \land \green{v} \in \GreenB\}$. 
 That is $E_{\green{B}}$ is the set of edges whose endpoints are fully contained in B (they have \green{green} endpoints), and let $G_{\green{B}}$ be the subgraph defined by the edges $E_{\GreenB}$. 
-Define $ \na \Def |G_{\GreenB}|$. \todo{FIX}
-
+Define $ \na \Def |G_{\GreenB}|$, which by the balancedness of the partition we have is \highlight{TODO}.
 Now define a bipartite graph $\BipartiteG$ with vertices $\Vertices{\GreenB} \cup \Vertices{\GreenB}$ and $\Edges{\BipartiteG})=E_{\GreenB}$.
 That is the left and right vertices of $\BipartiteG$ are copies of $G_{\GreenB}$ and for every edge $(u,v) \in E_{\GreenB}$, there is a corresponding copy $(u,v) \in \Edges{\BipartiteG}$.
 
@@ -674,6 +698,48 @@ Let $\OddComponents{G}$ denote the number of odd sized connected components in a
 $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
 \end{lemma}
 
+% \begin{figure*}
+%     \centering
+%     \begin{subfigure}[t]{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/part-a.pdf}
+%         \caption{}
+%        \label{fig:before-deletions}
+%     \end{subfigure}%
+%     \hspace{1mm}
+%     \hspace{1mm}    
+%     \begin{subfigure}[t]{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/part-b.pdf}
+%         \caption{}
+%        \label{fig:after-deletions}        
+%      \end{subfigure}
+%     \hspace{1mm}     
+% \end{figure*}
+
+\begin{figure*}
+    \centering
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/part-a.pdf}
+        \caption{\small Caption for Part A.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/part-b.pdf}
+        \caption{\small Caption for Part B.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/part-c.pdf}
+        \caption{\small Caption for Part C.}
+    \end{subfigure}
+    \caption{An overarching caption describing all three subfigures.}
+    \label{fig:three-images}
+\end{figure*}
+
 
 \begin{theorem}[Perfect Matching On The Remainder Theorem]\label{thm:perfect-matching}
 Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from Theorem \ref{thm:top-embedding}.
@@ -681,24 +747,6 @@ Then the induced sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma
 	
 \end{theorem}
 
-\begin{figure*}
-    \centering
-    \begin{subfigure}[t]{0.45\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{assets/stock.png}
-        \caption{The figure above describes the partitioning of the vertices of the graph $G$ into two sets $A$ (highlighted in green) and $B$ (highlighted in blue), such that for every vertex $v \in \Vertices{G}$, $\epsilon d$ fraction of the edges go into $A$ (depicted in orange) and $1 - \epsilon d$ fraction of the edges go into $B$.}
-       \label{fig:before-deletions}
-    \end{subfigure}%
-    \hspace{1mm}
-    \vrule width 1pt % vertical line
-    \hspace{1mm}
-    \begin{subfigure}[t]{0.45\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{assets/stock.png}
-        \caption{The figures on top describes the subgraph $G_A$ obtained by including vertices in $A$ and edges that stay inside $A$ (orange edges), as described in the construction of Step 2. The figure below describes the bipartite graph $\BipartiteG$ we use for the embedding theorem.}
-       \label{fig:after-deletions}        
-    \end{subfigure}
-\end{figure*}
 
 
 \begin{proof}Let $\RemGraph \Def  \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ and $\Size{\Vertices{\RemGraph}}\Def \SizeRemGraph$.
@@ -760,17 +808,6 @@ This implies that there \highlight{MUST} be edges incident on $Y$ from sets that
 Therefore, there must be an edge from $X$ into $Y$.
 This means $X$ and $Y$ cannot be disconnected as we \highlight{assumed}.
 We have our contradiction.
-
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.5\textwidth]{assets/stock.png}
-  \caption{Partition with edge}
- \label{fig:contradiction}
-\end{figure}
-
-
-
 
 \end{proof}
 
