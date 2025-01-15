@@ -278,12 +278,12 @@ What the above lemma says is that if we have a graph $G$ with odd vertices, that
 The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
 
 \begin{definition}[$(p, q)$-non blocking bipartite graphs]
-Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a family $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
+Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a collection  $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
 
 \begin{enumerate}
 	\item $\emptyset \in \Family{S}$
 	\item If $E'' \subseteq E'$ and $E' \in \Family{S}$, \emph{then}, $E'' \in \Family{S}$.
-	\item Given $E' \in \Family{S}$ such that $|E'| \leq p$, and \emph{any} $v \in A$ with $\degree{E'}{v} < q$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. 
+	\item Given $E' \in \Family{S}$ such that $|E'| \leq q$, and \emph{any} $v \in A$ with $\degree{E'}{v} < p$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. 
  We call $w$ a \emph{safe neighbour} for $v$ given $E'$.
 \end{enumerate}
 
@@ -310,8 +310,8 @@ If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at le
 \section{Proof Of Main Result}
 \label{sec:main-proof}
 
-Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for polynomial calculus known to exist as per Lemma \ref{lemma:worst-case-instance-PC}.
-The hardness proof follows from the following steps, and is illustrated in Figure \ref{fig:proof-outline}.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for polynomial calculus (or SoS) known to exist as per Lemma \ref{lemma:worst-case-instance-PC} (or Lemma \ref{lemma:worst-case-instance-sos}).
+The hardness proof follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
 
 
 \begin{figure}
@@ -332,18 +332,19 @@ The hardness proof follows from the following steps, and is illustrated in Figur
     Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ denote the topological embedding of $H$ into $G_{\GreenB}$, and $G_{\EmbeddingFunc}$ embedded subgraph.
     For each edge $(u,v) \in \Edges{H}$, let $\Path{\Embedding{u}}{\Embedding{v}}$ denote the vertex disjoint odd length path in $\Subdivision{H}{\sigma}$ we construct using Theorem \ref{thm:top-embedding}.
     Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-    To see why, map each variable $y_e$ for $e \in \Path{u}{v}$ alternatingly to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
+    To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternatingly to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
 }
 	
 	
 %	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
-	\item Lastly, we show (via Theorem \ref{thm:perfect-matching}) that the induced subgraph of $G$ not participating in the topological embedding above, has a perfect matching $M$. Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that 
+	\item Lastly, we show (via Theorem \ref{thm:perfect-matching}) that the induced subgraph of $G$ not participating in the topological embedding above (which we refer to as $\RemGraph$), has a perfect matching $M$. Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that 
 	
 	\[
         \rho(x_e)=
         \Bigger[10]\{\begin{array}{@{}cl}
                 1 & \text{ if $e \in M \land e \notin \Edges{G_{\EmbeddingFunc}}$} \\
-                0 & \text{ if $e \notin M \land e \notin \Edges{G_{\EmbeddingFunc}}$}\\ 
+          0 & \text{ if $e \notin M \land e \notin \Edges{G_{\EmbeddingFunc}}$}\\
+          % 0 & \text{if } u \in \Vertices{\RemGraph} \land v \in \Vertices{G_{\EmbeddingFunc}}\\
                 x_e & \text{ otherwise} 
         \end{array}
 \]
@@ -494,7 +495,8 @@ However, $S$ and $T$ are also subsets of $\Vertices{G}$ and $G$ is a $\EnDeeLamb
 From the \nameref{lemma:expanders-mixing-lemma}, we have
 
 \begin{align}
-	\CutEdges{S}{T}{E_{\GreenB}} &\leq \frac{d}{n}|S||T| + \lambda\sqrt{|S||T|} \\
+  \CutEdges{S}{T}{E_{\GreenB}} &\leq   \CutEdges{S}{T}{E} \\
+  &\leq \frac{d}{n}|S||T| + \lambda\sqrt{|S||T|} \\
 	&< 2\frac{2d^2}{n\lambda}|S|^2 + |S|\sqrt{2\lambda d} \label{eq:assumption}\\
 	&\leq |S|\left(\frac{2d^2}{\lambda n} \frac{n\lambda}{c_1 d} + \sqrt{d\cdot \frac{d}{c_2/2}}\right) \label{eq:assumption-lambda}\\
 	&= |S|d\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) \\
@@ -508,7 +510,7 @@ Finally we get our theorem statement by setting $\epsilonL = 1/c_2$ and $\epsilo
 
 \end{proof}
 
-With the non-blocking nature of $\BipartiteG$ established, the next step is to embed hard instance $H$ as topological minor of $\GreenB$ as described in the overview.
+With the non-blocking nature of $\BipartiteG$ established, the next step is to embed hard instance $H$ as topological minor of $G_{\GreenB}=(\GreenB, E_{\GreenB})$ as described in the overview.
 Note for every edge in $E_{\GreenB}$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
 
@@ -521,9 +523,9 @@ A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision 
 \end{definition}
 
 \begin{theorem}[Topological Embedding Theorem]\label{thm:top-embedding}
-Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined from the balanced partition theorem, where $|\GreenB| = \na$.
-Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil = \BigO{\frac{n}{\log n}}$ vertices known to exist in Lemma \ref{lemma:worst-case-instance-PC}, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
-If $\lambda \leq \epsilonL d$, then $G$ contains a subdivision of $H$, denoted by $\Subdivision{H}{\sigma}$ as a subgraph.
+Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the bipartitle representation of $G_{\GreenB}$, where $|G_{\GreenB}| = \na = \alpha n$, for some universal constant $\alpha \in [3/16, 5/16]$.
+Let $H$ be the worst case hard instance on $t = \lceil\epsilonA\alpha \frac{\na}{\log \na}\rceil = \lceil \frac{\epsilonA n}{\log \na}\rceil = \BigO{\frac{n}{\log n}}$ vertices known to exist in Lemma \ref{lemma:worst-case-instance-PC}, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
+If $\lambda \leq \epsilonL d$, then $G_{\GreenB}$ contains a subdivision of $H$, denoted by $\Subdivision{H}{\sigma}$ as a subgraph.
 
 \end{theorem}
 
@@ -532,11 +534,11 @@ If $\lambda \leq \epsilonL d$, then $G$ contains a subdivision of $H$, denoted b
 \begin{proof}
 Define $D = \frac{d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
-Define $\sigma(e) \Def \PathSize \Def 2k+1$ for all $e \in \Edges{H}$.
-Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_{\GreenB}$, that defines our topological embedding.
+Define $\sigma(e) \Def \PathSize = 2k+1$ for all $e \in \Edges{H}$.
+Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_{\GreenB}$ that defines our topological embedding.
 Our first task is to find a unique $\Embedding{h} \in \Vertices{G_{\GreenB}}$ for each $h \in \Vertices{H}$.
 Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_{\GreenB}}$.
-Let $X=\Vertices{G_{\GreenB}}$ and $Y=\Vertices{G_{\GreenB}}$ denote the left and right sides of the bipartite graph $\BipartiteG$ described above.
+Let $X=\Vertices{G_{\GreenB}}$ and $Y=\Vertices{G_{\GreenB}}$ denote the left and right sides of the bipartite graph $\BipartiteG$.
 We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$: 
 
 \begin{figure*}[t!]
@@ -573,7 +575,7 @@ We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding
   
 \item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. By the non-blocking property, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $E'$ is incident on $\tilde{h}_1$. We set $\Embedding{h_1} \Def \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
   
-\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < \epsilonA\na$, for each $a_j$ we can always find a \emph{safe neighbour} $\Embedding{h_j} \Def \tilde{h}_j$ in $Y$ such that there is an edge from $a_j$ to $\tilde{h}_j$, and there is no other edge in $E'$ so far, that is incident on each $\tilde{h}_j$.
+\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < \epsilonA n$, for each $a_j$ we can always find a \emph{safe neighbour} $\Embedding{h_j} \Def \tilde{h}_j$ in $Y$ such that there is an edge from $a_j$ to $\tilde{h}_j$, and there is no other edge in $E'$ so far, that is incident on each $\tilde{h}_j$.
   
 \end{itemize}
 
@@ -587,13 +589,11 @@ We prove the result by induction on $m$.
 
 Let $e_1 = (u_1,v_1)$. Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
 Define a global edge set and set it to $\GlobalEdgeSet \Def \emptyset$.
-We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows:
-
-For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process:
+We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows: For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process
 
 \begin{itemize}
-\item {For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $E_{\GreenB}$.
-    With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add exactly one \emph{safe} neigbour of $x$, denoted here with $y$, to $S_{j}$, and add the edge $(x,y)$ to $M_j$. Refer to Figure \ref{subfig:embeddingA} for a visual depiction of this process.
+\item {For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
+    With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add exactly one \emph{safe} neigbour of $x$, denoted here with $y$, to $S_{j}$, and add the edge $(x,y)$ to $M_j$. Refer to Figure \ref{subfig:embeddingA} for a visual depiction of this process (the green vertex).
     We discuss below why such a safe edge always exists.}
   
 \item{Now there might be other safe neigbours for $x \in S_j$ apart from the one we just added. Add these neighbours to $S_j$, and the edges to $M_j$ as long the size of $M_j \leq \min\{t, |S_{z-1}|D\}$.
@@ -601,6 +601,8 @@ For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process:
 For any index $i \leq k$, once a set $|S_i|=t$, for all remaining indices $j > i$, $S_j$'s are of size $t$ as well, with exactly one edge incident on each $a \in S_j$ from $S_{j-1}$. Figure \ref{subfig:embeddingB} illustrates this idea.
   }
 
+\item{$S_{j}'$ is defined with an analogous process, starting with vertices in $S_{j-1}'$. We describe this process of filling out $\{M_j\}_{j \in [k]}$ and $\{M_j'\}_{j \in [k]}$ as the forward process in Figure \ref{fig:baseB}.}
+  
 \item{\textbf{Why is there always a safe neighbour}: Let $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$.
 The reason we can always construct the sets described above sets is that $|M| \leq 2tk < \epsilonA n$, and as $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in S_{j+1}$, such that $(x,y) \in E_{\GreenB}$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.}  
 
@@ -609,17 +611,19 @@ The reason we can always construct the sets described above sets is that $|M| \l
 
 
 
-Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
+\textbf{Backtracking Phase}: Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
-\CutEdges{S_k}{S_k'}{E_{\GreenB}}
+\CutEdges{S_k}{S_k'}{E}
  &\geq \frac{d t^2}{n} - \lambda t \\
 	&> 0 \label{eq:greater}
 \end{align}
 
 Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \epsilonL d$ (from Lemma \ref{lemma:bipartitie-is-non-blocking}).
 This implies there exists at least one edge $e^\star=(x^\star,y^\star) \in \CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$.
+Note that although the above lemma is with respect to edges in $E$, $S_k$ and $S_k'$ are contain only \green{green} vertices.
+Therefore this edge $e^\star \in E$ \emph{must} be from $E_{\GreenB}$.
 By how we constructed $M_k$, we know that $x^\star$ was the safe neighbour of some node $a \in S_{k-1}$.
 Let $m_k \Def (a,x^\star) \in M_k$ be the connecting edge.
 Similarly, there is some edge $m_{k-1} \in M_{k-1}$ that connects some vertex in $S_{k-2}$ to $a$ with a safe edge.
@@ -646,11 +650,10 @@ Let $P_1, \dots, P_j$ denote these paths (depicted with \textcolor{carminepink}{
 Let $\GlobalEdgeSet$ denote the set of all edges in these paths.
 Let $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$.
 So far by induction we have $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$.
-Note that $\GlobalEdgeSet \leq tk < \epsilonA n$.
+Note that $\GlobalEdgeSet <  2tk < \epsilonA n$.
 The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case.
-We add $u_{j+1}$ to $S_0$ and $v_{j+1}$ to $S_0'$.
-Now we to add new nodes to $S_{1}$ and $S_{1}'$, we ask for $D$ neighbours of $u_{j+1}$ and $v_{j+1}$.
-Then we add at least one safe neighbour of each to $S_1$ and $S_1'$ respectively. As $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, and $|M| < \epsilonA\na$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
+We add $\Embedding{u_{j+1}}$ to $S_0$ and $\Embedding{v_{j+1}}$ to $S_0'$.
+Now we to add new nodes to $S_{1}$ and $S_{1}'$, we ask for $D$ neighbours of $\Embedding{u_{j+1}}$ and $\Embedding{v_{j+1}}$. As $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, and $|M| < \epsilonA n$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
 This concludes the proof.
 
 \begin{figure}
