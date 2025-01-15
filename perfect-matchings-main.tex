@@ -113,32 +113,34 @@ Thus, the main contribution of \citet{Austrin_2022} is a novel embedding theorem
 A distinctive feature of their result is that as the embedding relies on randomness used to sample the regular graph, and thus they only provide average case lower bounds.
 These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of expander graphs.
 
-\todo{Needs an edit. Describe how they depend on randomness better, now that i understand it better.}
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
-It should be noted that as an expander graph is \emph{also} a random graph with high probability, our result subsumes the result of \citet{Austrin_2022}.
-A second defining feature of our contribution is the qualitative simplicity of the hardness result.
-To show their hardness results, Austrin and Risse embed the hard instance $H$ constructed by \citet{buss1999linear} in a random $d$ regular graph $G$.
-To do this, they first show a partition lemma that partitions the vertices of $G$ into two sets $T$ and $\Vertices{G} \setminus T$, such that the partition satisfies two properties.
-The first property requires that for any odd sized subset $U \subseteq T$, $\Vertices{G} \setminus U$ has a perfect matching.
-This property is used to inherit the hardness of $H$ into $G$ (ensuring that there is no shorter refutation using parts of $G$ not used for the embedding).
-%In contrast, we show a much simpler way to inherit the hardness of $H$ into any pseudo random graph (even deterministic constructions) via a simple application of the Tutte criterion (Lemma \ref{lemma:tutte-criterion}). 
-The second property, requires the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
+The reason previous work rely on randomness can be summarised as follows:
+To show their hardness results, Austrin and Risse need to embed the hard instance $H$ constructed by \citet{buss1999linear} topologically into $G$.
+To do this, they first partition the graph into two roughly equal sized sets $S$ and $T$ with sufficiently many edges in the cut between them.
+Then they  require that the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
 The primary reason the authors require the second property, is to be able to use a result by \citet{krivelevich2019completeminorsgraphssparse}, which allows us to embed any graph $H$ into a host graph $\tilde{G}$ as a minor, if $\tilde{G}$ is a vertex expander with the above properties.
-%They describe an iterative algorithm for  embedding the vertices of $H$ into $\tilde{G}$ one while keeping track of the unused vertices of $\tilde{G}$, and discarding bad vertices that lead to bad embeddings and restarting the process of finding good vertices again \ari{Rajko can likely provide a better summary of his own work}.
-However, Austrin and Risse cannot directly use the result in \citep{krivelevich2019completeminorsgraphssparse} as they need to embed $H$ as a \emph{topological} minor in a $d$-random graph $G$ instead of embedding it as an ordinary minor.
-Thus, their main technical contribution is a modification of \citet{krivelevich2019completeminorsgraphssparse} to allow for topological embeddings.
-To embed $H$ as a topological minor, Austrin and Risse need to find vertex disjoint odd length paths in $G$ for edges in $H$.
-Therefore they map vertices of $H$ to ``star-like'' subgraphs in $G$, which allows the central vertex of the star to be connected to many vertex disjoint paths without incurring collisions.
-Formally proving the result requires a fairly involved set of tools from spectral graph theory, and forms the basis of their main technical contribution.
-In this work, we show a direct way to embed $H$ into any expander graph inspired by ideas from the theory of wide sense non blocking networks \citep{feldman1988wide}.
-The only spectral graph theory we require is the expander mixing lemma (Lemma \ref{lemma:expanders-mixing-lemma}).
-Furthermore, showing that the rest of graph contains a perfect matching, and therefore the hardness of $H$ is transferred, can be shown by a simple application of the Tutte criterion (Lemma \ref{lemma:tutte-criterion}).
+However, Austrin and Risse cannot directly use the result in \citep{krivelevich2019completeminorsgraphssparse} as they need to embed $H$ as a \emph{topological} minor instead of embedding it as an ordinary minor (this allows us them to preserve the hardness of $H$ after embedding).
+Their main technical contribution is a modification of the embedding techniques in \citep{krivelevich2019completeminorsgraphssparse} to allow for topological embeddings.
+For their topological embedding to work, they require that the induced subgraph $G[T]$ also be odd cycle robust (see \citep[Definition 3.2]{Austrin_2022}).
+To show that $G$ is odd cycle robust, their proof needs $G$ to be a random sample, as this allows them to show that the number of $i$-cycles in the graph $Y_i(G)$ is a Poisson random variable.
+Then using the tail bounds of the Poisson distribution they get what they are after with high probability.
+In contrast, we topologically embed any pseudorandom graph, with very mild spectral gap assumptions (milder than those of random graphs)
+relying on the theory wide sense non blocking networks, without having to rely on any randomness or tail bounds at all.
+It should be noted that as an expander graph is \emph{also} a random graph with high probability, and as we require milder spectral gap for the embedding to work, our result subsumes the result of \citet{Austrin_2022}.
+Another example of the the qualitative simplicity of our techniques is how we show the residual graph must have a perfect matching.
+Prior work \cite{Austrin_2022} also need this property for their result to transfer hardness.
+To show that the residual graph has a perfect matching they rely on a involved set of tools from Linear algebra.
+First they use the result by \citet[Theorem 2.3]{brouwer2005eigenvalues}, which says if $\lambda_m(L_{G'}) \leq 2\lambda_2(L_{G'})$, then $G'$ has a perfect matching.
+Here $G'$ will be residual graph on $m$ even numbered vertices, $L_{G'}$ is its laplacian and $\lambda_2$ and $\lambda_m$ are the second and last eigenvalues sorted in ascending order. 
+To show this spectral bound, they rely on the interlacing theorem\footnote{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html} and weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebrea, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
+On the contrary, we show the same result with a simple application of the  \nameref{lemma:tutte-criterion}, and the combinatorial \nameref{lemma:expanders-mixing-lemma}.
+We point out that \citep[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nameref{lemma:tutte-criterion} under the hood, and thus our proof can be viewed as a more direct combinatorial proof of the claim.
 In summary, we show \emph{stronger} lower bounds for a \emph{larger} set of objects using \emph{simpler} proof techniques.
 Our main result is stated below.
 
 \begin{theorem}[Main Theorem]\label{thm:main-thm}
 
-There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds  for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < \highlight{TODO}$:
+There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds  for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < \epsilonL d$ ($\epsilonL \leq 0.01$ works) 
 \begin{enumerate}
     \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
     \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
@@ -710,6 +712,7 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
         \centering
         \includegraphics[width=\textwidth]{assets/part-a.pdf}
         \caption{}
+        \label{fig:before-deletions}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.3\textwidth}
@@ -717,12 +720,14 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
         \includegraphics[width=\textwidth]{assets/part-b.pdf}
         \caption{
         }
+        \label{fig:after-deletions}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{assets/part-c.pdf}
-        \caption{\small Caption for Part C.}
+        \caption{}
+        \label{fig:contradiction}
     \end{subfigure}
     \caption{The blue box denotes the single connected component $U$ in $G$, and the grey blobs denote the connected components attached to $\BadSet$ that are unaffected by the deletion of $\Embedding{\Subdivision{H}{\sigma}}$. By our assumption, deleting $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ causes $U$ to split into many components (shown in pink) such that the number of odd sized components exceeeds $\Size{\BadSet}$. By definition, all edges connections between these components should go via $\BadSet$. Thus, on deletion of $\BadSet$ there should be no edge between $X$ and $Y$. We show that one exists, thus our assumption must have been wrong.}
     \label{fig:three-images}
@@ -756,9 +761,9 @@ Let $X$ and $Y$ denote a partition of $\Vertices{\RemGraph} \setminus \BadSet$ s
 This is always possible given $\Size{\BadSet} \leq \SizeRemGraph/2$.
 Without loss of generality let $\Size{Y} \leq \Size{X}$.
 Then $\Size{Y} < (\SizeRemGraph-|\BadSet|)/2$.
-By the balanced partition theorem, every vertex in $Y$ has at least $\frac{11d}{16}$ \red{red} neighbours in $\RemGraph$.
-To see why observe that removing $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ does not affect the red edge distribution, as $\Embedding{\Subdivision{H}{\sigma}}$ is composed entirely of \green{green} vertices.
-So there \emph{MUST} be at least $\frac{11d}{16}\Size{Y}$ edges incident on $Y$ (where we count edges with both end-points in $Y$ twice).
+By the balanced partition theorem, every vertex $u \in Y$ has at least $\frac{11d}{16}$ \red{red} neighbours in $\RemGraph$.
+To see why observe that removing $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ does not affect the number of \red{red} neighbours $u$ can have, as $\Embedding{\Subdivision{H}{\sigma}}$ is composed entirely of \green{green} vertices.
+So there \emph{must} be at least $\frac{11d}{16}\Size{Y}$ edges incident on $Y$ (where we count edges with both end-points in $Y$ twice), giving us the following lower bound.
 
 \begin{equation}\label{eq:edge-lower-bound}
   \CutEdges{Y}{Y}{\Edges{\RemGraph}} \geq \frac{11d}{16}\Size{Y}
@@ -780,7 +785,8 @@ Also by the expander mixing lemma,
   &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 2\epsilonL d\Size{Y} \label{eq:why2}
 \end{align}
 
-Step \eqref{eq:why2} comes from the assumption that $\Size{\BadSet} \leq 4\Size{Y}$. Combining equations \eqref{eq:why} and \eqref{eq:why2}, gives us the total number of edges incident on $Y$ either from $\BadSet$ or edges incident from $Y$ itself (i.e these edges have both endpoints in $Y$) is $\frac{d}{\SizeRemGraph}\Size{Y}^2 +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}$.
+Step \eqref{eq:why2} comes from the assumption that $\Size{\BadSet} \leq 4\Size{Y}$. Combining equations \eqref{eq:why} and \eqref{eq:why2}, gives us the total number of edges incident on $Y$ either from $\BadSet$ or edges fully contained in $Y$ itself is \emph{at most} $\frac{d}{\SizeRemGraph}\Size{Y}^2 +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}$.
+Also note that as we are upper bounding the number of edges incident on $Y$, this upper bound also applies if we restrict to edges in $\RemGraph$ instead of $G$ (as the number of edges can only go down).
 
 \begin{align}
  \text{Total edges in $\RemGraph$ incident on $Y$ from $\BadSet$ and $Y$} &\leq \frac{d\Size{Y}^2}{\SizeRemGraph} +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}\\[3pt]                                                                          &\leq  \frac{d\Size{Y}}{\SizeRemGraph}\frac{(\SizeRemGraph - \Size{\BadSet})}{2} + \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y} \label{eq:why3}\\[3pt]
@@ -793,31 +799,18 @@ Equation \eqref{eq:why3} comes from  $\Size{Y} < (\SizeRemGraph - \Size{\BadSet}
 Equation \eqref{eq:why4} comes from the assumption that $\Size{\BadSet} \leq \SizeRemGraph/2$.
 The lower bound on the edges incident on $Y$ given in Equation \eqref{eq:edge-lower-bound} strictly greater than the upper bound in Equation \eqref{eq:edge-upperbound}.
 This implies that there \emph{must} be edges incident on $Y$ from sets that are neither $Y$ or $\BadSet$.
-Therefore, there must be an edge from $X$ into $Y$.
-This means $X$ and $Y$ cannot be disconnected as we \highlight{assumed}.
-We have our contradiction.
+But by our \highlight{assumption}, after the deletion of $\BadSet$, $X$ and $Y$ coud not have an edge between each other.
+Giving us the contradiction we were after.
 
 \end{proof}
 
 \section{Related Work}
 \label{sec:related-work}
 
-
-
-
 \bibliographystyle{unsrtnat}
 \bibliography{main_paper}
 \clearpage
 \appendix
-\section{Extra Stuff TO SORT OUT later}
-\subsection{Graph Theory Preliminaries}
-
-% $\CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$ define\todo{do}
-
-% \begin{definition}[Subgraph]\label{def:subgraph}
-% A graph $G'=(V', E')$ is a subgraph of another graph $G=(V, E)$ iff (1) $V'\subseteq V$, and (2) $E'\subseteq E$ and  $(v_1, v_2) \in E' \implies (v_1, v_2) \in V')$.
-	
-% \end{definition}
 
 
 
