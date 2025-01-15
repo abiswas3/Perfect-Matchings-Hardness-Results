@@ -709,13 +709,14 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
     \begin{subfigure}[t]{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{assets/part-a.pdf}
-        \caption{\small Caption for Part A.}
+        \caption{}
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{assets/part-b.pdf}
-        \caption{\small Caption for Part B.}
+        \caption{
+        }
     \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.3\textwidth}
@@ -723,7 +724,7 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
         \includegraphics[width=\textwidth]{assets/part-c.pdf}
         \caption{\small Caption for Part C.}
     \end{subfigure}
-    \caption{An overarching caption describing all three subfigures.}
+    \caption{The blue box denotes the single connected component $U$ in $G$, and the grey blobs denote the connected components attached to $\BadSet$ that are unaffected by the deletion of $\Embedding{\Subdivision{H}{\sigma}}$. By our assumption, deleting $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ causes $U$ to split into many components (shown in pink) such that the number of odd sized components exceeeds $\Size{\BadSet}$. By definition, all edges connections between these components should go via $\BadSet$. Thus, on deletion of $\BadSet$ there should be no edge between $X$ and $Y$. We show that one exists, thus our assumption must have been wrong.}
     \label{fig:three-images}
 \end{figure*}
 
@@ -741,8 +742,8 @@ Then the induced sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma
   We refer the reader to Remark \ref{remark:edge-dist} for a review of how the many red and green neighbours each vertex in $G$ has.
 \textit{\highlight{Assume towards a contradiction} that $\RemGraph$ does \textbf{not} admit a perfect matching.}
 By the \nameref{lemma:tutte-criterion}, this implies that there exists a bad set $\BadSet$ such that $\OddComponents{\RemGraph \setminus \BadSet} > |\BadSet|$.
-Note that if $\Size{\BadSet} \geq \SizeRemGraph/2$, then by simple counting argument $\OddComponents{\RemGraph \setminus \BadSet} \leq |\BadSet|$ (there are not enough vertices left in $\RemGraph$ to make more than $\SizeRemGraph$ connected components).\\
-So we can assume that $\Size{\BadSet} \leq \SizeRemGraph/2$.
+Note that if $\Size{\BadSet} \geq \SizeRemGraph/2$, then by simple counting argument $\OddComponents{\RemGraph \setminus \BadSet} \leq |\BadSet|$ (there are not enough vertices left in $\RemGraph$ to make more than $\SizeRemGraph/2$ connected components).
+So we can assume that $\Size{\BadSet} \leq \SizeRemGraph/2$.\\
 Now, we know from Lemma \ref{lemma:edge-connectivity-pseudorandom} that $G$ is $d$ edge connected, therefore by Lemma  \ref{lemma:d-connected-sets-have-no-bad-sets} we get that for any set $S \subseteq \Vertices{G}$, we have $\OddComponents{G \setminus S} \leq |S|$.  
 Also as $\Embedding{\Subdivision{H}{\sigma}}$ is a connected\footnote{The proof also works if the embedding being removed is not connected, but the presence of connectedness makes the proof simpler to write.} subgraph contained entirely in $\GreenB$, it must be entirely contained in one of the connected components connected to $\BadSet$. Figure \ref{fig:before-deletions} illustrates what we have described above pictorially.
 We denote this connected component with $U$.
@@ -791,7 +792,7 @@ Step \eqref{eq:why2} comes from the assumption that $\Size{\BadSet} \leq 4\Size{
 Equation \eqref{eq:why3} comes from  $\Size{Y} < (\SizeRemGraph - \Size{\BadSet})/2$.
 Equation \eqref{eq:why4} comes from the assumption that $\Size{\BadSet} \leq \SizeRemGraph/2$.
 The lower bound on the edges incident on $Y$ given in Equation \eqref{eq:edge-lower-bound} strictly greater than the upper bound in Equation \eqref{eq:edge-upperbound}.
-This implies that there \highlight{MUST} be edges incident on $Y$ from sets that are neither $Y$ or $\BadSet$.
+This implies that there \emph{must} be edges incident on $Y$ from sets that are neither $Y$ or $\BadSet$.
 Therefore, there must be an edge from $X$ into $Y$.
 This means $X$ and $Y$ cannot be disconnected as we \highlight{assumed}.
 We have our contradiction.
