@@ -113,6 +113,7 @@ Thus, the main contribution of \citet{Austrin_2022} is a novel embedding theorem
 A distinctive feature of their result is that as the embedding relies on randomness used to sample the regular graph, and thus they only provide average case lower bounds.
 These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of expander graphs.
 
+\todo{Needs an edit. Describe how they depend on randomness better, now that i understand it better.}
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
 It should be noted that as an expander graph is \emph{also} a random graph with high probability, our result subsumes the result of \citet{Austrin_2022}.
 A second defining feature of our contribution is the qualitative simplicity of the hardness result.
@@ -358,7 +359,7 @@ A dependency graph for a set of events $E_1, . . . , E_n$ is a graph $G=(V, E)$ 
 of the events $\{E_j | (i, j) \notin E\}$. The degree of the dependency graph is the maximum degree of any vertex in the graph.
 
 
-\begin{lemma}[Multiplicative Chernoff Bound]\label{lemma:mult-chernoff}
+\begin{lemma}[Multiplicative Chernoff lemma]\label{lemma:mult-chernoff}
 Suppose $X_1, ..., X_n$ are identical independent random variables taking values in $\{0, 1\}$. Let $X$ denote their sum and let $\mu = n\Mean{}{X_1}$ denote the sum's expected value. Then for any $0 < \delta < 1$
 
 \[ \Prob{|X - \mu| \geq \delta \mu} \leq 2\exp(-\delta^2\mu/3)\]
@@ -408,30 +409,37 @@ A balanced partition or cut of graph $G$ into sets $\RedA$ and $\GreenB$ is one 
 \end{figure*}
 
 
-\begin{definition}[Balanced Sets]\label{defn:balanced-cuts}
-  A $(c, \epsilon)$-degree balanced cut of a graph $G$ is apartition $\RedA \cup \GreenB$ ofthe $n$ vertices of $G$ such that:
-
-  \begin{enumerate}
-  \item $||\RedA| - cn| \leq \epsilon n$
-  \item For every vertex $u \in \Vertices{G}$,  $cd - \epsilon d \leq \Neighbourhood{E}{v} \cap \RedA \leq cd + \epsilon d $
-    \end{enumerate}
-    
+\begin{definition}[Balanced Cuts]\label{defn:balanced-cuts} Given universal constants $0 \leq c \leq 1$ and $\epsilon > 0$, a $(c, \epsilon)$-degree balanced cut of a graph $G$ is apartition $\RedA \cup \GreenB$ ofthe $n$ vertices of $G$, such that, for every vertex $u \in \Vertices{G}$,  $cd - \epsilon d \leq \Neighbourhood{E}{v} \cap \RedA \leq cd + \epsilon d $    
 \end{definition}
+
+If a graph on $n$ vertices is $d$-reguar and has a balanced cut $\RedA$ and $\GreenB$, then $\frac{\Size{\RedA}}{\Size{\GreenB}} = \BigO{1}$. In other words $\Size{\RedA}, \Size{\GreenB} \in \BigO{n}$ i.e $\RedA$ and $\GreenB$ are roughly the same size.
 
 \begin{remark}
   Throughout the rest of this document, for any $(c, \epsilon)$ balanced partition $\RedA \cup \GreenB$ of any graph $G$,  we describe vertices in $\RedA$ as \red{red} nodes, and vertices in $\GreenB$ as \green{green} nodes.
 \end{remark}
 
-The proof for the following theorem is a textbook application of the  \nameref{lemma:lll} along with the Chernoff bound.
-We re-derive this for completeness.
-The main contribution lies in how we use the balanced partition to get a perfect matching in the residual graph in Theorem \ref{thm:partition}.
+The proof for the following theorem is a textbook application of the  \nameref{lemma:lll} along with the \nameref{lemma:mult-chernoff}.
+The main contribution lies in how we use the balanced cuts to get a perfect matching in the residual graph in Theorem \ref{thm:partition} i.e step 3 of the proof.
 
 \begin{lemma}[Pseudorandom Graphs Have Balanced Cuts]\label{thm:partition}
 For every $0 < c < 1$, and $\epsilon > 0$, there exists a constant $d_0 \in \BigOTilde{c/\epsilon^2}$, such that, given a $d$-regular graph $\Graph = (V, E)$ on $n$ vertices, with $d \in [d_0, n-1]$, there exists and a  sets $\red{A}$ and $\green{B}$ is a $(c, \epsilon)$ balanced cut of $G$.
 \end{lemma}
 
 \begin{proof}
-Copy from notebook.  
+We prove the existence of such a partition $\RedA \cup \GreenB = V$ using the probabilistic method.
+For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $c$.
+If $X_i = 1$, then we include $v$ in $\RedA$, else we put $v$ in $\GreenB$.
+Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $V$ into sets $\RedA$ and $\GreenB$.
+For any $v \in V$, let $Y_v \Def |\Neighbourhood{E}{v} \cap \RedA|$ denote the random variable that counts how many \red{red} neighbours of $v$ has.
+Define $\delta \Def \frac{\epsilon}{c}$, and for any $v \in V$, let $E_v = \Indicator{|Y_v - d c | \geq \delta c d}$ denote the bad event that $v$ has too many \red{red} neighbours.
+Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has max-degree at most $d^2$.
+To see why, for any node $v$, let $u$ and $w$ denote vertices exactly 2 hops\footnote{A node $a$ is $k$ hops away from another node $b$ if the shortest path between $a$ and $b$ has $k$ eges.} and at least 3 hops away from $v$ respectively. The colour of $u$'s neighbours, directly affects how many red neighbours $v$ can have.
+However, as the colours for each node is sampled independently, the colour of $w$ or its neighbours do not affect $v$'s neighbours.
+Therefore $E_v$ is independent of $E_w$.
+There are at most $d^2$ nodes at a distance of at most 2 from any node, giving us the max-degree of the dependency graph.
+As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = c d$, then by the \nameref{lemma:mult-chernoff}, for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq 2\exp(-\delta^2c d/3) \Def \beta$.
+There exists $d_0 \in \BigOTilde{c/\epsilon^2}$, such that for $d > d_0$, for some $d_0$, we have that $2\exp(-\delta^2c d/3) \leq 1/(4d^2)$. Therefore, we have $\beta d^2 \leq 1/4$.
+We have all the conditions to invoke the \nameref{lemma:lll} to get $\PProb{\underset{{v\in V}}{\land}E_v = 0}{\vec{X}} > 0$.
 \end{proof}
 
 \subsection{Step 2: The Topological Embedding}
@@ -452,13 +460,13 @@ Given $\EnDeeLambda$ graph $G=(V,E)$, let $\RedA$ and $
 \GreenB$ be the partition guaranteed by the \ref{thm:partition}.
 Define $E_{\GreenB} \Def \{ (\green{u},\green{v}) \in E : \green{u} \in \GreenB \land \green{v} \in \GreenB\}$. 
 That is $E_{\green{B}}$ is the set of edges whose endpoints are fully contained in B (they have \green{green} endpoints), and let $G_{\green{B}}$ be the subgraph defined by the edges $E_{\GreenB}$. 
-Define $ \na \Def |G_{\GreenB}|$, which by the balancedness of the partition we have is \highlight{TODO}.
-Now define a bipartite graph $\BipartiteG$ with vertices $\Vertices{\GreenB} \cup \Vertices{\GreenB}$ and $\Edges{\BipartiteG})=E_{\GreenB}$ (See Figure \ref{fig:bipartite}).
+Define $ \na \Def |G_{\GreenB}|$, which by the balancedness of the partition is some constant fraction of $\Size{V}$.
+Now define a bipartite graph $\BipartiteG = \left(\Vertices{\GreenB} \cup \Vertices{\GreenB}, E_{\GreenB} \right)$ (see Figure \ref{fig:bipartite}).
 That is the left and right vertices of $\BipartiteG$ are copies of $G_{\GreenB}$ and for every edge $(u,v) \in E_{\GreenB}$, there is a corresponding copy $(u,v) \in \Edges{\BipartiteG}$.
 
 \begin{remark}
   
-To avoid notation clutterm, we will refer to the left and right vertex sets of $\BipartiteG$ with $X$ and $Y$ respectively.
+To avoid notation clutter, we will refer to the left and right vertex sets of $\BipartiteG$ with $X$ and $Y$ respectively.
 Also by definition, every vertex in $X$ and $Y$ \emph{must} be \green{green}.  
 \end{remark}
 
@@ -472,8 +480,8 @@ Let $\lambda \Def \ExpansionFactor{G} \leq d/c_2$ where $c_2 > 0$ is a constant 
 Set $a = \frac{n\lambda}{2c_1 d}$ for a constant $c_1 > 0$ to be defined next.
 Set $c_1, c_2$ such that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) < \frac{3}{16}$.
 Pick any $S \subseteq X$ with $|S| \leq 2a = \frac{n\lambda}{c_1 d}$.
-\emph{\highlight{Assume} towards a contradiction that $\BipartiteG$ is \textbf{NOT} non-blocking.
-  Then there exists a set $T \subseteq Y$, adjacent to some vertex in $S$ such that $|T| < |S|(\frac{d}{\lambda}+\frac{d}{\lambda})$.} 
+\highlight{Assume towards a contradiction} that $\BipartiteG$ is \textbf{not} non-blocking.
+  Then by Lemma \ref{lemma:condtions-for-non-block} there exists a set $T \subseteq Y$, adjacent to some vertex in $S$ such that $|T| < |S|(\frac{d}{\lambda}+\frac{d}{\lambda})$. 
 By the balanced cut property we know that, every \green{green} node is connected to at least $\frac{3}{16}d$ \green{green} nodes (and $E_{\GreenB}$ consists of all edges with two \green{green} endpoints) i.e.
 
 \begin{equation}\label{eq:balanced}
@@ -510,7 +518,6 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
 \end{definition}
 
-\todo{$\Eps$ undefines}
 \begin{theorem}[Topological Embedding Theorem]\label{thm:top-embedding}
 Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the construction defined from the balanced partition theorem, where $|\GreenB| = \na$.
 Let $H$ be the worst case hard instance on $t = \lceil\epsilonA \frac{\na}{\log \na}\rceil = \BigO{\frac{n}{\log n}}$ vertices known to exist in Lemma \ref{lemma:worst-case-instance-PC}, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
