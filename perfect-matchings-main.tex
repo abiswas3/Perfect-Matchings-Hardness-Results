@@ -36,7 +36,7 @@
 
 \begin{figure}
 	\includegraphics{assets/proof-system-relationships.pdf}
-	\caption{The figure above (sourced from \citep[Page 10]{ProofComplexityLecNotes}) depicts proof systems commonly studied by the community and how they relate to each other.}
+	\caption{The figure above (sourced from \citep[Page 9]{fleming2019semialgebraic}) depicts proof systems commonly studied by the community and how they relate to each other. We show lower bounds in the proof systems highlighted in orange, and as a consequence this also implies lower bounds in the bounded-depth Frege proof systems.}
 	\label{fig:example-proof-systems}
 \end{figure}
 
@@ -50,13 +50,9 @@ If we could show that there exists a proof system $S$, such that for any true st
 Conversely, if we could show large proof size lower bounds for $A$ in \emph{all} proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
 Unfortunately, we currently do not possess the tools to show lower such bounds for \emph{arbitrary} proof systems.
 Thus, as an intermediate step towards making partial progress towards the grand problem, the research community has invested a significant amount of time and energy in proving size lower bounds for certain specific proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
-\todo{Change this figure to the one in pitassi flemming which includes the relevant proof systems for us} Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
+ Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
-We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.\par
-%One example of a simple proof system is that of truth tables i.e. given a propositional formula $\PropFormula$ that is a tautology, a valid proof is simply the truth table for the formula.
-%A formula on $n$ variables requires truth tables with size $2^n$, and it is easy to see that we cannot use shorter proofs.
-%Although simple, truth tables are quite inefficient\footnote{A proof system $A$ is more inefficient than a proof system $B$ if proofs of the same claim are longer in $A$ compared to $B$.} proof systems, and there exists proof systems that can have much shorter proofs for certain problems than possible with truth tables.
-
+We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.
 In this work, we focus on the algebraic and semi-algebraic proof system of polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
 In proof systems like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ as the problem instance.
 In PC, the polynomial coefficients can be over \emph{any} field $\Field$, and in SOS, the polynomial coefficients must be over the reals.
