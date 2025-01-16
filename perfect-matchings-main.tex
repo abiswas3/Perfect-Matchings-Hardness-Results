@@ -41,13 +41,13 @@
 \end{figure}
 
 
-Perhaps the most fundamental problem in computation is to provide an answer to the question: ``\textit{Given a true statement $A$, what is the shortest proof of the claim that $A$ is true?}''
+Perhaps the most fundamental problem in computation is to provide an answer to the question: ``\textit{Given a true statement $A$, is there a short proof of the claim that $A$ is true?}''
 In trying to answer this question, \citet{cook1979relative} observed that we must first describe what constitutes a valid proof?
 That is, we must describe the language in which the proof is written, and the rules for checking it.
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question above is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of the shortest proof $\Proof \in S$ that proves $A$?}''
 If we could show that there exists a proof system $S$, such that for any true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$, which would further imply that $\P = \NP$.
-Conversely, if we could show large proof size lower bounds for $A$ in all proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
+Conversely, if we could show large proof size lower bounds for $A$ in \emph{all} proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
 Unfortunately, we currently do not possess the tools to show lower such bounds for \emph{arbitrary} proof systems.
 Thus, as an intermediate step towards making partial progress towards the grand problem, the research community has invested a significant amount of time and energy in proving size lower bounds for certain specific proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
 \todo{Change this figure to the one in pitassi flemming which includes the relevant proof systems for us} Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
@@ -64,7 +64,7 @@ We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the cl
 In PC and SOS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and 
 the size/complexity of the proof is measured by the maximum of degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
 We denote the minimum degree of a proof that refutes $\Axioms$ with $\Degree{\Axioms \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and the main goal of the area is to study how large is the degree of proofs for refuting a given set of axioms $\Axioms$.
-Although algebraic by definition, one can use these proof systems to refute properties of combinatorial objects like graphs, and it even serves as a proof system for UNSAT.\par
+Although algebraic by definition, one can use these proof systems to refute properties of combinatorial objects like graphs, and it even serves as a proof system for UNSAT.
 In this paper we consider refutations of the perfect matching principle.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
@@ -95,48 +95,56 @@ polynomial calculus over fields of characteristic $\neq 2$ have large size, when
 
 \end{problem}
 
-\citet{Austrin_2022} made partial progress on the above problem by showing that the perfect matching principle requires large size on \emph{random $d$-regular graphs} (where $d \in \BigO{1}$) in the Sum-of-Squares and Polynomial Calculus proof systems \emph{on average}.
+\citet{Austrin_2022} made partial progress on the above problem by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Sum-of-Squares and Polynomial Calculus proof system requires long proofs.
 More formally, they show that 
 
 \begin{theorem}\label{thm:prev-thm}
-There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, and $\vec{b} \in [d]^{\Size{V}}$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices:
+There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd)
 \begin{enumerate}
-    \item{ $\Degree{\Card{G, \vec{b}} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
-    \item{$\Degree{\Card{G, \vec{b}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
+    \item{ $\Degree{\Card{G, \vec{1}} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
+    \item{$\Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
 \end{enumerate}
 \end{theorem}
 
-Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors start with a worst case hard graph $H$ described by \citet{buss1999linear}.
-%Such a graph is known to have $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\Size{V(H)}}$ (see \citep[Appendix A]{Austrin_2022} for details about how $H$ is constructed and \citet{buss1999linear} for hardness proof).
-Their average case hardness result then comes by \emph{embedding} $H$ into $G$ in such a way that that the hardness of $H$ is transferred to $G$.
-Thus, the main contribution of \citet{Austrin_2022} is a novel embedding theorem that embeds $H$ as a topological minor into $G $ where edges in $H$ are mapped to odd length paths in the embedding.
-A distinctive feature of their result is that as the embedding relies on randomness used to sample the regular graph, and thus they only provide average case lower bounds.
-These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of expander graphs.
+Their hardness proof works as follows.
+They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-PC} and Lemma \ref{lemma:worst-case-instance-sos}).
+Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
+A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
+However to transfer hardness, it does not suffice to just embed $H$ into $G$, but we need a topological embedding of $H$ such that the parities of all the paths are the same (all paths must be of odd length).
+Thus, their main technical contribution is a embedding theorem that allows for  topological embeddings of any graph $H$ into an expander graph.
+To do this, they first partition the graph into two roughly equal sized sets $S$ and $T$ with sufficiently many edges in the cut between them.
+Then they require that the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
+The reason the authors require the second property, is to be able to extend result by \citet{krivelevich2019completeminorsgraphssparse}, which allows us to embed any graph $H$ into a host graph $\tilde{G}$ as an ordinary minor, if $\tilde{G}$ is a vertex expander with the above properties.
+Now to go from minor to topological minor, a key step in their construction is that they require that the induced subgraph $G[T]$ also be odd cycle robust (see \citep[Definition 3.2]{Austrin_2022}).
+To show that $G$ is odd cycle robust, their proof needs $G$ to be a random sample, as this allows them to show that the number of $i$-cycles in the graph, denoted in their paper by $Y_i(G)$ is a Poisson random variable.
+Then using the tail bounds of the Poisson distribution they get what they are after with high probability.
+Thus, a distinctive feature of their result is that as their embedding relies on randomness used to sample the regular graph, and they can only provide average case lower bounds.
+These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of expander graphs.\par
+
+Note that just topologically embedding $H$ into $G$ is still not sufficient to show that perfect matchings in $G$ are hard to refute.
+It is entirely possible that the residual graph which does not contain an embedding of $H$ has evidence that allows us to refute the existence of a perfect matching with shorter proofs (for example it may have an isolated vertex).
+One way to prevent this possibility is to show that the residual graph has a perfect matching.
+As $n$ is odd, this could mean that the hardness of refuting perfect matchings \emph{must} come from the embedding only.
+To show that the residual graph has a perfect matching the authors rely on an involved set of tools from Linear algebra.
+First they use the result by \citet[Theorem 2.3]{brouwer2005eigenvalues}, which says if $\lambda_m(L_{G'}) \leq 2\lambda_2(L_{G'})$, then $G'$ has a perfect matching.
+Here $G'$ will be residual graph ($G$ with the embedded region removed) on $m$ even numbered vertices, $L_{G'}$ is its Laplacian and $\lambda_2$ and $\lambda_m$ are the second and last eigenvalues sorted in ascending order. 
+To show this spectral bound, they rely on the interlacing theorem\footnote{\url{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html}} and Weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebra, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
+This general idea is summarised in Figure \ref{fig:proof-outline}.\\
 
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
-The reason previous work rely on randomness can be summarised as follows:
-To show their hardness results, Austrin and Risse need to embed the hard instance $H$ constructed by \citet{buss1999linear} topologically into $G$.
-To do this, they first partition the graph into two roughly equal sized sets $S$ and $T$ with sufficiently many edges in the cut between them.
-Then they  require that the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
-The primary reason the authors require the second property, is to be able to use a result by \citet{krivelevich2019completeminorsgraphssparse}, which allows us to embed any graph $H$ into a host graph $\tilde{G}$ as a minor, if $\tilde{G}$ is a vertex expander with the above properties.
-However, Austrin and Risse cannot directly use the result in \citep{krivelevich2019completeminorsgraphssparse} as they need to embed $H$ as a \emph{topological} minor instead of embedding it as an ordinary minor (this allows us them to preserve the hardness of $H$ after embedding).
-Their main technical contribution is a modification of the embedding techniques in \citep{krivelevich2019completeminorsgraphssparse} to allow for topological embeddings.
-For their topological embedding to work, they require that the induced subgraph $G[T]$ also be odd cycle robust (see \citep[Definition 3.2]{Austrin_2022}).
-To show that $G$ is odd cycle robust, their proof needs $G$ to be a random sample, as this allows them to show that the number of $i$-cycles in the graph $Y_i(G)$ is a Poisson random variable.
-Then using the tail bounds of the Poisson distribution they get what they are after with high probability.
-In contrast, we topologically embed any pseudorandom graph, with very mild spectral gap assumptions (milder than those of random graphs)
-relying on the theory wide sense non blocking networks, without having to rely on any randomness or tail bounds at all.
-It should be noted that as an expander graph is \emph{also} a random graph with high probability, and as we require milder spectral gap for the embedding to work, our result subsumes the result of \citet{Austrin_2022}.
-Another example of the the qualitative simplicity of our techniques is how we show the residual graph must have a perfect matching.
-Prior work \cite{Austrin_2022} also need this property for their result to transfer hardness.
-To show that the residual graph has a perfect matching they rely on a involved set of tools from Linear algebra.
-First they use the result by \citet[Theorem 2.3]{brouwer2005eigenvalues}, which says if $\lambda_m(L_{G'}) \leq 2\lambda_2(L_{G'})$, then $G'$ has a perfect matching.
-Here $G'$ will be residual graph on $m$ even numbered vertices, $L_{G'}$ is its Laplacian and $\lambda_2$ and $\lambda_m$ are the second and last eigenvalues sorted in ascending order. 
-To show this spectral bound, they rely on the interlacing theorem\footnote{\url{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html}} and Weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebra, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
-On the contrary, we show the same result with a simple application of the  \nameref{lemma:tutte-criterion}, and the combinatorial \nameref{lemma:expanders-mixing-lemma}.
-We point out that \citep[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nameref{lemma:tutte-criterion} under the hood, and thus our proof can be viewed as a more direct combinatorial proof of the claim.
-In summary, we show \emph{stronger} lower bounds for a \emph{larger} set of objects using \emph{simpler} proof techniques.
-Our main result is stated below.
+We too follow the proof outline given in Figure \ref{fig:proof-outline}.
+However, our results differ in two key aspects.
+Firstly, we show a new embedding theorem that allows us to topologically embed any graph $H$ into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilonL d$ for some small constant $\epsilonL$) without relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
+This allows us to embed any graph $H$ into any expander graph, even the ones constructed deterministically.
+As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
+The second feature of our results is the qualitative simplicity of our techniques.
+Although our embedding theorem is stronger it is considerably easier to construct.
+Using the idea of non-blocking bipartite graphs from theory of wide-sense networks \citep{feldman1988wide} we show that it is possible to optimally topologically embed any graph into an expander graph, and still satisfy all the other properties needed to prove hardness lower bounds.
+Another illustration of the simplicity of our techniques is how we show the residual graph must has a perfect matching without relying on any complex spectral graph theory.
+We show the existence of a matching with a simple application of the  \nameref{lemma:tutte-criterion}, and the combinatorial properties of the \nameref{lemma:expanders-mixing-lemma} without relying on any spectral graph theory or linear algebra.
+We point out that \citep[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nameref{lemma:tutte-criterion} under the hood, and thus our proof can be viewed as a more direct intuitive proof of why we should expect to find a perfect matching in the residual graph.
+\textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques. 
+} Our main result is stated below.
 
 \begin{theorem}[Main Theorem]\label{thm:main-thm}
 
@@ -167,6 +175,7 @@ We review some basic tooling used for proving existence of objects using the pro
 
 For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. 
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
+Given two sets $S, T \subseteq \Vertices{G}$, we denote with $\CutEdgesSet{S}{T}{E'}$ the set of edges in $E' \subseteq \Edges{G}$ in the cut between $S$ and $T$, and use $\CutEdges{S}{T}{E'}$ to denote the size of the cut.
 We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
 We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
 Next we define pseudorandom graphs or expander graphs. 
@@ -809,6 +818,9 @@ Giving us the contradiction we were after.
 
 \section{Related Work}
 \label{sec:related-work}
+
+\section{Conclusion And Open Problems}
+\label{sec:conclusion}
 
 \bibliographystyle{unsrtnat}
 \bibliography{main_paper}
