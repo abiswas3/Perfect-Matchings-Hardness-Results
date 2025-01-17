@@ -6,15 +6,10 @@
 \input{theorem}
 \input{paper_commands.tex} %These are generic commands (Might move them to %base template)is
 
-% Intro
-%\newcommand{\P}{\mathsf{P}}
-%\newcommand{\NP}{\mathsf{NP}}
 
 \synctex=1
 % Title
 \title{Sum of Squares Refutations of Perfect Matchings In Expander Graphs Is Hard}
-
-%\sqrt{\nicefrac{d}{2}\log (2/\delta)} ; this is the error term
 
 % \author{}
 \author[1]{Ari Biswas}
@@ -28,7 +23,12 @@
 
 \maketitle
 \begin{abstract}
-\ari{Over to you boss.}
+This work studies the complexity of refuting the existence of a perfect matching in expander graphs with an odd number of vertices in the Polynomial Calculus (PC) (over fields of characteristic $\neq$ 2) and the Sum of Squares (SoS) proof system.
+In previous work, \citet{Austrin_2022} showed  refuting perfect matchings in sparse $d$-regular random graphs requires proofs with degree $\BigOmega{n/\log n}$ in the PC and SoS proof system \highlight{on average}.
+Although a $d$-regular random graph is an expander graph with high probability, their hardness result relies critically on the randomness of sampling a graph. 
+Therefore, these techniques do not extend to instances where the expander graph is deterministically constructed, and thus they are unable to provide \highlight{worst-case} lower bounds.
+In this work, we bridge this gap by showing that refuting perfect matchings in any expander graph with a very mild spectral gap requires proofs with degree $\BigOmega{n/\log n}$ in PC and SoS proof systems.
+
 \end{abstract}
 
 \section{Introduction}
@@ -79,19 +79,7 @@ When $|V|$ is odd, we know that any graph $G$ cannot have a perfect matching.
 In other words, $\Card{G, 1^{|V|}}$ cannot be satisfied.
 In this work we are interested in the complexity refutations for $\PM{G}$  when $|V|$ is odd in PC and SoS proof systems.
 With no further constraints on $G$, generic lower bounds for these refutations in PC or SOS proof systems are not known.
-In their recent manuscript \citep[Open Problem 7.7]{buss2021proof}, Buss and Nordstr{\"o}m asked ``\textit{Are even colouring formulas over expander graphs hard for
-polynomial calculus over fields of characteristic distinct from 2 ?}''
-The even colouring formula is a special case of $\Card{G, \vec{b}}$, where each coordinate  $\vec{b}$ is $\degree{G}{v}/2$ for $v \in V$.
-Therefore, their open question can be reformulated as the following question.
-
-\begin{problem}
-
-Do refutations for $\Card{G, \vec{b}}$ for
-polynomial calculus over fields of characteristic $\neq 2$ have large size, when $G$ is an expander graph? \citep[Open Problem 7.7]{buss2021proof}
-
-\end{problem}
-
-\citet{Austrin_2022} made partial progress on the above problem by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Sum-of-Squares and Polynomial Calculus proof system requires long proofs.
+In recent work \citet{Austrin_2022} made progress in proving lower bounds by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Sum-of-Squares and Polynomial Calculus proof system requires long proofs.
 More formally, they show that 
 
 \begin{theorem}\label{thm:prev-thm}
@@ -102,7 +90,17 @@ There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the foll
 \end{enumerate}
 \end{theorem}
 
-Their hardness proof works as follows.
+Although random $d$ regular graphs are expander graphs with high probability, their lower bound techniques rely strongly on the randomness of sampling, and thus they are unable to extend their results to general expander graphs.
+They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs, and leave showing this as an open problem. In this work, we extend their results to all expander graphs\footnote{More specifically we mean any expander graph with a very mild spectral gap $\lambda \leq \epsilonL d$ where $\epsilonL$ is a small universal constant.}, and provide worst case size lower bounds instead of average case lower bounds.
+
+\begin{problem}
+
+Do refutations for $\Card{G, \vec{1}}$ for
+PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is an expander graph?
+
+\end{problem}
+
+\paragraph{Technical Overview} The original hardness proof works as follows.
 They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-PC} and Lemma \ref{lemma:worst-case-instance-sos}).
 Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
 A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
@@ -125,7 +123,7 @@ To show that the residual graph has a perfect matching the authors rely on an in
 First they use the result by \citet[Theorem 2.3]{brouwer2005eigenvalues}, which says if $\lambda_m(L_{G'}) \leq 2\lambda_2(L_{G'})$, then $G'$ has a perfect matching.
 Here $G'$ will be residual graph ($G$ with the embedded region removed) on $m$ even numbered vertices, $L_{G'}$ is its Laplacian and $\lambda_2$ and $\lambda_m$ are the second and last eigenvalues sorted in ascending order. 
 To show this spectral bound, they rely on the interlacing theorem\footnote{\url{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html}} and Weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebra, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
-This general idea is summarised in Figure \ref{fig:proof-outline}.\\
+This general idea is summarised in Figure \ref{fig:proof-outline}.
 
 \paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
 We too follow the proof outline given in Figure \ref{fig:proof-outline}.

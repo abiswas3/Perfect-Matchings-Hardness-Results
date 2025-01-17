@@ -1,6 +1,5 @@
 % Common stuff that show up in nearly all writeups
 \newcommand{\Def}{\text{}\overset{\mathtt{def}}{=}}
-
 \makeatletter
 \newcommand{\smalldollar}{\mathrel{\mathpalette\small@dollar\relax}}
 \newcommand{\small@dollar}[2]{%
@@ -11,11 +10,6 @@
 \makeatother
 \renewcommand{\emph}[1]{\textit{#1}}
 \newcommand\Bigger[2][7]{\left#2\rule{0mm}{#1truemm}\right.}
-
-% Basic asympototics
-% \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
-% \newcommand{\BigO}[1]{O\left(#1\right)}
-
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \newcommand{\TODO}{\textcolor{orange}{??TODO??}}
 \renewcommand{\epsilon}{\varepsilon}
@@ -24,7 +18,8 @@
 \newcommand{\LCloseROpenInterval}[2]{\left[#1, #2\right)}
 \newcommand{\Interval}[2]{\left[\right]}
 \newcommand{\OpenInterval}[2]{\left(\right)}
-
+\newcommand{\DistSet}[1]{\Delta(#1)}
+\newcommand{\Dist}{\mathcal{D}}
 \newcommand{\leftarrowS}{\leftarrow\joinrel\smalldollar}
 \newcommand{\rightarrowS}{\smalldollar\joinrel\rightarrow}
 \newcommand{\samples}{\highlight{\leftarrowS}}
@@ -45,113 +40,31 @@
 \newcommand{\SmallO}[1]{o\left(#1\right)}
 \newcommand{\BigOmega}[1]{\Omega\left(#1\right)}
 \newcommand{\SmallOmega}[1]{\omega\left(#1\right)}
+\newcommand{\Mean}[2]{\mathbb{E}_{#1}\left[#2\right]}
+\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
+\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
+\newcommand{\True}{\texttt{True}}
+\newcommand{\False}{\texttt{False}}
 
-\newcommand{\FuncDomain}{\mathcal{X}}
-\newcommand{\FuncRange}{\mathcal{Y}}
-\newcommand{\HashFamily}{\mathcal{H}}
 
 % Complexity classes 
 \newcommand{\BPP}{\mathsf{BPP}}
 \renewcommand{\P}{\mathsf{P}}
 \newcommand{\NP}{\mathsf{NP}}
 \newcommand{\CoNP}{\mathsf{coNP}}
-\newcommand{\HVSZK}{\mathsf{HVSZK}}
-\newcommand{\ED}{\mathsf{ED}}
-\newcommand{\SD}{\mathsf{SD}}
-\newcommand{\Yes}{\mathsf{Yes}}
-\newcommand{\No}{\mathsf{No}}
 
-
-% Paper specific 
+% Paper specific + Proof Complexity Macros
 \newcommand{\PropFormula}{\Phi}
 \newcommand{\Proof}{\pi}
 \newcommand{\Size}[1]{|#1|}
 \newcommand{\Card}[1]{\text{Card}(#1)}
-
-% Graph Commands
-\newcommand{\Graph}{G}
-\newcommand{\Vertices}[1]{\mathsf{V}(#1)}
-\newcommand{\Edges}[1]{\mathsf{E}(#1)}
-\newcommand{\CutEdges}[3]{e(#1 \leftrightarrow #2; #3)}
-\newcommand{\IncidentEdges}[1]{\mathsf{E}(\rightarrow #1)}
-
-
-
-
-\newcommand{\CutEdgesSet}[3]{\mathsf{E}(#1 \leftrightarrow #2; #3)}
-\newcommand{\EdgesAccross}[2]{e_{#2}(#1)}
-\newcommand{\OddComponents}[1]{q(#1)}
-% Degree of vertex (a scalar)
-\newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
-\newcommand{\MaxDegree}[1]{\Delta(#1)}
-\newcommand{\Neighbourhood}[2]{\Gamma_{#1}\left(#2\right)}
-
-% Paper specific graph things
-\newcommand{\Family}[1]{\textcolor{purple}{\mathcal{#1}}}
-\newcommand{\SafeStates}{\Family{S}}
-\newcommand{\HardInstance}{H}
-\newcommand{\Embedding}[1]{\Psi\left(#1\right)}
-% \newcommand{\Path}[2]{P_{#1 \leftrightarrow #2}}
-\newcommand{\Path}[2]{\mathsf{P}_{#1 \rightsquigarrow #2
-}}
-\newcommand{\PathSize}{\textcolor{red}{l}}
-
-\newcommand{\pee}{\textcolor{blue}{p}}
-\newcommand{\qu}{\textcolor{ballblue}{q}}
-
-
-\newcommand{\GlobalEdgeSet}{\textcolor{orange}{\mathcal{E}}}
-
-\newcommand{\PartitionEps}{\textcolor{orange}{\tilde{\epsilon}}}
-
-\newcommand{\Degree}[1]{\text{Deg}\left(#1\right)}
-\newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
-
-\newcommand{\Complement}[1]{\overline{#1}}
-\newcommand{\EdgeConnectivity}[1]{\kappa'(#1)}
-
-% \newcommand{\PC}{\underset{\texttt{PC}_F}{\vdash}}
-\newcommand{\PC}{\vdash_{\texttt{PC}_F}}
-\newcommand{\SOS}{\vdash_{\texttt{SOS}}}
-\newcommand{\en}{\textcolor{ballblue}{n}}
-\newcommand{\dee}{\textcolor{cadmiumgreen}{d}}
-\newcommand{\eigen}{\textcolor{red}{\lambda}}
-\newcommand{\EnDeeLambda}{(n, d, \lambda)}
-\newcommand{\Subdivision}[2]{{#1}^{#2}}
-\newcommand{\MinimalDegree}[1]{\delta(#1)}
-%\newcommand{\Indicator}[1]{\mathbbm{1}\left\{#1\right\}}
-\newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
-
-\newcommand{\epsilonA}{\textcolor{ballblue}{\epsilon_a}}
-\newcommand{\epsilonL}{\textcolor{cadmiumgreen}{\epsilon_\lambda}}
-\newcommand{\na}{\green{n_B}}
-
-
-
-\newcommand{\DistSet}[1]{\Delta(#1)}
-\newcommand{\Dist}{\mathcal{D}}
-\newcommand{\EdgesShort}{E}
-%\newcommand{\Mean}[2]{\underset{#1}{\mathbb{E}}\left[#2\right]}
-\newcommand{\Mean}[2]{\mathbb{E}_{#1}\left[#2\right]}
-\newcommand{\Prob}[1]{\Pr\left[#1 \right]}
-\newcommand{\PProb}[2]{\Pr_{#2}\left[#1 \right]}
-\newcommand{\ExpansionFactor}[1]{\lambda(#1)}
-\newcommand{\EmbeddingFunc}{\Psi}
-
-
-\newcommand{\True}{\texttt{True}}
-\newcommand{\False}{\texttt{False}}
-
-% Proof Complexity Macros
 \newcommand{\Axioms}{\mathcal{Q}}
 \newcommand{\axiom}{q}
 \newcommand{\PM}[1]{\text{PM}(#1)}
-
 \newcommand{\RemGraph}{G'}
 \newcommand{\BadSet}{\textcolor{blue}{\hat{S}}}
 \newcommand{\ari}[1]{\textcolor{kon-peki}{Ari: }#1}
 \newcommand{\highlight}[1]{\textcolor{yama-budo}{#1}}
-
 \newcommand{\red}[1]{\textcolor{fuyu-gaki}{#1}}
 \newcommand{\green}[1]{\textcolor{shin-ryoku}{#1}}
 \newcommand{\RedNodes}[1]{\red{\text{Red}}(#1)}
@@ -160,3 +73,45 @@
 \newcommand{\RedA}{\red{A}}
 \newcommand{\BipartiteG}{G_{\GreenB \cup \GreenB}}
 \newcommand{\SizeRemGraph}{n'}
+
+% Graph Commands
+\newcommand{\Graph}{G}
+\newcommand{\Vertices}[1]{\mathsf{V}(#1)}
+\newcommand{\Edges}[1]{\mathsf{E}(#1)}
+\newcommand{\CutEdges}[3]{e(#1 \leftrightarrow #2; #3)}
+\newcommand{\IncidentEdges}[1]{\mathsf{E}(\rightarrow #1)}
+\newcommand{\CutEdgesSet}[3]{\mathsf{E}(#1 \leftrightarrow #2; #3)}
+\newcommand{\OddComponents}[1]{q(#1)}
+\newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
+\newcommand{\MaxDegree}[1]{\Delta(#1)}
+\newcommand{\Neighbourhood}[2]{\Gamma_{#1}\left(#2\right)}
+\newcommand{\Family}[1]{\textcolor{purple}{\mathcal{#1}}}
+\newcommand{\SafeStates}{\Family{S}}
+\newcommand{\HardInstance}{H}
+\newcommand{\Embedding}[1]{\Psi\left(#1\right)}
+\newcommand{\Path}[2]{\mathsf{P}_{#1 \rightsquigarrow #2
+}}
+\newcommand{\PathSize}{\textcolor{red}{l}}
+\newcommand{\GlobalEdgeSet}{\textcolor{orange}{\mathcal{E}}}
+\newcommand{\Degree}[1]{\text{Deg}\left(#1\right)}
+\newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
+\newcommand{\Complement}[1]{\overline{#1}}
+\newcommand{\EdgeConnectivity}[1]{\kappa'(#1)}
+\newcommand{\PC}{\vdash_{\texttt{PC}_F}}
+\newcommand{\SOS}{\vdash_{\texttt{SOS}}}
+\newcommand{\en}{\textcolor{ballblue}{n}}
+\newcommand{\dee}{\textcolor{cadmiumgreen}{d}}
+\newcommand{\eigen}{\textcolor{red}{\lambda}}
+\newcommand{\EnDeeLambda}{(n, d, \lambda)}
+\newcommand{\Subdivision}[2]{{#1}^{#2}}
+\newcommand{\MinimalDegree}[1]{\delta(#1)}
+\newcommand{\dbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
+\newcommand{\epsilonA}{\textcolor{ballblue}{\epsilon_a}}
+\newcommand{\epsilonL}{\textcolor{cadmiumgreen}{\epsilon_\lambda}}
+\newcommand{\na}{\green{n_B}}
+\newcommand{\EdgesShort}{E}
+\newcommand{\ExpansionFactor}[1]{\lambda(#1)}
+\newcommand{\EmbeddingFunc}{\Psi}
+
+
+
