@@ -482,51 +482,23 @@ A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision 
 
 
 \begin{theorem}[Embedding Theorem]\label{theorem:embedding-theorem}
-  Let $G=(V,E)$ denote an $\EnDeeLambda$ graph with $\lambda \le \epsilonL d$, and $H$ be an arbitrary sparse graph with at most $t = \lfloor \frac{ n}{20(\MaxDegree{H}+2)\log_D \na}\rfloor $ vertices with max degree $\MaxDegree{H} = \BigO{1} < d$, where $D=d/\lambda$.
-  For any subset $\GreenB \subseteq V$ with $\MinimalDegree{G[\GreenB]} \ge \frac{3d}{16}$, $G[\GreenB]$ contains $H$ as a topological minor $\Subdivision{H}{\sigma}$ where every edge in $H$ is an odd sized path in $\Subdivision{H}{\sigma}$.
+  Let $G=(V,E)$ denote an $\EnDeeLambda$ graph with $\lambda \le d/50$, and $H$ be an arbitrary sparse graph with at most $t = \lfloor \frac{ n}{20\MaxDegree{H}\log_Dn}\rfloor $ vertices with max degree $\MaxDegree{H} = \BigO{1} < d$, where $D=d/\lambda$.
+  For any subset $\GreenB \subseteq V$ of size $\Size{\GreenB} \ge \frac{3n}{16}$ and $\MinimalDegree{G[\GreenB]} \ge \frac{3d}{16}$, $G[\GreenB]$ contains $H$ as a topological minor $\Subdivision{H}{\sigma}$ where every edge in $H$ is an odd sized path in $\Subdivision{H}{\sigma}$.
 \end{theorem}
+
 \begin{proof}
-Define $D = \frac{d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
+Let $D = \frac{d}{\lambda}$ and $k =  \lceil\log_D n\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
 Define $\sigma(e) \Def 2k+1$ for all $e \in \Edges{H}$.
-Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G[{\GreenB}]}$ denote our toplogical embedding.
+Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G[{\GreenB}]}$ be the bijective mapping which will be our toplogical embedding.
 Our first task is to find a unique $\Embedding{h} \in \Vertices{G[\GreenB]}$ for each $h \in \Vertices{H}$.
 Define $X = Y = \Vertices{G[\GreenB]}$, and let $\BipartiteG = (X \cup Y, \Edges{G[\GreenB]})$.
 Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $G[\GreenB]$.
 As $\MinimalDegree{G[\GreenB]} \geq \nicefrac{3d}{16}$, by Lemma \ref{lemma:bipartitie-is-non-blocking} we know have that $\BipartiteG$ is $(D, n/20)$ non-blocking.
 We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$: 
 
-\begin{figure*}[t!]
-    \centering
-    \begin{subfigure}[t]{0.95\textwidth}
-        \centering
-        \includegraphics{assets/embeddingA.pdf}
-        \caption{The \textcolor{purple}{purple} edges represent the edges in $\cup_{i=1}^j (M_j \cup M_j')$, which we have already included in the $\GlobalEdgeSet$.
-        For any $v$ in $S_j \subseteq X$ (\textcolor{cadmiumgreen}{green vertex}) we ask for $D$ neighbours in $S_{j+1} \subseteq Y$ (shown with \textcolor{cadmiumgreen}{green} and \textcolor{carminepink}{pink} lines). 
-        Of these $D$ edges, by the non-blocking property, we know that there will be at least one edge (in this case there are 3 such edges shown in \textcolor{carminepink}{pink}) such that the endpoints in $Y$ are not connected to any of the \textcolor{purple}{purple} edges in $\GlobalEdgeSet$ . 
-        The \textcolor{cadmiumgreen}{green} dotted edges are unsafe, so we cannot use them. We will add the safe \textcolor{carminepink}{pink} edges to $M_j$.}
-        \label{subfig:embeddingA}
-    \end{subfigure}%
-    \hspace{1mm}
-%    \vrule width 1pt % vertical line
-    \hspace{1mm}
-    \begin{subfigure}[t]{0.95\textwidth}
-        \centering
-        \includegraphics[]{assets/embeddingB.pdf}
-        \caption{We restrict the size of $M_j$ to be $\min\{t, |S_{j-1}|D\}$ edges. As $k = \log_{D}[\na]$, eventually, for some $j \leq k$, we get $t \leq |S_{j-1}|D$.
-        In the above example $M_{j-1}$ has size $D|S_{j-2}|$ but $M_j$ has size $t$. 
-        From then on for all $j \leq i \leq k$, $|M_i|= t$.
-        Furthermore, for $j \leq i \leq k$,  each vertex in $S_i$ will be connected to exactly one vertex in $S_{i+1}$ via a safe edge.
-        }
-        \label{subfig:embeddingB}        
-    \end{subfigure}
-\end{figure*}
-
-
-
-
 \begin{itemize}
-\item Define $E' = \emptyset$ to begin with, and as $\BipartiteG$ is a $(D, n/20)$-non blocking bipartite graph  $E'$ is a safe state.
+\item Define $E' = \emptyset$ which is guaranteed to be a  safe state.
   
 \item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. As $E'$ is a safe state, we can always find at least one safe neighbour $\tilde{h}_1 \in Y$. We set $\Embedding{h_1} \Def \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
   
@@ -537,35 +509,19 @@ We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding
 Once this phase is complete, we have mapped every vertex of $H$ to a unique vertex in $G[\GreenB]$.
 The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of length $2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G[\GreenB]$.
 Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
-We prove the result by induction on $m$.
+We prove the result by induction on $m$. Define a global edge set  $\GlobalEdgeSet \Def \emptyset$.
 
 \paragraph{Base case} 
 
 Let $e_1 = (u_1,v_1)$. Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
-Define a global edge set  $\GlobalEdgeSet \Def \emptyset$.
-We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows: For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process
-
-\begin{itemize}
-\item {For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
-    With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add exactly one \emph{safe} neigbour of $x$, denoted here with $y$, to $S_{j}$, and add the edge $(x,y)$ to $M_j$.
-    To define $S_j'$ we repeat the same process for each $x \in S_{j-1}'$.
-    Refer to the green vertex in Figure \ref{subfig:embeddingA} for a visual depiction of this process.  We discuss below why such a safe edge always exists.}
-  
-\item{Now there might be other safe neighbours for $x \in S_j$ apart from the one we just added. Add these neighbours to $S_j$, and the edges to $M_j$ as long the size of $M_j \leq \min\{t, |S_{z-1}|D\}$.
-    Thus, the two extreme cases are the every $x \in S_{j-1}$ gets $D$ neighbours in $S_j$, or every $x \in S_{j}$ gets \emph{exactly} one neighbour in $S_j$.
-For any index $i \leq k$, once a set $|S_i|=t$, for all remaining indices $j > i$, $S_j$'s are of size $t$ as well, with exactly one edge incident on each $a \in S_j$ from $S_{j-1}$. Figure \ref{subfig:embeddingB} illustrates this idea.
-  }
-
-\item{$S_{j}'$ is defined with an analogous process, starting with vertices in $S_{j-1}'$. We describe this process of filling out $\{ M_j \}_{j \in [k]}$ and $\{M_j' \}_{j \in [k]}$ as the forward process in Figure \ref{fig:baseB}.}
-  
-
-\end{itemize}
-
-\textbf{Why is there always a safe neighbour}: Let $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big) \subseteq \Edges{\BipartiteG}$.
-Notice that  $|M| \leq 2tk < n/20$, so $M$ is a safe state.
-Thus for all $1 \leq j \leq k$, for every $x \in S_{j-1}$ we can always find \emph{at least} one safe neighbour $y \in S_{j+1}$. \\
-
-\textbf{Backtracking Phase}: Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
+We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows: For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process.
+For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
+With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add $\Size{M_j}$ safe neighbours to $S_{j+1}$ where $\Size{M_j} \le \min\{t, |S_{z-1}|D\}$.
+Add to $M_j$ the safe edges that connect $S_{j-1}$ to $S_j$.
+    $M_j'$ and $S_j'$ are defined analogously.
+    Note that for $1 \le j \le k$, as there at most $t$ edges in each $M_j$, there are a total of $2tk < n/20$ edges in $\cup_{i=1}^{k} (M_i \cup M'_i)$.
+    Thus, we can always find at least one safe neighbour for each $x \in S_{j-1}$.
+Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
@@ -574,56 +530,31 @@ By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 	&> 0 \label{eq:assumption_on_lambda}
 \end{align}
 
-Equation \eqref{eq:assumption_on_lambda} comes from the assumption $\lambda \leq \epsilonL d$.
-This implies there exists at least one edge $e^\star=(x^\star,y^\star) \in \CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$.
-Note that although the above lemma is with respect to edges in $E$, $S_k$ and $S_k'$ are contain only \green{green} vertices.
-Therefore this edge $e^\star \in E$ \emph{must} be from $E_{\GreenB}$.
+Equation \eqref{eq:assumption_on_lambda} comes from the assumption $\lambda \leq d/50$.
+This implies there exists at least one edge $e^\star=(x^\star,y^\star) \in \CutEdgesSet{S_k}{S_k'}{\Edges{\BipartiteG}}$.
 By how we constructed $M_k$, we know that $x^\star$ was the safe neighbour of some node $a \in S_{k-1}$.
-Let $m_k \Def (a,x^\star) \in M_k$ be the connecting edge.
+Let $m_k = (a,x^\star) \in M_k$ be the connecting edge.
 Similarly, there is some edge $m_{k-1} \in M_{k-1}$ that connects some vertex in $S_{k-2}$ to $a$ with a safe edge.
 We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k, e^\star$.
 We repeat the same process for the other end point of $y \in S_k'$, to get edges $e^\star, m'_1, \dots, m'_k$.
 We add these edges to a global edge set $\GlobalEdgeSet$.
 Thus, we have found an odd length path $m_1\dots m_k e^\star m_1'\dots m_k'$ of length $2k+1$, connecting $\Embedding{u}$ to $\Embedding{v}$.
- Figure \ref{fig:baseB} illustrates everything discussed so far pictorially.
-
-\begin{figure}
-	\includegraphics[width=0.9\textwidth
-	]{assets/BaseA.pdf}
-	\caption{In this toy example, $k=3$. The figure on top describes the forward phase of finding sets $\{M_i\}_{i\in [k]}$ and $\{M_i'\}_{i\in [k]}$. The figure below describes the process of backtracking from the edge $e$ that is promised to exist between $S_k$ and $S_k'$.
-    All the edges in pink are added to the global set $\GlobalEdgeSet$.}
-	\label{fig:baseB}
-\end{figure}
-
+ % Figure \ref{fig:baseB} illustrates everything discussed so far pictorially.
 
 
 \paragraph{Induction Step}
 	
 Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ for $j < m$.
-Let $P_1, \dots, P_j$ denote these paths (depicted with \textcolor{carminepink}{pink} edges in Figure \ref{fig:induction}) .
-Let $\GlobalEdgeSet$ denote the set of all edges in these paths.
-Let $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$.
-So far by induction we have $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$.
-They key thing to note is that $\GlobalEdgeSet < n/20$.
-To see why, $H$ has at most $t\MaxDegree{H}/2$ edges.
-When these edges are mapped to paths of length $2k+1$, the total number of edges in $\GlobalEdgeSet$ is $\frac{t\MaxDegree{H}}{2}(2k+1) < t/2\MaxDegree{H}3k = n/20$.
-
-The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case.
-We add $\Embedding{u_{j+1}}$ to $S_0$ and $\Embedding{v_{j+1}}$ to $S_0'$.
-Now we to add new nodes to $S_{1}$ and $S_{1}'$, we ask for $D$ neighbours of $\Embedding{u_{j+1}}$ and $\Embedding{v_{j+1}}$. As $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, and $|M| < \epsilonA n$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
+Let $P_1, \dots, P_j$ denote these paths.
+Let  $\GlobalEdgeSet$ denote the set of all edges in these paths.
+We upper bound the size of $\GlobalEdgeSet$.
+$H$ has at most $\frac{t\MaxDegree{H}}{2}$ edges.
+When these edges are mapped to paths of length $2k+1$, the total number of edges is $\frac{t\MaxDegree{H}}{2}(2k+1) <  \frac{n}{10\MaxDegree{H}}$.
+Thus not only is $\GlobalEdgeSet$ strictly smaller than $n/20$ but it has room for $2tk+1$ more edges with room to spare i.e. $\frac{n}{10\MaxDegree{H}}+ 2tk + 1 < n/20$.
+We set $S_0 = \{ u_{j+1}\}$ and $S_0' = \{v_{j+1} \}$.
+For all $1 \le j \le k$, we set $S_{j}$ to be $\min\{t, \Size{S_{j-1}}D \}$ safe neighbours adjacent to $S_{j-1}$.
+Now finding a path for $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$ reduces to the base case.
 This concludes the proof.
-
-\begin{figure}
-	\includegraphics[width=0.9\textwidth
-	]{assets/InductionStep.pdf}
-	\caption{The figure above describes the induction step. The nodes in green are already in the embedding and represent paths $P_1, \dots, P_j$ for edges $(u_1, v_1) \dots, (u_j, v_j)$.
-	The nodes in yellow represent candidates for the path for edge $u_{j+1}, v_{j+1}$. 
-	The candidate nodes are constructed identical to the procedure described in the base step of the induction step, where we use the non-blocking property of $\BipartiteG$ to extend with safe neighbours.
-    Once we find a blue edge between $S_k$ and $S_k'$, we backtrack like we did in the base case to find the path $\Path{\Embedding{u_{j+1}}}{\Embedding{v_{j+1}}}$.
-	}
-	\label{fig:induction}
-\end{figure}
-
 	
 \end{proof}
 
