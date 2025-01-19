@@ -810,6 +810,28 @@ Giving us the contradiction we were after.
 
 \end{proof}
 
+
+\begin{theorem} \label{thm:perfect-matching}
+Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/24$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 7d/8$, then $G[U]$ contains a perfect matching.
+\end{theorem}
+\begin{proof}
+    Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 7d/8$. We show that $G[U]$ satisfies a stronger version of Tutte's criterion:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components. If $|S| \ge |U|/2$ then the criterion trivially holds, thus we can assume $|S| < |U|/2$. It suffices to show that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$, there exists an edge between $X$ and $Y$. Indeed, suppose that this holds but $G[U \setminus S]$ has more than $|S|$ connected components, with vertex sets denoted by $C_1, \ldots, C_k$, for some $k > |S|$. Then there is no edge between $X := C_1 \cup \ldots \cup C_{s}$ and $Y := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$. As $|X|, |Y| \ge |S|/3$, we get a contradiction. 
+
+    Consider some partition $X \cup Y$ of $U \setminus S$ with $|X| \le |Y|$. Then $|X| \le (|U| - |S|)/2 \le (n - |S|)/2$. We show
+    \begin{equation} \label{eq:edge_bound}
+        e(X, X) + e(X, S) < \frac{7d}{8}|X|,
+    \end{equation}
+    as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
+    $$
+        e(X, X) + e(X, S) \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
+    $$
+    Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
+    $$
+        \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{2n}|X||S| + 3 \lambda |X| \le \frac{3d}{4} |X| + 3\lambda |X| \le \frac{7d}{8}|X|.
+    $$
+    This confirms \eqref{eq:edge_bound}.
+\end{proof}
+
 \section{Related Work}
 \label{sec:related-work}
 
