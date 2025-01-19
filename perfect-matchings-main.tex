@@ -229,24 +229,23 @@ An SoS refutation of $\Axioms$ is a proof of $-1 \geq 0$ derived from an SoS pro
 	
 \end{definition}
 
-Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} based on the following inference rules.
-\begin{enumerate}
-	\item From polynomials $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
-	\item From polynomial $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
-\end{enumerate}
+% Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} based on the following inference rules.
+% \begin{enumerate}
+% 	\item From polynomials $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
+% 	\item From polynomial $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
+% \end{enumerate}
 
-\begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
-A Polynomial Calculus (PC) refutation of $\Axioms$ over is a set of polynomials $\Proof = t_1, \dots, t_l$	such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules. 
-The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i}$. If we let $\Pi$ denote the set of all PC refutations of $\Axioms$, then  
+% \begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
+% A Polynomial Calculus (PC) refutation of $\Axioms$ over is a set of polynomials $\Proof = t_1, \dots, t_l$	such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules. 
+% The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i}$. If we let $\Pi$ denote the set of all PC refutations of $\Axioms$, then  
 
-\[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
-\end{definition}
+% \[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
+% \end{definition}
 
-The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
-\begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
-\end{lemma}
-
-The lower bounds for this hard instance $H$ also carry over to SoS refutations, and a formal proof can be found in \citep[Theorem A.3]{Austrin_2022}.
+% The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
+% \begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
+% \end{lemma}
+A description of the  worst case hard instance for SoS can be found in \citep[Theorem A.3]{Austrin_2022}.
 
 \begin{lemma}[Worst Case Hard Instance For SOS]\label{lemma:worst-case-instance-sos}
 Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that SoS refutations requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
@@ -392,13 +391,13 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
         e(X, X) + e(X, S) < \frac{11d}{16}|X|,
     \end{equation}
     as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
-    $$
+    \[
         e(X, X) + e(X, S) \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
-    $$
+    \]
     Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
-    $$
-        \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{2n}|X||S| + 3 \lambda |X| \le \frac{3d}{4} |X| + 3\lambda |X| \le \frac{7d}{8}|X|.
-    $$
+    \[
+        \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{n}|X||S| + 3 \lambda |X| \le \frac{d}{4} |X| + 3\lambda |X| < \frac{11d}{16}|X|.
+    \]
     This confirms \eqref{eq:edge_bound}.
 \end{proof}
 
@@ -644,8 +643,8 @@ The hardness proof follows from the following steps as illustrated in Figure \re
     To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
   }
 
-\item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = G[V \setminus G_{\EmbeddingFunc}]$ is even, and by the balanced partitioning we have $\MinimalDegree{G[U]} \geq \frac{11d}{16}$.
-    By Theorem \ref{thm:perfect-matching}, $G[U]$ has a perfect matching $M$.
+\item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = G[V \setminus G_{\EmbeddingFunc}]$ is even. The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and $\lambda \leq d/50$.
+    This satisfies all the constraints of Theorem \ref{thm:perfect-matching}, and therefore $G[U]$ has a perfect matching $M$.
 Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that 
 	
 	\[
