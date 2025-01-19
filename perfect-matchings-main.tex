@@ -100,6 +100,13 @@ PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is a
 
 \end{problem}
 
+\begin{figure}
+  \includegraphics[width=0.8\textwidth]{assets/proof-sketch.pdf}
+  \caption{The figure above above outlines the steps of the proof. First we partition the vertices of $G$ into balanced sets $\RedA$ and $\GreenB$. After that, we topologically embed the hard instance $H$ such that every path representing an edge of $e$ in the embedding is of odd size. This ensures that the graph restricted to the embedding is hard to refute. Next we show that the induced subgraph (referred to as the residual graph $\RemGraph = G[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$) has a perfect matching. This  implies that the hardness to refute matchings in $G$ is transferred to the hardness of refuting $H$.} 
+	\label{fig:proof-outline}
+\end{figure}
+
+
 \paragraph{Technical Overview} The original hardness proof works as follows.
 They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-PC} and Lemma \ref{lemma:worst-case-instance-sos}).
 Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
@@ -273,94 +280,10 @@ of $\Axioms$ depends on a constant number of variables, then
 The proof for the above lemma can be found in \citep[Lemma 2.2]{Austrin_2022}.
 What the above lemma says is that if we have a graph $G$ with odd vertices, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
 
-%We are given a pseudorandom graph $G$ on an odd number of vertices for $n$ large enough, and we want to show that refuting perfect matchings in the PC and SoS proof system requires large proofs.
-%As described earlier, we do this by topologically embedding the above hard instance $H$ into $G$ while preserving the hardness of the original instance.
+\subsection{Useful Tools}
 
-\section{Embedding Machinery}
-\label{sec:embed-machinery}
-The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
-
-\begin{definition}[$(p, q)$-non blocking bipartite graphs]
-Given $p,q \in \Naturals$ , we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a collection  $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
-
-\begin{enumerate}
-	\item $\emptyset \in \Family{S}$
-	\item If $E'' \subseteq E'$ and $E' \in \Family{S}$, \emph{then}, $E'' \in \Family{S}$.
-	\item Given $E' \in \Family{S}$ such that $|E'| \leq q$, and \emph{any} $v \in A$ with $\degree{E'}{v} < p$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. 
- We call $w$ a \emph{safe neighbour} for $v$ given $E'$.
-\end{enumerate}
-
-\end{definition}
-
-
-\begin{figure}[h]
-  \center
-  {\includegraphics{assets/non-blocking-networks.pdf}}
-{\caption{\small The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$. As $E' \subseteq E$ is a safe state that is not too large, by the non blocking property, we are \emph{guaranteed} to connect any vertex $v \in L$ to a vertex $w \in R$ that has no incident edges from $E'$.}
-}
-\label{fig:test}
-
-\end{figure}
-
-Next, we re-state a lemma by \citep[Proposition 1]{feldman1988wide} which describes the properties bipartite graphs must satisfy to be non-blocking.
-
-\begin{lemma}\label{lemma:condtions-for-non-block}
-Fix $a, r, s \in \Naturals$. Let $\Graph = (A \cup B, E)$ be a bipartite graph.
-If for every $X \subseteq A$ of size $1 \leq |X| \leq 2a$, there are \emph{at least} $(r + s)|X|$ vertices in $B$ that are adjacent to some vertex in $S$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
-\end{lemma}
-
-
-\section{Proof Of Main Result}
-\label{sec:main-proof}
-
-Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for polynomial calculus (or SoS) known to exist as per Lemma \ref{lemma:worst-case-instance-PC} (or Lemma \ref{lemma:worst-case-instance-sos}).
-The hardness proof follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
-
-
-\begin{figure}
-  \includegraphics[width=0.8\textwidth]{assets/proof-sketch.pdf}
-  \caption{The figure above above outlines the steps of the proof. First we partition the vertices of $G$ into balanced sets $\RedA$ and $\GreenB$. After that, we topologically embed the hard instance $H$ such that every path representing an edge of $e$ in the embedding is of odd size. This ensures that the graph restricted to the embedding is hard to refute. Next we show that the induced subgraph (referred to as the residual graph $\RemGraph = G[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$) has a perfect matching. This  implies that the hardness to refute matchings in $G$ is transferred to the hardness of refuting $H$.} 
-	\label{fig:proof-outline}
-\end{figure}
-
-\begin{enumerate}
-\item{First, we show (via Theorem \ref{thm:partition}) that we can partition the vertices of the graph $\Graph$ into two disjoint sets $\RedA$ and $\GreenB$, as shown in Figure \ref{fig:partition}, of roughly equal size.
-    Apart from $\RedA$ and $\GreenB$ being roughly the same size, the partition has the property that for each vertex $v \in V$ has roughly the same number of neighbours in $\RedA$ and $\GreenB$.
-    We formalise what ``roughly'' equal means in Section \ref{sec:partition-lemma}.
-    Given this partitioning, we will topologically embed $H$ into the subgraph $G_{\GreenB}$ which is described by the edges of $G$ where both endpoints lie in $\GreenB$. 
-  }
-  
-\item{Let $D = d/\lambda \in \Reals$. We find a subdivision  $\Subdivision{H}{\sigma}$ of $H$, where for each $e \in \Edges{H}$, we have $\sigma(e)  \Def 2k+1$ for $k = \BigO{\log_{D} n}$.
-    We show (via Theorem \ref{thm:top-embedding}) that $\Subdivision{H}{\sigma}$ is a subgraph of $G_{\GreenB}$ defined above.
-    Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ denote the topological embedding of $H$ into $G_{\GreenB}$, and $G_{\EmbeddingFunc}$ embedded subgraph.
-    For each edge $(u,v) \in \Edges{H}$, let $\Path{\Embedding{u}}{\Embedding{v}}$ denote the vertex disjoint odd length path in $\Subdivision{H}{\sigma}$ we construct using Theorem \ref{thm:top-embedding}.
-    Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-    To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-}
-	
-	
-%	\item Successfully executing the above steps guarantees that $\HardInstance$ exists inside of $\Graph$ as a topological minor. But as described earlier, this does not suffice in showing that $\PerfectMatching{\Graph}$ is also hard to refute. Let $\Embedding{\HardInstance}$ denote the vertices that form the topological embedding of $\HardInstance$ in $\Graph$. We want to show that the induced subgraph $\Graph[\Vertices{\Graph} \setminus \Embedding{\HardInstance}]$ contains a perfect matching. 
-	\item Lastly, we show (via Theorem \ref{thm:perfect-matching}) that the induced subgraph of $G$ not participating in the topological embedding above (which we refer to as $\RemGraph$), has a perfect matching $M$. Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that 
-	
-	\[
-        \rho(x_e)=
-        \Bigger[10]\{\begin{array}{@{}cl}
-                1 & \text{ if $e \in M \land e \notin \Edges{G_{\EmbeddingFunc}}$} \\
-          0 & \text{ if $e \notin M \land e \notin \Edges{G_{\EmbeddingFunc}}$}\\
-          % 0 & \text{if } u \in \Vertices{\RemGraph} \land v \in \Vertices{G_{\EmbeddingFunc}}\\
-                x_e & \text{ otherwise} 
-        \end{array}
-\]
-
-	If it easy to see that $\PM{G} \equiv \PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\PM{G} \in \BigOmega{|\Vertices{H}|} = \BigOmega{\frac{n}{\log n}}$. 
-
-  \end{enumerate}
-
-\subsection{Step 1: Balanced Partitions}
-\label{sec:partition-lemma}
-
-
-These lemmas are referenced from \citet[Chapter 1, Chapter 7]{mitzenmacher2017probability}.
+The proof of \nameref{lemma:mult-chernoff} and \nameref{lemma:lll}
+can be found in any textbook on randomised algorithms \citep[See Chapter 1, Chapter 7]{mitzenmacher2017probability}.
 A dependency graph for a set of events $E_1, . . . , E_n$ is a graph $G=(V, E)$ such that $V = \{1,.. . , n\}$ and,  for $i= 1,\dots, n$, event $E_i$ is mutually independent
 of the events $\{E_j | (i, j) \notin E\}$. The degree of the dependency graph is the maximum degree of any vertex in the graph.
 
@@ -392,103 +315,140 @@ Suppose $X_1, ..., X_n$ are identical independent random variables taking values
 \end{lemma}
 
 Next we describe what it means to have a balanced cut of $G$.
-A balanced partition or cut of graph $G$ into sets $\RedA$ and $\GreenB$ is one where both sets are roughly equal in size, and have roughly the same number of edges incident on them.
 
-\begin{figure*}
-    \centering
-    \begin{subfigure}[t]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{assets/partition-a.pdf}
-        \caption{}
-      \label{fig:partition}
-    \end{subfigure}%
-    \hspace{1mm}
-    \hspace{1mm}    
-    \begin{subfigure}[t]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{assets/partition-b.pdf}
-        \caption{}
-      \label{fig:bipartite}        
-    \end{subfigure}
-    \caption{\small The figure above describes the partitioning of the vertices of the graph $G$ into two sets $\RedA$ and $\GreenB$, such that for every vertex $v \in \Vertices{G}$ has at least $11d/16$ \red{red} neighbours and at most $13d/16$ \red{red} neighbours. The subgraph $G_{\GreenB}$ obtained by including vertices in $\GreenB$ and edges that stay inside $\GreenB$. The figure on the right, depicts how the subgraph $G_{\GreenB}$ can be expressed as a bipartite graph $\BipartiteG$.}
-    \hspace{1mm}     
-\end{figure*}
+% \begin{figure*}
+%     \centering
+%     \begin{subfigure}[t]{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/partition-a.pdf}
+%         \caption{}
+%       \label{fig:partition}
+%     \end{subfigure}%
+%     \hspace{1mm}
+%     \hspace{1mm}    
+%     \begin{subfigure}[t]{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/partition-b.pdf}
+%         \caption{}
+%       \label{fig:bipartite}        
+%     \end{subfigure}
+%     \caption{\small The figure above describes the partitioning of the vertices of the graph $G$ into two sets $\RedA$ and $\GreenB$, such that for every vertex $v \in \Vertices{G}$ has at least $11d/16$ \red{red} neighbours and at most $13d/16$ \red{red} neighbours. The subgraph $G_{\GreenB}$ obtained by including vertices in $\GreenB$ and edges that stay inside $\GreenB$. The figure on the right, depicts how the subgraph $G_{\GreenB}$ can be expressed as a bipartite graph $\BipartiteG$.}
+%     \hspace{1mm}     
+% \end{figure*}
 
 
 \begin{definition}[Balanced Cuts]\label{defn:balanced-cuts} Given universal constants $0 \leq c \leq 1$ and $\epsilon > 0$, a $(c, \epsilon)$-degree balanced cut of a graph $G$ is a partition $\RedA \cup \GreenB$ of the vertices of $G$, such that, for every vertex $u \in \Vertices{G}$,  $cd - \epsilon d \leq \Neighbourhood{E}{v} \cap \RedA \leq cd + \epsilon d $    
 \end{definition}
 
-If a graph on $n$ vertices is $d$-regular and has a balanced cut $\RedA$ and $\GreenB$, then $\frac{\Size{\RedA}}{\Size{\GreenB}} = \BigO{1}$. In other words $\Size{\RedA}, \Size{\GreenB} \in \BigO{n}$ i.e $\RedA$ and $\GreenB$ are roughly the same size.
 
-\begin{remark}
-  Throughout the rest of this document, for any $(c, \epsilon)$ balanced partition $\RedA \cup \GreenB$ of any graph $G$,  we describe vertices in $\RedA$ as \red{red} nodes, and vertices in $\GreenB$ as \green{green} nodes.
-\end{remark}
-
-The proof for the following theorem is a textbook application of the  \nameref{lemma:lll} along with the \nameref{lemma:mult-chernoff}.
-The main contribution lies in how we use the balanced cuts to get a perfect matching in the residual graph in Theorem \ref{thm:partition} i.e step 3 of the proof.
-
-\begin{lemma}[Pseudorandom Graphs Have Balanced Cuts]\label{thm:partition}
+\begin{lemma}[Regular Graphs Have Balanced Cuts]\label{thm:partition}
 For every $0 < c < 1$, and $\epsilon > 0$, there exists a constant $d_0 \in \BigOTilde{c/\epsilon^2}$, such that, given a $d$-regular graph $\Graph = (V, E)$ on $n$ vertices, with $d \in [d_0, n-1]$, there exists and a  sets $\red{A}$ and $\green{B}$ is a $(c, \epsilon)$ balanced cut of $G$.
 \end{lemma}
 
 \begin{proof}
-We prove the existence of such a partition $\RedA \cup \GreenB = V$ using the probabilistic method.
+  We prove the existence of such a partition $\RedA \cup \GreenB = V$ using the probabilistic method.
+We refer to elements in $\RedA$ as red nodes, and elements in $\GreenB$ as green nodes.
 For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $c$.
 If $X_i = 1$, then we include $v$ in $\RedA$, else we put $v$ in $\GreenB$.
 Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we partition $V$ into sets $\RedA$ and $\GreenB$.
 For any $v \in V$, let $Y_v \Def |\Neighbourhood{E}{v} \cap \RedA|$ denote the random variable that counts how many \red{red} neighbours of $v$ has.
 Define $\delta \Def \frac{\epsilon}{c}$, and for any $v \in V$, let $E_v = \Indicator{|Y_v - d c | \geq \delta c d}$ denote the bad event that $v$ has too many \red{red} neighbours.
-Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has max-degree at most $d^2$.
-To see why, for any node $v$, let $u$ and $w$ denote vertices exactly 2 hops\footnote{A node $a$ is $k$ hops away from another node $b$ if the shortest path between $a$ and $b$ has $k$ edges.} and at least 3 hops away from $v$ respectively. The colour of $u$'s neighbours, directly affects how many red neighbours $v$ can have.
-However, as the colours for each node is sampled independently, the colour of $w$ or its neighbours do not affect $v$'s neighbours.
-Therefore $E_v$ is independent of $E_w$.
-There are at most $d^2$ nodes at a distance of at most 2 from any node, giving us the max-degree of the dependency graph.
+Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has max-degree at most $d^2$ (only vertices at most two hops away from $v$ affect the colours of $v$'s neighbours; there at most $d^2$ such vertices).
+% To see why, for any node $v$, let $u$ and $w$ denote vertices exactly 2 hops\footnote{A node $a$ is $k$ hops away from another node $b$ if the shortest path between $a$ and $b$ has $k$ edges.} and at least 3 hops away from $v$ respectively. The colour of $u$'s neighbours, directly affects how many red neighbours $v$ can have.
+% However, as the colours for each node is sampled independently, the colour of $w$ or its neighbours do not affect $v$'s neighbours.
+% Therefore $E_v$ is independent of $E_w$.
+% There are at most $d^2$ nodes at a distance of at most 2 from any node, giving us the max-degree of the dependency graph.
 As $\Graph$ is $d$-regular, $\Mean{\vec{X}}{Y_v} = c d$, then by the \nameref{lemma:mult-chernoff}, for any $v \in V$, we have $\PProb{E_v}{\vec{X}} \leq 2\exp(-\delta^2c d/3) \Def \beta$.
-There exists $d_0 \in \BigOTilde{c/\epsilon^2}$, such that for $d > d_0$, for some $d_0$, we have that $2\exp(-\delta^2c d/3) \leq 1/(4d^2)$. Therefore, we have $\beta d^2 \leq 1/4$.
+For $d_0 \in \BigOTilde{c/\epsilon^2}$, we have for every $d > d_0$, for $2\exp(-\delta^2c d/3) \leq 1/(4d^2)$.
+Therefore, we have $\beta d^2 \leq 1/4$.
 We have all the conditions to invoke the \nameref{lemma:lll} to get $\PProb{\underset{{v\in V}}{\land}E_v = 0}{\vec{X}} > 0$.
 \end{proof}
 
-\subsection{Step 2: The Topological Embedding}
 
-\begin{remark}
-  \label{remark:edge-dist}
-For this section, and the next, we invoke Lemma \ref{thm:partition} with parameters.  $c=3/4$ and $\epsilon=1/16$.
-Reviewing the properties of a balanced sets with $c=3/4$ and $\epsilon=1/16$, we have that every vertex $u$ in any $\EnDeeLambda$ graph  $G=(V,E)$,
+%We are given a pseudorandom graph $G$ on an odd number of vertices for $n$ large enough, and we want to show that refuting perfect matchings in the PC and SoS proof system requires large proofs.
+%As described earlier, we do this by topologically embedding the above hard instance $H$ into $G$ while preserving the hardness of the original instance.
 
-\begin{align*}
-\text{ Number of \red{red} neighbours:} \quad &\frac{11}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \RedA} \leq \frac{13}{16}d \\
-\text{ Number of \green{green} neighbours:} \quad & \frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d \\
-\end{align*}
+% \begin{remark}
+%   \label{remark:edge-dist}
+% For this section, and the next, we invoke Lemma \ref{thm:partition} with parameters. $c=3/4$ and $\epsilon=1/16$.
+% Reviewing the properties of a balanced sets with $c=3/4$ and $\epsilon=1/16$, we have that every vertex $u$ in any $\EnDeeLambda$ graph  $G=(V,E)$,
+
   
-\end{remark}
+% \end{remark}
 
-Given $\EnDeeLambda$ graph $G=(V,E)$, let $\RedA$ and $
-\GreenB$ be the partition guaranteed by the \ref{thm:partition}.
-Define $E_{\GreenB} \Def \{ (\green{u},\green{v}) \in E : \green{u} \in \GreenB \land \green{v} \in \GreenB\}$. 
-That is $E_{\green{B}}$ is the set of edges whose endpoints are fully contained in B (they have \green{green} endpoints), and let $G_{\green{B}}$ be the subgraph defined by the edges $E_{\GreenB}$. 
-Define $ \na \Def |G_{\GreenB}|$, which by the balancedness of the partition is some constant fraction of $\Size{V}$.
-Now define a bipartite graph $\BipartiteG = \left(\Vertices{\GreenB} \cup \Vertices{\GreenB}, E_{\GreenB} \right)$ (see Figure \ref{fig:bipartite}).
-That is the left and right vertices of $\BipartiteG$ are copies of $G_{\GreenB}$ and for every edge $(u,v) \in E_{\GreenB}$, there is a corresponding copy $(u,v) \in \Edges{\BipartiteG}$.
+\begin{theorem} \label{thm:perfect-matching}
+Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ contains a perfect matching.
+\end{theorem}
+\begin{proof}
+  Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$.
+  We show that $G[U]$ satisfies a stronger version of Tutte's criterion:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components.
+  If $|S| \ge |U|/2$ then the criterion trivially holds, thus we can assume $|S| < |U|/2$.
+  It suffices to show that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$, there exists an edge between $X$ and $Y$.
+  Indeed, suppose that this holds but $G[U \setminus S]$ has more than $|S|$ connected components, with vertex sets denoted by $C_1, \ldots, C_k$, for some $k > |S|$.
+  Then there is no edge between $X := C_1 \cup \ldots \cup C_{s}$ and $Y := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$. As $|X|, |Y| \ge |S|/3$, we get a contradiction. 
 
-\begin{remark}
-  
-To avoid notation clutter, we will refer to the left and right vertex sets of $\BipartiteG$ with $X$ and $Y$ respectively.
-Also by definition, every vertex in $X$ and $Y$ \emph{must} be \green{green}.  
-\end{remark}
+    Consider some partition $X \cup Y$ of $U \setminus S$ with $|X| \le |Y|$. Then $|X| \le (|U| - |S|)/2 \le (n - |S|)/2$. We show
+    \begin{equation} \label{eq:edge_bound}
+        e(X, X) + e(X, S) < \frac{11d}{16}|X|,
+    \end{equation}
+    as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
+    $$
+        e(X, X) + e(X, S) \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
+    $$
+    Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
+    $$
+        \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{2n}|X||S| + 3 \lambda |X| \le \frac{3d}{4} |X| + 3\lambda |X| \le \frac{7d}{8}|X|.
+    $$
+    This confirms \eqref{eq:edge_bound}.
+\end{proof}
 
-\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph given to us and let $\BipartiteG$ be the bipartite graph constructed using the balanced partition theorem. 
-There exists small universal constants $\epsilonL, \epsilonA  \in (0,1)$ independent of $d$ and $n$, such that if $\lambda < \epsilonL d$, then $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
+\section{Embedding Machinery}
+
+The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
+
+\begin{definition}[$(p, q)$-non blocking bipartite graphs]
+Given $p,q \in \Naturals$, we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a collection  $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
+
+\begin{enumerate}
+	\item $\emptyset \in \Family{S}$
+	\item If $E'' \subseteq E'$ and $E' \in \Family{S}$, \emph{then}, $E'' \in \Family{S}$.
+	\item Given $E' \in \Family{S}$ such that $|E'| \leq q$, and \emph{any} $v \in A$ with $\degree{E'}{v} < p$, there exists $e = (v, w) \in E \setminus E'$  such that (i) $E' \cup \Set{e} \in \SafeStates $, and (ii) $w$ is not incident to any edge in $E'$ i.e. $\forall x \in A$ we have $(x,w) \notin E'$. 
+ We call $w$ a \emph{safe neighbour} for $v$ given $E'$.
+\end{enumerate}
+
+\end{definition}
+
+
+% \begin{figure}[h]
+%   \center
+%   \includegraphics{assets/non-blocking-networks.pdf}
+%   \caption{\small The figure above demonstrates the third property of non blocking bipartite graphs $G=(L\cup R, E)$.
+%       Assume $E' \subseteq E$ is a safe state with size less than $q$ and that $v$ has fewer than $p$ neighbours in $E'$.
+%       Then by the non blocking property, we are \emph{guaranteed} to connect $v$ to a safe neighbour $w \in R$ that has no incident edges from $E'$.}
+% \label{fig:test}
+% \end{figure}
+
+Next, we re-state a lemma by \citep[Proposition 1]{feldman1988wide} which describes the properties bipartite graphs must satisfy to be non-blocking.
+
+\begin{lemma}\label{lemma:condtions-for-non-block}
+Fix $a, r, s \in \Naturals$. Let $\Graph = (X \cup Y, E)$ be a bipartite graph.
+If for every $S \subseteq Y$ of size $1 \leq |S| \leq 2a$, there are \emph{at least} $(r + s)|S|$ neighbours in $Y$ that are adjacent to $S$, \emph{then}, $\Graph$ is $(r, as)$-non blocking.
+\end{lemma}
+
+The above definition and lemma are all we need to describe our embedding machinery.
+
+\begin{lemma}\label{lemma:bipartitie-is-non-blocking}Let $G$ be the $\EnDeeLambda$ graph with $\lambda \leq \epsilonL d$. For any $\GreenB \subseteq \Vertices{G}$ such that $\MinimalDegree{G[\GreenB]} \geq \nicefrac{3d}{16}$,
+ the bipartite graph  $\BipartiteG = (G[\GreenB] \cup G[\GreenB], \Edges{\GreenB})$ is $(\frac{d}{\lambda}, \epsilonA n)$ non-blocking.
 \end{lemma}
 
 \begin{proof}
-Let $\BipartiteG \Def (X \cup Y, E_{\GreenB})$. 
-Let $\lambda \Def \ExpansionFactor{G} \leq d/c_2$ where $c_2 > 0$ is a constant to be defined shortly.
-Set $a = \frac{n\lambda}{2c_1 d}$ for a constant $c_1 > 0$ to be defined next.
-Set $c_1, c_2$ such that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) < \frac{3}{16}$.
-Pick any $S \subseteq X$ with $|S| \leq 2a = \frac{n\lambda}{c_1 d}$.
+  Define $c_1 = 10$ and $c_2 = 50$. Let $X$ and $Y$ denote the right vertices of $\BipartiteG$.
+  Set $a = \frac{n\lambda}{2c_1 d}$.
+  Observe that that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) < \frac{3}{16}$.
+Let $S \subseteq X$ with $|S| \leq 2a = \frac{n\lambda}{c_1 d}$.
 \highlight{Assume towards a contradiction} that $\BipartiteG$ is \textbf{not} non-blocking.
-  Then by Lemma \ref{lemma:condtions-for-non-block} there exists a set $T \subseteq Y$, adjacent to some vertex in $S$ such that $|T| < |S|(\frac{d}{\lambda}+\frac{d}{\lambda})$. 
-By the balanced cut property we know that, every \green{green} node is connected to at least $\frac{3}{16}d$ \green{green} nodes (and $E_{\GreenB}$ consists of all edges with two \green{green} endpoints) i.e.
+  Then by Lemma \ref{lemma:condtions-for-non-block} there exists a set $T \subseteq Y$, adjacent to vertices in $S$ such that $|T| < |S|(\frac{d}{\lambda}+\frac{d}{\lambda})$. 
+As $G[\GreenB]$ has minimal degree at leat $\nicefrac{3d}{16}$, 
 
 \begin{equation}\label{eq:balanced}
   \CutEdges{S}{T}{E_{\GreenB}} \geq \frac{3}{16}|S|d
@@ -506,17 +466,14 @@ From the \nameref{lemma:expanders-mixing-lemma}, we have
 	&< |S|d\frac{3}{16} \label{eq:constants}
 \end{align}
 
-\eqref{eq:assumption} comes from our \highlight{assumption}.
-\eqref{eq:assumption-lambda} comes from our assumption that $\lambda \leq d/c_2$ and $|S| \leq \frac{n\lambda}{c_1 d}$.
+\eqref{eq:assumption} comes from our \highlight{assumption} on the size of $T$..
+\eqref{eq:assumption-lambda} comes from our assumption that $\lambda \leq  d/c_2$ and $|S| \leq \frac{n\lambda}{c_1 d}$.
 \eqref{eq:constants} contradicts the balanced sets property in Equation \eqref{eq:balanced}, so our \highlight{assumption} must have been wrong.
-Finally we get our theorem statement by setting $\epsilonL = 1/c_2$ and $\epsilonA = 1/c_1$.
-
+Therefore $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non blocking.
 \end{proof}
 
-With the non-blocking nature of $\BipartiteG$ established, the next step is to embed hard instance $H$ as topological minor of $G_{\GreenB}=(\GreenB, E_{\GreenB})$ as described in the overview.
-Note for every edge in $E_{\GreenB}$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
 
-
+\ari{Add a bit about topological minors}.
 \begin{definition}[Sub-divisions]\label{def:subdivisions}
 Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ (such that all these paths are mutually vertex disjoint, except at the end points).	
 \end{definition}
@@ -525,23 +482,20 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision $\Subdivision{H}{\sigma}$ that is isomorphic to \emph{any} subgraph of $G$.	
 \end{definition}
 
-\begin{theorem}[Topological Embedding Theorem]\label{thm:top-embedding}
-Let $G$ be a $\EnDeeLambda$ graph, and $\BipartiteG$ be the bipartite representation of $G_{\GreenB}$, where $|G_{\GreenB}| = \na = \alpha n$, for some universal constant $\alpha \in [3/16, 5/16]$.
-Let $H$ be the worst case hard instance on $t = \lceil\epsilonA\alpha \frac{\na}{\log \na}\rceil = \lceil \frac{\epsilonA n}{\log \na}\rceil = \BigO{\frac{n}{\log n}}$ vertices known to exist in Lemma \ref{lemma:worst-case-instance-PC}, where $0 < \epsilonL < \epsilonA <1$ are the constants from  Lemma \ref{lemma:bipartitie-is-non-blocking}.	
-If $\lambda \leq \epsilonL d$, then $G_{\GreenB}$ contains a subdivision of $H$, denoted by $\Subdivision{H}{\sigma}$ as a subgraph.
 
+\begin{theorem}[Embedding Theorem]\label{theorem:embedding-theorem}
+  Let $G=(V,E)$ denote an $\EnDeeLambda$ graph with $\lambda < \epsilonL d$, and $H$ be an arbitrary sparse graph with at most $t = \lceil \frac{\epsilonA n}{\log_D \na}\rceil $ vertices with max degree $\MaxDegree{H} = \BigO{1} < d$, where $D=d/\lambda$.
+  For any subset $\GreenB \subseteq V$ with $\MinimalDegree{G[\GreenB]} > \frac{3d}{16}$, $G[\GreenB]$ contains $H$ as a topological minor $\Subdivision{H}{\sigma}$ where  $\sigma(e) \equiv 1 (\mod 2)$ for all $e \in \Edges{H}$.
 \end{theorem}
-
-
-
 \begin{proof}
 Define $D = \frac{d}{\lambda}$ and $k \Def \lceil\log_D\na\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
-Define $\sigma(e) \Def \PathSize = 2k+1$ for all $e \in \Edges{H}$.
-Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G_{\GreenB}}$ be the bijective mapping between the vertices of $\Subdivision{H}{\sigma}$, and the vertices of $G_{\GreenB}$ that defines our topological embedding.
-Our first task is to find a unique $\Embedding{h} \in \Vertices{G_{\GreenB}}$ for each $h \in \Vertices{H}$.
-Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $\Vertices{G_{\GreenB}}$.
-Let $X=\Vertices{G_{\GreenB}}$ and $Y=\Vertices{G_{\GreenB}}$ denote the left and right sides of the bipartite graph $\BipartiteG$.
+Define $\sigma(e) \Def 2k+1$ for all $e \in \Edges{H}$.
+Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G[{\GreenB}]}$ denote our toplogical embedding.
+Our first task is to find a unique $\Embedding{h} \in \Vertices{G[\GreenB]}$ for each $h \in \Vertices{H}$.
+Define $X = Y = \Vertices{G[\GreenB]}$, and let $\BipartiteG = (X \cup Y, \Edges{G[\GreenB]})$.
+Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $G[\GreenB]$.
+As $\MinimalDegree{G[\GreenB]} \geq \nicefrac{3d}{16}$, by Lemma \ref{lemma:bipartitie-is-non-blocking} we know have that $\BipartiteG$ is $(D, \epsilonA d)$ non-blocking.
 We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$: 
 
 \begin{figure*}[t!]
@@ -574,45 +528,44 @@ We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding
 
 
 \begin{itemize}
-\item Define $E' = \emptyset$ to begin with, and as $\BipartiteG$ is a $(D, \epsilonA n)$-non blocking bipartite graph (by Lemma \ref{lemma:bipartitie-is-non-blocking}), $E'$ is a \emph{safe} state.
+\item Define $E' = \emptyset$ to begin with, and as $\BipartiteG$ is a $(D, \epsilonA n)$-non blocking bipartite graph  $E'$ is a safe state.
   
-\item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. By the non-blocking property, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$ such that there is no edge in $E'$ is incident on $\tilde{h}_1$. We set $\Embedding{h_1} \Def \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
+\item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. As $E'$ is a safe state, we can find a \emph{safe neighbour} $\tilde{h}_1 \in Y$. We set $\Embedding{h_1} \Def \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
   
 \item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < \epsilonA n$, for each $a_j$ we can always find a \emph{safe neighbour} $\Embedding{h_j} \Def \tilde{h}_j$ in $Y$ such that there is an edge from $a_j$ to $\tilde{h}_j$, and there is no other edge in $E'$ so far, that is incident on each $\tilde{h}_j$.
   
 \end{itemize}
 
-Once this phase is complete, we have mapped every vertex of $H$ to a vertex in $G_{\GreenB}$.
-That is we have defined $\Embedding{h_i}$ for all $i \in [t]$.
-The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $\PathSize = 2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G_{\GreenB}$.
+Once this phase is complete, we have mapped every vertex of $H$ to a unique vertex in $G[\GreenB]$.
+The next step to show that for each $(u,v) \in \Edges{H}$, there is a vertex disjoint path of odd length $2k+1$ between $\Embedding{u}$ and $\Embedding{v}$ in $G[\GreenB]$.
 Let $(e_1, \dots, e_m)$ be an arbitrary ordering of edges in $\Edges{H}$.
 We prove the result by induction on $m$.
 
 \paragraph{Base case} 
 
 Let $e_1 = (u_1,v_1)$. Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
-Define a global edge set and set it to $\GlobalEdgeSet \Def \emptyset$.
+Define a global edge set  $\GlobalEdgeSet \Def \emptyset$.
 We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows: For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process
 
 \begin{itemize}
 \item {For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
-    With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add exactly one \emph{safe} neigbour of $x$, denoted here with $y$, to $S_{j}$, and add the edge $(x,y)$ to $M_j$. Refer to Figure \ref{subfig:embeddingA} for a visual depiction of this process (the green vertex).
-    We discuss below why such a safe edge always exists.}
+    With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add exactly one \emph{safe} neigbour of $x$, denoted here with $y$, to $S_{j}$, and add the edge $(x,y)$ to $M_j$.
+    To define $S_j'$ we repeat the same process for each $x \in S_{j-1}'$.
+    Refer to the green vertex in Figure \ref{subfig:embeddingA} for a visual depiction of this process.  We discuss below why such a safe edge always exists.}
   
 \item{Now there might be other safe neighbours for $x \in S_j$ apart from the one we just added. Add these neighbours to $S_j$, and the edges to $M_j$ as long the size of $M_j \leq \min\{t, |S_{z-1}|D\}$.
     Thus, the two extreme cases are the every $x \in S_{j-1}$ gets $D$ neighbours in $S_j$, or every $x \in S_{j}$ gets \emph{exactly} one neighbour in $S_j$.
 For any index $i \leq k$, once a set $|S_i|=t$, for all remaining indices $j > i$, $S_j$'s are of size $t$ as well, with exactly one edge incident on each $a \in S_j$ from $S_{j-1}$. Figure \ref{subfig:embeddingB} illustrates this idea.
   }
 
-\item{$S_{j}'$ is defined with an analogous process, starting with vertices in $S_{j-1}'$. We describe this process of filling out $\{M_j\}_{j \in [k]}$ and $\{M_j'\}_{j \in [k]}$ as the forward process in Figure \ref{fig:baseB}.}
+\item{$S_{j}'$ is defined with an analogous process, starting with vertices in $S_{j-1}'$. We describe this process of filling out $\{ M_j \}_{j \in [k]}$ and $\{M_j' \}_{j \in [k]}$ as the forward process in Figure \ref{fig:baseB}.}
   
-\item{\textbf{Why is there always a safe neighbour}: Let $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$.
-The reason we can always construct the sets described above sets is that $|M| \leq 2tk < \epsilonA n$, and as $\BipartiteG$ is $(D, \epsilonA n)$ non-blocking, for any vertex $x \in S_j \subseteq X$, with at most $D$ neighbours in $S_{j+1} \subseteq Y$, we can always find \emph{at least} one $y \in S_{j+1}$, such that $(x,y) \in E_{\GreenB}$ and no edge in $\cup_{i=1}^{j-1} (M_i \cup M'_i)$ is incident on $y$.}  
-
 
 \end{itemize}
 
-
+\textbf{Why is there always a safe neighbour}: Let $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big) \subseteq \Edges{\BipartiteG}$.
+Notice that  $|M| \leq 2tk < \epsilonA n$, so $M$ is a safe state.
+Thus for all $1 \leq j \leq k$, for every $x \in S_{j-1}$ we can always find \emph{at least} one safe neighbour $y \in S_{j+1}$. \\
 
 \textbf{Backtracking Phase}: Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
@@ -620,10 +573,10 @@ By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 \begin{align}
 \CutEdges{S_k}{S_k'}{E}
  &\geq \frac{d t^2}{n} - \lambda t \\
-	&> 0 \label{eq:greater}
+	&> 0 \label{eq:assumption_on_lambda}
 \end{align}
 
-Equation \eqref{eq:greater} comes from the assumption $\lambda \leq \epsilonL d$ (from Lemma \ref{lemma:bipartitie-is-non-blocking}).
+Equation \eqref{eq:assumption_on_lambda} comes from the assumption $\lambda \leq \epsilonL d$.
 This implies there exists at least one edge $e^\star=(x^\star,y^\star) \in \CutEdgesSet{S_k}{S_k'}{E_{\GreenB}}$.
 Note that although the above lemma is with respect to edges in $E$, $S_k$ and $S_k'$ are contain only \green{green} vertices.
 Therefore this edge $e^\star \in E$ \emph{must} be from $E_{\GreenB}$.
@@ -653,7 +606,9 @@ Let $P_1, \dots, P_j$ denote these paths (depicted with \textcolor{carminepink}{
 Let $\GlobalEdgeSet$ denote the set of all edges in these paths.
 Let $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$.
 So far by induction we have $S_0 = \{u_1, \dots, u_j\}$ and $S_0' = \{v_1, \dots, v_j\}$.
-Note that $\GlobalEdgeSet <  2tk < \epsilonA n$.
+They key thing to note is that $\GlobalEdgeSet <  2tk < \epsilonA n$.
+\highlight{Expand on this. This is the key step.}
+
 The process for finding a path between $u_{j+1}$ and $v_{j+1}$ reduces the base case.
 We add $\Embedding{u_{j+1}}$ to $S_0$ and $\Embedding{v_{j+1}}$ to $S_0'$.
 Now we to add new nodes to $S_{1}$ and $S_{1}'$, we ask for $D$ neighbours of $\Embedding{u_{j+1}}$ and $\Embedding{v_{j+1}}$. As $M = \GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, and $|M| < \epsilonA n$ as well, we are guaranteed safe neighbours exist for each node (depicted with \textcolor{purple}{purple} edges in Figure \ref{fig:induction})).
@@ -673,164 +628,204 @@ This concludes the proof.
 	
 \end{proof}
 
-\subsection{Step 3: Finding A Perfect Matching In The Remainder Of The Graph}
+\section{Proof Of Main Result}
+\label{sec:main-proof}
 
-Before describing the full proof, we need some definitions from graph theory.
-Proofs for Lemma \ref{lemma:edge-connectivity-pseudorandom} and Lemma \ref{lemma:d-connected-sets-have-no-bad-sets} can be found textbooks \citep{krivelevich2006pseudo}, but we re-derive them as it aids in the understanding of our proof for Theorem \ref{thm:perfect-matching}.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for SoS known to exist as per Lemma \ref{lemma:worst-case-instance-sos}.
+The hardness proof follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
 
-\begin{definition}[Edge Connectivity]\label{def:edge-connectivity}
-The edge connectivity of a graph $G$, denoted with $\EdgeConnectivity{G}$ is the minimum number of edges we must delete from the graph to make it disconnected i.e $\EdgeConnectivity{G} = \min_{S \subseteq \Vertices{G}} \CutEdges{S}{\Complement{S}}{\Edges{G}}$
-\end{definition}
 
-\begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
-Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
-\end{lemma}
-\begin{proof}
-  We want to show that for all $S \subseteq \Vertices{G}$ of size $1 \leq \Size{S} \leq \frac{n}{2}$, we have $\CutEdges{S}{\Complement{S}}{\Edges{G}} \geq d$.
-  When $1\leq \Size{S} \leq d$, as $G$ is $d$ regular, every vertex in $S$ must have at least $d- \Size{S} + 1$ edges poking out poking out $S$.
-  Thus, the total edges out of $S$ is $\Size{S}(d- \Size{S} + 1)$ which has minimal value $d$.
-  If $d \leq \Size{S} \leq \frac{n}{2}$, use the tight version of the expander mixing lemma, and combined with the  fact that $d- \lambda > 2$ and $(n-\Size{S})$ is smallest when $\Size{S} = n/2$ to get the bound
-
-  \begin{align*}
-    \CutEdges{S}{\Complement{S}}{\Edges{G}} &\geq \frac{d\Size{S}(n-\Size{S})}{n} - \lambda\sqrt{\Size{S}(n-\Size{S}) (1 - \frac{\Size{S}}{n}) (1 - \frac{n-\Size{S}}{n})   }\\
-                                            &=  (d-\lambda)(\Size{S}\frac{(n-\Size{S})}{2}) \\
-                                              &\geq d
-    \end{align*}
+\begin{enumerate}
+\item{Invoke theorem (via Theorem \ref{thm:partition}) with parameters $c=3/4$ and $\epsilon = 1/16$ to get a partition of $V = \RedA \cup \GreenB$ such that for every $u \in V$: $\frac{11}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \RedA} \leq \frac{13}{16}d$ and $\frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d$.
+  }
   
-\end{proof}
+\item{As $\MinimalDegree{[\GreenB]} \geq \frac{3d}{16}$, and $\MaxDegree{H} = 5 < d$,and $\lambda < \epsilonL d$, we can invoke Theorem \ref{theorem:embedding-theorem} to embed $H$ as a topological minor $G_{\EmbeddingFunc}$ in $G[\GreenB]$ such that every edge $(u,v)$ in $H$ an odd path $\Path{\Embedding{u}}{\Embedding{v}}$ in $G_{\EmbeddingFunc}$.
+    Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.    
+    To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
+  }
 
-\begin{lemma}\label{lemma:d-connected-sets-have-no-bad-sets}
-  If $G$ has edge connectivity $\EdgeConnectivity{G} = d$, and $G$ is $d$-regular, then $\forall S \in \Vertices{G}$, $\OddComponents{G \setminus S} \leq |S|$.
-\end{lemma}
-\begin{proof}
-  As $G$ is $d$ regular, any set $S$ has at most $d\Size{S}$ edges incident on it.
-  By lemma \ref{lemma:edge-connectivity-pseudorandom}, as $\EdgeConnectivity{G} = d$, every component that connects to $S$ must have at least $d$ edges.
-  Therefore the maximum number of components we can have is $\Size{S}$.
-\end{proof}
-
-\begin{lemma}[Tutte Criterion]\label{lemma:tutte-criterion}
-Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices.
-$G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
-\end{lemma}
-\begin{figure*}
-    \centering
-    \begin{subfigure}[t]{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{assets/part-a.pdf}
-        \caption{}
-        \label{fig:before-deletions}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{assets/part-b.pdf}
-        \caption{
-        }
-        \label{fig:after-deletions}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{assets/part-c.pdf}
-        \caption{}
-        \label{fig:contradiction}
-    \end{subfigure}
-    \caption{The blue box denotes the single connected component $U$ in $G$, and the grey blobs denote the connected components attached to $\BadSet$ that are unaffected by the deletion of $\Embedding{\Subdivision{H}{\sigma}}$. By our assumption, deleting $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ causes $U$ to split into many components (shown in pink) such that the number of odd sized components exceeds $\Size{\BadSet}$. By definition, all edges connections between these components should go via $\BadSet$. Thus, on deletion of $\BadSet$ there should be no edge between $X$ and $Y$. We show that one exists, thus our assumption must have been wrong.}
-    \label{fig:three-images}
-\end{figure*}
-
-
-\begin{theorem}[Perfect Matching On The Remainder Theorem]\label{thm:perfect-matching}
-Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from Theorem \ref{thm:top-embedding}.
-Then the induced sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ has a perfect matching.	
+\item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = G[V \setminus G_{\EmbeddingFunc}]$ is even, and by the balanced partitioning we have $\MinimalDegree{G[U]} \geq \frac{11d}{16}$.
+    By Theorem \ref{thm:perfect-matching}, $G[U]$ has a perfect matching $M$.
+Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that 
 	
-\end{theorem}
+	\[
+        \rho(x_e)=
+        \Bigger[10]\{\begin{array}{@{}cl}
+                1 & \text{ if $e \in M \land e \notin \Edges{G_{\EmbeddingFunc}}$} \\
+          0 & \text{ if $e \notin M \land e \notin \Edges{G_{\EmbeddingFunc}}$}\\
+          % 0 & \text{if } u \in \Vertices{\RemGraph} \land v \in \Vertices{G_{\EmbeddingFunc}}\\
+                x_e & \text{ otherwise} 
+        \end{array}
+\]
+
+	If it easy to see that $\PM{G} \equiv \PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\PM{G} \in \BigOmega{|\Vertices{H}|} = \BigOmega{\frac{n}{\log n}}$. 
+}
+  \end{enumerate}
 
 
 
-\begin{proof}Let $\RemGraph \Def  \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ and $\Size{\Vertices{\RemGraph}}\Def \SizeRemGraph$.
-  Let $\RedA$ and $\GreenB$ denote the balanced sets from Theorem \ref{thm:partition}.
-  We refer the reader to Remark \ref{remark:edge-dist} for a review of how the many red and green neighbours each vertex in $G$ has.
-\textit{\highlight{Assume towards a contradiction} that $\RemGraph$ does \textbf{not} admit a perfect matching.}
-By the \nameref{lemma:tutte-criterion}, this implies that there exists a bad set $\BadSet$ such that $\OddComponents{\RemGraph \setminus \BadSet} > |\BadSet|$.
-Note that if $\Size{\BadSet} \geq \SizeRemGraph/2$, then by simple counting argument $\OddComponents{\RemGraph \setminus \BadSet} \leq |\BadSet|$ (there are not enough vertices left in $\RemGraph$ to make more than $\SizeRemGraph/2$ connected components).
-So we can assume that $\Size{\BadSet} \leq \SizeRemGraph/2$.\\
-Now, we know from Lemma \ref{lemma:edge-connectivity-pseudorandom} that $G$ is $d$ edge connected, therefore by Lemma  \ref{lemma:d-connected-sets-have-no-bad-sets} we get that for any set $S \subseteq \Vertices{G}$, we have $\OddComponents{G \setminus S} \leq |S|$.  
-Also as $\Embedding{\Subdivision{H}{\sigma}}$ is a connected\footnote{The proof also works if the embedding being removed is not connected, but the presence of connectedness makes the proof simpler to write.} subgraph contained entirely in $\GreenB$, it must be entirely contained in one of the connected components connected to $\BadSet$. Figure \ref{fig:before-deletions} illustrates what we have described above pictorially.
-We denote this connected component with $U$.
-Now for $\RemGraph$ to \highlight{not} admit a perfect matching, the process of deleting edges incident on $\Embedding{\Subdivision{H}{\sigma}}$ and $\BadSet$ must at some point cause $U$ to split into more than 1 disconnected components, which causes $\OddComponents{\RemGraph \setminus \BadSet}$ to cross over the threshold $|\BadSet|$.
-Figure \ref{fig:after-deletions} describes this event.
-To arrive at our \textit{\highlight{contradiction}}, we will show that there there \emph{must} be at least one edge between newly formed disconnected components, which contradicts the claim that they are disconnected components, which completes our proof.
-
-Let $X$ and $Y$ denote a partition of $\Vertices{\RemGraph} \setminus \BadSet$ suc that $\Size{X} \geq \Size{\BadSet}/4$ and $\Size{Y} \geq \Size{\BadSet}/4$.
-(See Figure \ref{fig:contradiction} for a reference).
-This is always possible given $\Size{\BadSet} \leq \SizeRemGraph/2$.
-Without loss of generality let $\Size{Y} \leq \Size{X}$.
-Then $\Size{Y} < (\SizeRemGraph-|\BadSet|)/2$.
-By the balanced partition theorem, every vertex $u \in Y$ has at least $\frac{11d}{16}$ \red{red} neighbours in $\RemGraph$.
-To see why observe that removing $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ does not affect the number of \red{red} neighbours $u$ can have, as $\Embedding{\Subdivision{H}{\sigma}}$ is composed entirely of \green{green} vertices.
-So there \emph{must} be at least $\frac{11d}{16}\Size{Y}$ edges incident on $Y$ (where we count edges with both end-points in $Y$ twice), giving us the following lower bound.
-
-\begin{equation}\label{eq:edge-lower-bound}
-  \CutEdges{Y}{Y}{\Edges{\RemGraph}} \geq \frac{11d}{16}\Size{Y}
-\end{equation}
-
-Now by the \nameref{lemma:expanders-mixing-lemma} with relations to edges in the orignal graph $G$,
-
-\begin{align}
-  \CutEdges{Y}{Y}{\Edges{G}}  &\leq \frac{d}{n}\Size{Y}^2 + \lambda\Size{Y} \\
-  &\leq \frac{d}{\SizeRemGraph}\Size{Y}^2 + \epsilonL d \Size{Y} \label{eq:why}
-\end{align}
-
-Where Equation \eqref{eq:why} comes from the fact that $\SizeRemGraph \leq n$ and our spectral assumption that $\lambda \leq \epsilonL d$.
-Also by the expander mixing lemma,
-
-\begin{align}
-  \CutEdges{\BadSet}{Y}{\Edges{G}}  &\leq \frac{d}{n}\Size{\BadSet}\Size{Y} + \lambda\sqrt{\Size{Y}\Size{\BadSet}} \\
-                                    &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + \epsilonL d\sqrt{\Size{Y}\Size{\BadSet}} \\
-  &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 2\epsilonL d\Size{Y} \label{eq:why2}
-\end{align}
-
-Step \eqref{eq:why2} comes from the assumption that $\Size{\BadSet} \leq 4\Size{Y}$. Combining equations \eqref{eq:why} and \eqref{eq:why2}, gives us the total number of edges incident on $Y$ either from $\BadSet$ or edges fully contained in $Y$ itself is \emph{at most} $\frac{d}{\SizeRemGraph}\Size{Y}^2 +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}$.
-Also note that as we are upper bounding the number of edges incident on $Y$, this upper bound also applies if we restrict to edges in $\RemGraph$ instead of $G$ (as the number of edges can only go down).
-
-\begin{align}
- \text{Total edges in $\RemGraph$ incident on $Y$ from $\BadSet$ and $Y$} &\leq \frac{d\Size{Y}^2}{\SizeRemGraph} +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}\\[3pt]                                                                          &\leq  \frac{d\Size{Y}}{\SizeRemGraph}\frac{(\SizeRemGraph - \Size{\BadSet})}{2} + \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y} \label{eq:why3}\\[3pt]
-                                                                          &= \frac{d\Size{Y}}{2} + \frac{d\Size{\BadSet}\Size{Y}}{2\SizeRemGraph} +3\epsilonL d\Size{Y}\\[3pt]
-                                                                          &\leq \frac{d\Size{Y}}{2} + \frac{d\Size{Y}}{4} +3\epsilonL d\Size{Y}  \label{eq:why4}\\
-                                                                            &< \frac{11d}{16}\Size{Y} \label{eq:edge-upperbound}
-\end{align}
-
-Equation \eqref{eq:why3} comes from  $\Size{Y} < (\SizeRemGraph - \Size{\BadSet})/2$.
-Equation \eqref{eq:why4} comes from the assumption that $\Size{\BadSet} \leq \SizeRemGraph/2$.
-The lower bound on the edges incident on $Y$ given in Equation \eqref{eq:edge-lower-bound} strictly greater than the upper bound in Equation \eqref{eq:edge-upperbound}.
-This implies that there \emph{must} be edges incident on $Y$ from sets that are neither $Y$ or $\BadSet$.
-But by our \highlight{assumption}, after the deletion of $\BadSet$, $X$ and $Y$ coud not have an edge between each other.
-Giving us the contradiction we were after.
-
-\end{proof}
+% \subsection{Step 2: The Topological Embedding}
 
 
-\begin{theorem} \label{thm:perfect-matching}
-Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/24$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 7d/8$, then $G[U]$ contains a perfect matching.
-\end{theorem}
-\begin{proof}
-    Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 7d/8$. We show that $G[U]$ satisfies a stronger version of Tutte's criterion:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components. If $|S| \ge |U|/2$ then the criterion trivially holds, thus we can assume $|S| < |U|/2$. It suffices to show that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$, there exists an edge between $X$ and $Y$. Indeed, suppose that this holds but $G[U \setminus S]$ has more than $|S|$ connected components, with vertex sets denoted by $C_1, \ldots, C_k$, for some $k > |S|$. Then there is no edge between $X := C_1 \cup \ldots \cup C_{s}$ and $Y := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$. As $|X|, |Y| \ge |S|/3$, we get a contradiction. 
+% Given $\EnDeeLambda$ graph $G=(V,E)$, let $\RedA$ and $
+% \GreenB$ be the partition guaranteed by the \ref{thm:partition}.
+% Define $E_{\GreenB} \Def \{ (\green{u},\green{v}) \in E : \green{u} \in \GreenB \land \green{v} \in \GreenB\}$. 
+% That is $E_{\green{B}}$ is the set of edges whose endpoints are fully contained in B (they have \green{green} endpoints), and let $G_{\green{B}}$ be the subgraph defined by the edges $E_{\GreenB}$. 
+% Define $ \na \Def |G_{\GreenB}|$, which by the balancedness of the partition is some constant fraction of $\Size{V}$.
+% Now define a bipartite graph $\BipartiteG = \left(\Vertices{\GreenB} \cup \Vertices{\GreenB}, E_{\GreenB} \right)$ (see Figure \ref{fig:bipartite}).
+% That is the left and right vertices of $\BipartiteG$ are copies of $G_{\GreenB}$ and for every edge $(u,v) \in E_{\GreenB}$, there is a corresponding copy $(u,v) \in \Edges{\BipartiteG}$.
 
-    Consider some partition $X \cup Y$ of $U \setminus S$ with $|X| \le |Y|$. Then $|X| \le (|U| - |S|)/2 \le (n - |S|)/2$. We show
-    \begin{equation} \label{eq:edge_bound}
-        e(X, X) + e(X, S) < \frac{7d}{8}|X|,
-    \end{equation}
-    as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
-    $$
-        e(X, X) + e(X, S) \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
-    $$
-    Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
-    $$
-        \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{2n}|X||S| + 3 \lambda |X| \le \frac{3d}{4} |X| + 3\lambda |X| \le \frac{7d}{8}|X|.
-    $$
-    This confirms \eqref{eq:edge_bound}.
-\end{proof}
+% \begin{remark}
+  
+% To avoid notation clutter, we will refer to the left and right vertex sets of $\BipartiteG$ with $X$ and $Y$ respectively.
+% Also by definition, every vertex in $X$ and $Y$ \emph{must} be \green{green}.  
+% \end{remark}
+
+
+% With the non-blocking nature of $\BipartiteG$ established, the next step is to embed hard instance $H$ as topological minor of $G_{\GreenB}=(\GreenB, E_{\GreenB})$ as described in the overview.
+% Note for every edge in $E_{\GreenB}$, by our construction, we will have a corresponding edge in the bipartite graph $\BipartiteG$.
+
+
+
+
+% \subsection{Step 3: Finding A Perfect Matching In The Remainder Of The Graph}
+
+% Before describing the full proof, we need some definitions from graph theory.
+% Proofs for Lemma \ref{lemma:edge-connectivity-pseudorandom} and Lemma \ref{lemma:d-connected-sets-have-no-bad-sets} can be found textbooks \citep{krivelevich2006pseudo}, but we re-derive them as it aids in the understanding of our proof for Theorem \ref{thm:perfect-matching}.
+
+% \begin{definition}[Edge Connectivity]\label{def:edge-connectivity}
+% The edge connectivity of a graph $G$, denoted with $\EdgeConnectivity{G}$ is the minimum number of edges we must delete from the graph to make it disconnected i.e $\EdgeConnectivity{G} = \min_{S \subseteq \Vertices{G}} \CutEdges{S}{\Complement{S}}{\Edges{G}}$
+% \end{definition}
+
+% \begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
+% Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
+% \end{lemma}
+% \begin{proof}
+%   We want to show that for all $S \subseteq \Vertices{G}$ of size $1 \leq \Size{S} \leq \frac{n}{2}$, we have $\CutEdges{S}{\Complement{S}}{\Edges{G}} \geq d$.
+%   When $1\leq \Size{S} \leq d$, as $G$ is $d$ regular, every vertex in $S$ must have at least $d- \Size{S} + 1$ edges poking out poking out $S$.
+%   Thus, the total edges out of $S$ is $\Size{S}(d- \Size{S} + 1)$ which has minimal value $d$.
+%   If $d \leq \Size{S} \leq \frac{n}{2}$, use the tight version of the expander mixing lemma, and combined with the  fact that $d- \lambda > 2$ and $(n-\Size{S})$ is smallest when $\Size{S} = n/2$ to get the bound
+
+%   \begin{align*}
+%     \CutEdges{S}{\Complement{S}}{\Edges{G}} &\geq \frac{d\Size{S}(n-\Size{S})}{n} - \lambda\sqrt{\Size{S}(n-\Size{S}) (1 - \frac{\Size{S}}{n}) (1 - \frac{n-\Size{S}}{n})   }\\
+%                                             &=  (d-\lambda)(\Size{S}\frac{(n-\Size{S})}{2}) \\
+%                                               &\geq d
+%     \end{align*}
+  
+% \end{proof}
+
+% \begin{lemma}\label{lemma:d-connected-sets-have-no-bad-sets}
+%   If $G$ has edge connectivity $\EdgeConnectivity{G} = d$, and $G$ is $d$-regular, then $\forall S \in \Vertices{G}$, $\OddComponents{G \setminus S} \leq |S|$.
+% \end{lemma}
+% \begin{proof}
+%   As $G$ is $d$ regular, any set $S$ has at most $d\Size{S}$ edges incident on it.
+%   By lemma \ref{lemma:edge-connectivity-pseudorandom}, as $\EdgeConnectivity{G} = d$, every component that connects to $S$ must have at least $d$ edges.
+%   Therefore the maximum number of components we can have is $\Size{S}$.
+% \end{proof}
+
+% \begin{lemma}[Tutte Criterion]\label{lemma:tutte-criterion}
+% Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices.
+% $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
+% \end{lemma}
+% \begin{figure*}
+%     \centering
+%     \begin{subfigure}[t]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/part-a.pdf}
+%         \caption{}
+%         \label{fig:before-deletions}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/part-b.pdf}
+%         \caption{
+%         }
+%         \label{fig:after-deletions}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{assets/part-c.pdf}
+%         \caption{}
+%         \label{fig:contradiction}
+%     \end{subfigure}
+%     \caption{The blue box denotes the single connected component $U$ in $G$, and the grey blobs denote the connected components attached to $\BadSet$ that are unaffected by the deletion of $\Embedding{\Subdivision{H}{\sigma}}$. By our assumption, deleting $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ causes $U$ to split into many components (shown in pink) such that the number of odd sized components exceeds $\Size{\BadSet}$. By definition, all edges connections between these components should go via $\BadSet$. Thus, on deletion of $\BadSet$ there should be no edge between $X$ and $Y$. We show that one exists, thus our assumption must have been wrong.}
+%     \label{fig:three-images}
+% \end{figure*}
+
+
+% \begin{theorem}[Perfect Matching On The Remainder Theorem]\label{thm:perfect-matching}
+% Given $\EnDeeLambda$ graph $\Graph=(V,E)$, let $\Embedding{\Subdivision{H}{\sigma}}$ be the topological embedding of the hard instance $H$ from Theorem \ref{thm:top-embedding}.
+% Then the induced sub-graph $\Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ has a perfect matching.	
+	
+% \end{theorem}
+
+
+
+% \begin{proof}Let $\RemGraph \Def  \Graph[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$ and $\Size{\Vertices{\RemGraph}}\Def \SizeRemGraph$.
+%   Let $\RedA$ and $\GreenB$ denote the balanced sets from Theorem \ref{thm:partition}.
+%   We refer the reader to Remark \ref{remark:edge-dist} for a review of how the many red and green neighbours each vertex in $G$ has.
+% \textit{\highlight{Assume towards a contradiction} that $\RemGraph$ does \textbf{not} admit a perfect matching.}
+% By the \nameref{lemma:tutte-criterion}, this implies that there exists a bad set $\BadSet$ such that $\OddComponents{\RemGraph \setminus \BadSet} > |\BadSet|$.
+% Note that if $\Size{\BadSet} \geq \SizeRemGraph/2$, then by simple counting argument $\OddComponents{\RemGraph \setminus \BadSet} \leq |\BadSet|$ (there are not enough vertices left in $\RemGraph$ to make more than $\SizeRemGraph/2$ connected components).
+% So we can assume that $\Size{\BadSet} \leq \SizeRemGraph/2$.\\
+% Now, we know from Lemma \ref{lemma:edge-connectivity-pseudorandom} that $G$ is $d$ edge connected, therefore by Lemma  \ref{lemma:d-connected-sets-have-no-bad-sets} we get that for any set $S \subseteq \Vertices{G}$, we have $\OddComponents{G \setminus S} \leq |S|$.  
+% Also as $\Embedding{\Subdivision{H}{\sigma}}$ is a connected\footnote{The proof also works if the embedding being removed is not connected, but the presence of connectedness makes the proof simpler to write.} subgraph contained entirely in $\GreenB$, it must be entirely contained in one of the connected components connected to $\BadSet$. Figure \ref{fig:before-deletions} illustrates what we have described above pictorially.
+% We denote this connected component with $U$.
+% Now for $\RemGraph$ to \highlight{not} admit a perfect matching, the process of deleting edges incident on $\Embedding{\Subdivision{H}{\sigma}}$ and $\BadSet$ must at some point cause $U$ to split into more than 1 disconnected components, which causes $\OddComponents{\RemGraph \setminus \BadSet}$ to cross over the threshold $|\BadSet|$.
+% Figure \ref{fig:after-deletions} describes this event.
+% To arrive at our \textit{\highlight{contradiction}}, we will show that there there \emph{must} be at least one edge between newly formed disconnected components, which contradicts the claim that they are disconnected components, which completes our proof.
+
+% Let $X$ and $Y$ denote a partition of $\Vertices{\RemGraph} \setminus \BadSet$ suc that $\Size{X} \geq \Size{\BadSet}/4$ and $\Size{Y} \geq \Size{\BadSet}/4$.
+% (See Figure \ref{fig:contradiction} for a reference).
+% This is always possible given $\Size{\BadSet} \leq \SizeRemGraph/2$.
+% Without loss of generality let $\Size{Y} \leq \Size{X}$.
+% Then $\Size{Y} < (\SizeRemGraph-|\BadSet|)/2$.
+% By the balanced partition theorem, every vertex $u \in Y$ has at least $\frac{11d}{16}$ \red{red} neighbours in $\RemGraph$.
+% To see why observe that removing $\Embedding{\Subdivision{H}{\sigma}}$ from $G$ does not affect the number of \red{red} neighbours $u$ can have, as $\Embedding{\Subdivision{H}{\sigma}}$ is composed entirely of \green{green} vertices.
+% So there \emph{must} be at least $\frac{11d}{16}\Size{Y}$ edges incident on $Y$ (where we count edges with both end-points in $Y$ twice), giving us the following lower bound.
+
+% \begin{equation}\label{eq:edge-lower-bound}
+%   \CutEdges{Y}{Y}{\Edges{\RemGraph}} \geq \frac{11d}{16}\Size{Y}
+% \end{equation}
+
+% Now by the \nameref{lemma:expanders-mixing-lemma} with relations to edges in the orignal graph $G$,
+
+% \begin{align}
+%   \CutEdges{Y}{Y}{\Edges{G}}  &\leq \frac{d}{n}\Size{Y}^2 + \lambda\Size{Y} \\
+%   &\leq \frac{d}{\SizeRemGraph}\Size{Y}^2 + \epsilonL d \Size{Y} \label{eq:why}
+% \end{align}
+
+% Where Equation \eqref{eq:why} comes from the fact that $\SizeRemGraph \leq n$ and our spectral assumption that $\lambda \leq \epsilonL d$.
+% Also by the expander mixing lemma,
+
+% \begin{align}
+%   \CutEdges{\BadSet}{Y}{\Edges{G}}  &\leq \frac{d}{n}\Size{\BadSet}\Size{Y} + \lambda\sqrt{\Size{Y}\Size{\BadSet}} \\
+%                                     &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + \epsilonL d\sqrt{\Size{Y}\Size{\BadSet}} \\
+%   &\leq \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 2\epsilonL d\Size{Y} \label{eq:why2}
+% \end{align}
+
+% Step \eqref{eq:why2} comes from the assumption that $\Size{\BadSet} \leq 4\Size{Y}$. Combining equations \eqref{eq:why} and \eqref{eq:why2}, gives us the total number of edges incident on $Y$ either from $\BadSet$ or edges fully contained in $Y$ itself is \emph{at most} $\frac{d}{\SizeRemGraph}\Size{Y}^2 +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}$.
+% Also note that as we are upper bounding the number of edges incident on $Y$, this upper bound also applies if we restrict to edges in $\RemGraph$ instead of $G$ (as the number of edges can only go down).
+
+% \begin{align}
+%  \text{Total edges in $\RemGraph$ incident on $Y$ from $\BadSet$ and $Y$} &\leq \frac{d\Size{Y}^2}{\SizeRemGraph} +   \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y}\\[3pt]                                                                          &\leq  \frac{d\Size{Y}}{\SizeRemGraph}\frac{(\SizeRemGraph - \Size{\BadSet})}{2} + \frac{d}{\SizeRemGraph}\Size{\BadSet}\Size{Y} + 3\epsilonL d\Size{Y} \label{eq:why3}\\[3pt]
+%                                                                           &= \frac{d\Size{Y}}{2} + \frac{d\Size{\BadSet}\Size{Y}}{2\SizeRemGraph} +3\epsilonL d\Size{Y}\\[3pt]
+%                                                                           &\leq \frac{d\Size{Y}}{2} + \frac{d\Size{Y}}{4} +3\epsilonL d\Size{Y}  \label{eq:why4}\\
+%                                                                             &< \frac{11d}{16}\Size{Y} \label{eq:edge-upperbound}
+% \end{align}
+
+% Equation \eqref{eq:why3} comes from  $\Size{Y} < (\SizeRemGraph - \Size{\BadSet})/2$.
+% Equation \eqref{eq:why4} comes from the assumption that $\Size{\BadSet} \leq \SizeRemGraph/2$.
+% The lower bound on the edges incident on $Y$ given in Equation \eqref{eq:edge-lower-bound} strictly greater than the upper bound in Equation \eqref{eq:edge-upperbound}.
+% This implies that there \emph{must} be edges incident on $Y$ from sets that are neither $Y$ or $\BadSet$.
+% But by our \highlight{assumption}, after the deletion of $\BadSet$, $X$ and $Y$ coud not have an edge between each other.
+% Giving us the contradiction we were after.
+
+% \end{proof}
+
+
 
 \section{Related Work}
 \label{sec:related-work}
