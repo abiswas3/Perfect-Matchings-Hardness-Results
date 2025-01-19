@@ -53,8 +53,8 @@ Thus, as an intermediate step towards making partial progress towards the grand 
  Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.
-In this work, we focus on the algebraic and semi-algebraic proof system of polynomial calculus (PC) \citep{alekhnovich2004pseudorandom} and sum of squares (SOS) proof system \citep{parrilo2000structured, boazCourse}.
-In proof systems like PC and SOS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ as the problem instance.
+In this work, we focus on the semi-algebraic proof system of sum of squares (SoS) \citep{parrilo2000structured, boazCourse}.
+In proof systems like SoS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ as the problem instance.
 In PC, the polynomial coefficients can be over \emph{any} field $\Field$, and in SOS, the polynomial coefficients must be over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$. 
 In PC and SOS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and 
@@ -520,16 +520,15 @@ We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, an
 For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
 With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add $\Size{M_j}$ safe neighbours to $S_{j+1}$ where $\Size{M_j} \le \min\{t, |S_{j-1}|D\}$.
 Add to $M_j$ the safe edges that connect $S_{j-1}$ to $S_j$.
-    $M_j'$ and $S_j'$ are defined analogously.
-    Note that for $1 \le j \le k$, as there at most $t$ edges in each $M_j$, there are a total of $2tk < n/20$ edges in $\cup_{i=1}^{k} (M_i \cup M'_i)$.
-    Thus, we can always find at least one safe neighbour for each $x \in S_{j-1}$.
+$M_j'$ and $S_j'$ are defined analogously.
+Note that for $1 \le j \le k$, as there at most $t$ edges in each $M_j$, there are a total of $2tk < n/20$ edges in $\cup_{i=1}^{k} (M_i \cup M'_i)$.
+Thus, we can always find at least $t$ safe edges been $ S_{j-1}$ and $S_j$ for every $1 \le j \le t$.
 Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
 By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
 
 \begin{align}
 \CutEdges{S_k}{S_k'}{E}
- &\geq \frac{d t^2}{n} - \lambda t \\
-	&> 0 \label{eq:assumption_on_lambda}
+ &\geq \frac{d t^2}{n} - \lambda t  > 0 \label{eq:assumption_on_lambda}
 \end{align}
 
 Equation \eqref{eq:assumption_on_lambda} comes from the assumption $\lambda \leq d/50$.
@@ -548,11 +547,12 @@ Thus, we have found an odd length path $m_1\dots m_k e^\star m_1'\dots m_k'$ of 
 	
 Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ for $j < m$.
 Let $P_1, \dots, P_j$ denote these paths.
-Let  $\GlobalEdgeSet$ denote the set of all edges in these paths.
+$\GlobalEdgeSet$ denotes this set of all edges in these paths.
 We upper bound the size of $\GlobalEdgeSet$.
 $H$ has at most $\frac{t\MaxDegree{H}}{2}$ edges.
 When these edges are mapped to paths of length $2k+1$, the total number of edges is $\frac{t\MaxDegree{H}}{2}(2k+1) <  \frac{n}{10\MaxDegree{H}}$.
 Thus not only is $\GlobalEdgeSet$ strictly smaller than $n/20$ but it has room for $2tk+1$ more edges with room to spare i.e. $\frac{n}{10\MaxDegree{H}}+ 2tk + 1 < n/20$.
+Now we once again do what we did in the base case.
 We set $S_0 = \{ u_{j+1}\}$ and $S_0' = \{v_{j+1} \}$.
 For all $1 \le j \le k$, we set $S_{j}$ to be $\min\{t, \Size{S_{j-1}}D \}$ safe neighbours adjacent to $S_{j-1}$.
 Now finding a path for $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$ reduces to the base case.
@@ -569,9 +569,6 @@ Then hardness proof for refuting $\PM{G}$ follows from the following steps as il
 
 \begin{enumerate}
 \item{Invoke Theorem \ref{thm:partition} with parameters $c=3/4$ and $\epsilon = 1/16$ to get a partition of $V = \RedA \cup \GreenB$ such that for every $u \in V$: $\frac{11}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \RedA} \leq \frac{13}{16}d$ and $\frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d$.}
-
-    \highlight{In the embedding lemma include the max degree of $H$ as a parameter.
-  }
   
 \item{As $\MinimalDegree{G[\GreenB]} \geq \frac{3d}{16}$, and $\MaxDegree{H} = 5 < d$,and $\lambda < \epsilonL d$, we can invoke Theorem \ref{theorem:embedding-theorem} to embed $H$ as a topological minor $G_{\EmbeddingFunc}$ in $G[\GreenB]$ such that every edge $(u,v)$ in $H$ is an odd length path $\Path{\Embedding{u}}{\Embedding{v}}$ in $G_{\EmbeddingFunc}$.
     Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.    
