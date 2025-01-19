@@ -516,7 +516,7 @@ We prove the result by induction on $m$. Define a global edge set  $\GlobalEdgeS
 Let $e_1 = (u_1,v_1)$. Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
 We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows: For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process.
 For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
-With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add $\Size{M_j}$ safe neighbours to $S_{j+1}$ where $\Size{M_j} \le \min\{t, |S_{z-1}|D\}$.
+With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add $\Size{M_j}$ safe neighbours to $S_{j+1}$ where $\Size{M_j} \le \min\{t, |S_{j-1}|D\}$.
 Add to $M_j$ the safe edges that connect $S_{j-1}$ to $S_j$.
     $M_j'$ and $S_j'$ are defined analogously.
     Note that for $1 \le j \le k$, as there at most $t$ edges in each $M_j$, there are a total of $2tk < n/20$ edges in $\cup_{i=1}^{k} (M_i \cup M'_i)$.
