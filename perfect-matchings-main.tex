@@ -108,9 +108,9 @@ PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is a
 
 
 \paragraph{Technical Overview} The original hardness proof works as follows.
-They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-PC} and Lemma \ref{lemma:worst-case-instance-sos}).
+They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-sos}).
 Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
-A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
+A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitrary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
 However to transfer hardness, it does not suffice to just embed $H$ into $G$, but we need a topological embedding of $H$ such that the parities of all the paths are the same (all paths must be of odd length).
 Thus, their main technical contribution is a embedding theorem that allows for  topological embeddings of any graph $H$ into an expander graph.
 To do this, they first partition the graph into two roughly equal sized sets $S$ and $T$ with sufficiently many edges in the cut between them.
@@ -142,7 +142,7 @@ The second feature of our results is the qualitative simplicity of our technique
 Although our embedding theorem is stronger it is considerably easier to construct.
 Using the idea of non-blocking bipartite graphs from theory of wide-sense networks \citep{feldman1988wide} we show that it is possible to optimally topologically embed any graph into an expander graph, and still satisfy all the other properties needed to prove hardness lower bounds.
 Another illustration of the simplicity of our techniques is how we show the residual graph must has a perfect matching without relying on any complex spectral graph theory.
-We show the existence of a matching with a simple application of the  \nameref{lemma:tutte-criterion}, and the combinatorial properties of the \nameref{lemma:expanders-mixing-lemma} without relying on any spectral graph theory or linear algebra.
+We show the existence of a matching with a simple application of the \nameref{lemma:tutte-criterion}, and the combinatorial properties of the \nameref{lemma:expanders-mixing-lemma} without relying on any spectral graph theory or linear algebra.
 We point out that \citep[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nameref{lemma:tutte-criterion} under the hood, and thus our proof can be viewed as a more direct intuitive proof of why we should expect to find a perfect matching in the residual graph.
 \textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques. 
 } Our main result is stated below.
@@ -160,7 +160,6 @@ There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the 
 The rest of the document as is structured as follows. In section \ref{sec:prelims} we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:main-thm}.
 In Section \ref{sec:embed-machinery}, we review definitions and results from the theory of wide-sense nonblocking networks, which aid us in the construction of our main embedding theorem.
 In Section \ref{sec:main-proof}, we provide the full proof of the main result and in Section \ref{sec:related-work} we describe related results in proof complexity lower bounds using embedding techniques.
-Finally, in Section \ref{sec:conclusion} we conclude with some open problems that we could not resolve in this work.
 
 
 \section{Preliminaries}
@@ -197,8 +196,10 @@ We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underse
   
 \end{lemma}
 
-
-
+\begin{lemma}[Tutte Criterion]\label{lemma:tutte-criterion}
+Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices.
+$G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
+\end{lemma}
 
 
 \subsection{Proof Complexity Preliminaries}
@@ -402,6 +403,7 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
 \end{proof}
 
 \section{Embedding Machinery}
+\label{sec:embed-machinery}
 
 The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
 
