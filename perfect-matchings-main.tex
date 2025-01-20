@@ -57,12 +57,12 @@ In this work, we focus on the semi-algebraic proof system of sum of squares (SoS
 In proof systems like SoS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ with real coefficients as the problem instance.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$. 
 In SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and the size/complexity of the proof is measured by the degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
-We denote the minimum degree over all proofs that refute $\Axioms$ with $\Degree{Q \SOS \bot}$, and the main goal of the area is to study how large is the degree of proofs for refuting a given set of axioms $\Axioms$.
-Another important reason for proving lower bounds for algebraic proof systems is that these can be used to then get lower bounds for a broad family of related algorithms \highlight{cite}.
-Similarly, proof system upper bounds has led to the fruitful discovery of many efficient algorithms \highlight{cite}.
+We denote the minimum degree over all proofs that refute $\Axioms$ with $\Degree{Q \SOS \bot}$, and the main goal of the area is to study how large is the degree of proofs for refuting a given set of axioms $\Axioms$.\par
+One motivation for proving size lower bounds for algebraic proof systems is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimsation problems.
+Similarly, proof system upper bounds has led to the fruitful discovery of many efficient algorithms.
 The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierararchy of semi-definite programming.
-We refer the reader to \citep[Chapter 3]{fleming2019semialgebraic} for more details.
-In this paper we consider refutations of the \emph{perfect matching principle}.
+We refer the reader to the survey by \citet{fleming2019semialgebraic} for more details about the connections between the semi-algebraic proof systems and combinatorial optimisation.
+In this paper we consider refutations of the \emph{perfect matching} principle.
 Apart from being a natural well studied problemn in its own right, the perfect matching principle is also related to the widely studied pigeon hole principle (PGP) \citep{razbarov2002pgp} and Tseitin formula \citep{grigoriev2001linear}.
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct a bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n$ holes, proving the pigeon hole principle amounts to proving the graph does not have a perfect matching.
@@ -71,8 +71,8 @@ The Tseitin formula over a graph claims that there is a subgraph for which every
 If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
 For graphs on an odd number of vertices this is clearly impossible.
 However, formally refuting this claim for expandeer graphs in the SoS proof system, requires size linear in the number of vertices in the graph \cite{grigoriev2001linear}.
-Given its close connections to refuations of the PGP and Tseitin principle, it is natural to study the complexity of refuting perfect matchings for non-bipartite graphs in greater detail.
-It is conjectured that complexity of refuting perfect matchings is in between Tseitin and PGP.\par
+Given its close connections to refuations of the PGP and Tseitin principle, it is natural to ask whether the complexity of refuting perfect matchings for non-bipartite graphs is closer to PGP or Tseitin?
+\par
 Matchings are a combinatorial concept. To refute matchings with an algebraic proof system, we need to find a way to express the combinatorial constraints as algebraic inequalities.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
@@ -91,24 +91,19 @@ When $|V|$ is odd, we know that any graph $G$ cannot have a perfect matching.
 In other words, $\Card{G, 1^{|V|}}$ cannot be satisfied.
 In this work we are interested in the complexity refutations for $\PM{G}$  when $|V|$ is odd in PC and SoS proof systems.
 With no further constraints on $G$, generic lower bounds for these refutations in PC or SOS proof systems are not known.
-In recent work \citet{Austrin_2022} made progress in proving lower bounds by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Sum-of-Squares and Polynomial Calculus proof system requires long proofs.
+In recent work, \citet{Austrin_2022} made progress in proving lower bounds by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Sum-of-Squares system requires long proofs.
 More formally, they show that 
 
 \begin{theorem}\label{thm:prev-thm}
-There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd)
-\begin{enumerate}
-    \item{ $\Degree{\Card{G, \vec{1}} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
-    \item{$\Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
-\end{enumerate}
+There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd) \[ \Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
 \end{theorem}
 
 Although random $d$ regular graphs are expander graphs with high probability, their lower bound techniques rely strongly on the randomness of sampling, and thus they are unable to extend their results to general expander graphs.
-They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs, and leave showing this as an open problem. In this work, we extend their results to all expander graphs\footnote{More specifically we mean any expander graph with a very mild spectral gap $\lambda \leq \epsilonL d$ where $\epsilonL$ is a small universal constant.}, and provide worst case size lower bounds instead of average case lower bounds.
+They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs, and leave showing this as an open problem. In this work, we extend their results to all expander graphs\footnote{More specifically we mean any expander graph with a very mild spectral gap $\lambda \leq d/50$.}, and provide worst case size lower bounds instead of average case lower bounds.
 
 \begin{problem}
 
-Do refutations for $\Card{G, \vec{1}}$ for
-PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is an expander graph?
+Do refutations for $\Card{G, \vec{1}}$ for SoS have large size, when $G$ is an expander graph?
 
 \end{problem}
 
@@ -119,7 +114,9 @@ PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is a
 \end{figure}
 
 
-\paragraph{Technical Overview} The original hardness proof works as follows.
+\subsection{Technical Overview}
+
+The original hardness proof works as follows.
 They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-sos}).
 Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
 A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitrary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
@@ -144,10 +141,12 @@ Here $G'$ will be residual graph ($G$ with the embedded region removed) on $m$ e
 To show this spectral bound, they rely on the interlacing theorem\footnote{\url{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html}} and Weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebra, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
 This general idea is summarised in Figure \ref{fig:proof-outline}.
 
-\paragraph{Our Contribution} In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
+\subsection{Our Contribution}
+
+In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
 We too follow the proof outline given in Figure \ref{fig:proof-outline}.
 However, our results differ in two key aspects.
-Firstly, we show a new embedding theorem that allows us to topologically embed any graph $H$ into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilonL d$ for some small constant $\epsilonL$) without relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
+Firstly, we show a new embedding theorem that allows us to topologically embed any graph $H$ into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq d/50$) without relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
 This allows us to embed any graph $H$ into any expander graph, even the ones constructed deterministically.
 As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
 The second feature of our results is the qualitative simplicity of our techniques.
@@ -161,11 +160,9 @@ We point out that \citep[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nam
 
 \begin{theorem}[Main Theorem]\label{thm:main-thm}
 
-There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds  for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < \epsilonL d$ ($\epsilonL \leq 0.01$ works) 
-\begin{enumerate}
-    \item{ $\Degree{\PerfectMatching{G} \PC \bot} = \BigOmega{\frac{n}{\log n}}$} 
-    \item{$\Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}$}
-\end{enumerate}
+  There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < d/50$. 
+
+  \[ \Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
 
 \end{theorem}
 
@@ -387,10 +384,11 @@ We have all the conditions to invoke the \nameref{lemma:lll} to get $\PProb{\und
 
   
 % \end{remark}
-
-\begin{theorem} \label{thm:perfect-matching}
+Next we prove a lemma that shows that even sized subsets of expander graph with large minimal degree contain perfect matchings.
+\begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
 Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ contains a perfect matching.
-\end{theorem}
+\end{lemma}
+
 \begin{proof}
   Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$.
   We show that $G[U]$ satisfies a stronger version of Tutte's criterion:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components.
@@ -482,7 +480,7 @@ From the \nameref{lemma:expanders-mixing-lemma}, we have
 \eqref{eq:assumption} comes from our \highlight{assumption} on the size of $T$..
 \eqref{eq:assumption-lambda} comes from our assumption that $\lambda \leq  d/c_2$ and $|S| \leq \frac{n\lambda}{c_1 d}$.
 \eqref{eq:constants} contradicts the balanced sets property in Equation \eqref{eq:balanced}, so our \highlight{assumption} must have been wrong.
-Therefore $\BipartiteG$ is $(\frac{d}{\lambda}, \epsilonA n)$ non blocking.
+Therefore $\BipartiteG$ is $(\frac{d}{\lambda}, n/20)$ non blocking.
 \end{proof}
 
 
@@ -496,7 +494,7 @@ A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision 
 
 
 \begin{theorem}[Embedding Theorem]\label{theorem:embedding-theorem}
-  Let $G=(V,E)$ denote an $\EnDeeLambda$ graph with $\lambda \le d/50$, and $H$ be an arbitrary sparse graph with at most $t = \lfloor \frac{ n}{20\MaxDegree{H}\log_Dn}\rfloor $ vertices with max degree $\MaxDegree{H} = \BigO{1} < d$, where $D=d/\lambda$.
+  Let $G=(V,E)$ denote an $\EnDeeLambda$ graph with $\lambda \le d/50$, and $H$ be an arbitrary sparse graph with at most $t = \lfloor \frac{ n}{80\MaxDegree{H}\log_Dn}\rfloor $ vertices with max degree $ 2 \le \MaxDegree{H} < d$, where $D=d/\lambda$.
   For any subset $\GreenB \subseteq V$ of size $\Size{\GreenB} \ge \frac{3n}{16}$ and $\MinimalDegree{G[\GreenB]} \ge \frac{3d}{16}$, $G[\GreenB]$ contains $H$ as a topological minor $\Subdivision{H}{\sigma}$ where every edge in $H$ is an odd sized path in $\Subdivision{H}{\sigma}$.
 \end{theorem}
 
@@ -506,7 +504,7 @@ Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
 Define $\sigma(e) \Def 2k+1$ for all $e \in \Edges{H}$.
 Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G[{\GreenB}]}$ be the bijective mapping which will be our toplogical embedding.
 Our first task is to find a unique $\Embedding{h} \in \Vertices{G[\GreenB]}$ for each $h \in \Vertices{H}$.
-Define $X = Y = \Vertices{G[\GreenB]}$, and let $\BipartiteG = (X \cup Y, \Edges{G[\GreenB]})$.
+Define $X = Y = \Vertices{G[\GreenB]}$, and let $\BipartiteG = (X \cup Y, \Edges{G[\GreenB]})$ be the bipartite graph that represents the induced subgraph $G[\GreenB]$.
 Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $G[\GreenB]$.
 As $\MinimalDegree{G[\GreenB]} \geq \nicefrac{3d}{16}$, by Lemma \ref{lemma:bipartitie-is-non-blocking} we know have that $\BipartiteG$ is $(D, n/20)$ non-blocking.
 We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding{h_t}\}$: 
@@ -516,7 +514,8 @@ We repeat the following process to obtain $\{ \Embedding{h_1}, \dots, \Embedding
   
 \item For $a_1 \in X$, we ask for $D$ neighbours in $Y$. As $E'$ is a safe state, we can always find at least one safe neighbour $\tilde{h}_1 \in Y$. We set $\Embedding{h_1} \Def \tilde{h}_1$ and update $E' = E'  \cup \{(a_1, \tilde{h}_1)\}$.
   
-\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For the $j$'th step, As $|E'| = j \leq t < n/20$, for each $a_j$ we can always find a safe neighbour $\Embedding{h_j} \in Y$.
+\item We repeat this process for all $a \in \{a_2, \dots, a_t\}$. For any $j \leq t$,  $|E'| = j \leq t < n/20$.
+  Therefore for every $a_j$ we can always find a safe neighbour $\Embedding{h_j} \in Y$.
   
 \end{itemize}
 
@@ -527,16 +526,19 @@ We prove the result by induction on $m$. Define a global edge set  $\GlobalEdgeS
 
 \paragraph{Base case} 
 
-Let $e_1 = (u_1,v_1)$. Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
+Let $e_1 = (u_1,v_1)$. We want to show there exists a path of length $2k+1$ between $\Embedding{u_1}$ and $\Embedding{v_1}$.
+Define sets $S_0 = \{\Embedding{u_1}\}$ and $S'_0 = \{ \Embedding{v_1}\}$, and set $M_0 = \emptyset$ and $M_0' = \emptyset$.
 We will define edge sets $\{ M_j\}_{j \in [k]}$ and $ \{ M'_j\}_{j \in [k]}$, and vertex sets $\{ S_j\}_{j \in [k]}$ and $\{ S'_j\}_{j \in [k]}$ inductively as follows: For each $1 \leq j \leq k$, we construct $S_{j}$ with the following process.
 For each $x \in S_{j-1}$, find the corresponding copy $x \in X$. Ask for $D$ neighbours of $x$ in $Y$ via edges in $\Edges{\BipartiteG}$.
-With respect to $\GlobalEdgeSet \cup \Big(\cup_{i=1}^{j} (M_i \cup M'_i)\Big)$, add $\Size{M_j}$ safe neighbours to $S_{j+1}$ where $\Size{M_j} \le \min\{t, |S_{j-1}|D\}$.
-Add to $M_j$ the safe edges that connect $S_{j-1}$ to $S_j$.
-$M_j'$ and $S_j'$ are defined analogously.
-Note that for $1 \le j \le k$, as there at most $t$ edges in each $M_j$, there are a total of $2tk < n/20$ edges in $\cup_{i=1}^{k} (M_i \cup M'_i)$.
-Thus, we can always find at least $t$ safe edges been $ S_{j-1}$ and $S_j$ for every $1 \le j \le t$.
+With respect to $\cup_{i=1}^{j-1} (M_i \cup M'_i)$, add $\Size{M_j}$ safe neighbours to $S_{j+1}$ where $\Size{M_j} \le \min\{t, |S_{j-1}|D\}$.
+That is if $\Size{S_{j-1}}D \le t$, then for every $x \in S_{j-1}$ add $D$ safe neighbours of $x$ to $S_j$. Additionally add the safe edges to that connect $S_{j-1}$ to $S_j$ to $M_j$.
+If $t < \Size{S_{j-1}}D$, then add at most $t$ out of $\Size{S_{j-1}}D$ safe neighbours to $S_j$; and add the safe edges that connect $S_{j-1}$ and $S_j$ to $M_j$.
+Sets $M_j'$ and $S_j'$ are defined analogously (where we use safe edges to connect safe neighbours of $S_{j-1}'$ to $S_j'$).
+Note by definition, for $1 \le j \le k$, as there at most $t$ edges in each $M_j$. Thus there is a total of $2tk < n/20$ edges in $\cup_{i=1}^{k} (M_i \cup M'_i)$.
+This guarantees that we can always find at least $t$ safe edges been $ S_{j-1}$ and $S_j$ for every $1 \le j \le t$ (by the non-blocking property of $\BipartiteG$).
+\flushleft
 Now as $k = \log_D[n]$, we have that, $|S_k| = |S_k'|= t$.
-By the expander mixing lemma \ref{lemma:expanders-mixing-lemma},
+By the \nameref{lemma:expanders-mixing-lemma},
 
 \begin{align}
 \CutEdges{S_k}{S_k'}{E}
@@ -552,25 +554,36 @@ We repeat this process all the way, till we get $k+1$ edges, $m_1 m_2 \dots, m_k
 We repeat the same process for the other end point of $y \in S_k'$, to get edges $e^\star, m'_1, \dots, m'_k$.
 We add these edges to a global edge set $\GlobalEdgeSet$.
 Thus, we have found an odd length path $m_1\dots m_k e^\star m_1'\dots m_k'$ of length $2k+1$, connecting $\Embedding{u}$ to $\Embedding{v}$.
- % Figure \ref{fig:baseB} illustrates everything discussed so far pictorially.
-
 
 \paragraph{Induction Step}
 	
 Assume that we have found paths for $e_1 = (u_1, v_1), \dots, e_j=(u_j, v_j)$ for $j < m$.
 Let $P_1, \dots, P_j$ denote these paths.
 $\GlobalEdgeSet$ denotes this set of all edges in these paths.
-We upper bound the size of $\GlobalEdgeSet$.
+First, we upper bound the size of $\GlobalEdgeSet$.
 $H$ has at most $\frac{t\MaxDegree{H}}{2}$ edges.
-When these edges are mapped to paths of length $2k+1$, the total number of edges is $\frac{t\MaxDegree{H}}{2}(2k+1) <  \frac{n}{10\MaxDegree{H}}$.
-Thus not only is $\GlobalEdgeSet$ strictly smaller than $n/20$ but it has room for $2tk+1$ more edges with room to spare i.e. $\frac{n}{10\MaxDegree{H}}+ 2tk + 1 < n/20$.
-Now we once again do what we did in the base case.
-We set $S_0 = \{ u_{j+1}\}$ and $S_0' = \{v_{j+1} \}$.
+When all these edges are mapped to paths of length $2k+1$, the total number of edges is $\frac{t\MaxDegree{H}}{2}(2k+1)$.
+\begin{align*}
+  \Size{\GlobalEdgeSet}  &\leq \frac{t\MaxDegree{H}}{2}(2k+1) \\
+                         &\le \frac{t\MaxDegree{H}}{2}4k \\
+                         &= 2t\MaxDegree{H}k \\
+                         &\leq \frac{n}{40}
+\end{align*}
+
+Thus not only is $\GlobalEdgeSet$ strictly smaller than $n/20$, but it has room for another $2tk+1 < \frac{n}{40\MaxDegree{H}}$ more edges.
+This implies that we can construct a path of length $2k+1$ via safe edges just like we did in the base case.
+Setting $S_0 = \{ u_{j+1}\}$ and $S_0' = \{v_{j+1} \}$.
 For all $1 \le j \le k$, we set $S_{j}$ to be $\min\{t, \Size{S_{j-1}}D \}$ safe neighbours adjacent to $S_{j-1}$.
 Now finding a path for $e_{j+1} = (u_{j+1},v_{j+1}) \in \Edges{H}$ reduces to the base case.
 This concludes the proof.
-	
+
 \end{proof}
+
+\begin{remark}For any node $x$ that is not the starting or ending vertex in a path, they are guaranteed to be \emph{safe} neighbours.
+  This ensures that the paths we select will be vertex-disjoint.
+  As a safe neighbour with respect to the existing edge set, guarantees that there is no edge from this edge set incident on it.
+\end{remark}
+
 
 \section{Proof Of Main Result}
 \label{sec:main-proof}
@@ -582,13 +595,15 @@ Then hardness proof for refuting $\PM{G}$ follows from the following steps as il
 \begin{enumerate}
 \item{Invoke Theorem \ref{thm:partition} with parameters $c=3/4$ and $\epsilon = 1/16$ to get a partition of $V = \RedA \cup \GreenB$ such that for every $u \in V$: $\frac{11}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \RedA} \leq \frac{13}{16}d$ and $\frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d$.}
   
-\item{As $\MinimalDegree{G[\GreenB]} \geq \frac{3d}{16}$, and $\MaxDegree{H} = 5 < d$,and $\lambda < \epsilonL d$, we can invoke Theorem \ref{theorem:embedding-theorem} to embed $H$ as a topological minor $G_{\EmbeddingFunc}$ in $G[\GreenB]$ such that every edge $(u,v)$ in $H$ is an odd length path $\Path{\Embedding{u}}{\Embedding{v}}$ in $G_{\EmbeddingFunc}$.
+\item{As $\MinimalDegree{G[\GreenB]} \geq \frac{3d}{16}$, and $\MaxDegree{H} = 5 < d$, and $\lambda < d/50$, we can invoke the  \nameref{theorem:embedding-theorem} to embed $H$ as a topological minor $G_{\EmbeddingFunc}$ in $G[\GreenB]$ such that every edge $(u,v)$ in $H$ is an odd length path $\Path{\Embedding{u}}{\Embedding{v}}$ in $G_{\EmbeddingFunc}$.
     Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.    
-    To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ is off odd length. Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$. Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
+    To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ has odd length.
+    Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$.
+    Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
   }
 
 \item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = V \setminus G_{\EmbeddingFunc}$ has even size.
-    The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda \leq d/50 < ?$, we can inoke Theorem \ref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
+    The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda \leq d/50$, we can inoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
 Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that 
 	
 
@@ -612,7 +627,7 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 
 
 \bibliographystyle{unsrtnat}
-\bibliography{perfect-matchings-main}
+\bibliography{main_paper}
 \clearpage
 \appendix
 
