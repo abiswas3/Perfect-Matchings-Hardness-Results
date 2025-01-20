@@ -391,7 +391,7 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
 
 \begin{proof}
   Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$.
-  We show that $G[U]$ satisfies a stronger version of Tutte's criterion:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components.
+  We show that $G[U]$ satisfies a stronger version of \nameref{lemma:tutte-criterion}:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components.
   If $|S| \ge |U|/2$ then the criterion trivially holds, thus we can assume $|S| < |U|/2$.
   It suffices to show that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$, there exists an edge between $X$ and $Y$.
   Indeed, suppose that this holds but $G[U \setminus S]$ has more than $|S|$ connected components, with vertex sets denoted by $C_1, \ldots, C_k$, for some $k > |S|$.
@@ -399,11 +399,11 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
 
     Consider some partition $X \cup Y$ of $U \setminus S$ with $|X| \le |Y|$. Then $|X| \le (|U| - |S|)/2 \le (n - |S|)/2$. We show
     \begin{equation} \label{eq:edge_bound}
-        e(X, X) + e(X, S) < \frac{11d}{16}|X|,
+        \CutEdges{X}{X}{E} + \CutEdges{X}{S}{E} < \frac{11d}{16}|X|,
     \end{equation}
     as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
     \[
-        e(X, X) + e(X, S) \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
+        \CutEdges{X}{X}{E} + \CutEdges{X}{S}{E} \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
     \]
     Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
     \[
