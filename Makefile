@@ -13,8 +13,8 @@ all: $(MAIN_FILE).pdf
 # Create the PDF from the LaTeX and BibTeX files
 $(MAIN_FILE).pdf: *tex
 	$(LATEX) $(MAIN_FILE).tex
-	# bib_shortener $(MAIN_FILE)
-	# bibtex-tidy $(MAIN_FILE).bib
+	bib_shortener $(MAIN_FILE)
+	bibtex-tidy $(MAIN_FILE).bib
 	$(BIBTEX) $(MAIN_FILE)
 	$(LATEX) $(MAIN_FILE).tex
 	$(LATEX) $(MAIN_FILE).tex

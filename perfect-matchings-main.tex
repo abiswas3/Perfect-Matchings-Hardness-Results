@@ -36,7 +36,7 @@ In this work, we bridge this gap by showing SoS refutations of perfect matchings
 
 \begin{figure}
 	\includegraphics{assets/proof-system-relationships.pdf}
-	\caption{The figure above (sourced from \citep[Page 9]{fleming2019semialgebraic}) depicts proof systems commonly studied by the community and how they relate to each other. We show lower bounds in the proof systems highlighted in orange, and as a consequence this also implies lower bounds in the bounded-depth Frege proof systems.}
+	\caption{The figure above (sourced from \citep[Page 9]{fleming2019semialgebraic}) depicts proof systems commonly studied by the community and how they relate to each other. We show lower bounds in the proof systems highlighted in orange, and as a consequence this also implies lower bounds in the bounded-depth Frege proof systems. \highlight{Change this}.}
 	\label{fig:example-proof-systems}
 \end{figure}
 
@@ -54,14 +54,26 @@ Thus, as an intermediate step towards making partial progress towards the grand 
 Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on the definitions of the various proof systems.
 In this work, we focus on the semi-algebraic proof system of sum of squares (SoS) \citep{parrilo2000structured, boazCourse}.
-In proof systems like SoS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ as the problem instance.
-In PC, the polynomial coefficients can be over \emph{any} field $\Field$, and in SOS, the polynomial coefficients must be over the reals.
+In proof systems like SoS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ with real coefficients as the problem instance.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$. 
-In PC and SOS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and 
-the size/complexity of the proof is measured by the maximum of degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
-We denote the minimum degree of a proof that refutes $\Axioms$ with $\Degree{\Axioms \PC \bot}$ and $\Degree{Q \SOS \bot}$ for PC and SOS respectively, and the main goal of the area is to study how large is the degree of proofs for refuting a given set of axioms $\Axioms$.
-Although algebraic by definition, one can use these proof systems to refute properties of combinatorial objects like graphs, and it even serves as a proof system for UNSAT.
-In this paper we consider refutations of the perfect matching principle.
+In SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and the size/complexity of the proof is measured by the degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
+We denote the minimum degree over all proofs that refute $\Axioms$ with $\Degree{Q \SOS \bot}$, and the main goal of the area is to study how large is the degree of proofs for refuting a given set of axioms $\Axioms$.
+Another important reason for proving lower bounds for algebraic proof systems is that these can be used to then get lower bounds for a broad family of related algorithms \highlight{cite}.
+Similarly, proof system upper bounds has led to the fruitful discovery of many efficient algorithms \highlight{cite}.
+The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierararchy of semi-definite programming.
+We refer the reader to \citep[Chapter 3]{fleming2019semialgebraic} for more details.
+In this paper we consider refutations of the \emph{perfect matching principle}.
+Apart from being a natural well studied problemn in its own right, the perfect matching principle is also related to the widely studied pigeon hole principle (PGP) \citep{razbarov2002pgp} and Tseitin formula \citep{grigoriev2001linear}.
+Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
+If we construct a bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n$ holes, proving the pigeon hole principle amounts to proving the graph does not have a perfect matching.
+There are many variants of the pigeon hole principle (see \citep{razbarov2002pgp}), and almost all of them are easy to refute in the sum of squares proof system.
+The Tseitin formula over a graph claims that there is a subgraph for which every vertex has odd degree.
+If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
+For graphs on an odd number of vertices this is clearly impossible.
+However, formally refuting this claim for expandeer graphs in the SoS proof system, requires size linear in the number of vertices in the graph \cite{grigoriev2001linear}.
+Given its close connections to refuations of the PGP and Tseitin principle, it is natural to study the complexity of refuting perfect matchings for non-bipartite graphs in greater detail.
+It is conjectured that complexity of refuting perfect matchings is in between Tseitin and PGP.\par
+Matchings are a combinatorial concept. To refute matchings with an algebraic proof system, we need to find a way to express the combinatorial constraints as algebraic inequalities.
 More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$, we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_1, \dots, x_{|E|} \in \Field^{\Size{E}}$
 
 \[
@@ -600,7 +612,7 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 
 
 \bibliographystyle{unsrtnat}
-\bibliography{main_paper}
+\bibliography{perfect-matchings-main}
 \clearpage
 \appendix
 
