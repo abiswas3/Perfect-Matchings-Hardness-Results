@@ -80,7 +80,7 @@ More specifically, given an undirected graph $G=(V,E)$, and a vector $\vec{b} = 
         \Card{G, \vec{b}}=
         \Bigger[10]\{\begin{array}{@{}cl}
                 x_{\highlight{e}}(1 - x_{\highlight{e}}) = 0 & \text{ for every $\highlight{e} \in E$}\\[3mm]
-                \underset{u \text{ is a neighbour of }\highlight{v}}{\sum x_{(u,\highlight{v})}}= b_{\highlight{v}} & \text{ for every $\highlight{v} \in V$} \\[3mm]
+                \underset{u \in \Neighbourhood{E}{\highlight{v}}}{\sum x_{(u,\highlight{v})}}= b_{\highlight{v}} & \text{ for every $\highlight{v} \in V$} \\[3mm]
         \end{array}
 \]
 
