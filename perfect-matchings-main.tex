@@ -230,6 +230,31 @@ We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underse
 \end{align*}
 
 \end{lemma}
+\begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
+Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
+\end{lemma}
+\begin{proof}
+  We want to show that for all $S \subseteq \Vertices{G}$ of size $1 \leq \Size{S} \leq \frac{n}{2}$, we have $\CutEdges{S}{\Complement{S}}{\Edges{G}} \geq d$.
+  When $1\leq \Size{S} \leq d$, as $G$ is $d$ regular, every vertex in $S$ must have at least $d- \Size{S} + 1$ edges poking out poking out $S$.
+  Thus, the total edges out of $S$ is $\Size{S}(d- \Size{S} + 1)$ which has minimal value $d$.
+  If $d \leq \Size{S} \leq \frac{n}{2}$, use the tight version of the expander mixing lemma, and combined with the  fact that $d- \lambda > 2$ and $(n-\Size{S})$ is smallest when $\Size{S} = n/2$ to get the bound
+
+  \begin{align*}
+    \CutEdges{S}{\Complement{S}}{\Edges{G}} &\geq \frac{d\Size{S}(n-\Size{S})}{n} - \lambda\sqrt{\Size{S}(n-\Size{S}) (1 - \frac{\Size{S}}{n}) (1 - \frac{n-\Size{S}}{n})   }\\
+                                            &=  (d-\lambda)(\Size{S}\frac{(n-\Size{S})}{2}) \\
+                                              &\geq d
+    \end{align*}
+  
+\end{proof}
+
+% \begin{lemma}\label{lemma:d-connected-sets-have-no-bad-sets}
+%   If $G$ has edge connectivity $\EdgeConnectivity{G} = d$, and $G$ is $d$-regular, then $\forall S \in \Vertices{G}$, $\OddComponents{G \setminus S} \leq |S|$.
+% \end{lemma}
+% \begin{proof}
+%   As $G$ is $d$ regular, any set $S$ has at most $d\Size{S}$ edges incident on it.
+%   By lemma \ref{lemma:edge-connectivity-pseudorandom}, as $\EdgeConnectivity{G} = d$, every component that connects to $S$ must have at least $d$ edges.
+%   Therefore the maximum number of components we can have is $\Size{S}$.
+% \end{proof}
 
 \begin{lemma}[Perfect Matching Tutte Criterion]\label{lemma:tutte-criterion}
 Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices.
@@ -673,7 +698,7 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
    |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} &\ge  \OddComponents{S \cup T}
   \end{align}
 
-  Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, we have \highlight{Benny/Michal survey} that $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
+  Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, from Lemma \ref{lemma:edge-connectivity-pseudorandom} and $d$-regualrity we have  $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
   Thus it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}   \\
@@ -715,8 +740,13 @@ Now we distinguish between two cases.
 
 \textbf{Case 2a}: If $\Size{T} \le \frac{\Size{S}}{C+3}$, then from $d$-regularity trivially have $\CutEdges{S}{T}{E} \leq \Size{T}d$, and equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$. \\
 
-\textbf{Case 2b}: $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$
-  
+\textbf{Case 2b}: $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
+Now using the \nameref{lemma:expanders-mixing-lemma}
+
+\[ \CutEdges{S}{T}{E} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+
+which gives us Equation \eqref{eq:to-show-3}.
+
 \end{proof}  
 
 \begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
@@ -728,11 +758,12 @@ Now we distinguish between two cases.
 \begin{proof}
   Without loss of generality we can assume that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$.
   As $n$ is odd and $G$ is regular, by a simple counting argument $d$ is even.
-  Now consider the subgraphs constructed by partitioning the edges of $G$ into $G_0$ and $G'$, where $G'$ is constructed by deleting $C=d/2$ edges from every vertex in $G$.
-  Thus, $G'$ is $d - C$ regular, and $G'$ is $C$ regular.
-
-
-
+  Now consider the subgraphs constructed by partitioning the edges of $G$ into $G_0$ and $G'$, where $G'$ is constructed by deleting $C=\alpha d$ edges from every vertex in $G$ for some $\alpha \in (0,1/2)$.
+  Thus, $G'$ is $d - C$ regular, and $G_0$ is $C$ regular.
+  Using Lemma \ref{lemma:f-factor} we can show that $G'$ has a $t-1$ factor.
+  For any $u \in G'$, set edges that are included in the $t-1$ factor to 1, and the rest to 0.
+  Using Theorem \ref{thm:main-thm} we can show that refuting $\PM{G_0}$ requires proof of size $\BigOmega{n/\log n}$.
+This concludes the proof.
 \end{proof}
 
 
