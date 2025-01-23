@@ -161,7 +161,7 @@ This general idea is summarised in Figure \ref{fig:proof-outline}.
 \subsection{Our Contribution}
 
 \rajko{As well as most of the blurb from this one. Just go straight to the point, and then discuss how it extends to even colouring formulas. Even better, combine this and the next section and state a general result for Card(G, t).}
-
+\ari{I will tackle this on Friday. }
 In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
 We too follow the proof outline given in Figure \ref{fig:proof-outline}.
 However, our results differ in two key aspects.
@@ -222,15 +222,15 @@ We review some basic tooling used for proving existence of objects using the pro
 
 \subsection{Graph Theory Preliminaries}
 \label{sec:graph-theory-prelims}
-\ari{Change the cut edges notation third parameter to include $G$ instead of $E$.}
+
 For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$.
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
-Given two sets $S, T \subseteq \Vertices{G}$, we denote with $\CutEdgesSet{S}{T}{E'}$ the set of edges in $E' \subseteq \Edges{G}$ in the cut between $S$ and $T$, and use $\CutEdges{S}{T}{E'}$ to denote the size of the cut.
+Given two sets $S, T \subseteq \Vertices{G}$, we denote with use $\CutEdges{S}{T}{E'}$ to denote the number of edges in $E'$ with one endpoint in $S$ and one endpoint in $T$ 
 \rajko{I suggest the following notation: $e_G(S, T)$ denotes the number of edges with one endpoint in $S$ and the other in $T$. As we do not require $S$ and $T$ to be disjoint, any edge with both endpoints in $S \cap T$ is counted twice in $e_G(S, T)$. This is important as we use $e_G(S, S)$.}
-We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
-We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
-Next we define pseudorandom graphs or expander graphs.
-Throughout this document, it suffices to treat $d$ as a small constant.
+% We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
+% We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
+Next, we give a definition for pseudorandom graphs or expander graphs.
+Throughout this document, it suffices to treat $d$ as a constant.
 
 \begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
 Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
@@ -322,22 +322,22 @@ An SoS refutation of $\Axioms$ is a proof of $-1 \geq 0$ derived from an SoS pro
 
 \end{definition}
 
-% Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} based on the following inference rules.
-% \begin{enumerate}
-% 	\item From polynomials $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
-% 	\item From polynomial $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
-% \end{enumerate}
+Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} based on the following inference rules.
+\begin{enumerate}
+	\item From polynomials $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
+	\item From polynomial $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
+\end{enumerate}
 
-% \begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
-% A Polynomial Calculus (PC) refutation of $\Axioms$ over is a set of polynomials $\Proof = t_1, \dots, t_l$	such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules.
-% The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i}$. If we let $\Pi$ denote the set of all PC refutations of $\Axioms$, then
+\begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
+A Polynomial Calculus (PC) refutation of $\Axioms$ over is a set of polynomials $\Proof = t_1, \dots, t_l$	such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules.
+The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i}$. If we let $\Pi$ denote the set of all PC refutations of $\Axioms$, then
 
-% \[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
-% \end{definition}
+\[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
+\end{definition}
 
-% The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
-% \begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
-% \end{lemma}
+The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
+\begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
+\end{lemma}
 A description of the  worst case hard instance for SoS can be found in \citep[Theorem A.3]{Austrin_2022}.
 
 \begin{lemma}[Worst Case Hard Instance For SOS]\label{lemma:worst-case-instance-sos}
@@ -508,16 +508,15 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
   We prove this lemma using the \nameref{lemma:tutte-criterion-factor}.
   We need to show that for any pair of disjoint sets $S, T$
   \begin{align}
-   |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} &\ge  \OddComponents{S \cup T}
+\OddComponents{S \cup T} &\le \Size{S}f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}
   \end{align}
 
   Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, from Lemma \ref{lemma:edge-connectivity-pseudorandom} and $d$-regualrity we have  $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
-  Thus it suffices to show
+  Thus, it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}   \\
               &= \Size{S}f - \Size{T}f + \sum_{w\in T}\Size{\Neighbourhood{E}{w} \setminus S} \\
-              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E}  \\
-|S| + |T| + \CutEdges{S}{T}{E} &\le  \Size{S}f + \Size{T}(d-C-f)  \label{eq:to-show}
+              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E}  \label{eq:to-show}
   \end{align}  
 
   \textbf{Case 1}: If $\Size{S} \leq \Size{T}$, and as $f \leq d/2$, we have 
@@ -534,10 +533,10 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
                                  &\le \Size{S}f - \Size{T}(d-C-f) \label{eq:plug}
  \end{align}  
   
-Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} $\lambda < \epsilon d$.
+Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} and $\lambda < \epsilon d$.
 Equation \eqref{eq:algebra} comes from the fact that $\Size{S}\Size{T} \leq \left(\frac{\Size{S}+\Size{T}}{2}\right)^2 \le n\frac{(\Size{S}+\Size{T})}{4}$.
-Equation \eqref{eq:eps-assumption} comes from $\epsilon < 1/100C^{3/2}$.
-Equation \eqref{eq:plug} comes from Equation \eqref{eq:to-show-1} which gives us what we want.
+Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$.
+Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives us what we want.
 
 \textbf{Case 2}: If $\Size{S} > \Size{T}$, then 
   \begin{align}
@@ -551,7 +550,7 @@ Equation \eqref{eq:plug} comes from Equation \eqref{eq:to-show-1} which gives us
 
 Now we distinguish between two cases.
 
-\textbf{Case 2a}: If $\Size{T} \le \frac{\Size{S}}{C+3}$, then from $d$-regularity trivially have $\CutEdges{S}{T}{E} \leq \Size{T}d$, and equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$. \\
+\textbf{Case 2a}: If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then from $d$-regularity trivially have $\CutEdges{S}{T}{E} \leq \Size{T}d$, and equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
 
 \textbf{Case 2b}: $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
 Now using the \nameref{lemma:expanders-mixing-lemma}
@@ -754,7 +753,7 @@ Then hardness proof follows from the following steps as illustrated in Figure \r
   }
 
 \item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size.
-    The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda \leq d/50$, we can inoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
+    The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda < d/50$, we can inoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
     Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that
 \[
 \rho(x_e) =
@@ -767,17 +766,18 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 \right.
 \]
 
-Thus, we conclude $\PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. This concludes the proof for Theorem \ref{thm:main-thm}.
+Thus, we conclude $\PM{G}|_\rho \equiv \PM{G_{\EmbeddingFunc}} \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. If $t=1$, then this concludes the proof for Theorem \ref{thm:main-thm}.
 }
   
-\item{If we want to show our hardness by reducing the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
-Given an odd integer $t \in \Naturals$, we can assume without loss of generality that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$).  
+\item{ For odd $1 < t \leq d$, we want to reduce the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
+We can assume without loss of generality that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$).  
 Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in \Edges{G_{\EmbeddingFunc}} \cup M$, where $M$ is the perfect matching from the step above.
 As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $C=5 + 1$ edges in this process.
-  Thus we have $\MinimalDegree{G'} = d - C$. Setting $\lambda < \epsilon d < d/50$ with $\epsilon < 1/100C^{3/2}$, we invoke the \nameref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
-Now extend $\rho$ by the following process - for every $u \in G'$, set edges $e$ that are included in the $t-1$ factor to $\rho(e) = 1$.
-Observe that for $G$ to satisfy $\Card{G, \vec{t}}$, we need $G_{\EmbeddingFunc}$ to satisfy a perfect matching.
-Thus refuting $\Card{G, \vec{t}}$ is reduced to refuting $\PM{H}$.
+Thus, we have $\MinimalDegree{G'} = d - C$.
+As $\lambda < \epsilon d$, we invoke the \nameref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
+We extend $\rho$ by the following process: for every $u \in G'$, set edges $e$ that are included in the $t-1$ factor to $\rho(e) = 1$.
+Now observe that for $G$ to satisfy $\Card{G, \vec{t}}$, we need $G_{\EmbeddingFunc}$ to satisfy a perfect matching.
+Thus refuting $\Card{G, \vec{t}}$ is reduced to refuting $\PM{G}_{\rho} \equiv \PM{H}$.
 }
 
 
