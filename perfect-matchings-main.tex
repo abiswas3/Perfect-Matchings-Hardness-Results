@@ -10,7 +10,7 @@
 
 \synctex=1
 % Title
-\title{Refutation of perfect matchings in expander graphs is sard}
+\title{Refuting Perfect Matchings In Expander Graphs Is Hard}
 
 % \author{}
 \author[1]{Ari Biswas}
@@ -24,12 +24,12 @@
 
 \maketitle
 \begin{abstract}
-This work studies the complexity of refuting the existence of a perfect matching in expander graphs with an odd number of vertices in the Sum of Squares (SoS) proof system. \rajko{And polynomial calculus, I guess. Whatever they studied, we study as well. We can stick to one in the main body of the paper, like you did, and point out that it workds for the other proof system.}
-In previous work, \citet{Austrin_2022} showed  SoS refutations of perfect matchings in sparse $d$-regular random graphs requires proofs with degree $\BigOmega{n/\log n}$ \emph{on average}. \rajko{Do not use cite command in the abstract. The abstract should be self-contained.}
+This work studies the complexity of refuting the existence of a perfect matching in expander graphs with an odd number of vertices in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
+In previous work, Austrin and Risse [SODA, 2022] showed that refuting perfect matchings in sparse $d$-regular random graphs in the above proof systems require proofs with degree $\BigOmega{n/\log n}$ \emph{on average}. 
 Although a $d$-regular random graph is an expander graph with high probability, their hardness result relies critically on the randomness of sampling a graph.
 Therefore, these techniques do not extend to instances where the expander graph is deterministically constructed, and we do not have  \emph{worst-case} lower bounds.
-In this work, we bridge this gap by showing SoS refutations of perfect matchings in \emph{any} expander graph with a very mild spectral gap requires proofs with degree $\BigOmega{n/\log n}$.
-As direct consquence of this result, we positively answer the open problem posed by \citet[Open Problem 7.7]{buss2021proof}, which asks, \textit{``Are even colouring formulas over expander graphs hard for polynomial calculus over fields of characteristic distinct from 2 ?''}
+In this work, we bridge this gap by showingrefutations of perfect matchings in \emph{any} expander graph with a very mild spectral gap requires proofs with degree $\BigOmega{n/\log n}$.
+As direct consquence of this result, we positively answer the open problem posed by Buss and  Nordstr{\"o}m, which asks, \textit{``Are even colouring formulas over expander graphs hard for polynomial calculus over fields of characteristic distinct from 2 ?''}
 \end{abstract}
 
 \section{Introduction}
@@ -197,6 +197,14 @@ This is the second place that the authors critically rely on randomness (the fir
 They use contiguity to split $G'$ into $\lfloor t/2\rfloor$ 2-regular subgraphs.
 The union of which shows that each vertex in $G'$ has $t-1$ neighbours.
 Our reduction does not require randomness, and thus once again we are able to provide worst case bounds for a broader class of graphs.\\
+
+\begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
+  There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
+  Let $G$ be an $\EnDeeLambda$ graph, and $H$ be a graph on $n'$ vertices with $\MaxDegree{H} \le 5$.
+  Then $\PM{H}$ is an affine restriction of $\Card{G, \vec{t}}$.
+\end{theorem}
+
+
 The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:main-thm}.
 In Section \ref{sec:embed-machinery}, we review definitions and results from the theory of wide-sense nonblocking networks, which aid us in the construction of our main embedding theorem.
 In Section \ref{sec:main-proof}, we provide the full proof of the main result and in Section \ref{sec:related-work} we describe related results in proof complexity lower bounds using embedding techniques.
@@ -212,7 +220,7 @@ We review some basic tooling used for proving existence of objects using the pro
 
 \subsection{Graph Theory Preliminaries}
 \label{sec:graph-theory-prelims}
-
+\ari{Change the cut edges notation third parameter to include $G$ instead of $E$.}
 For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$.
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
 Given two sets $S, T \subseteq \Vertices{G}$, we denote with $\CutEdgesSet{S}{T}{E'}$ the set of edges in $E' \subseteq \Edges{G}$ in the cut between $S$ and $T$, and use $\CutEdges{S}{T}{E'}$ to denote the size of the cut.
@@ -227,7 +235,6 @@ Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda
 We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
 \end{definition}
 
-\rajko{Changed the statement of the Mixing Lemma. We need deviation from $d|S||T|/n$ in both directions.}
 
 \begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
   Given an $\EnDeeLambda$ graph $G$ for any $S, T \subseteq \Vertices{G}$ we have
@@ -239,6 +246,7 @@ $$
 \end{lemma}
 
 \rajko{I don't think we need the following lemma.}
+\ari{I used it in the lemma below, maybe we don't need it. I'll remove it if we do not.}
 
 \begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
 Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
@@ -272,12 +280,12 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
 \end{lemma}
 
 \begin{definition}[$f$-factor]\label{defn:f-factor}
-  Given a graph $G $and $f \in \Naturals$, a subgraph $G' \subseteq G$ is called an $f$-factor if $\degree{v}{G} = f$ for every $v \in \Vertices{G}$.
+  Given a graph $G$ and $f \in \Naturals$, a subgraph $G' \subseteq G$ is called an $f$-factor if $\degree{v}{G} = f$ for every $v \in \Vertices{G}$.
 \end{definition}
 
 \rajko{Explain that this is stronger than what Tutte requires.}
 
-\begin{lemma}[$f$-factor Tutte Criterion]\label{lemma:tutte-criterion-factor}
+\begin{lemma}[$f$-Factor Criterion]\label{lemma:tutte-criterion-factor}
   Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ and $f \in \Naturals$ be even. $G$ has an $f$-factor if for every pair of disjoint sets $S, T \subseteq V$ the following holds:
 
   \[ |S|f \geq \OddComponents{S \cup T} + \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} \]
@@ -362,9 +370,7 @@ of $\Axioms$ depends on a constant number of variables, then
 The proof for the above lemma can be found in \citep[Lemma 2.2]{Austrin_2022}.
 What the above lemma says is that if we have a graph $G$ with odd vertices, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
 
-\subsection{Useful Tools}
-
-\rajko{A more descriptive title would be ``Probabilistic tools'' or something like that.}
+\subsection{Probabilistic Tools}
 
 The proof of \nameref{lemma:mult-chernoff} and \nameref{lemma:lll}
 can be found in any textbook on randomised algorithms \citep[See Chapter 1, Chapter 7]{mitzenmacher2017probability}.
@@ -461,8 +467,6 @@ We have all the conditions to invoke the \nameref{lemma:lll} to get $\PProb{\und
 % \end{remark}
 
 \section{Perfect matchings and factors in expanders}
-
-\rajko{Put all perfect matching / factors in one section.}
 
 Next we prove a lemma that shows that even sized subsets of expander graph with large minimal degree contain perfect matchings.
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
@@ -690,7 +694,7 @@ By the \nameref{lemma:expanders-mixing-lemma},
 \end{align}
 
 Equation \eqref{eq:assumption_on_lambda} comes from the assumption $\lambda \leq d/50$.
-This implies there exists at least one edge $e^\star=(x^\star,y^\star) \in \CutEdgesSet{S_k}{S_k'}{\Edges{\BipartiteG}}$.
+This implies there exists at least one edge $e^\star=(x^\star,y^\star)$ between in $S_k$ and $S_k'$ in $\Edges{\BipartiteG}$.
 By how we constructed $M_k$, we know that $x^\star$ was the safe neighbour of some node $a \in S_{k-1}$.
 Let $m_k = (a,x^\star) \in M_k$ be the connecting edge.
 Similarly, there is some edge $m_{k-1} \in M_{k-1}$ that connects some vertex in $S_{k-2}$ to $a$ with a safe edge.
@@ -732,9 +736,10 @@ This concludes the proof.
 \section{Proof Of Main Result}
 \label{sec:main-proof}
 
+In this section we give a for Theorem \ref{thm:general-hardness-result} for any value of $t \leq d$.
+The proof for Theorem \ref{thm:main-thm} follows by setting $t=1$.
 Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for which refuting $\PM{H}$ has degree $\BigOmega{t}$ as per Lemma \ref{lemma:worst-case-instance-sos}.
-Then hardness proof for refuting $\PM{G}$ follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
-
+Then hardness proof follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
 
 \begin{enumerate}
 \item{Invoke Theorem \ref{thm:partition} with parameters $c=3/4$ and $\epsilon = 1/16$ to get a partition of $V = \RedA \cup \GreenB$ such that for every $u \in V$: $\frac{11}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \RedA} \leq \frac{13}{16}d$ and $\frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d$.}
@@ -746,11 +751,16 @@ Then hardness proof for refuting $\PM{G}$ follows from the following steps as il
     Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
   }
 
-\item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = V \setminus G_{\EmbeddingFunc}$ has even size.
+\item{
+     We want to show our hardness result by reducing the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
+Given an odd integer $t \in \Naturals$, we can assume without loss of generality that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$).  
+  Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in G_{\EmbeddingFunc}$. As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $C=5$ edges in this process.
+  Thus we have $\MinimalDegree{G'} = d - C$. Setting $\lambda < \epsilon d < d/50$ with $\epsilon < 1/100C^{3/2}$, we invoke Lemma \ref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
+  Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that, for any $u \in G'$, set edges $e$ that are included in the $t-1$ factor to $\rho(e) = 1$.
+  Observe that for $G$ to satisfy $\Card{G, \vec{t}}$, the affine restriction of $G$ with respect to $\rho$ must have a perfect matching (as each vertex needs one more edge to be assigned 1 to satisfy the formula).
+Thefore, the task of refuting $\Card{G, \vec{t}}$ boils down to refuting $\PM{G}_{\rho}$. As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size.
     The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda \leq d/50$, we can inoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
-Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that
-
-
+Extend $\rho$ such that
 \[
 \rho(x_e) =
 \left\{
@@ -762,31 +772,14 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 \right.
 \]
 
-	If it easy to see that $\PM{G} \equiv \PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\PM{G} \in \BigOmega{|\Vertices{H}|} = \BigOmega{\frac{n}{\log n}}$. }
+Thus, we conclude $\Card{G, \vec{t}} \equiv \PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. This concludes the proof for Theorem \ref{thm:general-hardness-result}.
+}
+
+
   \end{enumerate}
 
 
-\section{General Result}
-\label{sec:general-result}
 
-\rajko{If you take $C = \Theta(d)$, then $\epsilon$ in Lemma 3.2 is $d^{-3/2}$, and $\lambda < 1/\sqrt(d)$. That doesn't quite work. Instead, I suggest you combine this proof with the previous one as Step 4: Remove the edges from the embedding and the perfect matching, and find $t-1$ factor. This works with constant $C$ as you have removed at most 5 or so edges touching each vertex. }
-
-\begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
-  There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
-  Let $G$ be an $\EnDeeLambda$ graph, and $H$ be a graph on $n'$ vertices with $\MaxDegree{H} \le 5$.
-  Then $\PM{H}$ is an affine restriction of $\Card{G, \vec{t}}$.
-\end{theorem}
-
-\begin{proof}
-  Without loss of generality we can assume that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$.
-  As $n$ is odd and $G$ is regular, by a simple counting argument $d$ is even.
-  Now consider the subgraphs constructed by partitioning the edges of $G$ into $G_0$ and $G'$, where $G'$ is constructed by deleting $C=\alpha d$ edges from every vertex in $G$ for some $\alpha \in (0,1/2)$.
-  Thus, $G'$ is $d - C$ regular, and $G_0$ is $C$ regular.
-  Using Lemma \ref{lemma:f-factor} we can show that $G'$ has a $t-1$ factor.
-  For any $u \in G'$, set edges that are included in the $t-1$ factor to 1, and the rest to 0.
-  Using Theorem \ref{thm:main-thm} we can show that refuting $\PM{G_0}$ requires proof of size $\BigOmega{n/\log n}$.
-This concludes the proof.
-\end{proof}
 
 
 \section{Related Work}

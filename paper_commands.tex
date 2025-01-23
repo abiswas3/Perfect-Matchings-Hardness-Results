@@ -63,7 +63,7 @@
 \newcommand{\PM}[1]{\text{PM}(#1)}
 \newcommand{\RemGraph}{G'}
 \newcommand{\BadSet}{\textcolor{blue}{\hat{S}}}
-\newcommand{\ari}[1]{\textcolor{kon-peki}{Ari: }#1}
+\newcommand{\ari}[1]{\textcolor{kon-peki}{Ari: #1}}
 \newcommand{\rajko}[1]{\textcolor{red}{Rajko: #1}}
 \newcommand{\highlight}[1]{\textcolor{yama-budo}{#1}}
 \newcommand{\red}[1]{\textcolor{fuyu-gaki}{#1}}
@@ -79,9 +79,9 @@
 \newcommand{\Graph}{G}
 \newcommand{\Vertices}[1]{\mathsf{V}(#1)}
 \newcommand{\Edges}[1]{\mathsf{E}(#1)}
-\newcommand{\CutEdges}[3]{e(#1 \leftrightarrow #2; #3)}
+\newcommand{\CutEdges}[3]{e_{#3}(#1, #2)}
 \newcommand{\IncidentEdges}[1]{\mathsf{E}(\rightarrow #1)}
-\newcommand{\CutEdgesSet}[3]{\mathsf{E}(#1 \leftrightarrow #2; #3)}
+\newcommand{\CutEdgesSet}[3]{\mathsf{E}_{#3}(#1, #2)}
 \newcommand{\OddComponents}[1]{q(#1)}
 \newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
 \newcommand{\MaxDegree}[1]{\Delta_{#1}}
