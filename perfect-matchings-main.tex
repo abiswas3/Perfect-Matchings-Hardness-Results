@@ -69,12 +69,12 @@ Apart from being a natural well studied problemn in its own right, the perfect m
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct a bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n$ holes, proving the pigeon hole principle amounts to proving that such bipartite graphs does not have a perfect matching.
 There are other formulations of the pigeon hole principle (see \citep{razbarov2002pgp}), and almost all of them have short proofs in the sum of squares proof system.
-On the other hand Tseiting formulae, which is also related to the perfect matching principel is known to have long proofs.
+On the other hand Tseitin formulae, which is also related to the perfect matching principle is known to have long proofs.
 The Tseitin formula over a graph claims that there is a subgraph for which every vertex has odd degree.
 If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
-However, formally refuting Tseitin formulae for expander graphs with oddd number of vertices in the SoS proof system, requires size linear in the number of vertices in the graph \cite{grigoriev2001linear}.
+However, formally refuting Tseitin formulae for expander graphs with odd number of vertices in the SoS proof system, requires size linear in the number of vertices in the graph \cite{grigoriev2001linear}.
 The exact complexity of refuting the perfect matching principle however remains unknown.
-Given its close connections to refuations of the PGP and Tseitin principle, it is natural to ask whether the complexity of refuting perfect matchings for non-bipartite graphs is closer to PGP or Tseitin?
+Given its close connections to refutations of the PGP and Tseitin principle, it is natural to ask whether the complexity of refuting perfect matchings for non-bipartite graphs is closer to PGP or Tseitin?
 \par
 To refute matchings with an algebraic proof system, we need to find a way to express the combinatorial constraints as algebraic inequalities.
 More specifically, given an undirected graph $G=(V,E)$, and a constant $b\in \Field$, we denote with $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$ the vector of all $b$'s vector with size $\Size{V}$.
@@ -498,7 +498,7 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
     This confirms \eqref{eq:edge_bound}.
 \end{proof}
 
-\begin{lemma}\label{lemma:f-factor}
+\begin{lemma}[$f$-Factor Lemma]\label{lemma:f-factor}
   Fix $C > 0$ and $d \ge d_0(C)$.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$, where $\epsilon < 1/100C^{3/2}$.
 If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$ contains an $f$-factor for any even $2 \le f \le d/2$.
@@ -757,7 +757,7 @@ Then hardness proof follows from the following steps as illustrated in Figure \r
      We want to show our hardness result by reducing the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
 Given an odd integer $t \in \Naturals$, we can assume without loss of generality that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$).  
   Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in G_{\EmbeddingFunc}$. As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $C=5$ edges in this process.
-  Thus we have $\MinimalDegree{G'} = d - C$. Setting $\lambda < \epsilon d < d/50$ with $\epsilon < 1/100C^{3/2}$, we invoke Lemma \ref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
+  Thus we have $\MinimalDegree{G'} = d - C$. Setting $\lambda < \epsilon d < d/50$ with $\epsilon < 1/100C^{3/2}$, we invoke the \nameref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
   Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that, for any $u \in G'$, set edges $e$ that are included in the $t-1$ factor to $\rho(e) = 1$.
   Observe that for $G$ to satisfy $\Card{G, \vec{t}}$, the affine restriction of $G$ with respect to $\rho$ must have a perfect matching (as each vertex needs one more edge to be assigned 1 to satisfy the formula).
 Thefore, the task of refuting $\Card{G, \vec{t}}$ boils down to refuting $\PM{G}_{\rho}$. As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size.
