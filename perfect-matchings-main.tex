@@ -7,9 +7,10 @@
 \input{paper_commands.tex} %These are generic commands (Might move them to %base template)is
 
 
+
 \synctex=1
 % Title
-\title{Sum of Squares Refutations of Perfect Matchings In Expander Graphs Is Hard}
+\title{Refutation of perfect matchings in expander graphs is sard}
 
 % \author{}
 \author[1]{Ari Biswas}
@@ -23,8 +24,8 @@
 
 \maketitle
 \begin{abstract}
-This work studies the complexity of refuting the existence of a perfect matching in expander graphs with an odd number of vertices in the Sum of Squares (SoS) proof system.
-In previous work, \citet{Austrin_2022} showed  SoS refutations of perfect matchings in sparse $d$-regular random graphs requires proofs with degree $\BigOmega{n/\log n}$ \emph{on average}.
+This work studies the complexity of refuting the existence of a perfect matching in expander graphs with an odd number of vertices in the Sum of Squares (SoS) proof system. \rajko{And polynomial calculus, I guess. Whatever they studied, we study as well. We can stick to one in the main body of the paper, like you did, and point out that it workds for the other proof system.}
+In previous work, \citet{Austrin_2022} showed  SoS refutations of perfect matchings in sparse $d$-regular random graphs requires proofs with degree $\BigOmega{n/\log n}$ \emph{on average}. \rajko{Do not use cite command in the abstract. The abstract should be self-contained.}
 Although a $d$-regular random graph is an expander graph with high probability, their hardness result relies critically on the randomness of sampling a graph.
 Therefore, these techniques do not extend to instances where the expander graph is deterministically constructed, and we do not have  \emph{worst-case} lower bounds.
 In this work, we bridge this gap by showing SoS refutations of perfect matchings in \emph{any} expander graph with a very mild spectral gap requires proofs with degree $\BigOmega{n/\log n}$.
@@ -129,6 +130,8 @@ polynomial calculus over fields of characteristic $\neq 2$ have large size, when
 
 \subsection{Technical Overview}
 
+\rajko{I suggest omitting this section. It is essentially about how *not* to prove the theorem, other than the general strategy. We will give them all the credit for the general idea.}
+
 The original hardness proof for random graphs works as follows.
 They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-sos}).
 Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
@@ -156,6 +159,8 @@ To show this spectral bound, they rely on the interlacing theorem\footnote{\url{
 This general idea is summarised in Figure \ref{fig:proof-outline}.
 
 \subsection{Our Contribution}
+
+\rajko{As well as most of the blurb from this one. Just go straight to the point, and then discuss how it extends to even colouring formulas. Even better, combine this and the next section and state a general result for Card(G, t).}
 
 In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
 We too follow the proof outline given in Figure \ref{fig:proof-outline}.
@@ -211,6 +216,7 @@ We review some basic tooling used for proving existence of objects using the pro
 For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$.
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
 Given two sets $S, T \subseteq \Vertices{G}$, we denote with $\CutEdgesSet{S}{T}{E'}$ the set of edges in $E' \subseteq \Edges{G}$ in the cut between $S$ and $T$, and use $\CutEdges{S}{T}{E'}$ to denote the size of the cut.
+\rajko{I suggest the following notation: $e_G(S, T)$ denotes the number of edges with one endpoint in $S$ and the other in $T$. As we do not require $S$ and $T$ to be disjoint, any edge with both endpoints in $S \cap T$ is counted twice in $e_G(S, T)$. This is important as we use $e_G(S, S)$.}
 We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
 We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
 Next we define pseudorandom graphs or expander graphs.
@@ -221,15 +227,19 @@ Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda
 We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
 \end{definition}
 
+\rajko{Changed the statement of the Mixing Lemma. We need deviation from $d|S||T|/n$ in both directions.}
 
 \begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
   Given an $\EnDeeLambda$ graph $G$ for any $S, T \subseteq \Vertices{G}$ we have
-\begin{align*}
-  \CutEdges{S}{T}{\Edges{G}} &\geq \frac{d\Size{S}\Size{T}}{n} - \lambda\sqrt{\Size{S}\Size{T} (1 - \frac{\Size{S}}{n}) (1 - \frac{\Size{T}}{n})   }	\\
-  &\geq \frac{d\Size{S}\Size{T}}{n} - \lambda\sqrt{\Size{S}\Size{T} }
-\end{align*}
-
+$$
+  \left| \CutEdges{S}{T}{\Edges{G}} - \frac{d}{n}|S||T| \right|
+  % \geq \frac{d\Size{S}\Size{T}}{n} - \lambda\sqrt{\Size{S}\Size{T} (1 - \frac{\Size{S}}{n}) (1 - \frac{\Size{T}}{n})   }	\\
+  \geq \lambda\sqrt{\Size{S}\Size{T} }
+$$
 \end{lemma}
+
+\rajko{I don't think we need the following lemma.}
+
 \begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
 Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
 \end{lemma}
@@ -264,6 +274,8 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
 \begin{definition}[$f$-factor]\label{defn:f-factor}
   Given a graph $G $and $f \in \Naturals$, a subgraph $G' \subseteq G$ is called an $f$-factor if $\degree{v}{G} = f$ for every $v \in \Vertices{G}$.
 \end{definition}
+
+\rajko{Explain that this is stronger than what Tutte requires.}
 
 \begin{lemma}[$f$-factor Tutte Criterion]\label{lemma:tutte-criterion-factor}
   Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ and $f \in \Naturals$ be even. $G$ has an $f$-factor if for every pair of disjoint sets $S, T \subseteq V$ the following holds:
@@ -351,6 +363,8 @@ The proof for the above lemma can be found in \citep[Lemma 2.2]{Austrin_2022}.
 What the above lemma says is that if we have a graph $G$ with odd vertices, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
 
 \subsection{Useful Tools}
+
+\rajko{A more descriptive title would be ``Probabilistic tools'' or something like that.}
 
 The proof of \nameref{lemma:mult-chernoff} and \nameref{lemma:lll}
 can be found in any textbook on randomised algorithms \citep[See Chapter 1, Chapter 7]{mitzenmacher2017probability}.
@@ -445,6 +459,11 @@ We have all the conditions to invoke the \nameref{lemma:lll} to get $\PProb{\und
 
 
 % \end{remark}
+
+\section{Perfect matchings and factors in expanders}
+
+\rajko{Put all perfect matching / factors in one section.}
+
 Next we prove a lemma that shows that even sized subsets of expander graph with large minimal degree contain perfect matchings.
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
 Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ contains a perfect matching.
@@ -472,6 +491,70 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
     \]
     This confirms \eqref{eq:edge_bound}.
 \end{proof}
+
+\begin{lemma}\label{lemma:f-factor}
+  Fix $C > 0$ and $d \ge d_0(C)$.
+Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$, where $\epsilon < 1/100C^{3/2}$.
+If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$ contains an $f$-factor for any even $2 \le f \le d/2$.
+\end{lemma}
+
+\begin{proof}
+  We prove this lemma using the \nameref{lemma:tutte-criterion-factor}.
+  We need to show that for any pair of disjoint sets $S, T$
+  \begin{align}
+   |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} &\ge  \OddComponents{S \cup T}
+  \end{align}
+
+  Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, from Lemma \ref{lemma:edge-connectivity-pseudorandom} and $d$-regualrity we have  $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
+  Thus it suffices to show
+  \begin{align}
+    |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}   \\
+              &= \Size{S}f - \Size{T}f + \sum_{w\in T}\Size{\Neighbourhood{E}{w} \setminus S} \\
+              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E}  \\
+|S| + |T| + \CutEdges{S}{T}{E} &\le  \Size{S}f + \Size{T}(d-C-f)  \label{eq:to-show}
+  \end{align}  
+
+  \textbf{Case 1}: If $\Size{S} \leq \Size{T}$, and as $f \leq d/2$, we have 
+  \begin{align}
+    \Size{S}f + \Size{T}(d-C-f)  &\ge (\Size{S} + \Size{T})(d/2 -C) \label{eq:to-show-1}
+  \end{align}
+
+\begin{align}
+  |S| + |T| + \CutEdges{S}{T}{E} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
+                                 &\le |S| + |T| + \frac{d}{4}(\Size{S} + \Size{T}) + \epsilon d \frac{1}{2}(\Size{S} + \Size{T}) \label{eq:algebra}\\
+                                 &\le (\Size{S} + \Size{T})\left(\frac{d}{4} + 1 + \frac{
+                                   \epsilon d}{2}\right) \\
+                                 &<  (\Size{S} + \Size{T})\left(d/2-C\right) \label{eq:eps-assumption}\\
+                                 &\le \Size{S}f - \Size{T}(d-C-f) \label{eq:plug}
+ \end{align}  
+  
+Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} $\lambda < \epsilon d$.
+Equation \eqref{eq:algebra} comes from the fact that $\Size{S}\Size{T} \leq \left(\frac{\Size{S}+\Size{T}}{2}\right)^2 \le n\frac{(\Size{S}+\Size{T})}{4}$.
+Equation \eqref{eq:eps-assumption} comes from $\epsilon < 1/100C^{3/2}$.
+Equation \eqref{eq:plug} comes from Equation \eqref{eq:to-show-1} which gives us what we want.
+
+\textbf{Case 2}: If $\Size{S} > \Size{T}$, then 
+  \begin{align}
+    f\Size{S} +  \Size{T}(d-C-f)  &\ge 2\Size{S} +\Size{T}(d-C-2) \label{eq:to-show-2}
+  \end{align}
+  
+  To show Equation \eqref{eq:to-show}, it suffices to show that
+\begin{align}
+  \CutEdges{S}{T}{E} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
+\end{align}
+
+Now we distinguish between two cases.
+
+\textbf{Case 2a}: If $\Size{T} \le \frac{\Size{S}}{C+3}$, then from $d$-regularity trivially have $\CutEdges{S}{T}{E} \leq \Size{T}d$, and equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$. \\
+
+\textbf{Case 2b}: $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
+Now using the \nameref{lemma:expanders-mixing-lemma}
+
+\[ \CutEdges{S}{T}{E} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+
+which gives us Equation \eqref{eq:to-show-3}.
+
+\end{proof}  
 
 \section{Embedding Machinery}
 \label{sec:embed-machinery}
@@ -685,69 +768,8 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 
 \section{General Result}
 \label{sec:general-result}
-\begin{lemma}\label{lemma:f-factor}
-  Fix $C > 0$ and $d \ge d_0(C)$.
-Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$, where $\epsilon < 1/100C^{3/2}$.
-If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$ contains an $f$-factor for any even $2 \le f \le d/2$.
-\end{lemma}
 
-\begin{proof}
-  We prove this lemma using the \nameref{lemma:tutte-criterion-factor}.
-  We need to show that for any pair of disjoint sets $S, T$
-  \begin{align}
-   |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} &\ge  \OddComponents{S \cup T}
-  \end{align}
-
-  Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, from Lemma \ref{lemma:edge-connectivity-pseudorandom} and $d$-regualrity we have  $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
-  Thus it suffices to show
-  \begin{align}
-    |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}   \\
-              &= \Size{S}f - \Size{T}f + \sum_{w\in T}\Size{\Neighbourhood{E}{w} \setminus S} \\
-              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E}  \\
-|S| + |T| + \CutEdges{S}{T}{E} &\le  \Size{S}f + \Size{T}(d-C-f)  \label{eq:to-show}
-  \end{align}  
-
-  \textbf{Case 1}: If $\Size{S} \leq \Size{T}$, and as $f \leq d/2$, we have 
-  \begin{align}
-    \Size{S}f + \Size{T}(d-C-f)  &\ge (\Size{S} + \Size{T})(d/2 -C) \label{eq:to-show-1}
-  \end{align}
-
-\begin{align}
-  |S| + |T| + \CutEdges{S}{T}{E} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
-                                 &\le |S| + |T| + \frac{d}{4}(\Size{S} + \Size{T}) + \epsilon d \frac{1}{2}(\Size{S} + \Size{T}) \label{eq:algebra}\\
-                                 &\le (\Size{S} + \Size{T})\left(\frac{d}{4} + 1 + \frac{
-                                   \epsilon d}{2}\right) \\
-                                 &<  (\Size{S} + \Size{T})\left(d/2-C\right) \label{eq:eps-assumption}\\
-                                 &\le \Size{S}f - \Size{T}(d-C-f) \label{eq:plug}
- \end{align}  
-  
-Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} $\lambda < \epsilon d$.
-Equation \eqref{eq:algebra} comes from the fact that $\Size{S}\Size{T} \leq \left(\frac{\Size{S}+\Size{T}}{2}\right)^2 \le n\frac{(\Size{S}+\Size{T})}{4}$.
-Equation \eqref{eq:eps-assumption} comes from $\epsilon < 1/100C^{3/2}$.
-Equation \eqref{eq:plug} comes from Equation \eqref{eq:to-show-1} which gives us what we want.
-
-\textbf{Case 2}: If $\Size{S} > \Size{T}$, then 
-  \begin{align}
-    f\Size{S} +  \Size{T}(d-C-f)  &\ge 2\Size{S} +\Size{T}(d-C-2) \label{eq:to-show-2}
-  \end{align}
-  
-  To show Equation \eqref{eq:to-show}, it suffices to show that
-\begin{align}
-  \CutEdges{S}{T}{E} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
-\end{align}
-
-Now we distinguish between two cases.
-
-\textbf{Case 2a}: If $\Size{T} \le \frac{\Size{S}}{C+3}$, then from $d$-regularity trivially have $\CutEdges{S}{T}{E} \leq \Size{T}d$, and equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$. \\
-
-\textbf{Case 2b}: $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
-Now using the \nameref{lemma:expanders-mixing-lemma}
-
-\[ \CutEdges{S}{T}{E} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
-
-which gives us Equation \eqref{eq:to-show-3}.
-
-\end{proof}  
+\rajko{If you take $C = \Theta(d)$, then $\epsilon$ in Lemma 3.2 is $d^{-3/2}$, and $\lambda < 1/\sqrt(d)$. That doesn't quite work. Instead, I suggest you combine this proof with the previous one as Step 4: Remove the edges from the embedding and the perfect matching, and find $t-1$ factor. This works with constant $C$ as you have removed at most 5 or so edges touching each vertex. }
 
 \begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
   There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
