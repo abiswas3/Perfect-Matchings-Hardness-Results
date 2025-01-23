@@ -177,13 +177,20 @@ We point out that theorem bt \citet[Theorem 2.3]{brouwer2005eigenvalues} also us
 \textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques.
 } Our main result is stated below.
 
-\begin{theorem}[Main Theorem]\label{thm:main-thm}
+\ari{Change this.}
+
+\begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
+  There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
+  Let $G$ be an $\EnDeeLambda$ graph, and $H$ be a graph on $n'$ vertices with $\MaxDegree{H} \le 5$.
+  Then $\PM{H}$ is an affine restriction of $\Card{G, \vec{t}}$.
+\end{theorem}
+
+\begin{corollary}\label{thm:main-thm}
 
   There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < d/50$.
 
   \[ \Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
-
-\end{theorem}
+\end{corollary}
 
 \paragraph{Extending The Result To Even Colourings}
 Given any $\EnDeeLambda$ graph $G$ on an odd number of vertices, and odd $t\in [d]$, $\Card{G, \vec{t}}$ denotes the claim that every vertex has $t$ edges incident on them.
@@ -198,11 +205,6 @@ They use contiguity to split $G'$ into $\lfloor t/2\rfloor$ 2-regular subgraphs.
 The union of which shows that each vertex in $G'$ has $t-1$ neighbours.
 Our reduction does not require randomness, and thus once again we are able to provide worst case bounds for a broader class of graphs.\\
 
-\begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
-  There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
-  Let $G$ be an $\EnDeeLambda$ graph, and $H$ be a graph on $n'$ vertices with $\MaxDegree{H} \le 5$.
-  Then $\PM{H}$ is an affine restriction of $\Card{G, \vec{t}}$.
-\end{theorem}
 
 
 The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:main-thm}.
