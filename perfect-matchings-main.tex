@@ -738,15 +738,15 @@ This concludes the proof.
 \section{Proof Of Main Result}
 \label{sec:main-proof}
 
-In this section we give a for Theorem \ref{thm:general-hardness-result} for any value of $t \leq d$.
+In this section we proof Theorem \ref{thm:general-hardness-result} for any value of $t \leq d$.
 The proof for Theorem \ref{thm:main-thm} follows by setting $t=1$.
-Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices, and,  $\HardInstance$ denote the hard instance on $t=\BigO{\frac{n}{\log n}}$ vertices for which refuting $\PM{H}$ has degree $\BigOmega{t}$ as per Lemma \ref{lemma:worst-case-instance-sos}.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. Let $D=\nicefrac{d}{\lambda}$ and $\HardInstance$ denote the hard instance on $t=\frac{n}{80\cdot 5\log_D n}$ vertices for which refuting $\PM{H}$ has degree $\BigOmega{t}$ as per Lemma \ref{lemma:worst-case-instance-sos}.
 Then hardness proof follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
 
 \begin{enumerate}
 \item{Invoke Theorem \ref{thm:partition} with parameters $c=3/4$ and $\epsilon = 1/16$ to get a partition of $V = \RedA \cup \GreenB$ such that for every $u \in V$: $\frac{11}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \RedA} \leq \frac{13}{16}d$ and $\frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d$.}
 
-\item{As $\MinimalDegree{G[\GreenB]} \geq \frac{3d}{16}$, $\Size{G[\GreenB]} \geq \frac{3n}{16}$ and $\MaxDegree{H} = 5 < d$, and $\lambda < d/50$, we can invoke the  \nameref{theorem:embedding-theorem} to embed $H$ on $t = \lfloor \frac{ n}{80\cdot 5\log_Dn}\rfloor $ vertices as a topological minor $G_{\EmbeddingFunc}$ in $G[\GreenB]$ such that every edge $(u,v)$ in $H$ is an odd length path $\Path{\Embedding{u}}{\Embedding{v}}$ in $G_{\EmbeddingFunc}$.
+\item{As $\MinimalDegree{G[\GreenB]} \geq \frac{3d}{16}$, $\Size{G[\GreenB]} \geq \frac{3n}{16}$ and $\MaxDegree{H} = 5 < d$, and $\lambda < \epsilon d < d/50$, we can invoke the  \nameref{theorem:embedding-theorem} to embed $H$ on $t = \lfloor \frac{ n}{80\cdot 5\log_Dn}\rfloor $ vertices as a topological minor $G_{\EmbeddingFunc}$ in $G[\GreenB]$ such that every edge $(u,v)$ in $H$ is an odd length path $\Path{\Embedding{u}}{\Embedding{v}}$ in $G_{\EmbeddingFunc}$.
     Then it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
     To see why, map each variable $y_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $x_{uv}$ or $\bar{x}_{uv}$, such that the edges adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $x_{uv}$. This is always possible as $\Path{u}{v}$ has odd length.
     Observe that this function maps a perfect matching formula  $\PM{G_{\EmbeddingFunc}}$ to $\PM{H}$.
