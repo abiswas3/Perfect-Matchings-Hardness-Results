@@ -695,14 +695,14 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
   We prove this lemma using the \nameref{lemma:tutte-criterion-factor}.
   We need to show that for any pair of disjoint sets $S, T$
   \begin{align}
-   |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} &\ge  \OddComponents{S \cup T}
+   \OddComponents{S \cup T}  &\le  |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}
   \end{align}
 
   Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, from Lemma \ref{lemma:edge-connectivity-pseudorandom} and $d$-regualrity we have  $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
   Thus it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}   \\
-              &= \Size{S}f - \Size{T}f + \sum_{w\in T}\Size{\Neighbourhood{E}{w} \setminus S} \\
+              % &= \Size{S}f - \Size{T}f + \sum_{w\in T}\Size{\Neighbourhood{E}{w} \setminus S} \\
               &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E}  \\
 |S| + |T| + \CutEdges{S}{T}{E} &\le  \Size{S}f + \Size{T}(d-C-f)  \label{eq:to-show}
   \end{align}  
