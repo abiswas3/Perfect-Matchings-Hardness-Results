@@ -177,7 +177,7 @@ We point out that theorem bt \citet[Theorem 2.3]{brouwer2005eigenvalues} also us
 \textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques.
 } Our main result is stated below.
 
-\ari{Change this.}
+\ari{Change this to just directly the general proof.}
 
 \begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
   There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
@@ -753,16 +753,9 @@ Then hardness proof follows from the following steps as illustrated in Figure \r
     Therefore it should be at least as hard to refute $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
   }
 
-\item{
-     We want to show our hardness result by reducing the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
-Given an odd integer $t \in \Naturals$, we can assume without loss of generality that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$).  
-  Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in G_{\EmbeddingFunc}$. As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $C=5$ edges in this process.
-  Thus we have $\MinimalDegree{G'} = d - C$. Setting $\lambda < \epsilon d < d/50$ with $\epsilon < 1/100C^{3/2}$, we invoke the \nameref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
-  Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that, for any $u \in G'$, set edges $e$ that are included in the $t-1$ factor to $\rho(e) = 1$.
-  Observe that for $G$ to satisfy $\Card{G, \vec{t}}$, the affine restriction of $G$ with respect to $\rho$ must have a perfect matching (as each vertex needs one more edge to be assigned 1 to satisfy the formula).
-Thefore, the task of refuting $\Card{G, \vec{t}}$ boils down to refuting $\PM{G}_{\rho}$. As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size.
+\item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size.
     The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda \leq d/50$, we can inoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
-Extend $\rho$ such that
+    Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that
 \[
 \rho(x_e) =
 \left\{
@@ -774,13 +767,21 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 \right.
 \]
 
-Thus, we conclude $\Card{G, \vec{t}} \equiv \PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. This concludes the proof for Theorem \ref{thm:general-hardness-result}.
+Thus, we conclude $\PM{G}|_\rho \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. This concludes the proof for Theorem \ref{thm:main-thm}.
+}
+  
+\item{If we want to show our hardness by reducing the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
+Given an odd integer $t \in \Naturals$, we can assume without loss of generality that $t \le d/2$ (otherwise we can flip the 0's and 1's and just show the result for $\Card{G, \vec{d-t}}$).  
+Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in \Edges{G_{\EmbeddingFunc}} \cup M$, where $M$ is the perfect matching from the step above.
+As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $C=5 + 1$ edges in this process.
+  Thus we have $\MinimalDegree{G'} = d - C$. Setting $\lambda < \epsilon d < d/50$ with $\epsilon < 1/100C^{3/2}$, we invoke the \nameref{lemma:f-factor} to show that $G'$ has a $t-1$ factor.
+Now extend $\rho$ by the following process - for every $u \in G'$, set edges $e$ that are included in the $t-1$ factor to $\rho(e) = 1$.
+Observe that for $G$ to satisfy $\Card{G, \vec{t}}$, we need $G_{\EmbeddingFunc}$ to satisfy a perfect matching.
+Thus refuting $\Card{G, \vec{t}}$ is reduced to refuting $\PM{H}$.
 }
 
 
   \end{enumerate}
-
-
 
 
 
