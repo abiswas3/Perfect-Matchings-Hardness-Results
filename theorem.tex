@@ -9,7 +9,7 @@
   {\bfseries\color{black}} % Theorem head font
   {} % Punctuation after theorem head
   {.5em} % Space after theorem head
-  {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
+  {\thmname{#1}~\thmnumber{#2}:~\textcolor{theoremcolor}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
 
 % Define mdframed settings for the lemma box
 \mdfdefinestyle{theoremframe}{
@@ -60,6 +60,7 @@
 \newtheorem{corollary}{Corollary}
 \surroundwithmdframed[style=remarkframe]{corollary}
 
+% Definitions
 \newtheoremstyle{definitionstyle}
   {\topsep} % Space above
   {\topsep} % Space below
@@ -68,7 +69,7 @@
   {\bfseries\color{black}} % Theorem head font
   {} % Punctuation after theorem head
   {.5em} % Space after theorem head
-  {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
+  {\thmname{#1}~\thmnumber{#2}:~\textcolor{theoremcolor}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
 
 % Define mdframed settings for the lemma box
 \mdfdefinestyle{definitionframe}{
@@ -96,7 +97,7 @@
   {\bfseries\color{black}} % Theorem head font
   {} % Punctuation after theorem head
   {.5em} % Space after theorem head
-  {\thmname{#1}~\thmnumber{#2}:~\textcolor{carminepink}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
+  {\thmname{#1}~\thmnumber{#2}:~\textcolor{theoremcolor}{\thmnote{[#3]}}} % Theorem head spec (can be left empty, meaning ‘normal’)
 
 % Define mdframed settings for the lemma box
 \mdfdefinestyle{lemmaframe}{

@@ -37,7 +37,7 @@ As direct consquence of this result, we positively answer the open problem posed
 
 \begin{figure}
 	\includegraphics{assets/proof-system-relationships.pdf}
-	\caption{The figure above (sourced from \citep[Page 9]{fleming2019semialgebraic}) depicts proof systems commonly studied by the community and how they relate to each other. We show lower bounds in the proof systems highlighted in orange, and as a consequence this also implies lower bounds in the bounded-depth Frege proof systems. \highlight{Change this}.}
+	\caption{The figure above (sourced from \citep[Page 9]{fleming2019semialgebraic}) depicts proof systems commonly studied by the community and how they relate to each other. We show lower bounds in the proof systems highlighted in orange, and as a consequence this also implies lower bounds in the bounded-depth Frege proof systems.}
 	\label{fig:example-proof-systems}
 \end{figure}
 
@@ -93,132 +93,101 @@ Note if there was an assignment of variables in $\vec{x} \in \bit^{|E|}$ that sa
 When $\vec{b} = \vec{1}$, as short hand we denote $\Card{G, \vec{b}}$ as $\PM{G}$.
 When $|V|$ is odd, we ask what is the complexity refuting $\PM{G}$ in the SoS proof system.
 With no further constraints on $G$, generic lower bounds for such refutations are not known.
-In recent work, \citet{Austrin_2022} made progress in proving lower bounds by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Sum-of-Squares system requires long proofs.
-More formally, they show that
-
-\begin{theorem}\label{thm:prev-thm}
-There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd) \[ \Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
-\end{theorem}
-
+In recent work, \citet{Austrin_2022} made progress in proving lower bounds by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Polynomial Calculus (PC) and Sum-of-Squares system requires proofs with degree $\BigOmega{\nicefrac{n}{\log n}}$ on average.
+% \begin{theorem}\label{thm:prev-thm}
+% There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd) \[ \Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
+% \end{theorem}
 Although random $d$ regular graphs are expander graphs with high probability, their lower bound techniques rely strongly on the randomness of sampling, and thus they are unable to extend their results to general expander graphs.
-They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs, and leave showing this as an open problem. In this work, we extend their results to all expander graphs\footnote{More specifically we mean any expander graph with a very mild spectral gap $\lambda \leq d/50$.}, and provide worst case size lower bounds instead of average case lower bounds.
-
-\begin{problem}
-
-Do refutations for $\Card{G, \vec{1}}$ for SoS have large size, when $G$ is an expander graph?
-
-\end{problem}
-
-By answering the above question affirmatively, in Section \ref{sec:general-result} we show that we are able to also positively answer \citep[Open Problem 7.7]{buss2021proof}, Buss and Nordstr{\"o}m asked ``\textit{Are even colouring formulas over expander graphs hard for
+They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs, and leave showing this as an open problem. In this work, we extend their results to all expander graphs\footnote{More specifically we mean any expander graph with a very mild spectral gap $\lambda \leq \epsilon 50$ where $\epsilon$ is small universal constant.}, and provide worst case size lower bounds instead of average case lower bounds.
+As a direct consequence of our hardness result, we  positively answer \citep[Open Problem 7.7]{buss2021proof}, where Buss and Nordstr{\"o}m asked ``\textit{Are even colouring formulas over expander graphs hard for
 polynomial calculus over fields of characteristic distinct from 2 ?}''
 The even colouring formula is a special case of $\Card{G, \vec{b}}$, where each coordinate  $\vec{b}$ is $\degree{G}{v}/2$ for $v \in V$.
-Therefore, their open question can be reformulated as the following question.
+Therefore, their open question and that of refuting perfect matchings can be reformulated as the following general question.
 
 \begin{problem}
-
-Do refutations for $\Card{G, \vec{b}}$ for
-polynomial calculus over fields of characteristic $\neq 2$ have large size, when $G$ is an expander graph? 
+  
+Given any odd $t \in \Naturals$, do refutations for $\Card{G, \vec{t}}$ in
+PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is an expander graph? 
 \end{problem}
 
-
+In this work, we answer the above question affirmatively.
+Given any $\EnDeeLambda$ graph $G$ on an odd number of vertices, and odd $t\in [d]$, $\Card{G, \vec{t}}$ denotes the claim that every vertex has $t$ edges incident on them.
+We obtain our hardness result with the following steps.
+First, we show a embedding theorem that allows us to topologically embed a grapg $H$ which is difficult to refute into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilon d$) \emph{without} relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
+This allows us to transfer the hardness of $H$ into the host graph.
+As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
+Note that just topologically embedding $H$ into $G$ is still not sufficient to show that perfect matchings in $G$ are hard to refute.
+It is entirely possible that the residual graph which does not participate in the  embedding has evidence that allows us to refute the existence of a perfect matching with shorter proofs (for example it may have an isolated vertex).
+To show that this is not possible, the second part of the proofs shows  that the residual graph has a perfect matching.
+As $n$ is odd, this means that the hardness of refuting perfect matchings \emph{must} come from the embedding only.
+This shows that refuting $\Card{G, \vec{t}}$ is hard when $t=1$.
+Figure \ref{fig:proof-outline} outlines our hardness proof.  \par
+To extend this to result to any odd $t \leq d$, we partition $G$ into 2 subgraphs $G'$ and $G_0$, where $G'$ is created by deleting all edges in $G$ that participate in the embedding and the matching.
+Then we show that $G'$ contains a $t-1$ factor.
+This implies that for for every vertex of $G$ to have degree $t$, $G_0$ must contain a perfect matching.
+Therefore, we reduce the task of refuting $\Card{G,\vec{t}}$ to refuting $\PM{G_0}$, and this gives us the general result.
 \begin{figure}
   \includegraphics[width=0.8\textwidth]{assets/proof-sketch.pdf}
   \caption{The figure above above outlines the steps of the proof. First we partition the vertices of $G$ into balanced sets $\RedA$ and $\GreenB$. After that, we topologically embed the hard instance $H$ such that every path representing an edge of $e$ in the embedding is of odd size. This ensures that the graph restricted to the embedding is hard to refute. Next we show that the induced subgraph (referred to as the residual graph $\RemGraph = G[V \setminus \Embedding{\Subdivision{H}{\sigma}}]$) has a perfect matching. This  implies that the hardness to refute matchings in $G$ is transferred to the hardness of refuting $H$.}
 	\label{fig:proof-outline}
 \end{figure}
 
-
-\subsection{Technical Overview}
-
-\rajko{I suggest omitting this section. It is essentially about how *not* to prove the theorem, other than the general strategy. We will give them all the credit for the general idea.}
-
-The original hardness proof for random graphs works as follows.
-They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-sos}).
-Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
-A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitrary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
-However to transfer hardness, it does not suffice to just embed $H$ into $G$, but we need a topological embedding of $H$ such that the parities of all the paths are the same (all paths must be of odd length).
-Thus, their main technical contribution is a embedding theorem that allows for  topological embeddings of any graph $H$ into an expander graph.
-To do this, they first partition the graph into two roughly equal sized sets $S$ and $T$ with sufficiently many edges in the cut between them.
-Then they require that the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
-The reason the authors require the second property, is to be able to extend result by \citet{krivelevich2019completeminorsgraphssparse}, which allows us to embed any graph $H$ into a host graph $\tilde{G}$ as an ordinary minor, if $\tilde{G}$ is a vertex expander with the above properties.
-Now to go from minor to topological minor, a key step in their construction is that they require that the induced subgraph $G[T]$ also be odd cycle robust (see \citep[Definition 3.2]{Austrin_2022}).
-To show that $G$ is odd cycle robust, their proof needs $G$ to be a random sample, as this allows them to show that the number of $i$-cycles in the graph, denoted in their paper by $Y_i(G)$ is a Poisson random variable.
-Then using the tail bounds of the Poisson distribution they get what they are after with high probability.
-This is one of of the two places where the authors rely critically on randomness.
-This restriction means they can only provide average case lower bounds.
-These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of expander graphs.\par
-
-Note that just topologically embedding $H$ into $G$ is still not sufficient to show that perfect matchings in $G$ are hard to refute.
-It is entirely possible that the residual graph which does not contain an embedding of $H$ has evidence that allows us to refute the existence of a perfect matching with shorter proofs (for example it may have an isolated vertex).
-One way to prevent this possibility is to show that the residual graph has a perfect matching.
-As $n$ is odd, this could mean that the hardness of refuting perfect matchings \emph{must} come from the embedding only.
-To show that the residual graph has a perfect matching the authors rely on an involved set of tools from Linear algebra.
-First they use the result by \citet[Theorem 2.3]{brouwer2005eigenvalues}, which says if $\lambda_m(L_{G'}) \leq 2\lambda_2(L_{G'})$, then $G'$ has a perfect matching.
-Here $G'$ will be residual graph ($G$ with the embedded region removed) on $m$ even numbered vertices, $L_{G'}$ is its Laplacian and $\lambda_2$ and $\lambda_m$ are the second and last eigenvalues sorted in ascending order.
-To show this spectral bound, they rely on the interlacing theorem\footnote{\url{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html}} and Weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebra, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
-This general idea is summarised in Figure \ref{fig:proof-outline}.
-
-\subsection{Our Contribution}
-
-\rajko{As well as most of the blurb from this one. Just go straight to the point, and then discuss how it extends to even colouring formulas. Even better, combine this and the next section and state a general result for Card(G, t).}
-\ari{I will tackle this on Friday. }
-In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
-We too follow the proof outline given in Figure \ref{fig:proof-outline}.
-However, our results differ in two key aspects.
-Firstly, as described earlier, we show a embedding theorem that allows us to topologically embed any graph $H$ into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq d/50$) \emph{without} relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
-This allows us to embed any graph $H$ into any expander graph, even the ones constructed deterministically.
-As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
-The second distinctive feature of our results is the qualitative simplicity of our techniques.
-Although our embedding theorem is stronger it is considerably easier to construct.
-Using the single definition of non-blocking bipartite graphs from theory of wide-sense networks \citep{feldman1988wide} we show that it is possible to optimally topologically embed any graph into an expander graph, and still satisfy all the other properties needed to prove hardness lower bounds.
-Another illustration of the simplicity of our techniques is how we show the residual graph must has a perfect matching without relying on any complex spectral graph theory.
-A simple application of the \nameref{lemma:tutte-criterion}, and the combinatorial properties of the \nameref{lemma:expanders-mixing-lemma} is sufficient to prove this result, without relying on any involved spectral graph theory or linear algebra.
-We point out that theorem bt \citet[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nameref{lemma:tutte-criterion} under the hood, and thus our proof can be viewed as a more direct intuitive proof of why we should expect to find a perfect matching in the residual graph.
-\textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques.
-} Our main result is stated below.
-
-\ari{Change this to just directly the general proof.}
-
 \begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
-  There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
-  Let $G$ be an $\EnDeeLambda$ graph, and $H$ be a graph on $n'$ vertices with $\MaxDegree{H} \le 5$.
-  Then $\PM{H}$ is an affine restriction of $\Card{G, \vec{t}}$.
+
+  There exists universal constants $\epsilon, n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < \epsilon d$, and for any odd $1 \leq t \leq d$:  
+  \[ \Degree{\Card{G, \vec{t}} \PC \bot} = \BigOmega{\nicefrac{n}{\log n}}\]
+  \[ \Degree{\Card{G, \vec{t}} \SOS \bot} = \BigOmega{\nicefrac{n}{\log n}}\]  
+  % There exists universal constants $d_0 \in \Naturals$ and $\epsilon > 0$ such that for all $d \ge d_0$ the following holds: Let $n$, $n' \le \frac{\epsilon n}{\log n}$ and $t \in [d]$ be odd integers.
+  % Let $G$ be an $\EnDeeLambda$ graph, and $H$ be a graph on $n'$ vertices with $\MaxDegree{H} \le 5$.
+  % Then $\PM{H}$ is an affine restriction of $\Card{G, \vec{t}}$.
 \end{theorem}
 
-\begin{corollary}\label{thm:main-thm}
+\rajko{I suggest omitting this section. It is essentially about how *not* to prove the theorem, other than the general strategy. We will give them all the credit for the general idea.}
+\ari{Omitted, and re-written, but keeping your comment here for reference. We have not really emphasised our simplicity, and we have not contrasted our results with Killiand And Per. I know you say this how to *not* solve the problem, but the reviewers might not know this (or they might, I'm not sure). It is possibly worth thinking about. CS reviewers might not be as in tune with results as math reviewers.}.
+% The original hardness proof for random graphs works as follows.
+% They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-sos}).
+% Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
+% A random graph is an expander graph with high probability, and there is a long line of research about embedding arbitrary graphs into expander graphs \citep{krivelevich2019completeminorsgraphssparse, kleinberg1996short}.
+% However to transfer hardness, it does not suffice to just embed $H$ into $G$, but we need a topological embedding of $H$ such that the parities of all the paths are the same (all paths must be of odd length).
+% Thus, their main technical contribution is a embedding theorem that allows for  topological embeddings of any graph $H$ into an expander graph.
+% To do this, they first partition the graph into two roughly equal sized sets $S$ and $T$ with sufficiently many edges in the cut between them.
+% Then they require that the induced subgraph $G[T]$ contains a constant degree $\alpha$ vertex expander such that the maximal degree of $H$ is $\MaxDegree{H} \ll \alpha^2 \degree{}{G}$.
+% The reason the authors require the second property, is to be able to extend result by \citet{krivelevich2019completeminorsgraphssparse}, which allows us to embed any graph $H$ into a host graph $\tilde{G}$ as an ordinary minor, if $\tilde{G}$ is a vertex expander with the above properties.
+% Now to go from minor to topological minor, a key step in their construction is that they require that the induced subgraph $G[T]$ also be odd cycle robust (see \citep[Definition 3.2]{Austrin_2022}).
+% To show that $G$ is odd cycle robust, their proof needs $G$ to be a random sample, as this allows them to show that the number of $i$-cycles in the graph, denoted in their paper by $Y_i(G)$ is a Poisson random variable.
+% Then using the tail bounds of the Poisson distribution they get what they are after with high probability.
+% This is one of of the two places where the authors rely critically on randomness.
+% This restriction means they can only provide average case lower bounds.
+% These techniques do not apply when the host graph $G$ is constructed deterministically, as in the case of the many known deterministic constructions of expander graphs.\par
 
-  There is constants $n_0, d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds for \emph{any} $(n, d, \lambda)$-graph $G$ on $n \geq n_0$ vertices, where $n$ is odd and $\lambda < d/50$.
+% Here $G'$ will be residual graph ($G$ with the embedded region removed) on $m$ even numbered vertices, $L_{G'}$ is its Laplacian and $\lambda_2$ and $\lambda_m$ are the second and last eigenvalues sorted in ascending order.
+% To show this spectral bound, they rely on the interlacing theorem\footnote{\url{https://simple-complexities.github.io/eigenvalue/interlacing/2020/02/10/interlacing.html}} and Weyl's theorem\footnote{\url{https://terrytao.wordpress.com/tag/weyls-theorem/}} from Linear algebra, along with the fact that random graphs are strong expanders with $\lambda \leq \sqrt{d-1} - \SmallO{1}$.
+% This general idea is summarised in Figure \ref{fig:proof-outline}.
 
-  \[ \Degree{\PerfectMatching{G} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
-\end{corollary}
+% \subsection{Our Contribution}
 
-\paragraph{Extending The Result To Even Colourings}
-Given any $\EnDeeLambda$ graph $G$ on an odd number of vertices, and odd $t\in [d]$, $\Card{G, \vec{t}}$ denotes the claim that every vertex has $t$ edges incident on them.
-We reduce refuting $\Card{G, \vec{t}}$ to refuting $\PM{G_0}$ for a subgraph $G_0$ of $G$.
-We do this by paritioning $G$ into subgraphs $G_0$ and a remainder graph $G'$.
-Then we show every vertex has in $G'$ has $t-1$ edges incindent on them.
-Thus, the hardness of refuting $\Card{G, \vec{t}}$ comes from showing that $G_0$ cannot contain a perfect matching.
-In Section 3.2 of their paper, Austrin and Risse also reduce $\Card{G, \vec{t}}$ to refuting $\PM{G_0}$.
-However, to split graph $G$ into $G_0$ and $G'$ their proof relies on the contiguity property \citep[See Chapter 23]{frieze2024introduction} of random graphs.
-This is the second place that the authors critically rely on randomness (the first being in their embedding theorem).
-They use contiguity to split $G'$ into $\lfloor t/2\rfloor$ 2-regular subgraphs.
-The union of which shows that each vertex in $G'$ has $t-1$ neighbours.
-Our reduction does not require randomness, and thus once again we are able to provide worst case bounds for a broader class of graphs.\\
-
-
-
-The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:main-thm}.
-In Section \ref{sec:embed-machinery}, we review definitions and results from the theory of wide-sense nonblocking networks, which aid us in the construction of our main embedding theorem.
-In Section \ref{sec:main-proof}, we provide the full proof of the main result and in Section \ref{sec:related-work} we describe related results in proof complexity lower bounds using embedding techniques.
-
+% \rajko{As well as most of the blurb from this one. Just go straight to the point, and then discuss how it extends to even colouring formulas. Even better, combine this and the next section and state a general result for Card(G, t).}
+% \ari{I will tackle this on Friday. }
+% In this work, we directly answer Buss and Nordstr{\"o}m's question by showing hardness results that do \emph{not} rely on randomness, and therefore allowing us to prove worst case lower bounds for refuting perfect matchings in any large enough expander graph with an odd number of vertices.
+% We too follow the proof outline given in Figure \ref{fig:proof-outline}.
+% However, our results differ in two key aspects.
+% Firstly, as described earlier, we show a embedding theorem that allows us to topologically embed any graph $H$ into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq d/50$) \emph{without} relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
+% This allows us to embed any graph $H$ into any expander graph, even the ones constructed deterministically.
+% As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
+% The second distinctive feature of our results is the qualitative simplicity of our techniques.
+% Although our embedding theorem is stronger it is considerably easier to construct.
+% Using the single definition of non-blocking bipartite graphs from theory of wide-sense networks \citep{feldman1988wide} we show that it is possible to optimally topologically embed any graph into an expander graph, and still satisfy all the other properties needed to prove hardness lower bounds.
+% Another illustration of the simplicity of our techniques is how we show the residual graph must has a perfect matching without relying on any complex spectral graph theory.
+% A simple application of the \nameref{lemma:tutte-criterion}, and the combinatorial properties of the \nameref{lemma:expanders-mixing-lemma} is sufficient to prove this result, without relying on any involved spectral graph theory or linear algebra.
+% We point out that theorem bt \citet[Theorem 2.3]{brouwer2005eigenvalues} also uses the \nameref{lemma:tutte-criterion} under the hood, and thus our proof can be viewed as a more direct intuitive proof of why we should expect to find a perfect matching in the residual graph.
+% \textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques.
+% } Our main result is stated below.
+The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:general-hardness-result}.
+In Section \ref{sec:matching-machinery} and Section \ref{sec:embed-machinery}, we describe and prove the main lemmas needed to prove our lower bound.
+In Section \ref{sec:main-proof}, we provide the full proof of the hardness result and in Section \ref{sec:related-work} we describe related results in proving proof complexity lower bounds using embedding techniques.
 
 \section{Preliminaries}
 \label{sec:prelims}
-
-We review some basic tooling used for proving existence of objects using the probabilistic method.
-
-
-
 
 \subsection{Graph Theory Preliminaries}
 \label{sec:graph-theory-prelims}
@@ -226,7 +195,7 @@ We review some basic tooling used for proving existence of objects using the pro
 For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$.
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
 Given two sets $S, T \subseteq \Vertices{G}$, we denote with use $\CutEdges{S}{T}{E'}$ to denote the number of edges in $E'$ with one endpoint in $S$ and one endpoint in $T$ 
-\rajko{I suggest the following notation: $e_G(S, T)$ denotes the number of edges with one endpoint in $S$ and the other in $T$. As we do not require $S$ and $T$ to be disjoint, any edge with both endpoints in $S \cap T$ is counted twice in $e_G(S, T)$. This is important as we use $e_G(S, S)$.}
+% \rajko{I suggest the following notation: $e_G(S, T)$ denotes the number of edges with one endpoint in $S$ and the other in $T$. As we do not require $S$ and $T$ to be disjoint, any edge with both endpoints in $S \cap T$ is counted twice in $e_G(S, T)$. This is important as we use $e_G(S, S)$.}
 % We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
 % We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
 Next, we give a definition for pseudorandom graphs or expander graphs.
@@ -237,6 +206,7 @@ Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda
 We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
 \end{definition}
 
+The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively.
 
 \begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
   Given an $\EnDeeLambda$ graph $G$ for any $S, T \subseteq \Vertices{G}$ we have
@@ -247,25 +217,25 @@ $$
 $$
 \end{lemma}
 
-\rajko{I don't think we need the following lemma.}
-\ari{I used it in the lemma below, maybe we don't need it. I'll remove it if we do not.}
+% \rajko{I don't think we need the following lemma.}
+% \ari{I used it in the lemma below, maybe we don't need it. I'll remove it if we do not.}
 
-\begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
-Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
-\end{lemma}
-\begin{proof}
-  We want to show that for all $S \subseteq \Vertices{G}$ of size $1 \leq \Size{S} \leq \frac{n}{2}$, we have $\CutEdges{S}{\Complement{S}}{\Edges{G}} \geq d$.
-  When $1\leq \Size{S} \leq d$, as $G$ is $d$ regular, every vertex in $S$ must have at least $d- \Size{S} + 1$ edges poking out poking out $S$.
-  Thus, the total edges out of $S$ is $\Size{S}(d- \Size{S} + 1)$ which has minimal value $d$.
-  If $d \leq \Size{S} \leq \frac{n}{2}$, use the tight version of the expander mixing lemma, and combined with the  fact that $d- \lambda > 2$ and $(n-\Size{S})$ is smallest when $\Size{S} = n/2$ to get the bound
+% \begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
+% Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
+% \end{lemma}
+% \begin{proof}
+%   We want to show that for all $S \subseteq \Vertices{G}$ of size $1 \leq \Size{S} \leq \frac{n}{2}$, we have $\CutEdges{S}{\Complement{S}}{\Edges{G}} \geq d$.
+%   When $1\leq \Size{S} \leq d$, as $G$ is $d$ regular, every vertex in $S$ must have at least $d- \Size{S} + 1$ edges poking out poking out $S$.
+%   Thus, the total edges out of $S$ is $\Size{S}(d- \Size{S} + 1)$ which has minimal value $d$.
+%   If $d \leq \Size{S} \leq \frac{n}{2}$, use the tight version of the expander mixing lemma, and combined with the  fact that $d- \lambda > 2$ and $(n-\Size{S})$ is smallest when $\Size{S} = n/2$ to get the bound
 
-  \begin{align*}
-    \CutEdges{S}{\Complement{S}}{\Edges{G}} &\geq \frac{d\Size{S}(n-\Size{S})}{n} - \lambda\sqrt{\Size{S}(n-\Size{S}) (1 - \frac{\Size{S}}{n}) (1 - \frac{n-\Size{S}}{n})   }\\
-                                            &=  (d-\lambda)(\Size{S}\frac{(n-\Size{S})}{2}) \\
-                                              &\geq d
-    \end{align*}
+%   \begin{align*}
+%     \CutEdges{S}{\Complement{S}}{\Edges{G}} &\geq \frac{d\Size{S}(n-\Size{S})}{n} - \lambda\sqrt{\Size{S}(n-\Size{S}) (1 - \frac{\Size{S}}{n}) (1 - \frac{n-\Size{S}}{n})   }\\
+%                                             &=  (d-\lambda)(\Size{S}\frac{(n-\Size{S})}{2}) \\
+%                                               &\geq d
+%     \end{align*}
   
-\end{proof}
+% \end{proof}
 
 % \begin{lemma}\label{lemma:d-connected-sets-have-no-bad-sets}
 %   If $G$ has edge connectivity $\EdgeConnectivity{G} = d$, and $G$ is $d$-regular, then $\forall S \in \Vertices{G}$, $\OddComponents{G \setminus S} \leq |S|$.
@@ -275,8 +245,7 @@ Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $
 %   By lemma \ref{lemma:edge-connectivity-pseudorandom}, as $\EdgeConnectivity{G} = d$, every component that connects to $S$ must have at least $d$ edges.
 %   Therefore the maximum number of components we can have is $\Size{S}$.
 % \end{proof}
-
-\begin{lemma}[Perfect Matching Tutte Criterion]\label{lemma:tutte-criterion}
+\begin{lemma}[Tutte Criterion]\label{lemma:tutte-criterion}
 Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices.
 $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$.
 \end{lemma}
@@ -469,8 +438,13 @@ We have all the conditions to invoke the \nameref{lemma:lll} to get $\PProb{\und
 % \end{remark}
 
 \section{Perfect matchings and factors in expanders}
+\label{sec:matching-machinery}
+% Next we prove a lemma that shows that even sized subsets of expander graph with large minimal degree contain perfect matchings.
+As described earlier, our hardness proof has two parts.
+The first is an embedding theorem that allows us to transfer hardness of a worst case instance.
+The second involves showing that the residual graph does not include a shorter refutation of the claim (by showing it has a perfect matching and $t-1$ factor).
+In this section, we describe tools to required to prove the second part of our hardness result.
 
-Next we prove a lemma that shows that even sized subsets of expander graph with large minimal degree contain perfect matchings.
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
 Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ contains a perfect matching.
 \end{lemma}
@@ -499,24 +473,23 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
 \end{proof}
 
 \begin{lemma}[$f$-Factor Lemma]\label{lemma:f-factor}
-  Fix $C > 0$ and $d \ge d_0(C)$.
+  Fix universal constant $C > 0$ and $d \ge d_0(C)$.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$, where $\epsilon < 1/100C^{3/2}$.
 If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$ contains an $f$-factor for any even $2 \le f \le d/2$.
 \end{lemma}
 
 \begin{proof}
   We prove this lemma using the \nameref{lemma:tutte-criterion-factor}.
-  We need to show that for any pair of disjoint sets $S, T$
+  We need to show that for any pair of disjoint sets $S, T \subseteq \Vertices{G'}$
   \begin{align}
-\OddComponents{S \cup T} &\le \Size{S}f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}
+\OddComponents{S \cup T} &\le \Size{S}f - \sum_{w \in T} f - \Size{\Neighbourhood{E'}{w} \setminus S}
   \end{align}
 
-  Given $G$ is an $\EnDeeLambda$ graph and $\lambda \leq \epsilon d < d-2$, from Lemma \ref{lemma:edge-connectivity-pseudorandom} and $d$-regualrity we have  $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
+As $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d < d/50$ and $G'$ has minimal degree $\MinimalDegree{G'} \ge d - C >  11d/16$, by the Lemma above, $G$' satisfies the strong \nameref{lemma:tutte-criterion} i.e. $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
   Thus, it suffices to show
   \begin{align}
-    |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}   \\
-              &= \Size{S}f - \Size{T}f + \sum_{w\in T}\Size{\Neighbourhood{E}{w} \setminus S} \\
-              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E}  \label{eq:to-show}
+    |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E'}{w} \setminus S}   \\
+              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E'}  \label{eq:to-show}
   \end{align}  
 
   \textbf{Case 1}: If $\Size{S} \leq \Size{T}$, and as $f \leq d/2$, we have 
@@ -525,7 +498,7 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
   \end{align}
 
 \begin{align}
-  |S| + |T| + \CutEdges{S}{T}{E} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
+  |S| + |T| + \CutEdges{S}{T}{E'} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
                                  &\le |S| + |T| + \frac{d}{4}(\Size{S} + \Size{T}) + \epsilon d \frac{1}{2}(\Size{S} + \Size{T}) \label{eq:algebra}\\
                                  &\le (\Size{S} + \Size{T})\left(\frac{d}{4} + 1 + \frac{
                                    \epsilon d}{2}\right) \\
@@ -550,21 +523,30 @@ Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives 
 
 Now we distinguish between two cases.
 
-\textbf{Case 2a}: If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then from $d$-regularity trivially have $\CutEdges{S}{T}{E} \leq \Size{T}d$, and equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
+\begin{enumerate}
 
-\textbf{Case 2b}: $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
+\item{
+    If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then we trivially have $\CutEdges{S}{T}{E'} \leq \Size{T}d$, and Equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
+  }
+
+\item{
+$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
 Now using the \nameref{lemma:expanders-mixing-lemma}
 
-\[ \CutEdges{S}{T}{E} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+\[ \CutEdges{S}{T}{E'} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
 
 which gives us Equation \eqref{eq:to-show-3}.
+  }
+  
+\end{enumerate}
+
 
 \end{proof}  
 
 \section{Embedding Machinery}
 \label{sec:embed-machinery}
 
-The following definitions are adapted from \citep{nenadov2023routing} but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
+The following definitions are adapted from \citep{nenadov2023routing}, but were originally introduced by \citet{feldman1988wide} in their work about the theory of wide sense blocking networks.
 
 \begin{definition}[$(p, q)$-non blocking bipartite graphs]
 Given $p,q \in \Naturals$, we say that a bipartite graph $\Graph = (A \cup B, E)$ is $(p, q)$ \emph{non-blocking}, if there exists a collection  $\Family{S}$ of subsets of $E$, called the \emph{safe states}, such that the following holds:
@@ -737,9 +719,8 @@ This concludes the proof.
 \section{Proof Of Main Result}
 \label{sec:main-proof}
 
-In this section we proof Theorem \ref{thm:general-hardness-result} for any value of $t \leq d$.
-The proof for Theorem \ref{thm:main-thm} follows by setting $t=1$.
-Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. Let $D=\nicefrac{d}{\lambda}$ and $\HardInstance$ denote the hard instance on $t=\frac{n}{80\cdot 5\log_D n}$ vertices for which refuting $\PM{H}$ has degree $\BigOmega{t}$ as per Lemma \ref{lemma:worst-case-instance-sos}.
+In this section we prove Theorem \ref{thm:general-hardness-result} for any value of $t \leq d$.
+Let $G=(V,E)$ denote any $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. Let $D=\nicefrac{d}{\lambda}$ and $\HardInstance$ denote the hard instance on $t=\frac{n}{80\cdot 5\log_D n}$ vertices for which refuting $\PM{H}$ has degree $\BigOmega{t}$ as per Lemma \ref{lemma:worst-case-instance-sos} (if we wanted to show lower bounds for PC, then we use $H$ from Lemma \ref{lemma:worst-case-instance-PC}).
 Then hardness proof follows from the following steps as illustrated in Figure \ref{fig:proof-outline}.
 
 \begin{enumerate}
