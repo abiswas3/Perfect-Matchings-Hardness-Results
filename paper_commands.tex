@@ -64,10 +64,12 @@
 \newcommand{\RemGraph}{G'}
 \newcommand{\BadSet}{\textcolor{blue}{\hat{S}}}
 \newcommand{\ari}[1]{\textcolor{kon-peki}{Ari: #1}}
-\newcommand{\rajko}[1]{\textcolor{fuyu-gaki}{Rajko: #1}}
-\newcommand{\highlight}[1]{\textcolor{yama-budo}{#1}}
-\newcommand{\red}[1]{\textcolor{fuyu-gaki}{#1}}
-\newcommand{\green}[1]{\textcolor{shin-ryoku}{#1}}
+\newcommand{\rajko}[1]{\textcolor{shin-ryoku}{Rajko: #1}}
+\newcommand{\highlight}[1]{\textcolor{fuyu-gaki}{#1}}
+% \newcommand{\red}[1]{\textcolor{fuyu-gaki}{#1}}
+\newcommand{\red}[1]{#1}
+% \newcommand{\green}[1]{\textcolor{shin-ryoku}{#1}}
+\newcommand{\green}[1]{#1}
 \newcommand{\RedNodes}[1]{\red{\text{Red}}(#1)}
 \newcommand{\GreenNodes}[1]{\green{\text{Green}}(#1)}
 \newcommand{\GreenB}{\green{B}}
@@ -86,14 +88,14 @@
 \newcommand{\degree}[2]{\mathsf{deg}_{#1}(#2)} 
 \newcommand{\MaxDegree}[1]{\Delta_{#1}}
 \newcommand{\Neighbourhood}[2]{\Gamma_{#1}\left(#2\right)}
-\newcommand{\Family}[1]{\textcolor{purple}{\mathcal{#1}}}
+\newcommand{\Family}[1]{\mathcal{#1}}
 \newcommand{\SafeStates}{\Family{S}}
 \newcommand{\HardInstance}{H}
 \newcommand{\Embedding}[1]{\Psi\left(#1\right)}
 \newcommand{\Path}[2]{\mathsf{P}_{#1 \rightsquigarrow #2
 }}
 \newcommand{\PathSize}{\textcolor{red}{l}}
-\newcommand{\GlobalEdgeSet}{\textcolor{orange}{\mathcal{E}}}
+\newcommand{\GlobalEdgeSet}{\mathcal{E}}
 \newcommand{\Degree}[1]{\text{Deg}\left(#1\right)}
 \newcommand{\PerfectMatching}[1]{\mathsf{PM}\left(#1\right)}
 \newcommand{\Complement}[1]{\overline{#1}}

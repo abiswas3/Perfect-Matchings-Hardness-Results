@@ -60,12 +60,12 @@ In proof systems like SoS, instead of a propositional formula over $n$ variables
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
 In SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and the size/complexity of the proof is measured by the degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
 We denote the minimum degree over all proofs that refute $\Axioms$ with $\Degree{Q \SOS \bot}$, as described earlier, the main goal of the area is to study how large proofs for refuting any given set of axioms $\Axioms$ must be.
-One motivation for proving size lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimsation problems.
+One motivation for proving size lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
 Similarly, upper bounding the proof length has led to the fruitful discovery of many efficient algorithms.
-The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierararchy of semi-definite programming.
-We refer the reader to the survey by \citet{fleming2019semialgebraic} for more details about the connections betcween the semi-algebraic proof systems and combinatorial optimisation.\par
+The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierarchy of semi-definite programming.
+We refer the reader to the survey by \citet{fleming2019semialgebraic} for more details about the connections between the semi-algebraic proof systems and combinatorial optimisation.\par
 In this paper we consider refutations of the \emph{perfect matching} principle.
-Apart from being a natural well studied problemn in its own right, the perfect matching principle is also related to the widely studied pigeon hole principle (PGP) \citep{razbarov2002pgp} and Tseitin formula \citep{grigoriev2001linear}, two well studied formulae in proof complexity.
+Apart from being a natural well studied problem in its own right, the perfect matching principle is also related to the widely studied pigeon hole principle (PGP) \citep{razbarov2002pgp} and Tseitin formula \citep{grigoriev2001linear}, two well studied formulae in proof complexity.
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct a bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n$ holes, proving the pigeon hole principle amounts to proving that such bipartite graphs does not have a perfect matching.
 There are other formulations of the pigeon hole principle (see \citep{razbarov2002pgp}), and almost all of them have short proofs in the sum of squares proof system.
@@ -113,7 +113,7 @@ PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is a
 In this work, we answer the above question affirmatively.
 Given any $\EnDeeLambda$ graph $G$ on an odd number of vertices, and odd $t\in [d]$, $\Card{G, \vec{t}}$ denotes the claim that every vertex has $t$ edges incident on them.
 We obtain our hardness result with the following steps.
-First, we show a embedding theorem that allows us to topologically embed a grapg $H$ which is difficult to refute into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilon d$) \emph{without} relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
+First, we show a embedding theorem that allows us to topologically embed a graph $H$ which is difficult to refute into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilon d$) \emph{without} relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
 This allows us to transfer the hardness of $H$ into the host graph.
 As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
 Note that just topologically embedding $H$ into $G$ is still not sufficient to show that perfect matchings in $G$ are hard to refute.
@@ -143,7 +143,7 @@ Therefore, we reduce the task of refuting $\Card{G,\vec{t}}$ to refuting $\PM{G_
 \end{theorem}
 
 \rajko{I suggest omitting this section. It is essentially about how *not* to prove the theorem, other than the general strategy. We will give them all the credit for the general idea.}
-\ari{Omitted, and re-written, but keeping your comment here for reference. We have not really emphasised our simplicity, and we have not contrasted our results with Killiand And Per. I know you say this how to *not* solve the problem, but the reviewers might not know this (or they might, I'm not sure). It is possibly worth thinking about. CS reviewers might not be as in tune with results as math reviewers.}.
+\ari{Omitted, and re-written, but keeping your comment here for reference. We have not really emphasised our simplicity, and we have not contrasted our results with Killian and And Per. I know you say this how to *not* solve the problem, but the reviewers might not know this (or they might, I'm not sure). It is possibly worth thinking about. CS reviewers might not be as in tune with results as Math reviewers.}.
 % The original hardness proof for random graphs works as follows.
 % They start with a graph $H$ on $t = \BigO{n/\log n}$ described by \citet{buss1999linear} which is known to be hard to refute (Lemma \ref{lemma:worst-case-instance-sos}).
 % Given a random $d$-regular graph $G\samples \mathcal{G}(n, d)$ on $n$ vertices (where $n$ is odd), the authors embed the worst case hard graph $H$ in $G$ in a way that transfers the hardness of $H$ into $G$.
@@ -633,7 +633,7 @@ A graph $H$ is a topological minor of a graph $G$ if there exists a subdivision 
 Let $D = \frac{d}{\lambda}$ and $k =  \lceil\log_D n\rceil$.
 Let $\{ h_1, \dots, h_t\}$ denote the vertices of $H$.
 Define $\sigma(e) \Def 2k+1$ for all $e \in \Edges{H}$.
-Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G[{\GreenB}]}$ be the bijective mapping which will be our toplogical embedding.
+Let $\EmbeddingFunc: \Vertices{\Subdivision{H}{\sigma}} \rightarrow \Vertices{G[{\GreenB}]}$ be the bijective mapping which will be our topological embedding.
 Our first task is to find a unique $\Embedding{h} \in \Vertices{G[\GreenB]}$ for each $h \in \Vertices{H}$.
 Define $X = Y = \Vertices{G[\GreenB]}$, and let $\BipartiteG = (X \cup Y, \Edges{G[\GreenB]})$ be the bipartite graph that represents the induced subgraph $G[\GreenB]$.
 Let $\{a_1, \dots, a_{t}\}$ be arbitrary set of $t$ vertices in $G[\GreenB]$.
@@ -734,7 +734,7 @@ Then hardness proof follows from the following steps as illustrated in Figure \r
   }
 
 \item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size.
-    The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda < d/50$, we can inoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
+    The balanced partitioning gives us $\MinimalDegree{G[U]} \geq \frac{11d}{16}$, and as $\lambda < d/50$, we can invoke the \nameref{thm:perfect-matching} to show $G[U]$ has a perfect matching $M$.
     Define map $\rho: \{x_1, \dots, x_{|\Edges{G}|}\} \rightarrow \{x_1, \dots, x_{|\Edges{G}|}, \bar{x}_1, \dots, \bar{x}_{|\Edges{G}|}, 1, 0 \}$ such that
 \[
 \rho(x_e) =
@@ -747,7 +747,7 @@ x_e & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 \right.
 \]
 
-Thus, we conclude $\PM{G}|_\rho \equiv \PM{G_{\EmbeddingFunc}} \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. If $t=1$, then this concludes the proof for Theorem \ref{thm:main-thm}.
+Thus, we conclude $\PM{G}|_\rho \equiv \PM{G_{\EmbeddingFunc}} \equiv \PM{H}$. Therefore by Lemma \ref{lemma:affine_restriction} above, we get that $\Card{G, \vec{t}} \in \BigOmega{\frac{n}{\log n}}$. If $t=1$, then this concludes the proof.
 }
   
 \item{ For odd $1 < t \leq d$, we want to reduce the complexity of refuting $\Card{G, \vec{t}}$ to the complexity of refuting $\PM{H}$.
@@ -761,8 +761,7 @@ Now observe that for $G$ to satisfy $\Card{G, \vec{t}}$, we need $G_{\EmbeddingF
 Thus refuting $\Card{G, \vec{t}}$ is reduced to refuting $\PM{G}_{\rho} \equiv \PM{H}$.
 }
 
-
-  \end{enumerate}
+\end{enumerate}
 
 
 
