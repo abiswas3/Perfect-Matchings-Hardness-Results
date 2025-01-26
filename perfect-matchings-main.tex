@@ -53,18 +53,19 @@ Unfortunately, we currently do not possess the tools to show lower such bounds f
 As an intermediate step towards making partial progress towards the grand problem, the research community has invested a significant amount of time and energy in proving size lower bounds for increasingly expressive proof systems \citep{blake1937canonical,razborov1998lower, impagliazzo1999lower, alekhnovich2001lower, buss1999linear}.
  Figure \ref{fig:example-proof-systems} lists some these proof systems and describes the relationships between them.
  Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
-Thus, in an attempt to separate $\NP$ from $\CoNP$, the primary goal of the proof complexity research community is to prove lower bounds for proof systems listed high up in Figure \ref{fig:example-proof-systems}.
-We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details.
-In this work, we focus on the semi-algebraic proof system of sum of squares (SoS) \citep{parrilo2000structured, boazCourse}.
-In proof systems like SoS, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$ with real coefficients as the problem instance.
+Thus, in an attempt to separate $\NP$ from $\CoNP$, the primary goal of proof complexity is to prove lower bounds for proof systems listed as high up in Figure \ref{fig:example-proof-systems} as possible.
+We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details on these proof systems.
+In this work, we focus on the algebraic and semi-algebraic proof systems of polynomial calculus (PC) and sum of squares (SoS) \citep{parrilo2000structured, boazCourse}.
+In algebraic proof systems, instead of a propositional formula over $n$ variables, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
+In PC the coefficientcs can be over arbitrary fields $\Field$ and in the SoS the coefficients must be over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
-In SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and the size/complexity of the proof is measured by the degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
-We denote the minimum degree over all proofs that refute $\Axioms$ with $\Degree{Q \SOS \bot}$, as described earlier, the main goal of the area is to study how large proofs for refuting any given set of axioms $\Axioms$ must be.
+In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials, and the size/complexity of the proof is measured by the degree of the proof polynomials that refutes $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
+We denote the minimum degree over all proofs that refute $\Axioms$ with $\Degree{Q \SOS \bot}$.
 One motivation for proving size lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
 Similarly, upper bounding the proof length has led to the fruitful discovery of many efficient algorithms.
 The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierarchy of semi-definite programming.
 We refer the reader to the survey by \citet{fleming2019semialgebraic} for more details about the connections between the semi-algebraic proof systems and combinatorial optimisation.\par
-In this paper we consider refutations of the \emph{perfect matching} principle.
+In this paper we study the complexity of refuting the \emph{perfect matching} principle in PC and SoS.
 Apart from being a natural well studied problem in its own right, the perfect matching principle is also related to the widely studied pigeon hole principle (PGP) \citep{razbarov2002pgp} and Tseitin formula \citep{grigoriev2001linear}, two well studied formulae in proof complexity.
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct a bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n$ holes, proving the pigeon hole principle amounts to proving that such bipartite graphs does not have a perfect matching.
@@ -73,7 +74,7 @@ On the other hand Tseitin formulae, which is also related to the perfect matchin
 The Tseitin formula over a graph claims that there is a subgraph for which every vertex has odd degree.
 If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
 However, formally refuting Tseitin formulae for expander graphs with odd number of vertices in the SoS proof system, requires size linear in the number of vertices in the graph \cite{grigoriev2001linear}.
-The exact complexity of refuting the perfect matching principle however remains unknown.
+The exact complexity of refuting the perfect matching principle for expander graphs, however, remains unknown.
 Given its close connections to refutations of the PGP and Tseitin principle, it is natural to ask whether the complexity of refuting perfect matchings for non-bipartite graphs is closer to PGP or Tseitin?
 \par
 To refute matchings with an algebraic proof system, we need to find a way to express the combinatorial constraints as algebraic inequalities.
@@ -91,9 +92,9 @@ We define $\Card{G, \vec{b}}$ as the following set of polynomial constraints ove
 For every $e \in E$, the polynomial equation $x_e(1 - x_e) = 0$ restricts the domain of the above variables to bits.
 Note if there was an assignment of variables in $\vec{x} \in \bit^{|E|}$ that satisfied all the other equations in $\Card{G, \vec{1}}$, it would imply that the graph $G$ has a perfect matching (given by the edges corresponding to variables with assignment 1).
 When $\vec{b} = \vec{1}$, as short hand we denote $\Card{G, \vec{b}}$ as $\PM{G}$.
-When $|V|$ is odd, we ask what is the complexity refuting $\PM{G}$ in the SoS proof system.
+When $|V|$ is odd, we ask what is the complexity refuting $\PM{G}$ ?
 With no further constraints on $G$, generic lower bounds for such refutations are not known.
-In recent work, \citet{Austrin_2022} made progress in proving lower bounds by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Polynomial Calculus (PC) and Sum-of-Squares system requires proofs with degree $\BigOmega{\nicefrac{n}{\log n}}$ on average.
+In recent work, \citet{Austrin_2022} made progress  by showing that refuting the existence of perfect matchings in \emph{random $d$-regular graphs} in the Polynomial Calculus (PC) and Sum-of-Squares system requires proofs with degree $\BigOmega{\nicefrac{n}{\log n}}$ on average.
 % \begin{theorem}\label{thm:prev-thm}
 % There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd) \[ \Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
 % \end{theorem}
@@ -113,11 +114,12 @@ PC over fields of characteristic $\neq 2$ and SoS have large size, when $G$ is a
 In this work, we answer the above question affirmatively.
 Given any $\EnDeeLambda$ graph $G$ on an odd number of vertices, and odd $t\in [d]$, $\Card{G, \vec{t}}$ denotes the claim that every vertex has $t$ edges incident on them.
 We obtain our hardness result with the following steps.
-First, we show a embedding theorem that allows us to topologically embed a graph $H$ which is difficult to refute into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilon d$) \emph{without} relying on randomness, while still ensuring the parities of the all the path lengths remain the same.
+We start with a graph $H$ which known to be  difficult to refute.
+We then show a embedding theorem that allows us to topologically embed a $H$ into \emph{any} expander graph with very mild spectral gap constraints ($\lambda \leq \epsilon d$), while still ensuring the parities of the all the path lengths remain the same.
 This allows us to transfer the hardness of $H$ into the host graph.
 As a random graph is also a pseudorandom graph with high probability, our embedding theorem subsumes the result of \citet{Austrin_2022}.
 Note that just topologically embedding $H$ into $G$ is still not sufficient to show that perfect matchings in $G$ are hard to refute.
-It is entirely possible that the residual graph which does not participate in the  embedding has evidence that allows us to refute the existence of a perfect matching with shorter proofs (for example it may have an isolated vertex).
+It is entirely possible that the residual graph  which does not participate in the  embedding has evidence that allows us to refute the existence of a perfect matching with shorter proofs (for example it may have an isolated vertex).
 To show that this is not possible, the second part of the proofs shows  that the residual graph has a perfect matching.
 As $n$ is odd, this means that the hardness of refuting perfect matchings \emph{must} come from the embedding only.
 This shows that refuting $\Card{G, \vec{t}}$ is hard when $t=1$.
@@ -183,8 +185,8 @@ Therefore, we reduce the task of refuting $\Card{G,\vec{t}}$ to refuting $\PM{G_
 % \textit{In summary, we show \highlight{stronger} lower bounds for a \highlight{larger} set of objects using \highlight{simpler} proof techniques.
 % } Our main result is stated below.
 The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required to describe and derive the Theorem \ref{thm:general-hardness-result}.
-In Section \ref{sec:matching-machinery} and Section \ref{sec:embed-machinery}, we describe and prove the main lemmas needed to prove our lower bound.
-In Section \ref{sec:main-proof}, we provide the full proof of the hardness result and in Section \ref{sec:related-work} we describe related results in proving proof complexity lower bounds using embedding techniques.
+In Section \ref{sec:matching-machinery} and Section \ref{sec:embed-machinery}, we describe and prove the main lemmas needed by our topological embedding, and the proof for the residual graph having a perfect matching.
+In Section \ref{sec:main-proof}, we provide the full proof of the hardness result, and in Section \ref{sec:related-work} we describe related results in proving proof complexity lower bounds using embedding techniques along with some open problems.
 
 \section{Preliminaries}
 \label{sec:prelims}
@@ -194,19 +196,17 @@ In Section \ref{sec:main-proof}, we provide the full proof of the hardness resul
 
 For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$.
 For any $E' \subseteq \Edges{\Graph}$ and a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{E'}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ with respect to $E'$, and $\degree{E'}{v}$ to denote the number of vertices adjacent to $v$ via edges in $E'$.
-Given two sets $S, T \subseteq \Vertices{G}$, we denote with use $\CutEdges{S}{T}{E'}$ to denote the number of edges in $E'$ with one endpoint in $S$ and one endpoint in $T$ 
+Given two sets $S, T \subseteq \Vertices{G}$, we  use $\CutEdges{S}{T}{E'}$ to denote the number of edges in $E'$ with one endpoint in $S$ and one endpoint in $T$. 
 % \rajko{I suggest the following notation: $e_G(S, T)$ denotes the number of edges with one endpoint in $S$ and the other in $T$. As we do not require $S$ and $T$ to be disjoint, any edge with both endpoints in $S \cap T$ is counted twice in $e_G(S, T)$. This is important as we use $e_G(S, S)$.}
 % We assume the reader is familiar with standard graph theory definitions of subgraphs, minors, subdivisions and  topological minors.
 % We refer the reader to \citep{bollobas2012graph} for a detailed introduction to these concepts.
-Next, we give a definition for pseudorandom graphs or expander graphs.
+Next, we give a definition for pseudorandom graphs.
 Throughout this document, it suffices to treat $d$ as a constant.
 
 \begin{definition}[$\EnDeeLambda$ pseudorandom graphs]\label{def:expander-graphs}
 Let $G$ be a $d$-regular graph on $n$ vertices, and, let $\lambda_1 \geq \lambda_2, \dots, \geq \lambda_n$ denote eigenvalues of the adjacency matrix of $G$.
 We say $G$ is an $\EnDeeLambda$-graph if $\ExpansionFactor{\Graph} \Def \underset{{\{2, \dots, n\}}}{\max}|\lambda_i| \leq \lambda$.
 \end{definition}
-
-The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively.
 
 \begin{lemma}[Expander Mixing Lemma]\label{lemma:expanders-mixing-lemma}
   Given an $\EnDeeLambda$ graph $G$ for any $S, T \subseteq \Vertices{G}$ we have
@@ -262,6 +262,7 @@ $G$ admits a perfect matching \emph{if and only if} for every $S \subseteq V$, $
   \[ |S|f \geq \OddComponents{S \cup T} + \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S} \]
 \end{lemma}
 
+The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively.
 
 \subsection{Proof Complexity Preliminaries}
 \label{sec:proof-system-prelims}
@@ -281,11 +282,9 @@ The degree of a proof $\Proof$ is
 
 \end{definition}
 
-Since we always assume the axioms contain constraints that restrict the variables to a boolean range by adding constraints $x_i^2 - x_i=0$ to the axioms, we can alternatively just work in the ring $\Field[x_1, \dots, \bar{x}_n]/(x_1^2 - x_1, \dots, \bar{x}_n^2 - \bar{x}_n)$ of multilinear polynomials.
-Multi-linearity implies that the degree of any proof can be at most $n$ i.e a proof of degree $\BigOmega{n}$ is the largest lower bound one can hope to achieve.
 
 \begin{definition}[SoS Refutation]
-An SoS refutation of $\Axioms$ is a proof of $-1 \geq 0$ derived from an SoS proof from $\Axioms$. If we let $\Pi$ denote the set of all SoS refutations of $\Axioms$, then
+An SoS refutation of $\Axioms$ is a proof of $-1 \geq 0$ derived from $\Axioms$. If we let $\Pi$ denote the set of all valid SoS refutations of $\Axioms$, then
 
 \[ \Degree{\Axioms \SOS \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
 
@@ -303,7 +302,8 @@ The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i
 
 \[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
 \end{definition}
-
+Since we always assume the axioms contain constraints that restrict the variables to a boolean range by adding constraints $x_i^2 - x_i=0$ to the axioms, we can alternatively just work in the ring $\Field[x_1, \dots, \bar{x}_n]/(x_1^2 - x_1, \dots, \bar{x}_n^2 - \bar{x}_n)$ of multilinear polynomials.
+Multi-linearity implies that the degree of any proof can be at most $n$ i.e a proof of degree $\BigOmega{n}$ is the largest lower bound one can hope to achieve.
 The following lemma is by \citet{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case.
 \begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
@@ -339,7 +339,7 @@ of $\Axioms$ depends on a constant number of variables, then
 \end{lemma}
 
 The proof for the above lemma can be found in \citep[Lemma 2.2]{Austrin_2022}.
-What the above lemma says is that if we have a graph $G$ with odd vertices, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
+What the above lemma says is that if we have a graph $G$ with odd vertices woth constant degree, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
 
 \subsection{Probabilistic Tools}
 
@@ -588,7 +588,7 @@ The above definition and lemma are all we need to describe our embedding machine
   Set $a = \frac{n\lambda}{2c_1 d}$.
   Observe that that $\left(\frac{1}{c_1/2}  + \sqrt{\frac{1}{c_2/2}}\right) < \frac{3}{16}$.
 Let $S \subseteq X$ with $|S| \leq 2a = \frac{n\lambda}{c_1 d}$.
-\highlight{Assume towards a contradiction} that $\BipartiteG$ is \textbf{not} non-blocking.
+\emph{Assume towards a contradiction} that $\BipartiteG$ is \textbf{not} non-blocking.
   Then by Lemma \ref{lemma:condtions-for-non-block} there exists a set $T \subseteq Y$, adjacent to vertices in $S$ such that $|T| < |S|(\frac{d}{\lambda}+\frac{d}{\lambda})$.
 As $G[\GreenB]$ has minimal degree at leat $\nicefrac{3d}{16}$,
 
@@ -608,9 +608,9 @@ From the \nameref{lemma:expanders-mixing-lemma}, we have
 	&< |S|d\frac{3}{16} \label{eq:constants}
 \end{align}
 
-\eqref{eq:assumption} comes from our \highlight{assumption} on the size of $T$..
+\eqref{eq:assumption} comes from our \emph{assumption} on the size of $T$.
 \eqref{eq:assumption-lambda} comes from our assumption that $\lambda \leq  d/c_2$ and $|S| \leq \frac{n\lambda}{c_1 d}$.
-\eqref{eq:constants} contradicts the balanced sets property in Equation \eqref{eq:balanced}, so our \highlight{assumption} must have been wrong.
+\eqref{eq:constants} contradicts the balanced sets property in Equation \eqref{eq:balanced}, so our \emph{assumption} must have been wrong.
 Therefore $\BipartiteG$ is $(\frac{d}{\lambda}, n/20)$ non blocking.
 \end{proof}
 
