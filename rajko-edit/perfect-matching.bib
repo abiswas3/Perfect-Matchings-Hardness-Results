@@ -152,41 +152,38 @@
   year          = "1998",
   publisher     = "Springer"
 }
-
-@Article{alon88mixing,
- Author = {Alon, N. and Chung, F. R. K.},
- Title = {Explicit construction of linear sized tolerant networks},
- FJournal = {Discrete Mathematics},
- Journal = {Discrete Math.},
- ISSN = {0012-365X},
- Volume = {72},
- Number = {1-3},
- Pages = {15--19},
- Year = {1988},
- Language = {English},
- DOI = {10.1016/0012-365X(88)90189-6},
- Keywords = {05C99,05C55,05C38},
- zbMATH = {4073036},
- Zbl = {0657.05068}
+@article{alon88mixing,
+  author        = {Alon, N. and Chung, F. R. K.},
+  title         = {Explicit construction of linear sized tolerant networks},
+  fjournal      = {Discrete Mathematics},
+  journal       = {Discrete Math.},
+  issn          = {0012-365X},
+  volume        = {72},
+  number        = {1-3},
+  pages         = {15--19},
+  year          = {1988},
+  language      = {English},
+  doi           = {10.1016/0012-365X(88)90189-6},
+  keywords      = {05C99,05C55,05C38},
+  zbmath        = {4073036},
+  zbl           = {0657.05068}
 }
-
-@Article{draganic22rolling,
- Author = {Dragani{\'c}, Nemanja and Krivelevich, Michael and Nenadov, Rajko},
- Title = {Rolling backwards can move you forward: on embedding problems in sparse expanders},
- FJournal = {Transactions of the American Mathematical Society},
- Journal = {Trans. Am. Math. Soc.},
- ISSN = {0002-9947},
- Volume = {375},
- Number = {7},
- Pages = {5195--5216},
- Year = {2022},
- Language = {English},
- DOI = {10.1090/tran/8660},
- Keywords = {05C48,05C83,05C85,05C55,05C38,05C05},
- zbMATH = {7542911},
- Zbl = {1492.05084}
+@article{draganic22rolling,
+  author        = {Dragani{\'c}, Nemanja and Krivelevich, Michael and Nenadov, Rajko},
+  title         = {Rolling backwards can move you forward: on embedding problems in sparse expanders},
+  fjournal      = {Transactions of the American Mathematical Society},
+  journal       = {Trans. Am. Math. Soc.},
+  issn          = {0002-9947},
+  volume        = {375},
+  number        = {7},
+  pages         = {5195--5216},
+  year          = {2022},
+  language      = {English},
+  doi           = {10.1090/tran/8660},
+  keywords      = {05C48,05C83,05C85,05C55,05C38,05C05},
+  zbmath        = {7542911},
+  zbl           = {1492.05084}
 }
-
 @article{krajicek2019proof,
   author        = "Kraj{\i}cek, Jan",
   title         = "Proof complexity",
@@ -216,204 +213,186 @@
   year          = "2000",
   url           = "https://courses.cs.washington.edu/courses/cse599s/20au/notes/Proof\_Complexity\_Notes.pdf"
 }
-
 @misc{tikhomirov2016spectralgapdenserandom,
-      title={The spectral gap of dense random regular graphs}, 
-      author={Konstantin Tikhomirov and Pierre Youssef},
-      year={2016},
-      eprint={1610.01765},
-      archivePrefix={arXiv},
-      primaryClass={math.PR},
-      url={https://arxiv.org/abs/1610.01765}, 
+  title         = {The spectral gap of dense random regular graphs},
+  author        = {Konstantin Tikhomirov and Pierre Youssef},
+  year          = {2016},
+  eprint        = {1610.01765},
+  archiveprefix = {arXiv},
+  primaryclass  = {math.PR},
+  url           = {https://arxiv.org/abs/1610.01765}
 }
-
 @inproceedings{jackson2021strongly,
-author = {Abascal, Jackson and Guruswami, Venkatesan and Kothari, Pravesh K.},
-title = {Strongly refuting all semi-random boolean CSPs},
-year = {2021},
-isbn = {9781611976465},
-publisher = {Society for Industrial and Applied Mathematics},
-address = {USA},
-abstract = {We give an efficient algorithm to strongly refute semi-random instances of all Boolean constraint satisfaction problems. The number of constraints required by our algorithm matches (up to polylogarithmic factors) the best known bounds for efficient refutation of fully random instances. Our main technical contribution is an algorithm to strongly refute semi-random instances of the Boolean k-XOR problem on n variables that have \~{O}(nk/2) constraints. (In a semi-random k-XOR instance, the equations can be arbitrary and only the right hand sides are random.)One of our key insights is to identify a simple combinatorial property of random XOR instances that makes spectral refutation work. Our approach involves taking an instance that does not satisfy this property (i.e., is not pseudorandom) and reducing it to a partitioned collection of 2-XOR instances. We analyze these subinstances using a carefully chosen quadratic form as proxy, which in turn is bounded via a combination of spectral methods and semidefinite programming. The analysis of our spectral bounds relies only on an off-the-shelf matrix Bernstein inequality. Even for the purely random case, this leads to a shorter proof compared to the ones in the literature that rely on problem-specific trace-moment computations.},
-booktitle = {Proceedings of the Thirty-Second Annual ACM-SIAM Symposium on Discrete Algorithms},
-pages = {454–472},
-numpages = {19},
-location = {Virtual Event, Virginia},
-series = {SODA '21}
+  author        = {Abascal, Jackson and Guruswami, Venkatesan and Kothari, Pravesh K.},
+  title         = {Strongly refuting all semi-random boolean CSPs},
+  year          = {2021},
+  isbn          = {9781611976465},
+  publisher     = {Society for Industrial and Applied Mathematics},
+  address       = {USA},
+  abstract      = {We give an efficient algorithm to strongly refute semi-random instances of all Boolean constraint satisfaction problems. The number of constraints required by our algorithm matches (up to polylogarithmic factors) the best known bounds for efficient refutation of fully random instances. Our main technical contribution is an algorithm to strongly refute semi-random instances of the Boolean k-XOR problem on n variables that have \~{O}(nk/2) constraints. (In a semi-random k-XOR instance, the equations can be arbitrary and only the right hand sides are random.)One of our key insights is to identify a simple combinatorial property of random XOR instances that makes spectral refutation work. Our approach involves taking an instance that does not satisfy this property (i.e., is not pseudorandom) and reducing it to a partitioned collection of 2-XOR instances. We analyze these subinstances using a carefully chosen quadratic form as proxy, which in turn is bounded via a combination of spectral methods and semidefinite programming. The analysis of our spectral bounds relies only on an off-the-shelf matrix Bernstein inequality. Even for the purely random case, this leads to a shorter proof compared to the ones in the literature that rely on problem-specific trace-moment computations.},
+  booktitle     = {Proceedings of the Thirty-Second Annual ACM-SIAM Symposium on Discrete Algorithms},
+  pages         = {454–472},
+  numpages      = {19},
+  location      = {Virtual Event, Virginia},
+  series        = {SODA '21}
 }
-
-@InProceedings{potechin:LIPIcs.CCC.2020.38,
-  author =	{Potechin, Aaron},
-  title =	{{Sum of Squares Bounds for the Ordering Principle}},
-  booktitle =	{35th Computational Complexity Conference (CCC 2020)},
-  pages =	{38:1--38:37},
-  series =	{Leibniz International Proceedings in Informatics (LIPIcs)},
-  ISBN =	{978-3-95977-156-6},
-  ISSN =	{1868-8969},
-  year =	{2020},
-  volume =	{169},
-  editor =	{Saraf, Shubhangi},
-  publisher =	{Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r Informatik},
-  address =	{Dagstuhl, Germany},
-  URL =		{https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.CCC.2020.38},
-  URN =		{urn:nbn:de:0030-drops-125900},
-  doi =		{10.4230/LIPIcs.CCC.2020.38},
-  annote =	{Keywords: sum of squares hierarchy, proof complexity, ordering principle}
+@inproceedings{potechin:LIPIcs.CCC.2020.38,
+  author        = {Potechin, Aaron},
+  title         = {{Sum of Squares Bounds for the Ordering Principle}},
+  booktitle     = {35th Computational Complexity Conference (CCC 2020)},
+  pages         = {38:1--38:37},
+  series        = {Leibniz International Proceedings in Informatics (LIPIcs)},
+  isbn          = {978-3-95977-156-6},
+  issn          = {1868-8969},
+  year          = {2020},
+  volume        = {169},
+  editor        = {Saraf, Shubhangi},
+  publisher     = {Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r Informatik},
+  address       = {Dagstuhl, Germany},
+  url           = {https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.CCC.2020.38},
+  urn           = {urn:nbn:de:0030-drops-125900},
+  doi           = {10.4230/LIPIcs.CCC.2020.38},
+  annote        = {Keywords: sum of squares hierarchy, proof complexity, ordering principle}
 }
-
 @article{tutte1947factorization,
-  title={The factorization of linear graphs},
-  author={Tutte, William T},
-  journal={Journal of the London Mathematical Society},
-  volume={1},
-  number={2},
-  pages={107--111},
-  year={1947},
-  publisher={Wiley Online Library}
+  title         = {The factorization of linear graphs},
+  author        = {Tutte, William T},
+  journal       = {Journal of the London Mathematical Society},
+  volume        = {1},
+  number        = {2},
+  pages         = {107--111},
+  year          = {1947},
+  publisher     = {Wiley Online Library}
 }
-
 @article{tutte1952factors,
-  title={The factors of graphs},
-  author={Tutte, William Thomas},
-  journal={Canadian Journal of Mathematics},
-  volume={4},
-  pages={314--328},
-  year={1952},
-  publisher={Cambridge University Press}
+  title         = {The factors of graphs},
+  author        = {Tutte, William Thomas},
+  journal       = {Canadian Journal of Mathematics},
+  volume        = {4},
+  pages         = {314--328},
+  year          = {1952},
+  publisher     = {Cambridge University Press}
 }
-
 @inproceedings{raz2008elusive,
-  title={Elusive functions and lower bounds for arithmetic circuits},
-  author={Raz, Ran},
-  booktitle={Proceedings of the fortieth annual ACM symposium on Theory of computing},
-  pages={711--720},
-  year={2008}
+  title         = {Elusive functions and lower bounds for arithmetic circuits},
+  author        = {Raz, Ran},
+  booktitle     = {Proceedings of the fortieth annual ACM symposium on Theory of computing},
+  pages         = {711--720},
+  year          = {2008}
 }
-
 @inproceedings{filmus2013towards,
-  title={Towards an understanding of polynomial calculus: New separations and lower bounds},
-  author={Filmus, Yuval and Lauria, Massimo and Mik{\v{s}}a, Mladen and Nordstr{\"o}m, Jakob and Vinyals, Marc},
-  booktitle={International Colloquium on Automata, Languages, and Programming},
-  pages={437--448},
-  year={2013},
-  organization={Springer}
+  title         = {Towards an understanding of polynomial calculus: New separations and lower bounds},
+  author        = {Filmus, Yuval and Lauria, Massimo and Mik{\v{s}}a, Mladen and Nordstr{\"o}m, Jakob and Vinyals, Marc},
+  booktitle     = {International Colloquium on Automata, Languages, and Programming},
+  pages         = {437--448},
+  year          = {2013},
+  organization  = {Springer}
 }
-
 @inproceedings{glinskih2017satisfiable,
-  title={Satisfiable Tseitin formulas are hard for nondeterministic read-once branching programs},
-  author={Glinskih, Ludmila and Itsykson, Dmitry},
-  booktitle={42nd International Symposium on Mathematical Foundations of Computer Science (MFCS 2017)},
-  year={2017},
-  organization={Schloss-Dagstuhl-Leibniz Zentrum f{\"u}r Informatik}
+  title         = {Satisfiable Tseitin formulas are hard for nondeterministic read-once branching programs},
+  author        = {Glinskih, Ludmila and Itsykson, Dmitry},
+  booktitle     = {42nd International Symposium on Mathematical Foundations of Computer Science (MFCS 2017)},
+  year          = {2017},
+  organization  = {Schloss-Dagstuhl-Leibniz Zentrum f{\"u}r Informatik}
 }
-
 @inproceedings{galesi2019bounded,
-  title={Bounded-depth frege complexity of tseitin formulas for all graphs},
-  author={Galesi, Nicola and Itsykson, Dmitry and Riazanov, Artur and Sofronova, Anastasia},
-  booktitle={44th International Symposium on Mathematical Foundations of Computer Science (MFCS 2019)},
-  year={2019},
-  organization={Schloss-Dagstuhl-Leibniz Zentrum f{\"u}r Informatik}
+  title         = {Bounded-depth frege complexity of tseitin formulas for all graphs},
+  author        = {Galesi, Nicola and Itsykson, Dmitry and Riazanov, Artur and Sofronova, Anastasia},
+  booktitle     = {44th International Symposium on Mathematical Foundations of Computer Science (MFCS 2019)},
+  year          = {2019},
+  organization  = {Schloss-Dagstuhl-Leibniz Zentrum f{\"u}r Informatik}
 }
-
 @inproceedings{maciel2000new,
-  title={A new proof of the weak pigeonhole principle},
-  author={Maciel, Alexis and Pitassi, Toniann and Woods, Alan R},
-  booktitle={Proceedings of the Thirty-Second Annual ACM Symposium on Theory of Computing},
-  pages={368--377},
-  year={2000}
+  title         = {A new proof of the weak pigeonhole principle},
+  author        = {Maciel, Alexis and Pitassi, Toniann and Woods, Alan R},
+  booktitle     = {Proceedings of the Thirty-Second Annual ACM Symposium on Theory of Computing},
+  pages         = {368--377},
+  year          = {2000}
 }
-
 @article{razborov2003resolution,
-  title={Resolution lower bounds for the weak functional pigeonhole principle},
-  author={Razborov, Alexander A},
-  journal={Theoretical Computer Science},
-  volume={303},
-  number={1},
-  pages={233--243},
-  year={2003},
-  publisher={Elsevier}
+  title         = {Resolution lower bounds for the weak functional pigeonhole principle},
+  author        = {Razborov, Alexander A},
+  journal       = {Theoretical Computer Science},
+  volume        = {303},
+  number        = {1},
+  pages         = {233--243},
+  year          = {2003},
+  publisher     = {Elsevier}
 }
-
 @article{raz2004resolution,
-  title={Resolution lower bounds for the weak pigeonhole principle},
-  author={Raz, Ran},
-  journal={Journal of the ACM (JACM)},
-  volume={51},
-  number={2},
-  pages={115--138},
-  year={2004},
-  publisher={ACM New York, NY, USA}
+  title         = {Resolution lower bounds for the weak pigeonhole principle},
+  author        = {Raz, Ran},
+  journal       = {Journal of the ACM (JACM)},
+  volume        = {51},
+  number        = {2},
+  pages         = {115--138},
+  year          = {2004},
+  publisher     = {ACM New York, NY, USA}
 }
-
 @article{pitassi1993exponential,
-  title={Exponential lower bounds for the pigeonhole principle},
-  author={Pitassi, Toniann and Beame, Paul and Impagliazzo, Russell},
-  journal={Computational complexity},
-  volume={3},
-  pages={97--140},
-  year={1993},
-  publisher={Springer}
+  title         = {Exponential lower bounds for the pigeonhole principle},
+  author        = {Pitassi, Toniann and Beame, Paul and Impagliazzo, Russell},
+  journal       = {Computational complexity},
+  volume        = {3},
+  pages         = {97--140},
+  year          = {1993},
+  publisher     = {Springer}
 }
-
 @inproceedings{conneryd2023graph,
-  title={Graph Colouring Is Hard on Average for Polynomial Calculus and Nullstellensatz},
-  author={Conneryd, Jonas and De Rezende, Susanna F and Nordstr{\"o}m, Jakob and Pang, Shuo and Risse, Kilian},
-  booktitle={2023 IEEE 64th Annual Symposium on Foundations of Computer Science (FOCS)},
-  pages={1--11},
-  year={2023},
-  organization={IEEE}
+  title         = {Graph Colouring Is Hard on Average for Polynomial Calculus and Nullstellensatz},
+  author        = {Conneryd, Jonas and De Rezende, Susanna F and Nordstr{\"o}m, Jakob and Pang, Shuo and Risse, Kilian},
+  booktitle     = {2023 IEEE 64th Annual Symposium on Foundations of Computer Science (FOCS)},
+  pages         = {1--11},
+  year          = {2023},
+  organization  = {IEEE}
 }
-
 @inproceedings{de2023clique,
-  title={Clique is hard on average for unary Sherali-Adams},
-  author={De Rezende, Susanna F and Potechin, Aaron and Risse, Kilian},
-  booktitle={2023 IEEE 64th Annual Symposium on Foundations of Computer Science (FOCS)},
-  pages={12--25},
-  year={2023},
-  organization={IEEE}
+  title         = {Clique is hard on average for unary Sherali-Adams},
+  author        = {De Rezende, Susanna F and Potechin, Aaron and Risse, Kilian},
+  booktitle     = {2023 IEEE 64th Annual Symposium on Foundations of Computer Science (FOCS)},
+  pages         = {12--25},
+  year          = {2023},
+  organization  = {IEEE}
 }
-
 @inproceedings{schoenebeck2008linear,
-  title={Linear level Lasserre lower bounds for certain k-CSPs},
-  author={Schoenebeck, Grant},
-  booktitle={2008 49th Annual IEEE Symposium on Foundations of Computer Science},
-  pages={593--602},
-  year={2008},
-  organization={IEEE}
+  title         = {Linear level Lasserre lower bounds for certain k-CSPs},
+  author        = {Schoenebeck, Grant},
+  booktitle     = {2008 49th Annual IEEE Symposium on Foundations of Computer Science},
+  pages         = {593--602},
+  year          = {2008},
+  organization  = {IEEE}
 }
-
 @inproceedings{kothari2017SumOfSquares,
-author = {Kothari, Pravesh K. and Mori, Ryuhei and O'Donnell, Ryan and Witmer, David},
-title = {Sum of squares lower bounds for refuting any CSP},
-year = {2017},
-isbn = {9781450345286},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/3055399.3055485},
-doi = {10.1145/3055399.3055485},
-abstract = {Let P:{0,1}k → {0,1} be a nontrivial k-ary predicate. Consider a random instance of the constraint satisfaction problem (P) on n variables with Δ n constraints, each being P applied to k randomly chosen literals. Provided the constraint density satisfies Δ ≫ 1, such an instance is unsatisfiable with high probability. The refutation problem is to efficiently find a proof of unsatisfiability. We show that whenever the predicate P supports a t-wise uniform probability distribution on its satisfying assignments, the sum of squares (SOS) algorithm of degree d = Θ(n/Δ2/(t-1) logΔ) (which runs in time nO(d)) cannot refute a random instance of (P). In particular, the polynomial-time SOS algorithm requires Ω(n(t+1)/2) constraints to refute random instances of CSP(P) when P supports a t-wise uniform distribution on its satisfying assignments. Together with recent work of Lee, Raghavendra, Steurer (2015), our result also implies that any polynomial-size semidefinite programming relaxation for refutation requires at least Ω(n(t+1)/2) constraints. More generally, we consider the δ-refutation problem, in which the goal is to certify that at most a (1 - δ)-fraction of constraints can be simultaneously satisfied. We show that if P is δ-close to supporting a t-wise uniform distribution on satisfying assignments, then the degree-Θ(n/Δ2/(t - 1) logΔ) SOS algorithm cannot (δ+o(1))-refute a random instance of CSP(P). This is the first result to show a distinction between the degree SOS needs to solve the refutation problem and the degree it needs to solve the harder δ-refutation problem. Our results (which also extend with no change to CSPs over larger alphabets) subsume all previously known lower bounds for semialgebraic refutation of random CSPs. For every constraint predicate P, they give a three-way hardness tradeoff between the density of constraints, the SOS degree (hence running time), and the strength of the refutation. By recent algorithmic results of Allen, O'Donnell, Witmer (2015) and Raghavendra, Rao, Schramm (2016), this full three-way tradeoff is tight, up to lower-order factors.},
-booktitle = {Proceedings of the 49th Annual ACM SIGACT Symposium on Theory of Computing},
-pages = {132–145},
-numpages = {14},
-keywords = {Constraint Satisfaction, Lower Bounds, Sum-of-Squares Semidefinite Programming Hierarchy},
-location = {Montreal, Canada},
-series = {STOC 2017}
+  author        = {Kothari, Pravesh K. and Mori, Ryuhei and O'Donnell, Ryan and Witmer, David},
+  title         = {Sum of squares lower bounds for refuting any CSP},
+  year          = {2017},
+  isbn          = {9781450345286},
+  publisher     = {Association for Computing Machinery},
+  address       = {New York, NY, USA},
+  url           = {https://doi.org/10.1145/3055399.3055485},
+  doi           = {10.1145/3055399.3055485},
+  abstract      = {Let P:{0,1}k \rightarrow{} {0,1} be a nontrivial k-ary predicate. Consider a random instance of the constraint satisfaction problem (P) on n variables with \ensuremath{\Delta} n constraints, each being P applied to k randomly chosen literals. Provided the constraint density satisfies \ensuremath{\Delta} \gg{} 1, such an instance is unsatisfiable with high probability. The refutation problem is to efficiently find a proof of unsatisfiability. We show that whenever the predicate P supports a t-wise uniform probability distribution on its satisfying assignments, the sum of squares (SOS) algorithm of degree d = \ensuremath{\Theta}(n/\ensuremath{\Delta}2/(t-1) log\ensuremath{\Delta}) (which runs in time nO(d)) cannot refute a random instance of (P). In particular, the polynomial-time SOS algorithm requires \ensuremath{\Omega}(n(t+1)/2) constraints to refute random instances of CSP(P) when P supports a t-wise uniform distribution on its satisfying assignments. Together with recent work of Lee, Raghavendra, Steurer (2015), our result also implies that any polynomial-size semidefinite programming relaxation for refutation requires at least \ensuremath{\Omega}(n(t+1)/2) constraints. More generally, we consider the \ensuremath{\delta}-refutation problem, in which the goal is to certify that at most a (1 - \ensuremath{\delta})-fraction of constraints can be simultaneously satisfied. We show that if P is \ensuremath{\delta}-close to supporting a t-wise uniform distribution on satisfying assignments, then the degree-\ensuremath{\Theta}(n/\ensuremath{\Delta}2/(t - 1) log\ensuremath{\Delta}) SOS algorithm cannot (\ensuremath{\delta}+o(1))-refute a random instance of CSP(P). This is the first result to show a distinction between the degree SOS needs to solve the refutation problem and the degree it needs to solve the harder \ensuremath{\delta}-refutation problem. Our results (which also extend with no change to CSPs over larger alphabets) subsume all previously known lower bounds for semialgebraic refutation of random CSPs. For every constraint predicate P, they give a three-way hardness tradeoff between the density of constraints, the SOS degree (hence running time), and the strength of the refutation. By recent algorithmic results of Allen, O'Donnell, Witmer (2015) and Raghavendra, Rao, Schramm (2016), this full three-way tradeoff is tight, up to lower-order factors.},
+  booktitle     = {Proceedings of the 49th Annual ACM SIGACT Symposium on Theory of Computing},
+  pages         = {132–145},
+  numpages      = {14},
+  keywords      = {Constraint Satisfaction, Lower Bounds, Sum-of-Squares Semidefinite Programming Hierarchy},
+  location      = {Montreal, Canada},
+  series        = {STOC 2017}
 }
-
 @inproceedings{atserias2020Size,
-author = {Atserias, Albert and Hakoniemi, Tuomas},
-title = {Size-degree trade-offs for sums-of-squares and positivstellensatz proofs},
-year = {2020},
-isbn = {9783959771160},
-publisher = {Schloss Dagstuhl--Leibniz-Zentrum fuer Informatik},
-address = {Dagstuhl, DEU},
-url = {https://doi.org/10.4230/LIPIcs.CCC.2019.24},
-doi = {10.4230/LIPIcs.CCC.2019.24},
-abstract = {We show that if a system of degree-k polynomial constraints on n Boolean variables has a Sums-of-Squares (SOS) proof of unsatisfiability with at most s many monomials, then it also has one whose degree is of the order of the square root of n log s plus k. A similar statement holds for the more general Positivstellensatz (PS) proofs. This establishes size-degree trade-offs for SOS and PS that match their analogues for weaker proof systems such as Resolution, Polynomial Calculus, and the proof systems for the LP and SDP hierarchies of Lov\'{a}sz and Schrijver. As a corollary to this, and to the known degree lower bounds, we get optimal integrality gaps for exponential size SOS proofs for sparse random instances of the standard NP-hard constraint optimization problems. We also get exponential size SOS lower bounds for Tseitin and Knapsack formulas. The proof of our main result relies on a zero-gap duality theorem for pre-ordered vector spaces that admit an order unit, whose specialization to PS and SOS may be of independent interest.},
-booktitle = {Proceedings of the 34th Computational Complexity Conference},
-articleno = {24},
-numpages = {20},
-keywords = {trade-offs, sums-of-squares, semialgebraic proof systems, proof complexity, positivstellensatz, monomial size, lower bounds, degree},
-location = {New Brunswick, New Jersey},
-series = {CCC '19}
+  author        = {Atserias, Albert and Hakoniemi, Tuomas},
+  title         = {Size-degree trade-offs for sums-of-squares and positivstellensatz proofs},
+  year          = {2020},
+  isbn          = {9783959771160},
+  publisher     = {Schloss Dagstuhl--Leibniz-Zentrum fuer Informatik},
+  address       = {Dagstuhl, DEU},
+  url           = {https://doi.org/10.4230/LIPIcs.CCC.2019.24},
+  doi           = {10.4230/LIPIcs.CCC.2019.24},
+  abstract      = {We show that if a system of degree-k polynomial constraints on n Boolean variables has a Sums-of-Squares (SOS) proof of unsatisfiability with at most s many monomials, then it also has one whose degree is of the order of the square root of n log s plus k. A similar statement holds for the more general Positivstellensatz (PS) proofs. This establishes size-degree trade-offs for SOS and PS that match their analogues for weaker proof systems such as Resolution, Polynomial Calculus, and the proof systems for the LP and SDP hierarchies of Lov\'{a}sz and Schrijver. As a corollary to this, and to the known degree lower bounds, we get optimal integrality gaps for exponential size SOS proofs for sparse random instances of the standard NP-hard constraint optimization problems. We also get exponential size SOS lower bounds for Tseitin and Knapsack formulas. The proof of our main result relies on a zero-gap duality theorem for pre-ordered vector spaces that admit an order unit, whose specialization to PS and SOS may be of independent interest.},
+  booktitle     = {Proceedings of the 34th Computational Complexity Conference},
+  articleno     = {24},
+  numpages      = {20},
+  keywords      = {trade-offs, sums-of-squares, semialgebraic proof systems, proof complexity, positivstellensatz, monomial size, lower bounds, degree},
+  location      = {New Brunswick, New Jersey},
+  series        = {CCC '19}
 }
