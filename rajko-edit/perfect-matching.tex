@@ -424,11 +424,11 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
 
     Consider some partition $X \cup Y$ of $U \setminus S$ with $|X| \le |Y|$. Then $|X| \le (|U| - |S|)/2 \le (n - |S|)/2$. We show
     \begin{equation} \label{eq:edge_bound}
-        \CutEdges{X}{X}{E} + \CutEdges{X}{S}{E} < \frac{11d}{16}|X|,
+        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \frac{11d}{16}|X|,
     \end{equation}
     as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
     \[
-        \CutEdges{X}{X}{E} + \CutEdges{X}{S}{E} \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
+        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
     \]
     Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
     \[
@@ -454,7 +454,7 @@ As $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d < d/50$ and $G'$ ha
   Thus, it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} f - \Size{\Neighbourhood{E'}{w} \setminus S}   \\
-              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{E'}  \label{eq:to-show}
+              &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{G'}  \label{eq:to-show}
   \end{align}  
 
   \textbf{Case 1}: If $\Size{S} \leq \Size{T}$, and as $f \leq d/2$, we have 
@@ -463,7 +463,7 @@ As $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d < d/50$ and $G'$ ha
   \end{align}
 
 \begin{align}
-  |S| + |T| + \CutEdges{S}{T}{E'} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
+  |S| + |T| + \CutEdges{S}{T}{G'} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
                                  &\le |S| + |T| + \frac{d}{4}(\Size{S} + \Size{T}) + \epsilon d \frac{1}{2}(\Size{S} + \Size{T}) \label{eq:algebra}\\
                                  &\le (\Size{S} + \Size{T})\left(\frac{d}{4} + 1 + \frac{
                                    \epsilon d}{2}\right) \\
@@ -483,7 +483,7 @@ Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives 
   
   To show Equation \eqref{eq:to-show}, it suffices to show that
 \begin{align}
-  \CutEdges{S}{T}{E} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
+  \CutEdges{S}{T}{G} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
 \end{align}
 
 Now we distinguish between two cases.
@@ -491,14 +491,14 @@ Now we distinguish between two cases.
 \begin{enumerate}
 
 \item{
-    If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then we trivially have $\CutEdges{S}{T}{E'} \leq \Size{T}d$, and Equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
+    If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then we trivially have $\CutEdges{S}{T}{G'} \leq \Size{T}d$, and Equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
   }
 
 \item{
 $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
 Now using the \nameref{lemma:expanders-mixing-lemma}
 
-\[ \CutEdges{S}{T}{E'} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+\[ \CutEdges{S}{T}{G'} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
 
 which gives us Equation \eqref{eq:to-show-3}.
   }
