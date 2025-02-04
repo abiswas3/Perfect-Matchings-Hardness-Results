@@ -1,13 +1,10 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry} % Adjust margins as needed
-\input{base_template}
+\input{../base_template}
+\input{../theorem}
 \usepackage{accents}
 \usepackage{calc}
-\input{theorem}
 \input{../paper_commands.tex} %These are generic commands (Might move them to %base template)is
-
-
-
 \synctex=1
 % Title
 \title{Refuting Perfect Matchings in Spectral Expanders is Hard}
@@ -54,15 +51,12 @@ Conversely, if we could show large proof size lower bounds for some $A$ in \emph
 Unfortunately, such lower  bounds for \emph{arbitrary} proof systems are out of reach.
 As an intermediate step,
 %towards making partial progress towards the grand problem, 
-the research community has invested a significant effort in proving lower bounds for increasingly expressive proof systems (e.g.\ see \citep{alekhnovich2001lower,buss1999linear,impagliazzo1999lower,razborov1998lower}). \rajko{Ari, please add some further prominent results here.}
-
+the research community has invested a significant effort in proving lower bounds for increasingly expressive proof systems (e.g.\ see \citep{alekhnovich2001lower,buss1999linear,impagliazzo1999lower,razborov1998lower, jackson2021strongly, potechin:LIPIcs.CCC.2020.38, kothari2017SumOfSquares, atserias2020Size, schoenebeck2008linear, de2023clique, conneryd2023graph, raz2008elusive}). \par
 %Figure \ref{fig:example-proof-systems} lists some of these proof systems and describes the relationships between them.
  %Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 %Thus, in an attempt to separate $\NP$ from $\CoNP$, the primary goal of proof complexity is to prove lower bounds for proof systems listed as high up in Figure \ref{fig:example-proof-systems} as possible.
 % We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details. 
 %these proof systems.
-
-
 In this work, we focus on the algebraic and semi-algebraic proof systems of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
 In PC the coefficientcs can be over an arbitrary field $\Field$ and in the SoS the coefficients are  over the reals.
@@ -73,7 +67,7 @@ The SoS proof system is of particular interest because of its close connection t
 We refer the reader to the survey by Fleming, Kothari, and Pitassi \cite{fleming2019semialgebraic} for more details about the connections between the semi-algebraic proof systems and combinatorial optimisation.
 
 We study the complexity of refuting \emph{perfect matchings} in PC and SoS.
-Apart from being a natural problem in its own right, perfect matchings are also related to the pigeon hole principle \citep{razbarov2002pgp} and Tseitin formula \citep{grigoriev2001linear}, two well studied formulae in proof complexity \rajko{Add more references related to PGP and Tseitin}.
+Apart from being a natural problem in its own right, perfect matchings are also related to the pigeon hole principle \citep{razbarov2002pgp, pitassi1993exponential, raz2004resolution, razborov2003resolution, maciel2000new} and Tseitin formula \citep{grigoriev2001linear, galesi2019bounded, glinskih2017satisfiable, filmus2013towards}, two well studied formulae in proof complexity.
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct the complete bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n < m$ holes, proving the pigeon hole principle amounts to proving that such bipartite graphs does not have a perfect matching.
 There are other formulations of the pigeon hole principle (see the survey by Razborov \citep{razbarov2002pgp}), and almost all of them have short proofs in the sum of squares proof system.
@@ -115,7 +109,7 @@ They suggest (see \citep[Section 6]{Austrin_2022}) that the hardness results sho
   \[ \Degree{\Card{G, \vec{t}} \SOS \bot} = \BigOmega{\nicefrac{n}{\log n}}\]  
 \end{theorem}
 
-\paragraph{Proof overview.} We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree. An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$, such that all paths corresponding to the embedding have odd length. As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ \rajko{Ari: Please add references}, this subsumes the main technical ingredient of \cite{Austrin_2022}. Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching. This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$. To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph. Austrin and Risse achieve this using the contiguity property of random regular graphs; we provide a significantly simpler and shorter argument based on Tutte's criterion.
+\paragraph{Proof overview.} We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree. An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$, such that all paths corresponding to the embedding have odd length. As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ (\cite[see Theorem A]{tikhomirov2016spectralgapdenserandom}), this subsumes the main technical ingredient of \cite{Austrin_2022}. Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching. This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$. To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph. Austrin and Risse achieve this using the contiguity property of random regular graphs; we provide a significantly simpler and shorter argument based on Tutte's criterion.
 
 The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required. In Section \ref{sec:embed-machinery} we describe the machinery for finding a desired topological embedding. In Section \ref{sec:matching-machinery} we prove conditions under which the residual graph has a perfect matching or, more generally, a $(t-1)$-regular spaning subgraph. In Section \ref{sec:main-proof}, we prove Theorem \ref{thm:general-hardness-result}. 
 
@@ -262,7 +256,9 @@ $$
 %   Therefore the maximum number of components we can have is $\Size{S}$.
 % \end{proof}
 
-We make use of the following two well known criteria of Tutte \rajko{Ari, please add references to the original work of Tutte.} Note that both of the lemmata ask for a property which is stronger than what Tutte criteria requires, though easier to state.
+We make use of the following two well known criteria of Tutte \cite{tutte1952factors, tutte1947factorization}.
+% \rajko{Ari, please add references to the original work of Tutte.}
+Note that both of the lemmata ask for a property which is stronger than what Tutte criteria requires, though easier to state.
 % The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively. \rajko{Please cite the original work, not lecture notes.}
 
 \begin{lemma}[Tutte's Criterion]\label{lemma:tutte-criterion}
@@ -531,8 +527,7 @@ This $|A| < n/2$, with room to spare.
 \item{Let $B = V(G) \setminus A$. By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$. We can described $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
 
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-    \ari{Did you intend to use $\ldots $notation?}
-    To see why, let us define a mapping $\rho': E(G_\EmbeddingFunc) ...$ as follows. For each $(u,v) \in E(H)$, let $y_{u,v} := x_e$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Then $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
+    To see why, let us define a mapping $\rho': \Edges{G_\EmbeddingFunc}...$ as follows. For each $(u,v) \in E(H)$, let $y_{u,v} := x_e$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Then $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
   }
 
 \item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $11d/16$. As $\lambda < d/50$, we can invoke the \nameref{thm:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
