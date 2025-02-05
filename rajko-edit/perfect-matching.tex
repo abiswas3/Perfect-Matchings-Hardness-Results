@@ -22,13 +22,13 @@
 \maketitle
 \begin{abstract}
 This work studies the complexity of refuting the existence of a perfect matching in spectral expanders with an odd number of vertices, in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
-Austrin and Risse [SODA, 2022] showed that refuting perfect matchings in sparse $d$-regular random graphs in the above proof systems typically requires proofs of degree $\BigOmega{n/\log n}$. 
+Austrin and Risse [SODA, 2021] showed that refuting perfect matchings in sparse $d$-regular \emph{random} graphs in the above proof systems requires proofs with degree $\BigOmega{n/\log n}$ on average. 
 % Although a $d$-regular random graph is an expander graph with high probability, their hardness result relies critically on the randomness of sampling a graph.
 % Therefore, these techniques do not extend to instances where the expander graph is deterministically constructed, and we do not have  \emph{worst-case} lower bounds.
 % In this work, 
-We extend their result by showing that the same lower bound holds for any $d$-regular graph with a mild assumption on its spectral gap.
+We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graph with a mild spectral gap.
 % refuting perfect matchings in \emph{any} $d$-regular graph with a mild spectral gap requires proofs of degree $\BigOmega{n/\log n}$.
-Similarly to Austrin and Risse, we obtain a more general result about refuting a class of formulas, which include perfect matchings and \emph{even-colouring} formulas, thereby settling an open problem of Buss and Nordstr\"{o}m.
+Additionally, we show how our result also extends to refuting a more general class of formulae, which includes perfect matchings and \emph{even-colouring} formulas, thereby settling an open problem of Buss and Nordstr\"{o}m.
 % As direct consequence of this result, we positively answer the open problem posed by Buss and  Nordstr{\"o}m, which asks, \textit{``Are even colouring formulas over expander graphs hard for polynomial calculus over fields of characteristic distinct from 2 ?''}
 \end{abstract}
 
@@ -51,7 +51,7 @@ Conversely, if we could show large proof size lower bounds for some $A$ in \emph
 Unfortunately, such lower  bounds for \emph{arbitrary} proof systems are out of reach.
 As an intermediate step,
 %towards making partial progress towards the grand problem, 
-the research community has invested a significant effort in proving lower bounds for increasingly expressive proof systems (e.g.\ see \citep{alekhnovich2001lower,buss1999linear,impagliazzo1999lower,razborov1998lower, jackson2021strongly, potechin:LIPIcs.CCC.2020.38, kothari2017SumOfSquares, atserias2020Size, schoenebeck2008linear, de2023clique, conneryd2023graph, raz2008elusive}). \par
+the research community has invested a significant effort in proving lower bounds for increasingly expressive proof systems (e.g.\ see \citep{abascal2021strongly, alekhnovich2001lower, atserias2020Size, buss1999linear,  conneryd2023graph, de2023clique, impagliazzo1999lower,  kothari2017SumOfSquares, potechin:LIPIcs.CCC.2020.38, raz2008elusive, razborov1998lower, schoenebeck2008linear}). \par
 %Figure \ref{fig:example-proof-systems} lists some of these proof systems and describes the relationships between them.
  %Proof systems listed at the top of Figure \ref{fig:example-proof-systems} are more expressive\footnote{Expressiveness is formalised by the notion of $p$-simulation, and we refer the reader to \citep[Definition 1.6]{ProofComplexityLecNotes} for more details.}, and lower bounds for such proof systems subsume claims about the complexity of proofs lower in the figure.
 %Thus, in an attempt to separate $\NP$ from $\CoNP$, the primary goal of proof complexity is to prove lower bounds for proof systems listed as high up in Figure \ref{fig:example-proof-systems} as possible.
@@ -59,15 +59,18 @@ the research community has invested a significant effort in proving lower bounds
 %these proof systems.
 In this work, we focus on the algebraic and semi-algebraic proof systems of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
-In PC the coefficientcs can be over an arbitrary field $\Field$ and in the SoS the coefficients are  over the reals.
+In PC, the coefficientcs can be over an arbitrary field $\Field$ and in the SoS the coefficients are  over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
-In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials. Two common measures of the complexity of the proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details). Trade-offs between the two are well known; in particular, a lower bound on the degree implies a comparatively strong lower bound on the size of the proof. Therefore, in this work we focus on the former. We denote the smallest maximum degree over all proofs that refute $\Axioms$ with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$. One motivation for proving lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
+In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials.
+Two common measures of the complexity of the proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
+Trade-offs between the two are well known; in particular, a lower bound on the degree implies a comparatively strong lower bound on the size of the proof.
+Therefore, in this work we focus on the former. We denote the smallest maximum degree over all proofs that refute $\Axioms$ in PC and SoS, with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$, respectively.
+One motivation for proving lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
 Similarly, upper bounding the proof length has led to the fruitful discovery of many efficient algorithms.
 The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierarchy of semi-definite programming.
-We refer the reader to the survey by Fleming, Kothari, and Pitassi \cite{fleming2019semialgebraic} for more details about the connections between the semi-algebraic proof systems and combinatorial optimisation.
-
-We study the complexity of refuting \emph{perfect matchings} in PC and SoS.
-Apart from being a natural problem in its own right, perfect matchings are also related to the pigeon hole principle \citep{razbarov2002pgp, pitassi1993exponential, raz2004resolution, razborov2003resolution, maciel2000new} and Tseitin formula \citep{grigoriev2001linear, galesi2019bounded, glinskih2017satisfiable, filmus2013towards}, two well studied formulae in proof complexity.
+We refer the reader to the survey by Fleming, Kothari, and Pitassi \cite{fleming2019semialgebraic} for more details about the connections between the semi-algebraic proof systems and combinatorial optimisation.\par
+In this work, we study the complexity of refuting \emph{perfect matchings} in PC and SoS.
+Apart from being a natural problem in its own right, perfect matchings are also related to the pigeon hole principle \citep{maciel2000new, pitassi1993exponential, raz2004resolution, razbarov2002pgp, razborov2003resolution} and Tseitin formula \citep{filmus2013towards, galesi2019bounded, glinskih2017satisfiable, grigoriev2001linear}, two well studied formulae in proof complexity.
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct the complete bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n < m$ holes, proving the pigeon hole principle amounts to proving that such bipartite graphs does not have a perfect matching.
 There are other formulations of the pigeon hole principle (see the survey by Razborov \citep{razbarov2002pgp}), and almost all of them have short proofs in the sum of squares proof system.
@@ -75,9 +78,7 @@ In contrast, Tseitin formulae is known to require long proofs. The Tseitin formu
 If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
 However, formally refuting Tseitin formulae for expander graphs with odd number of vertices, in the SoS proof system, requires degree linear in the number of vertices in the graph \cite{grigoriev2001linear}.
 % The exact complexity of refuting the perfect matching principle for expander graphs, however, remains unknown.
-Given its close connections to the pigeon-hole and Tseitin, and the different behaviour of the two formulae, it is natural to determine the complexity of refuting perfect matchings for non-bipartite graphs.
-
-\par
+Given its close connections to the pigeon-hole and Tseitin, and the different behaviour of the two formulae, it is natural to determine the complexity of refuting perfect matchings for non-bipartite graphs.\par
 To refute perfect matchings in an algebraic proof system, we first need to specify combinatorial constraints as algebraic equalities. Given an undirected graph $G=(V,E)$, $V = \{1, \ldots, n\}$, and a vector $\vec{b} = (b_1, \ldots, b_{n}) \in \Field^{n}$,
 % we denote with $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$ the vector of all $b$'s vector with size $\Size{V}$.
 we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_e$ for $e \in E$:
@@ -90,16 +91,21 @@ we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints ove
                 \sum_{e \sim \highlight{v}} x_e = b_{\highlight{v}} & \text{ for every $\highlight{v} \in V$} \\[3mm]
         \end{array}
 \]
-For every $e \in E$, the equation $x_e(1 - x_e) = 0$ restricts the domain of the above variables to bits. In plain words, $\Card{G, \vec{b}}$ denotes the claim that there exists a spanning subgraph $G' \subseteq G$ such that a vertex $v \in V(G)$ has $b_v$ edges incident to it in $G'$. Note if there was an assignment of variables $(x_e)_{e \in E}$ that satisfies all equations in $\Card{G, \vec{1}}$, where $\vec{1} = (1, \ldots, 1) \in \Field^{n}$, it would imply that the graph $G$ has a perfect matching (given by the edges corresponding to variables with assignment 1).
+For every $e \in E$, the equation $x_e(1 - x_e) = 0$ restricts the domain of the above variables to bits.
+In plain words, $\Card{G, \vec{b}}$ denotes the claim that there exists a spanning subgraph $G' \subseteq G$ such that a vertex $v \in V(G)$ has $b_v$ edges incident to it in $G'$.
+Note if there was an assignment of variables $(x_e)_{e \in E}$ that satisfies all equations in $\Card{G, \vec{1}}$, where $\vec{1} = (1, \ldots, 1) \in \Field^{n}$, it would imply that the graph $G$ has a perfect matching (given by the edges corresponding to variables with assignment 1).
 Therefore, we define $\PM{G} := \Card{G, \vec{1}}$.
-
-
-When $|V|$ is odd, $G$ trivially does not contain a perfect matching. How difficult is it to refute $\PM{G}$ in this case? In recent work, Austrin and Risse \cite{Austrin_2022} showed that refuting $\PM{G}$, in the Polynomial Calculus  and Sum-of-Squares system, in the case $G$ is a \emph{random $d$-regular graphs} with an odd number of vertices typically requires proofs with degree $\BigOmega{\nicefrac{n}{\log n}}$.
+When $|V|$ is odd, $G$ trivially does not contain a perfect matching. How difficult is it to refute $\PM{G}$ in this case? In recent work, Austrin and Risse \cite{Austrin_2022} showed that refuting $\PM{G}$, in the Polynomial Calculus  and Sum-of-Squares system, in the case $G$ is a \emph{random $d$-regular graphs} with an odd number of vertices typically requires proofs with degree $\BigOmega{n/\log n}$.
 % \begin{theorem}\label{thm:prev-thm}
 % There is a constant $d_0 \in \Naturals$ such that for all $d \geq d_0$, the following holds \emph{asymptotically almost surely} over a random $d$-regular graph $G=(V,E)$ on $n$ vertices (where $n$ is odd) \[ \Degree{\Card{G, \vec{1}} \SOS \bot} = \BigOmega{\frac{n}{\log n}}\]
 % \end{theorem}
 % Although random $d$-regular graphs are expander graphs with high probability, their techniques rely strongly on the randomness of sampling, and thus they are unable to extend their results to general expander graphs.
-They suggest (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs. In this work, we verify this by extending their result to all $d$-regular spectral expanders, that is, $d$-regular graphs with a mild condition on the spectral gap. In fact, using the same techniques we show the hardness of refuting $\Card{G, \vec{t}}$, where $\vec{t} = (t, \ldots, t) \in \Field^{n}$ for any odd value $t$. As another special case, this answers the \emph{even-colouring} case $t = d/2$ is odd, a problem posed by Buss and Nordstr\"{o}m \citep[Open Problem 7.7]{buss2021proof}. Formally, we prove the following (for the definition of $(n, d, \lambda)$-graphs see Section \ref{sec:graph-theory-prelims}).
+Their lower bound technique critically relies on the randomness of sampling, and therefore they can only only provide average case lower bounds.
+They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs but leave showing so as an open problem.
+In this work, we verify this by extending their result to all $d$-regular spectral expanders, that is, $d$-regular graphs with a mild condition on the spectral gap.
+In fact, similar to Austrin and Risse, we reduce the hardness of refuting $\Card{G, \vec{t}}$, for any odd value $t$, to the hardness of refuting $\Card{G, \vec{1}}$.
+As another special case, this answers the \emph{even-colouring} case $t = d/2$ is odd, a problem posed by Buss and Nordstr\"{o}m \citep[Open Problem 7.7]{buss2021proof}, which asks, \textit{``Are even colouring formulas over expander graphs hard for polynomial calculus over fields of characteristic distinct from 2 ?''}
+Formally, we prove the following (for the definition of $(n, d, \lambda)$-graphs see Section \ref{sec:graph-theory-prelims}).
 
 
 \begin{theorem}[Hardness Result For $\Card{G, \vec{t}}$]\label{thm:general-hardness-result}
@@ -109,10 +115,21 @@ They suggest (see \citep[Section 6]{Austrin_2022}) that the hardness results sho
   \[ \Degree{\Card{G, \vec{t}} \SOS \bot} = \BigOmega{\nicefrac{n}{\log n}}\]  
 \end{theorem}
 
-\paragraph{Proof overview.} We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree. An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$, such that all paths corresponding to the embedding have odd length. As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ (\cite[see Theorem A]{tikhomirov2016spectralgapdenserandom}), this subsumes the main technical ingredient of \cite{Austrin_2022}. Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching. This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$. To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph. Austrin and Risse achieve this using the contiguity property of random regular graphs; we provide a significantly simpler and shorter argument based on Tutte's criterion.
-
-The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required. In Section \ref{sec:embed-machinery} we describe the machinery for finding a desired topological embedding. In Section \ref{sec:matching-machinery} we prove conditions under which the residual graph has a perfect matching or, more generally, a $(t-1)$-regular spaning subgraph. In Section \ref{sec:main-proof}, we prove Theorem \ref{thm:general-hardness-result}. 
-
+\paragraph{Proof overview.}
+We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction (see Definition \ref{def:affine-restriction}) $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree.
+An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$ with $\lambda \le \epsilon d$ for some universal small constant $\epsilon \in (0,1)$, such that all paths corresponding to the embedding have odd length.
+The main technical ingredient of Austrin and Risse is also similar embedding theorem, but one that critically relies on the underlying graph being random.
+As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ (\cite[see Theorem A]{tikhomirov2016spectralgapdenserandom}), our embedding theorem subsumes that of \cite{Austrin_2022}.
+Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching.
+This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$.
+To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph.
+Austrin and Risse achieve this using the contiguity property of random regular graphs; which naturally does not extend to arbitrary graphs.
+Instead, we provide a significantly simpler and shorter, but more general argument based on Tutte's criterion.\par
+The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required.
+In Section \ref{sec:embed-machinery}, we describe the machinery for finding a desired topological embedding.
+In Section \ref{sec:matching-machinery}, we prove conditions under which the residual graph has a perfect matching or, more generally, a $(t-1)$-regular spaning subgraph.
+In Section \ref{sec:main-proof}, we use the tools from the previous sections to prove Theorem \ref{thm:general-hardness-result}. 
+In Section \ref{sec:related-work} we briefly discuss a few other lower bounds using embeddings in proof complexity, and then conclude with some future directions.
 
 \section{Preliminaries}
 \label{sec:prelims}
@@ -527,7 +544,8 @@ This $|A| < n/2$, with room to spare.
 \item{Let $B = V(G) \setminus A$. By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$. We can described $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
 
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-    To see why, let us define a mapping $\rho': \Edges{G_\EmbeddingFunc}...$ as follows. For each $(u,v) \in E(H)$, let $y_{u,v} := x_e$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Then $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
+    To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
+    Define a mapping $\rho': \Edges{G_\EmbeddingFunc}: \{0,1, y_1, \ldots, y_{E(H)}, \Complement{y}_1, \ldots, \Complement{y}_{E(H)}\}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Then $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
   }
 
 \item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $11d/16$. As $\lambda < d/50$, we can invoke the \nameref{thm:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
@@ -553,8 +571,25 @@ Then $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$, thus our theorem follows from Lemm
 \end{proof}
 
 
-\section{Concluding Remarks}
-\label{sec:conclusion}
+\section{Related Work And Concluding Remarks}
+\label{sec:related-work}
+In propositional\footnote{As opposed to alegebraic proof complexity} proof complexity, there a few prior examples of the strategy of embedding a worst case instance into a host graph to show lower bounds for a larger class of objects \cite{itsykson2021Near, pitassi2016PolyLogFrege}.
+Pitassi, Rossman, Servedio and Tan show Tseitin lower bounds for Frege proof systems \citep{pitassi2016PolyLogFrege} by relying on the embedding result by Rubinfeld and Kleinberg \citep{kleinberg1996short}, which allows us to embed any graph $H$ of size $\BigO{n/\poly(\log n)}$ into an exapnder graph on $n$ vertices as an ordinary minor.
+Krivelevich and Nenadov simplify and improve the above embedding theorem to allow for embedding any graph $H$ with size $\BigO{n/\log n}$ as an ordinary minor \citep{krivelevich2021completeMinors}.
+However, embedding a hard instance $H$ into $G$ as an ordinary minor does not guarantee that the hardness of $H$ is preserved.
+It is entirely possible that one of the edge contractions to obtain the minor results in $H$ now being easy to refute.
+Thus, these embedding theorems cannot be directly applied.
+Instead, as described in section \ref{sec:main-proof}, one way to preserve hardness is to use  embedding theorems that allow for topological embeddings that allow for edge sub-divisions of odd size \citep{draganic22rolling, nenadov2023routing}.
+In order to get a topological embedding, Austrin and Risse instead modify the ordinary embedding theorem in \citep{krivelevich2021completeMinors}.
+As described earlier, to obtain the desired results, they critically rely on the host graph being random.
+In this work, we use the embedding theorem by Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, but we point out that a similar result also follows using the machinery of non-blocking graphs used in \citep{feldman1988wide, nenadov2023routing}.\par
+In summary, we show degree lower bounds for refuting $\Card{G, \vec{t}}$ for odd $t$ in $\EnDeeLambda$ graphs in the SoS and PC proof systems.
+There is still $\log n$ gap between the largest possible proof in such systems, and our lower bounds (similar to Austrin and Risse).
+It is not inherenly clear that such a gap should exist.
+This gap is predominantly an artefact of $d$ being constant, and using embedding theorems to prove hardness, as in exapnder graphs we  need $\Theta(\log n)$ edges to form a path between any two nodes.
+This implies, that $\BigOmega{n/\log n}$ is the best we can do using embedding techniques.
+Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement using a different set of techniques.
+We leave the issue of resolving the tightness of our lower bound as an open problem for future work.
 
 % \newpage
 \bibliographystyle{plain}
