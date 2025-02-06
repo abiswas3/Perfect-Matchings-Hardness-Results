@@ -9,11 +9,11 @@
 % Title
 \title{Refuting Perfect Matchings in Spectral Expanders is Hard}
 
-% \author{}
-\author[1]{Ari Biswas}
-\author[2]{Rajko Nenadov}
-\affil[1]{\small University Of Warwick, United Kingdom}
-\affil[2]{\small University Of Auckland, New Zealand}
+\author{}
+% \author[1]{Ari Biswas}
+% \author[2]{Rajko Nenadov}
+% \affil[1]{\small University Of Warwick, United Kingdom}
+% \affil[2]{\small University Of Auckland, New Zealand}
 
 \date{}
 % \linenumbers
@@ -23,8 +23,8 @@
 \begin{abstract}
 This work studies the complexity of refuting the existence of a perfect matching in spectral expanders with an odd number of vertices, in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
 Austrin and Risse [SODA, 2021] showed that refuting perfect matchings in sparse $d$-regular \emph{random} graphs in the above proof systems requires proofs with degree $\Omega(n/\log n)$ on average. 
-We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graph with a mild spectral gap.
-Additionally, we show how our result also extends to refuting a more general class of formulae, which includes perfect matchings and \emph{even-colouring} formulas, thereby settling an open problem of Buss and Nordstr\"{o}m.
+We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graphs with a mild spectral gap.
+Additionally, we also show how the hardness of refuting perfect matchings reduces to refuting a more general class of formulae, which includes \emph{even-colouring} formulas, thereby settling an open problem of Buss and Nordstr\"{o}m.
 \end{abstract}
 
 \section{Introduction}
@@ -37,8 +37,8 @@ Additionally, we show how our result also extends to refuting a more general cla
 % \end{figure}
 
 
-Perhaps the most fundamental problem in computation is to provide an answer to the question: ``\textit{Given a true statement $A$, is there a short proof of the claim that $A$ is true?}''
-In trying to answer this question, we must first describe what constitutes a valid proof \cite{cook1979relative}. That is, we must describe the language in which the proof is written (axioms), and the rules for checking it (the verifier).
+Perhaps the most fundamental problem in computation is to provide an answer to the question asked by Cook and Reckchow in their seminal paper \citep{cook1979relative} -- ``\textit{Given a true statement $A$, is there a short proof of the claim that $A$ is true?}''
+In trying to answer this question, we must first describe what constitutes a valid proof. That is, we must describe the language in which the proof is written (axioms), and the rules for checking it (the verifier).
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question above is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of a shortest $\Proof \in S$ that proves $A$?}''
 If we could show that there exists a proof system $S$, such that for \emph{any} true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$ and consequently $\P = \NP$. 
@@ -73,7 +73,7 @@ In contrast, Tseitin formulae is known to require long proofs. The Tseitin formu
 If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
 However, formally refuting Tseitin formulae for expander graphs with odd number of vertices, in the SoS proof system, requires degree linear in the number of vertices in the graph \cite{grigoriev2001linear}.
 % The exact complexity of refuting the perfect matching principle for expander graphs, however, remains unknown.
-Given its close connections to the pigeon-hole and Tseitin, and the different behaviour of the two formulae, it is natural to determine the complexity of refuting perfect matchings for non-bipartite graphs.\par
+Given its close connections to the pigeon-hole and Tseitin, and the different behaviour of the two formulae, it is natural to determine the complexity of refuting perfect matchings for non-bipartite graphs.
 To refute perfect matchings in an algebraic proof system, we first need to specify combinatorial constraints as algebraic equalities. Given an undirected graph $G=(V,E)$, $V = \{1, \ldots, n\}$, and a vector $\vec{b} = (b_1, \ldots, b_{n}) \in \Field^{n}$,
 % we denote with $\vec{b} = (b_1, \dots, b_{|V|})  \in \Field^{\Size{V}}$ the vector of all $b$'s vector with size $\Size{V}$.
 we define $\Card{G, \vec{b}}$ as the following set of polynomial constraints over variables $x_e$ for $e \in E$:
@@ -239,9 +239,6 @@ $$
 $$
 \end{lemma}
 
-% \rajko{I don't think we need the following lemma.}
-% \ari{I used it in the lemma below, maybe we don't need it. I'll remove it if we do not.}
-
 % \begin{lemma}[Edge Connectivity In Pseudorandom Graphs]\label{lemma:edge-connectivity-pseudorandom}
 % Every $\EnDeeLambda$ graph $G$ with $d - \lambda \geq 2$ has edge connectivity $\EdgeConnectivity{G} = d$.
 % \end{lemma}
@@ -269,7 +266,6 @@ $$
 % \end{proof}
 
 We make use of the following two well known criteria of Tutte \cite{tutte1952factors, tutte1947factorization}.
-% \rajko{Ari, please add references to the original work of Tutte.}
 Note that both of the lemmata ask for a property which is stronger than what Tutte criteria requires, though easier to state.
 % The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively. \rajko{Please cite the original work, not lecture notes.}
 
@@ -395,25 +391,36 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 If a graph $G$ contains $H^{\sigma}$ for some $\sigma: \Edges{H} \to \Naturals$, then we say $G$ contains $H$ as a \emph{topological minor}. In our application, it will be important that we can control the parity of $\sigma(e)$. The following result follows directly from \cite[Theorem 1]{draganic22rolling}. 
 
 \begin{theorem}[Embedding Theorem] \label{thm:embedding_top}
-For every $D \in \mathbb{N}$ there exist $\alpha, \mu, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $X, Y \subseteq V(G)$ of size $|S|, |T| \ge \mu n$, we have
+For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $X, Y \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
 $$
-    \bigl| e_{E(G)}(S, T) - |S||T|p \bigr| \le \mu |S||T| p, 
+    \bigl| e_{G}(S, T) - |S||T|p \bigr| \le \xi |S||T| p, 
 $$
-where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (2 D \log n)$ vertices, and $\sigma(e) \in [\log n, 2 \log n]$ for every $e \in E(H)$.    
+where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$, $H^\sigma$ has at most $\alpha n$ vertices, and $\sigma(e) \ge \log n$ for every $e \in E(H)$.
 \end{theorem}
 
 We make use of Theorem \ref{thm:embedding_top} through the following corollary.
 
 \begin{corollary} \label{cor:embedding_top}
-For every $D \in \mathbb{N}$ there exist $d_0, \epsilon > 0$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/2$. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (2D \log n)$ vertices, and $\sigma(e) \in [\log n, 2 \log n]$ for every $e \in E(H)$.
+For every $D \in \mathbb{N}$ there exist $d_0, \epsilon > 0$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
-\rajko{I'll add the proof tomorrow.}
-
-
-% \begin{theorem}[Embedding Theorem]\label{theorem:embedding-theorem}
-%   Let $G=(V,E)$ denote an $\EnDeeLambda$ graph with $\lambda \le d/50$, and $H$ be an arbitrary sparse graph with at most $t = \lfloor \frac{ n}{80\MaxDegree{H}\log_Dn}\rfloor $ vertices with max degree $ 2 \le \MaxDegree{H} < d$, where $D=d/\lambda$.
-%   For any subset $\GreenB \subseteq V$ of size $\Size{\GreenB} \ge \frac{3n}{16}$ and $\MinimalDegree{G[\GreenB]} \ge \frac{3d}{16}$, $G[\GreenB]$ contains $H$ as a topological minor $\Subdivision{H}{\sigma}$ where every edge in $H$ is an odd sized path in $\Subdivision{H}{\sigma}$.
-% \end{theorem}
+\begin{proof}
+    Let $m$ denote the number of edges in the induced subgraph $G[B]$. Then $2m = e_G(B, B)$, thus by \nameref{lemma:expanders-mixing-lemma} we have
+    $$
+        \left| 2m - \frac{d}{n}|B|^2 \right| \le \lambda |B|.
+    $$
+    Setting $p = m / \binom{|B|}{2}$, we have
+    $$
+        \left| p - \frac{d}{n} \right| \le 2 \lambda / |B|,
+    $$
+    with room to spare. Therefore, for every $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
+    \begin{align*}
+        \Bigl| e_G(S, T) - p|S||T| \Bigr| &\le \left| e_G(S, T) - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
+        &\le \lambda \sqrt{|S||T|} + 2 \lambda |S||T| / |B| \le \xi |S||T|p. 
+    \end{align*}
+    \rajko{Feel free to expand the previous calculation and explain it in more detail.}
+    
+    Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. Note that $\sigma(e) \le 2 + \log n$, thus $H^\sigma$ has at most $\alpha n / 10 \le \alpha |B|$ vertices. Therefore, we can invoke \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
+\end{proof}
 
 \section{Perfect matching and regular subgraphs}
 \label{sec:matching-machinery}
@@ -423,13 +430,12 @@ For every $D \in \mathbb{N}$ there exist $d_0, \epsilon > 0$, such that the foll
 As described earlier, the second ingredient in our hardness proof is showing that a certain residual graph contains a perfect matching or a spanning $(t-1)$-regular subgraph. In this section we state and prove these ingredients.
 
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
-Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ contains a perfect matching.
+Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}. Consequently, $G[U]$ contains a perfect matching. 
 \end{lemma}
 
 \begin{proof}
   Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$.
-  We show that $G[U]$ satisfies a stronger version of \nameref{lemma:tutte-criterion}:  $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components.
-  If $|S| \ge |U|/2$ then the criterion trivially holds, thus we can assume $|S| < |U|/2$.
+  We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}. Consider some $S \subseteq U$. We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components (note that this is a stronger property than required). If $|S| \ge |U|/2$ then this trivially holds, thus we can assume $|S| < |U|/2$.
   It suffices to show that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$, there exists an edge between $X$ and $Y$.
   Indeed, suppose that this holds but $G[U \setminus S]$ has more than $|S|$ connected components, with vertex sets denoted by $C_1, \ldots, C_k$, for some $k > |S|$.
   Then there is no edge between $X := C_1 \cup \ldots \cup C_{s}$ and $Y := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$. As $|X|, |Y| \ge |S|/3$, we get a contradiction.
@@ -446,7 +452,7 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
     \[
         \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{n}|X||S| + 3 \lambda |X| \le \frac{d}{4} |X| + 3\lambda |X| < \frac{11d}{16}|X|.
     \]
-    This confirms \eqref{eq:edge_bound}.
+    This confirms \eqref{eq:edge_bound}. \rajko{Feel free to expand calculations, similarly how you did it in the next lemma.}
 \end{proof}
 
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
@@ -533,17 +539,17 @@ Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lam
 \begin{equation} \label{eq:size_nbr_A}
     \bigl| \Size{\Neighbourhood{G}{u} \cap A} - 3d/4 \bigr| \leq \epsilon d.
 \end{equation}
-This $|A| < n/2$, with room to spare.
+This $|A| < n/2$, with room to spare. \rajko{Calculate the correct upper bound on $A$. If necessary, adjust the constant in Corollary \ref{cor:embedding_top}.}
 }
 
 \item{Let $B = V(G) \setminus A$. By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$. We can described $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
 
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
     To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
-    Define a mapping $\rho': \Edges{G_\EmbeddingFunc}: \{0,1, y_1, \ldots, y_{E(H)}, \Complement{y}_1, \ldots, \Complement{y}_{E(H)}\}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Then $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
+    Let $\mathcal{Y} = (y_e)_{e \in E(H)}$ and $\Complement{\mathcal{Y}} = (\Complement{y_e})_{e \in E(H)}$. Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Complement{\mathcal{Y}} \}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
   }
 
-\item{ As $n$ is odd, and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $11d/16$. As $\lambda < d/50$, we can invoke the \nameref{thm:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
+\item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $11d/16$. As $\lambda < d/50$, we can invoke the \nameref{thm:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
 }
   
 \item{
@@ -568,26 +574,33 @@ Then $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$, thus our theorem follows from Lemm
 
 \section{Related Work And Concluding Remarks}
 \label{sec:related-work}
-In propositional\footnote{As opposed to alegebraic proof complexity} proof complexity, there a few prior examples of the strategy of embedding a worst case instance into a host graph to show lower bounds for a larger class of objects \cite{itsykson2021Near, pitassi2016PolyLogFrege}.
-Pitassi, Rossman, Servedio and Tan show Tseitin lower bounds for Frege proof systems \citep{pitassi2016PolyLogFrege} by relying on the embedding result by Rubinfeld and Kleinberg \citep{kleinberg1996short}, which allows us to embed any graph $H$ of size $\BigO{n/\poly(\log n)}$ into an exapnder graph on $n$ vertices as an ordinary minor.
+
+\ari{I'm really not sure what else is actually related to our work. 
+I could write about other results in proof complexity, but in that case we could just open the textbook on proof complexity and outline results. I fear we will be penalised for not having a bigger related work section, but at the same time there really isn't much more to talk about.
+}
+\rajko{I think it's fine. Leave it as is.}
+
+In propositional\footnote{As opposed to algebraic proof complexity} proof complexity, there a few prior examples of the strategy of embedding a worst case instance into a host graph to show lower bounds for a larger class of objects \cite{itsykson2021Near, pitassi2016PolyLogFrege}.
+Pitassi, Rossman, Servedio and Tan show Tseitin lower bounds for Frege proof systems \citep{pitassi2016PolyLogFrege} by relying on the embedding result by Rubinfeld and Kleinberg \citep{kleinberg1996short}, which allows one to embed any bounded degree graph $H$ of size $\BigO{n/\poly(\log n)}$ into an expander graph on $n$ vertices as a minor (not necessarily a topological one). 
 Krivelevich and Nenadov simplify and improve the above embedding theorem to allow for embedding any graph $H$ with size $\BigO{n/\log n}$ as an ordinary minor \citep{krivelevich2021completeMinors}.
 However, embedding a hard instance $H$ into $G$ as an ordinary minor does not guarantee that the hardness of $H$ is preserved.
 It is entirely possible that one of the edge contractions to obtain the minor results in $H$ now being easy to refute.
 Thus, these embedding theorems cannot be directly applied.
 Instead, as described in section \ref{sec:main-proof}, one way to preserve hardness is to use  embedding theorems that allow for topological embeddings that allow for edge sub-divisions of odd size \citep{draganic22rolling, nenadov2023routing}.
-In order to get a topological embedding, Austrin and Risse instead modify the ordinary embedding theorem in \citep{krivelevich2021completeMinors}.
-As described earlier, to obtain the desired results, they critically rely on the host graph being random.
-In this work, we use the embedding theorem by Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, but we point out that a similar result also follows using the machinery of non-blocking graphs used in \citep{feldman1988wide, nenadov2023routing}.\par
+In order to get a topological embedding, Austrin and Risse modify the ordinary embedding theorem in \citep{krivelevich2021completeMinors} but critically rely on the host graph being random.
+In this work, we use the embedding theorem by Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, which greatly simplifies the argument. Moreover, we avoid the use of the contiguity argument present in \cite{Austrin_2022} by directly utilising Tutte's criterion and the Expander Mixing Lemma.
+
+\par
 In summary, we show degree lower bounds for refuting $\Card{G, \vec{t}}$ for odd $t$ in $\EnDeeLambda$ graphs in the SoS and PC proof systems.
 There is still $\log n$ gap between the largest possible proof in such systems, and our lower bounds (similar to Austrin and Risse).
-It is not inherenly clear that such a gap should exist.
+It is not inherently clear that such a gap should exist.
 This gap is predominantly an artefact of $d$ being constant, and using embedding theorems to prove hardness, as in exapnder graphs we  need $\Theta(\log n)$ edges to form a path between any two nodes.
 This implies, that $\BigOmega{n/\log n}$ is the best we can do using embedding techniques.
 Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement using a different set of techniques.
 We leave the issue of resolving the tightness of our lower bound as an open problem for future work.
 
 % \newpage
-\bibliographystyle{plain}
+\bibliographystyle{abbrv}
 \bibliography{perfect-matching}
 \clearpage
 \appendix
