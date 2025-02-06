@@ -390,8 +390,9 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 
 If a graph $G$ contains $H^{\sigma}$ for some $\sigma: \Edges{H} \to \Naturals$, then we say $G$ contains $H$ as a \emph{topological minor}. In our application, it will be important that we can control the parity of $\sigma(e)$. The following result follows directly from \cite[Theorem 1]{draganic22rolling}. 
 
+\ari{Why is there $X$ and $Y$ and $S$ and $T$?}
 \begin{theorem}[Embedding Theorem] \label{thm:embedding_top}
-For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $X, Y \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
+For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $S, T \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
 $$
     \bigl| e_{G}(S, T) - |S||T|p \bigr| \le \xi |S||T| p, 
 $$
@@ -401,18 +402,37 @@ where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any g
 We make use of Theorem \ref{thm:embedding_top} through the following corollary.
 
 \begin{corollary} \label{cor:embedding_top}
-For every $D \in \mathbb{N}$ there exist $d_0, \epsilon > 0$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
+For every $D \in \mathbb{N}$ there exist $d_0 \in \Naturals, \epsilon \in (0,1)$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
 \begin{proof}
-    Let $m$ denote the number of edges in the induced subgraph $G[B]$. Then $2m = e_G(B, B)$, thus by \nameref{lemma:expanders-mixing-lemma} we have
-    $$
-        \left| 2m - \frac{d}{n}|B|^2 \right| \le \lambda |B|.
-    $$
-    Setting $p = m / \binom{|B|}{2}$, we have
-    $$
-        \left| p - \frac{d}{n} \right| \le 2 \lambda / |B|,
-    $$
-    with room to spare. Therefore, for every $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
+  Let $m$ denote the number of edges in the induced subgraph $G[B]$, which gives us $2m = \CutEdges{B}{B}{G}$.
+Denote $b \Def \Size{B}$ and Define $p = m / \binom{|B|}{2}$. Using the \nameref{lemma:expanders-mixing-lemma}
+
+\[ \left| 2m - \frac{d}{n}b^2 \right| \le \lambda b \]
+
+Dividing both sides with $b(b-1)$, and using the fact that $\frac{b}{b-1} = 1 + \frac{1}{b-1}$, we get
+
+\begin{align}
+\left| \frac{2m}{b(b-1)} - \frac{d}{n} + \frac{d}{n(b-1)} \right| &\le \frac{\lambda}{b-1}  \label{eq:eml-post-process}
+\end{align}
+
+From this we have 
+\begin{align}
+  \left| p - \frac{d}{n}\right| &= \left| p - \frac{d}{n} - \frac{d}{n(b-1)} + \frac{d}{n(b-1)}\right|  \\
+                                &\le \left| p - \frac{d}{n} - \frac{d}{n(b-1)} \right| + \frac{1}{(b-1)} \label{eq:triangle}\\
+                                &\le \frac{\lambda}{(b-1)} + \frac{1}{(b-1)}  \label{eq:final} \\
+  & \le \frac{2\lambda}{b} 
+\end{align}
+
+\eqref{eq:triangle} comes from the triangle inquality and  $d/n \le 1$.
+Equation \eqref{eq:final} comes from Equation \eqref{eq:eml-post-process}.
+Finally, the last inequality comes from the fact that $b \geq n/10$ for $n$ large enough.\\
+Therefore, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
+
+\begin{align*}
+\left| p|S||T| - \frac{d}{n}|S||T| \right| & \le \frac{2\lambda}{b} |S||T|  
+\end{align*}
+
     \begin{align*}
         \Bigl| e_G(S, T) - p|S||T| \Bigr| &\le \left| e_G(S, T) - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
         &\le \lambda \sqrt{|S||T|} + 2 \lambda |S||T| / |B| \le \xi |S||T|p. 
@@ -535,18 +555,23 @@ In this section we prove Theorem \ref{thm:general-hardness-result}. As $\Card{G,
 Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. Let $\HardInstance$ denote the graph on $h=\frac{n}{D \log n}$ vertices as given by Lemma \ref{lemma:worst-case-instance-sos} (to show lower bounds for PC, then we use $H$ from Lemma \ref{lemma:worst-case-instance-PC}). Recall that any SoS proof which refutes $\PM{H}$ has degree $\BigOmega{h}$. We now make use of $H$ to show the hardness of refuting $\Card{G, \vec{t}}$. The idea is to find a restriction $\rho$ such that $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$. We achieve this through the following steps.
 
 \begin{enumerate}
-\item{Invoke Lemma  \ref{thm:partition} with parameters $c=3/4$ and $\epsilon = 1/16$ to get a subset $A \subseteq V(G)$ such that for every $v \in V(G)$ we have 
-\begin{equation} \label{eq:size_nbr_A}
-    \bigl| \Size{\Neighbourhood{G}{u} \cap A} - 3d/4 \bigr| \leq \epsilon d.
-\end{equation}
-This $|A| < n/2$, with room to spare. \rajko{Calculate the correct upper bound on $A$. If necessary, adjust the constant in Corollary \ref{cor:embedding_top}.}
+\item{Invoke Lemma  \ref{thm:partition} with parameters $c=3/4$ and $\epsilon = 1/16$ to get a subset $A \subseteq V(G)$ such that for every $u \in V(G)$ we have
+% $u \in V$: $$ and $$
+    
+\begin{align} 
+  \frac{11}{16}d  \leq   \Size{\Neighbourhood{G}{u} \cap \RedA} \leq \frac{13}{16}d \label{eq:size_nbr_A}\\[5pt]
+  \frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d \label{eq:size_nbr_B}
+\end{align}
+This implies that $\Size{B} > n/10$, with room to spare.
 }
 
-\item{Let $B = V(G) \setminus A$. By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$. We can described $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
-
+\item{Let $B = V(G) \setminus A$. By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
+    We can describe $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
-    To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
-    Let $\mathcal{Y} = (y_e)_{e \in E(H)}$ and $\Complement{\mathcal{Y}} = (\Complement{y_e})_{e \in E(H)}$. Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Complement{\mathcal{Y}} \}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$. Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
+To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
+We use as shorthand $\mathcal{Y} = (y_e)_{e \in E(H)}$ and $\Complement{\mathcal{Y}} = (\Complement{y}_e)_{e \in E(H)}$.
+Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Complement{\mathcal{Y}} \}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$.
+Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$.
   }
 
 \item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $11d/16$. As $\lambda < d/50$, we can invoke the \nameref{thm:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
@@ -574,11 +599,6 @@ Then $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$, thus our theorem follows from Lemm
 
 \section{Related Work And Concluding Remarks}
 \label{sec:related-work}
-
-\ari{I'm really not sure what else is actually related to our work. 
-I could write about other results in proof complexity, but in that case we could just open the textbook on proof complexity and outline results. I fear we will be penalised for not having a bigger related work section, but at the same time there really isn't much more to talk about.
-}
-\rajko{I think it's fine. Leave it as is.}
 
 In propositional\footnote{As opposed to algebraic proof complexity} proof complexity, there a few prior examples of the strategy of embedding a worst case instance into a host graph to show lower bounds for a larger class of objects \cite{itsykson2021Near, pitassi2016PolyLogFrege}.
 Pitassi, Rossman, Servedio and Tan show Tseitin lower bounds for Frege proof systems \citep{pitassi2016PolyLogFrege} by relying on the embedding result by Rubinfeld and Kleinberg \citep{kleinberg1996short}, which allows one to embed any bounded degree graph $H$ of size $\BigO{n/\poly(\log n)}$ into an expander graph on $n$ vertices as a minor (not necessarily a topological one). 
