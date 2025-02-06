@@ -390,7 +390,7 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 
 If a graph $G$ contains $H^{\sigma}$ for some $\sigma: \Edges{H} \to \Naturals$, then we say $G$ contains $H$ as a \emph{topological minor}. In our application, it will be important that we can control the parity of $\sigma(e)$. The following result follows directly from \cite[Theorem 1]{draganic22rolling}. 
 
-\ari{Why is there $X$ and $Y$ and $S$ and $T$?}
+
 \begin{theorem}[Embedding Theorem] \label{thm:embedding_top}
 For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $S, T \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
 $$
@@ -402,7 +402,8 @@ where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any g
 We make use of Theorem \ref{thm:embedding_top} through the following corollary.
 
 \begin{corollary} \label{cor:embedding_top}
-For every $D \in \mathbb{N}$ there exist $d_0 \in \Naturals, \epsilon \in (0,1)$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
+  For every $D \in \mathbb{N}$ there exist $d_0 \in \Naturals, \epsilon \in (0,1)$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$.
+  If $e(G[B]) > Cn$ for some $C >0$, then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
 \begin{proof}
   Let $m$ denote the number of edges in the induced subgraph $G[B]$, which gives us $2m = \CutEdges{B}{B}{G}$.
@@ -430,15 +431,12 @@ Finally, the last inequality comes from the fact that $b \geq n/10$ for $n$ larg
 Therefore, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
 
 \begin{align*}
-\left| p|S||T| - \frac{d}{n}|S||T| \right| & \le \frac{2\lambda}{b} |S||T|  
-\end{align*}
-
-    \begin{align*}
-        \Bigl| e_G(S, T) - p|S||T| \Bigr| &\le \left| e_G(S, T) - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
-        &\le \lambda \sqrt{|S||T|} + 2 \lambda |S||T| / |B| \le \xi |S||T|p. 
+  \Bigl| e_G(S, T) - p|S||T| \Bigr| &\le \left| e_G(S, T) - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
+                                    &\le \lambda \sqrt{|S||T|} + 2 \lambda |S||T| / |B| \le \xi |S||T|p. 
     \end{align*}
+
     \rajko{Feel free to expand the previous calculation and explain it in more detail.}
-    
+    \ari{What is the value of $\xi$ that makes this work?. I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work.}
     Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. Note that $\sigma(e) \le 2 + \log n$, thus $H^\sigma$ has at most $\alpha n / 10 \le \alpha |B|$ vertices. Therefore, we can invoke \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
 \end{proof}
 
@@ -455,24 +453,46 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
 
 \begin{proof}
   Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$.
-  We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}. Consider some $S \subseteq U$. We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components (note that this is a stronger property than required). If $|S| \ge |U|/2$ then this trivially holds, thus we can assume $|S| < |U|/2$.
-  It suffices to show that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$, there exists an edge between $X$ and $Y$.
-  Indeed, suppose that this holds but $G[U \setminus S]$ has more than $|S|$ connected components, with vertex sets denoted by $C_1, \ldots, C_k$, for some $k > |S|$.
-  Then there is no edge between $X := C_1 \cup \ldots \cup C_{s}$ and $Y := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$. As $|X|, |Y| \ge |S|/3$, we get a contradiction.
+  We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
+  Consider some $S \subseteq U$.
+  We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components (note that this is a stronger property than required).
+  If $|S| \ge |U|/2$ then by a simple counting argument this trivially holds, thus we can assume $|S| < |U|/2$.  
+ We claim that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$,
 
-    Consider some partition $X \cup Y$ of $U \setminus S$ with $|X| \le |Y|$. Then $|X| \le (|U| - |S|)/2 \le (n - |S|)/2$. We show
+ \begin{equation}
+  \CutEdges{X}{Y}{G} > 1 \implies  G[U \setminus S] \text{ has at most $|S|$ connected components}  \label{eq:mini-claim}
+ \end{equation}
+
+\flushleft
+To see why, assume towards a contradiction that there exists an edge between \emph{every} $X$ and $Y$ of size at least $\Size{S}/3$, \emph{and}, $G[U \setminus S]$ has more than $|S|$ connected components.
+We denote the  vertex sets of these components by $C_1, \ldots, C_k$, for some $k > |S|$.
+Let $X^\star := C_1 \cup \ldots \cup C_{s}$ and $Y^\star := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$.
+By construction, even if each component is singleton, we get that  $\Size{X^\star}, \Size{Y^\star} \ge \Size{S}/3$.
+Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$ i.e we have found a  partition without an edge between them, giving us our contradiction. \\
+\flushleft
+Now, consider some aribitrary partition $X \cup Y$ of $U \setminus S$, and without loss of generality assume $|X| \le |Y|$. Then
+\begin{equation}
+|X| \le (|U| - |S|)/2 \le (n - |S|)/2  \label{eq:upp-X}
+\end{equation}
+
+  We will show that
     \begin{equation} \label{eq:edge_bound}
-        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \frac{11d}{16}|X|,
+        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \frac{11d}{16}|X|
     \end{equation}
-    as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By the Expander Mixing Lemma we have
-    \[
-        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} \le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}.
-    \]
-    Using $|S|/3 \le |X| \le (n-|S|)/2$, $|S| \le n/2$, and $\lambda < d/24$,  we further upper bound the right hand side:
-    \[
-        \frac{d}{n} |X| \frac{n-|S|}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| < \frac{d}{2}|X| + \frac{d}{n}|X||S| + 3 \lambda |X| \le \frac{d}{4} |X| + 3\lambda |X| < \frac{11d}{16}|X|.
-    \]
-    This confirms \eqref{eq:edge_bound}. \rajko{Feel free to expand calculations, similarly how you did it in the next lemma.}
+    as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $G[U\setminus S]$ has at most $\Size{S}$ connected components, which would complete the proof.
+    By the \nameref{lemma:expanders-mixing-lemma}, we have
+
+\begin{align}
+  \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} &\le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}        \\
+                                          &\le \frac{d}{n} |X| \frac{(n-|S|)}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| \label{eq:upper-bound-X}  \\
+                                          &< \frac{d}{2}|X| + \frac{d}{n}|X||S| + 3 \lambda |X| \label{eq:smaller-than-one} \\
+                                          &\le \frac{d}{4} |X| + 3\lambda |X| \\
+                                            &< \frac{11d}{16}|X|  \label{eq:upper-bound-S}
+\end{align}
+
+Equation \eqref{eq:upper-bound-X} comes from Equation \eqref{eq:upp-X}.
+Equation \eqref{eq:smaller-than-one} comes from $\frac{(n-\Size{S})}{n} < 1$ . Equation \eqref{eq:upper-bound-S} comes from $|S| < \Size{U}/2 < n/2$, and the last step comes from the assumption $\lambda < d/50$.
+This confirms \eqref{eq:edge_bound}.
 \end{proof}
 
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
@@ -562,10 +582,10 @@ Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lam
   \frac{11}{16}d  \leq   \Size{\Neighbourhood{G}{u} \cap \RedA} \leq \frac{13}{16}d \label{eq:size_nbr_A}\\[5pt]
   \frac{3}{16}d  \leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq \frac{5}{16}d \label{eq:size_nbr_B}
 \end{align}
-This implies that $\Size{B} > n/10$, with room to spare.
 }
 
-\item{Let $B = V(G) \setminus A$. By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
+\item{Let $B = V(G) \setminus A$. From the partition lemma above, $\Size{B} > n/10$, with room to spare and $\Size{E(G[B])} \ge 3d/16$. $G[B]$.
+    By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
     We can describe $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
 To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
@@ -624,6 +644,7 @@ We leave the issue of resolving the tightness of our lower bound as an open prob
 \bibliography{perfect-matching}
 \clearpage
 \appendix
+
 
 
 
