@@ -24,7 +24,7 @@
 This work studies the complexity of refuting the existence of a perfect matching in spectral expanders with an odd number of vertices, in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
 Austrin and Risse [SODA, 2021] showed that refuting perfect matchings in sparse $d$-regular \emph{random} graphs in the above proof systems requires proofs with degree $\Omega(n/\log n)$ on average. 
 We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graphs with a mild spectral gap.
-Additionally, we also show how the hardness of refuting perfect matchings reduces to refuting a more general class of formulae, which includes \emph{even-colouring} formulas, thereby settling an open problem of Buss and Nordstr\"{o}m.
+Additionally, as in the case for random graphs, we show that the hardness of refuting perfect matchings in spectral expanders also reduces to refuting a more general class of formulae, which includes \emph{even-colouring} formulas, thereby settling an open problem of Buss and Nordstr\"{o}m.
 \end{abstract}
 
 \section{Introduction}
@@ -389,10 +389,10 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 
 If a graph $G$ contains $H^{\sigma}$ for some $\sigma: \Edges{H} \to \Naturals$, then we say $G$ contains $H$ as a \emph{topological minor}. In our application, it will be important that we can control the parity of $\sigma(e)$. The following result follows directly from \cite[Theorem 1]{draganic22rolling}. 
 
-\ari{It would be nice if you could write a short paragraph about why this theorem is true. 
-I know they can go find the original reference, so if you think this would be easy then please add something. 
-}
-\rajko{What do you mean ``why this theorem is true''? You mean the intuition? That I can't give in one paragraph. If you mean why does it follow from [11, Theorem 1], that is rather straightforward and needs no explanation.}
+% \ari{It would be nice if you could write a short paragraph about why this theorem is true. 
+% I know they can go find the original reference, so if you think this would be easy then please add something. 
+% }
+% \rajko{What do you mean ``why this theorem is true''? You mean the intuition? That I can't give in one paragraph. If you mean why does it follow from [11, Theorem 1], that is rather straightforward and needs no explanation.}
 
 \begin{theorem}[Embedding Theorem] \label{thm:embedding_top}
 For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $S, T \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
@@ -436,11 +436,9 @@ Let $\xi$ be as given by \nameref{thm:embedding_top}. Using the bound on the dif
                                     &\le \lambda \sqrt{|S||T|} + 2 \lambda |S||T| / |B| \le \xi |S||T|p. 
     \end{align*}
 
-    \rajko{Feel free to expand the previous calculation and explain it in more detail.}
-    \ari{What is the value of $\xi$ that makes this work? And $\xi \in (0,1)$ right? I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work. I added the $E(G[B])$ clause to the corollary. Where do we exploit the fact that $|B|>n/10$ in the corollary or the sets $\Size{S},\Size{T} \ge \xi n$??}
-    \rajko{I removed $E(G[B])$ from the statement. It follows from the lower bound on $B$ and the fact that $d$ is sufficiently large. $\xi$ is given by the Embedding Theorem; you take $\epsilon$ to be sufficiently small with respect to $\xi$. How small? It doesn't matter, it is clear that sufficiently small works. The lower bound on $B$, $S$ and $T$ is used to derive that sufficiently small $\epsilon$ works.}
-
-
+    % \rajko{Feel free to expand the previous calculation and explain it in more detail.}
+    % \ari{What is the value of $\xi$ that makes this work? And $\xi \in (0,1)$ right? I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work. I added the $E(G[B])$ clause to the corollary. Where do we exploit the fact that $|B|>n/10$ in the corollary or the sets $\Size{S},\Size{T} \ge \xi n$??}
+    % \rajko{I removed $E(G[B])$ from the statement. It follows from the lower bound on $B$ and the fact that $d$ is sufficiently large. $\xi$ is given by the Embedding Theorem; you take $\epsilon$ to be sufficiently small with respect to $\xi$. How small? It doesn't matter, it is clear that sufficiently small works. The lower bound on $B$, $S$ and $T$ is used to derive that sufficiently small $\epsilon$ works.}
     Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. Note that $\sigma(e) \le 2 + \log n$, thus $H^\sigma$ has at most $\alpha n / 10 \le \alpha |B|$ vertices. As $G[B]$ has at least $Cn$ edges (by \nameref{lemma:expanders-mixing-lemma}), we can invoke \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
 \end{proof}
 
@@ -589,7 +587,7 @@ Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lam
 \end{align}
 }
 
-\item{Let $B = V(G) \setminus A$. From the partition lemma above, $\Size{B} > n/10$, with room to spare and $\Size{E(G[B])} \ge 3d/16$. $G[B]$.
+\item{Let $B = V(G) \setminus A$. From the partition lemma above, $\Size{B} > n/10$, with room to spare and $\Size{E(G[B])} \ge 3nd/16$. $G[B]$.
     By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
     We can describe $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
