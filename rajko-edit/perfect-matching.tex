@@ -355,7 +355,7 @@ We prove the existence of such a partition $A \subseteq V(G)$ using the probabil
 For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $c$.
 If $X_i = 1$, then we include $v$ in $A$. Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we choose $A$. For any $v \in V$, let $Y_v \Def |\Neighbourhood{E}{v} \cap \RedA|$ denote the random variable that counts the number of neighbours of $v$ in $A$.
 Define $\delta \Def \epsilon / c$, and for every $v \in V$ let $E_v = \Indicator{|Y_v - d c | \geq \delta c d}$ denote the bad event that $v$ has too many or too few neighbours in $A$.
-Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has maximum degree at most $d^2$ (only vertices at most two hops away from $v$ affect the colours of $v$'s neighbours; there at most $d^2$ such vertices).
+Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has maximum degree at most $d^2$ (only vertices at most two hops away from $v$ affect how many of $v$'s neighbours are in $A$ or $B$; there at most $d^2$ such vertices).
 % To see why, for any node $v$, let $u$ and $w$ denote vertices exactly 2 hops\footnote{A node $a$ is $k$ hops away from another node $b$ if the shortest path between $a$ and $b$ has $k$ edges.} and at least 3 hops away from $v$ respectively. The colour of $u$'s neighbours, directly affects how many red neighbours $v$ can have.
 % However, as the colours for each node is sampled independently, the colour of $w$ or its neighbours do not affect $v$'s neighbours.
 % Therefore $E_v$ is independent of $E_w$.
