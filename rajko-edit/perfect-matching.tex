@@ -265,18 +265,17 @@ $$
 %   Therefore the maximum number of components we can have is $\Size{S}$.
 % \end{proof}
 
-We make use of the following two well known criteria of Tutte \cite{tutte1952factors, tutte1947factorization}.
-Note that both of the lemmata ask for a property which is stronger than what Tutte criteria requires, though easier to state.
+We make use of the following two well known criteria of Tutte \cite{tutte1952factors, tutte1947factorization}. Note that both of the lemmata ask for a property which is stronger than what Tutte criteria requires, though easier to state. We denote with $q(G)$ the number of connected components in a graph $G$.
 % The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively. \rajko{Please cite the original work, not lecture notes.}
 
 \begin{lemma}[Tutte's Criterion]\label{lemma:tutte-criterion}
-Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ with \emph{even} number of vertices. Suppose that for every $S \subseteq V$, $\OddComponents{G[V \setminus S]} \leq |S|$. Then $G$ contains a perfect matching.
+If $G$ has  \emph{even} number of vertices and for every $S \subseteq V$ we have $\OddComponents{G[V \setminus S]} \leq |S|$, then $G$ contains a perfect matching.
 \end{lemma}
 
 \begin{lemma}[Tutte's Generalised Criterion]\label{lemma:tutte-criterion-factor}
-  Let $\OddComponents{G}$ denote the number of odd sized connected components in a graph $G=(V,E)$ and $f \in \Naturals$ be even. Suppose that for every pair of disjoint sets $S, T \subseteq V$ the following holds:
+  Let $f \in \Naturals$ be even. Suppose that for every pair of disjoint sets $S, T \subseteq V$ the following holds:
 
-  \[ |S|f \geq \OddComponents{S \cup T} + \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}. \]
+  \[ |S|f \geq \OddComponents{G[S \cup T]} + \sum_{w \in T} f - \Size{\Neighbourhood{E}{w} \setminus S}. \]
   Then $G$ contains a spanning subgraph $G' \subseteq G$ which if $f$-regular.
 \end{lemma}
 
@@ -390,6 +389,10 @@ Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the 
 
 If a graph $G$ contains $H^{\sigma}$ for some $\sigma: \Edges{H} \to \Naturals$, then we say $G$ contains $H$ as a \emph{topological minor}. In our application, it will be important that we can control the parity of $\sigma(e)$. The following result follows directly from \cite[Theorem 1]{draganic22rolling}. 
 
+\ari{It would be nice if you could write a short paragraph about why this theorem is true. 
+I know they can go find the original reference, so if you think this would be easy then please add something. 
+}
+\rajko{What do you mean ``why this theorem is true''? You mean the intuition? That I can't give in one paragraph. If you mean why does it follow from [11, Theorem 1], that is rather straightforward and needs no explanation.}
 
 \begin{theorem}[Embedding Theorem] \label{thm:embedding_top}
 For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $S, T \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
@@ -402,21 +405,18 @@ where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any g
 We make use of Theorem \ref{thm:embedding_top} through the following corollary.
 
 \begin{corollary} \label{cor:embedding_top}
-  For every $D \in \mathbb{N}$ there exist $d_0 \in \Naturals, \epsilon \in (0,1)$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$.
-  If $e(G[B]) > Cn$ for some $C >0$, then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
+  For every $D \in \mathbb{N}$ there exist $d_0 \in \Naturals, \epsilon \in (0,1)$, such that the following holds. Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ and $\lambda < \epsilon d$. Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/10$. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$ and at most $\alpha n / (11 \log n)$ vertices, and $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
 \begin{proof}
   Let $m$ denote the number of edges in the induced subgraph $G[B]$, which gives us $2m = \CutEdges{B}{B}{G}$.
-Denote $b \Def \Size{B}$ and Define $p = m / \binom{|B|}{2}$. Using the \nameref{lemma:expanders-mixing-lemma}
+Denote $b \Def \Size{B}$ and Define $p = m / \binom{b}{2}$. Using the \nameref{lemma:expanders-mixing-lemma}
 
 \[ \left| 2m - \frac{d}{n}b^2 \right| \le \lambda b \]
-
-Dividing both sides with $b(b-1)$, and using the fact that $\frac{b}{b-1} = 1 + \frac{1}{b-1}$, we get
+Dividing both sides with $b(b-1)$, and re-expressing $\frac{b}{b-1} = 1 + \frac{1}{b-1}$, we get
 
 \begin{align}
 \left| \frac{2m}{b(b-1)} - \frac{d}{n} + \frac{d}{n(b-1)} \right| &\le \frac{\lambda}{b-1}  \label{eq:eml-post-process}
 \end{align}
-
 From this we have 
 \begin{align}
   \left| p - \frac{d}{n}\right| &= \left| p - \frac{d}{n} - \frac{d}{n(b-1)} + \frac{d}{n(b-1)}\right|  \\
@@ -428,7 +428,8 @@ From this we have
 \eqref{eq:triangle} comes from the triangle inquality and  $d/n \le 1$.
 Equation \eqref{eq:final} comes from Equation \eqref{eq:eml-post-process}.
 Finally, the last inequality comes from the fact that $b \geq n/10$ for $n$ large enough.\\
-Therefore, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
+
+Let $\xi$ be as given by \nameref{thm:embedding_top}. Using the bound on the difference between $p$ and $d/n$, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
 
 \begin{align*}
   \Bigl| e_G(S, T) - p|S||T| \Bigr| &\le \left| e_G(S, T) - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
@@ -436,8 +437,11 @@ Therefore, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \x
     \end{align*}
 
     \rajko{Feel free to expand the previous calculation and explain it in more detail.}
-    \ari{What is the value of $\xi$ that makes this work?. I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work.}
-    Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. Note that $\sigma(e) \le 2 + \log n$, thus $H^\sigma$ has at most $\alpha n / 10 \le \alpha |B|$ vertices. Therefore, we can invoke \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
+    \ari{What is the value of $\xi$ that makes this work? And $\xi \in (0,1)$ right? I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work. I added the $E(G[B])$ clause to the corollary. Where do we exploit the fact that $|B|>n/10$ in the corollary or the sets $\Size{S},\Size{T} \ge \xi n$??}
+    \rajko{I removed $E(G[B])$ from the statement. It follows from the lower bound on $B$ and the fact that $d$ is sufficiently large. $\xi$ is given by the Embedding Theorem; you take $\epsilon$ to be sufficiently small with respect to $\xi$. How small? It doesn't matter, it is clear that sufficiently small works. The lower bound on $B$, $S$ and $T$ is used to derive that sufficiently small $\epsilon$ works.}
+
+
+    Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. Note that $\sigma(e) \le 2 + \log n$, thus $H^\sigma$ has at most $\alpha n / 10 \le \alpha |B|$ vertices. As $G[B]$ has at least $Cn$ edges (by \nameref{lemma:expanders-mixing-lemma}), we can invoke \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
 \end{proof}
 
 \section{Perfect matching and regular subgraphs}
@@ -456,19 +460,20 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subset
   We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
   Consider some $S \subseteq U$.
   We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components (note that this is a stronger property than required).
-  If $|S| \ge |U|/2$ then by a simple counting argument this trivially holds, thus we can assume $|S| < |U|/2$.  
+  If $|S| \ge |U|/2$ then as $G[U \setminus S]$ has fewer than $|S|$ vertices, so the the upper bound on connected components trivially holds. 
+Thus, we can assume $|S| < |U|/2$.
  We claim that for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$,
 
  \begin{equation}
-  \CutEdges{X}{Y}{G} > 1 \implies  G[U \setminus S] \text{ has at most $|S|$ connected components}  \label{eq:mini-claim}
+  \text{If }\CutEdges{X}{Y}{G} > 1, \text{ then, }  G[U \setminus S] \text{ has at most $|S|$ connected components}  \label{eq:mini-claim}
  \end{equation}
 
 \flushleft
-To see why, assume towards a contradiction that there exists an edge between \emph{every} $X$ and $Y$ of size at least $\Size{S}/3$, \emph{and}, $G[U \setminus S]$ has more than $|S|$ connected components.
+To see why, assume towards a contradiction that there exists an edge between \emph{every} partition $X, Y$ of size at least $\Size{S}/3$, \emph{and} $G[U \setminus S]$ has more than $|S|$ connected components.
 We denote the  vertex sets of these components by $C_1, \ldots, C_k$, for some $k > |S|$.
 Let $X^\star := C_1 \cup \ldots \cup C_{s}$ and $Y^\star := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$.
-By construction, even if each component is singleton, we get that  $\Size{X^\star}, \Size{Y^\star} \ge \Size{S}/3$.
-Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$ i.e we have found a  partition without an edge between them, giving us our contradiction. \\
+By construction, even if each component $C_i$ is a singleton set, we get that  $\Size{X^\star}, \Size{Y^\star} \ge \Size{S}/3$.
+Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$ i.e we have found a correct sized partition of $U \setminus S$ without an edge between them, which contradicts our assumption. \\
 \flushleft
 Now, consider some aribitrary partition $X \cup Y$ of $U \setminus S$, and without loss of generality assume $|X| \le |Y|$. Then
 \begin{equation}
@@ -479,7 +484,7 @@ Now, consider some aribitrary partition $X \cup Y$ of $U \setminus S$, and witho
     \begin{equation} \label{eq:edge_bound}
         \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \frac{11d}{16}|X|
     \end{equation}
-    as then the minimum degree assumption on $G[U]$ implies there has to be an edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $G[U\setminus S]$ has at most $\Size{S}$ connected components, which would complete the proof.
+    as then the minimum degree assumption on $G[U]$ implies there has to be at least one edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $G[U\setminus S]$ has at most $\Size{S}$ connected components, which would complete the proof.
     By the \nameref{lemma:expanders-mixing-lemma}, we have
 
 \begin{align}
@@ -632,11 +637,11 @@ In this work, we use the embedding theorem by Dragani\'c, Krivelevich, and Nenad
 
 \par
 In summary, we show degree lower bounds for refuting $\Card{G, \vec{t}}$ for odd $t$ in $\EnDeeLambda$ graphs in the SoS and PC proof systems.
-There is still $\log n$ gap between the largest possible proof in such systems, and our lower bounds (similar to Austrin and Risse).
+There is still a $\log n$ gap between the largest possible proof in such systems, and our lower bounds (similar to Austrin and Risse).
 It is not inherently clear that such a gap should exist.
-This gap is predominantly an artefact of $d$ being constant, and using embedding theorems to prove hardness, as in exapnder graphs we  need $\Theta(\log n)$ edges to form a path between any two nodes.
-This implies, that $\BigOmega{n/\log n}$ is the best we can do using embedding techniques.
-Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement using a different set of techniques.
+The gap is artefact of $d$ being constant, and which makes the graphs are sparse i.e we need $\Theta(\log n)$ edges to form a path between any two nodes.
+This implies, that $\BigOmega{n/\log n}$ is the largest hard instance we can topologically embed in any graph.
+Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement without using a smaller hard instance.
 We leave the issue of resolving the tightness of our lower bound as an open problem for future work.
 
 % \newpage

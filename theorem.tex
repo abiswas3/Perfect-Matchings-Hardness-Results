@@ -44,9 +44,9 @@
 
 % Define mdframed settings for the lemma box
 \mdfdefinestyle{remarkframe}{
-  linecolor=fuyu-gaki!80,
+  linecolor=hotaru-bi!80,
   linewidth=2pt,
-  backgroundcolor=fuyu-gaki!15,
+  backgroundcolor=hotaru-bi!15,
   roundcorner=5pt,
   nobreak=true,
   topline=false,
@@ -57,7 +57,7 @@
 \theoremstyle{remarkstyle}
 \newtheorem{remark}{Remark}
 \surroundwithmdframed[style=remarkframe]{remark}
-\newtheorem{corollary}{Corollary}
+\newtheorem{corollary}[theorem]{Corollary}
 \surroundwithmdframed[style=remarkframe]{corollary}
 
 % Definitions
