@@ -5,7 +5,7 @@ BIBTEX = bibtex
 SKIM = /Applications/Skim.app/Contents/MacOS/Skim
 
 # Main LaTeX file (without the extension)
-MAIN_FILE = perfect-matchings-main
+MAIN_FILE = perfect-matching
 
 # Targets
 all: $(MAIN_FILE).pdf
