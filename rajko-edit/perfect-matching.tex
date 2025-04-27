@@ -355,7 +355,7 @@ We prove the existence of such a partition $A \subseteq V(G)$ using the probabil
 For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $c$.
 If $X_i = 1$, then we include $v$ in $A$. Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we choose $A$. For any $v \in V$, let $Y_v \Def |\Neighbourhood{E}{v} \cap \RedA|$ denote the random variable that counts the number of neighbours of $v$ in $A$.
 Define $\delta \Def \epsilon / c$, and for every $v \in V$ let $E_v = \Indicator{|Y_v - d c | \geq \delta c d}$ denote the bad event that $v$ has too many or too few neighbours in $A$.
-Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has maximum degree at most $d^2$ (only vertices at most two hops away from $v$ affect how many of $v$'s neighbours are in $A$ or $B$; there at most $d^2$ such vertices).
+Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has maximum degree at most $d^2$ (only vertices at most two hops away from $v$ affect how many of $v$'s neighbours are in $A$; there at most $d^2$ such vertices).
 % To see why, for any node $v$, let $u$ and $w$ denote vertices exactly 2 hops\footnote{A node $a$ is $k$ hops away from another node $b$ if the shortest path between $a$ and $b$ has $k$ edges.} and at least 3 hops away from $v$ respectively. The colour of $u$'s neighbours, directly affects how many red neighbours $v$ can have.
 % However, as the colours for each node is sampled independently, the colour of $w$ or its neighbours do not affect $v$'s neighbours.
 % Therefore $E_v$ is independent of $E_w$.
@@ -450,11 +450,11 @@ Let $\xi$ be as given by \nameref{thm:embedding_top}. Using the bound on the dif
 As described earlier, the second ingredient in our hardness proof is showing that a certain residual graph contains a perfect matching or a spanning $(t-1)$-regular subgraph. In this section we state and prove these ingredients.
 
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
-Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$, then $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}. Consequently, $G[U]$ contains a perfect matching. 
+Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. If $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}. Consequently, $G[U]$ contains a perfect matching. 
 \end{lemma}
 
 \begin{proof}
-  Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge 11d/16$.
+  Suppose $U \subseteq V(G)$ is of even size and $\delta(G[U]) \ge \cTilde$.
   We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
   Consider some $S \subseteq U$.
   We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components (note that this is a stronger property than required).
@@ -473,28 +473,29 @@ Let $X^\star := C_1 \cup \ldots \cup C_{s}$ and $Y^\star := C_{s+1} \cup \ldots 
 By construction, even if each component $C_i$ is a singleton set, we get that  $\Size{X^\star}, \Size{Y^\star} \ge \Size{S}/3$.
 Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$ i.e we have found a correct sized partition of $U \setminus S$ without an edge between them, which contradicts our assumption. \\
 \flushleft
-Now, consider some aribitrary partition $X \cup Y$ of $U \setminus S$, and without loss of generality assume $|X| \le |Y|$. Then
+Now, consider some arbitrary partition $X \cup Y$ of $U \setminus S$, and without loss of generality assume $|X| \le |Y|$. Then
 \begin{equation}
 |X| \le (|U| - |S|)/2 \le (n - |S|)/2  \label{eq:upp-X}
 \end{equation}
 
   We will show that
     \begin{equation} \label{eq:edge_bound}
-        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \frac{11d}{16}|X|
+        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \cTilde|X|
     \end{equation}
     as then the minimum degree assumption on $G[U]$ implies there has to be at least one edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $G[U\setminus S]$ has at most $\Size{S}$ connected components, which would complete the proof.
     By the \nameref{lemma:expanders-mixing-lemma}, we have
 
 \begin{align}
   \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} &\le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}        \\
-                                          &\le \frac{d}{n} |X| \frac{(n-|S|)}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| \label{eq:upper-bound-X}  \\
-                                          &< \frac{d}{2}|X| + \frac{d}{n}|X||S| + 3 \lambda |X| \label{eq:smaller-than-one} \\
-                                          &\le \frac{d}{4} |X| + 3\lambda |X| \\
-                                            &< \frac{11d}{16}|X|  \label{eq:upper-bound-S}
+&\le \frac{d}{n} |X| \frac{(n-|S|)}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| \label{eq:upper-bound-X}  \\
+&= \frac{d|X|}{2} + \frac{d|X||S|}{2n} + 3 \lambda |X|\\
+&< \frac{d}{2}|X| + \frac{d}{4}|X| + 3 \lambda |X| \label{eq:smaller-than-one} \\
+&< \cTilde|X|  \label{eq:upper-bound-S}
 \end{align}
 
+\highlight{Change the constants from 11/16 to 0.9}
 Equation \eqref{eq:upper-bound-X} comes from Equation \eqref{eq:upp-X}.
-Equation \eqref{eq:smaller-than-one} comes from $\frac{(n-\Size{S})}{n} < 1$ . Equation \eqref{eq:upper-bound-S} comes from $|S| < \Size{U}/2 < n/2$, and the last step comes from the assumption $\lambda < d/50$.
+Equation \eqref{eq:smaller-than-one} comes from $\Size{S} < \frac{n}{2}$ . Equation \eqref{eq:upper-bound-S} comes the assumption $\lambda < d/50$.
 This confirms \eqref{eq:edge_bound}.
 \end{proof}
 
