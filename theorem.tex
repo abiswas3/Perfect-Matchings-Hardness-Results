@@ -15,7 +15,7 @@
 \mdfdefinestyle{theoremframe}{
   linecolor=theoremcolor!80,
   linewidth=2pt,
-  backgroundcolor=theoremcolor!15,
+  backgroundcolor=theoremcolor!05,
   roundcorner=5pt,
   nobreak=true,
   topline=false,
@@ -44,9 +44,9 @@
 
 % Define mdframed settings for the lemma box
 \mdfdefinestyle{remarkframe}{
-  linecolor=hotaru-bi!80,
+  linecolor=theoremcolor!80,
   linewidth=2pt,
-  backgroundcolor=hotaru-bi!15,
+  backgroundcolor=theoremcolor!05,
   roundcorner=5pt,
   nobreak=true,
   topline=false,
@@ -57,8 +57,6 @@
 \theoremstyle{remarkstyle}
 \newtheorem{remark}{Remark}
 \surroundwithmdframed[style=remarkframe]{remark}
-\newtheorem{corollary}[theorem]{Corollary}
-\surroundwithmdframed[style=remarkframe]{corollary}
 
 % Definitions
 \newtheoremstyle{definitionstyle}
@@ -113,11 +111,11 @@
 % Apply the custom theorem style
 \theoremstyle{lemmastyle}
 \newtheorem{lemma}[theorem]{Lemma}
-% Automatically surround lemma with mdframed
 \surroundwithmdframed[style=lemmaframe]{lemma}
 \newtheorem{claim}[theorem]{Claim}
-% Automatically surround lemma with mdframed
 \surroundwithmdframed[style=definitionframe]{claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\surroundwithmdframed[style=remarkframe]{corollary}
 
 % Define custom environments for Question and Open Problem
 % \newenvironment{question}

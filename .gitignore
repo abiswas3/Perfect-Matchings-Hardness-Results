@@ -52,3 +52,4 @@ build/
 
 # Output PDF (optional – keep if you want it versioned)
 *.pdf
+old.tex
