@@ -3,7 +3,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{xcolor}
 \usepackage[normalem]{ulem}
-%DIF ADD perfect-matching.tex   Sat Jun  7 02:38:05 2025
+%DIF ADD perfect-matching.tex   Sun Jun  8 00:33:13 2025
 \usepackage[margin=1in]{geometry} % Adjust margins as needed
 \input{base_template}
 \input{theorem}
@@ -71,9 +71,9 @@
 This work studies the complexity of refuting the existence of a perfect matching in spectral expanders with an odd number of vertices, in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
 Austrin and Risse [SODA, 2021] showed that refuting perfect matchings in sparse $d$-regular \emph{random} graphs, in the above proof systems, with high probability requires proofs with degree $\Omega(n/\log n)$. 
 We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graphs with a mild spectral gap.
-\rajko{I shortened the abstract. I think this is catchy enough, and straight to the point.}
-\DIFaddbegin \ari{Why not mention the Buss and Norstrom thing?}
-\DIFaddend % Additionally, as Austrin and Risse do for random graphs, we show that the hardness of refuting a more general class of formulae, which includes both perfect matchings and \emph{even-colouring} formulas, also reduces to the hardness of refuting perfect matchings in spectral expanders, thereby settling an open problem of Buss and Nordstr\"{o}m.
+\DIFdelbegin \rajko{\DIFdel{I shortened the abstract. I think this is catchy enough, and straight to the point.}}
+%DIFAUXCMD
+\DIFdelend % Additionally, as Austrin and Risse do for random graphs, we show that the hardness of refuting a more general class of formulae, which includes both perfect matchings and \emph{even-colouring} formulas, also reduces to the hardness of refuting perfect matchings in spectral expanders, thereby settling an open problem of Buss and Nordstr\"{o}m.
 \DIFdelbegin \rajko{\DIFdel{Add somewhere for me: ``Research supported by the Marsden Fund of the Royal Society of New Zealand.''}}
 %DIFAUXCMD
 %DIFDELCMD < 
@@ -498,11 +498,11 @@ This gives us the }\DIFaddend following corollary.
 
 %DIFDELCMD < %%%
 \DIFdelend \begin{corollary} 
-  For every $D \in \mathbb{N}$ there exist \DIFdelbegin \DIFdel{$d_0 \in \Naturals, \epsilon \in (0,1)$}\DIFdelend \DIFaddbegin \DIFadd{$d_0 \in \Naturals, \epsilon, \alpha \in (0,1)$}\DIFaddend , such that the following holds. 
-  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ \DIFaddbegin \DIFadd{is a constant }\DIFaddend and $\lambda < \epsilon d$. 
+  For every $D \in \mathbb{N}$ there exist \DIFdelbegin \DIFdel{$d_0 \in \Naturals, \epsilon \in (0,1)$}\DIFdelend \DIFaddbegin \DIFadd{$d_0, n_0 \in \Naturals, \epsilon, \alpha \in (0,1)$}\DIFaddend , such that the following holds. 
+  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ \DIFaddbegin \DIFadd{is a constant }\DIFaddend and $\lambda < \epsilon d$\DIFaddbegin \DIFadd{, and $n \ge n_0$}\DIFaddend . 
   Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/20$\DIFdelbegin \DIFdel{. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where }\DIFdelend \DIFaddbegin \DIFadd{, and }\DIFaddend $H$ is any graph with maximum degree at most $D$ and at most \DIFdelbegin \DIFdel{$\alpha n / (11 \log n)$ vertices}\rajko{\DIFdel{What is $\alpha$?}}%DIFAUXCMD
 \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{$\alpha \frac{n}{\log n}$ vertices.
-Then that the induced sub-graph $G[B]$ contains $H^{\sigma}$ }\DIFaddend and $\sigma(e)$ is odd for every $e \in E(H)$.
+Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ }\DIFaddend and $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
 
 
@@ -713,13 +713,14 @@ which gives us Equation \eqref{eq:to-show-3}.
 In this section we prove Theorem \ref{thm:general-hardness-result}. As $\Card{G, \vec{t}} \equiv \Card{G, \vec{d-t}}$, without loss of generality we only prove the theorem for $t \le d/2$. 
 
 \begin{proof}[Proof of Theorem \ref{thm:general-hardness-result}]
-Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. Let $\HardInstance$ denote the graph on $h=\frac{n}{D \log n}$ vertices as given by Lemma \ref{lemma:worst-case-instance-sos} (to show lower bounds for PC, we use $H$ from Lemma \ref{lemma:worst-case-instance-PC}). Recall that any SoS proof which refutes $\PM{H}$ has degree $\BigOmega{h}$. We now make use of $H$ to show the hardness of refuting $\Card{G, \vec{t}}$. The idea is to find a restriction $\rho$ such that $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$. We achieve this through the following steps.
+Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. 
+\DIFdelbegin \DIFdel{Let }\DIFdelend \DIFaddbegin \DIFadd{For sufficiently small constant $\alpha \in (0,1)$, let }\DIFaddend $\HardInstance$ denote the graph on \DIFdelbegin \DIFdel{$h=\frac{n}{D \log n}$ }\DIFdelend \DIFaddbegin \DIFadd{$h=\alpha\frac{n}{\log n}$ }\DIFaddend vertices as given by Lemma \ref{lemma:worst-case-instance-sos} (to show lower bounds for PC, we use $H$ from Lemma \ref{lemma:worst-case-instance-PC}). Recall that any SoS proof which refutes $\PM{H}$ has degree $\BigOmega{h}$. We now make use of $H$ to show the hardness of refuting $\Card{G, \vec{t}}$. The idea is to find a restriction $\rho$ such that $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$. We achieve this through the following steps.
 \DIFdelbegin \rajko{\DIFdel{You have $\Gamma_G$ and $\Gamma_E$. Please use $\Gamma_G$ consistently. }}
 %DIFAUXCMD
 \DIFdelend 
 
 \begin{enumerate}
-\item{Invoke Lemma  \ref{thm:partition} with parameters $c=0.925$ and \DIFdelbegin \DIFdel{$\epsilon = 0.025$ }\DIFdelend \DIFaddbegin \DIFadd{$\gamma = 0.025$ }\DIFaddend to get a subset $A \subseteq V(G)$ \DIFaddbegin \DIFadd{and $B = G \setminus A$, }\DIFaddend such that for every $u \in V(G)$ we have
+\item{Invoke Lemma  \ref{thm:partition} with parameters $c=0.925$ and \DIFdelbegin \DIFdel{$\epsilon = 0.025$ }\DIFdelend \DIFaddbegin \DIFadd{$\gamma = 0.025$ }\DIFaddend to get \DIFdelbegin \DIFdel{a subset }\DIFdelend \DIFaddbegin \DIFadd{subsets }\DIFaddend $A \subseteq V(G)$ \DIFaddbegin \DIFadd{and $B = G \setminus A$, }\DIFaddend such that for every $u \in V(G)$ we have
 % $u \in V$: $$ and $$
 
 \DIFdelbegin \begin{align*} 
@@ -735,7 +736,7 @@ Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lam
 
 \item{\DIFdelbegin \DIFdel{Let $B = V(G) \setminus A$. }\rajko{\DIFdel{$B$ should be defined earlier.}} %DIFAUXCMD
 \DIFdelend From \DIFdelbegin \DIFdel{the partition lemma above }\rajko{\DIFdel{Not the partition lemma itself, but (25) and (26)}}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \DIFadd{equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}}\DIFaddend , $\Size{B} > n/20$, with room to spare and $\Size{E(G[B])} \ge nd/20$.
+\DIFdelend \DIFaddbegin \DIFadd{equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}}\DIFaddend , $\Size{B} > n/20$, with room to spare and \DIFdelbegin \DIFdel{$\Size{E(G[B])} \ge nd/20$}\DIFdelend \DIFaddbegin \DIFadd{$\Size{E(G[B])} \ge nd/20 = Cn$}\DIFaddend .
     \DIFdelbegin \DIFdel{$G[B]$ }\rajko{\DIFdel{Why is $G[B]$ a sentence on its own?}}%DIFAUXCMD
 \DIFdel{.
     }\DIFdelend By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
@@ -803,8 +804,16 @@ The gap is artefact of $d$ being constant, which makes the graphs are sparse i.e
 This implies, that $\BigOmega{n/\log n}$ is the largest hard instance we can topologically embed in any graph.
 Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement without using a smaller hard instance.
 We leave the issue of resolving the tightness of our lower bound as an open problem for future work.
+\DIFdelbegin %DIFDELCMD < 
 
-\rajko{Make references consistent. For example, all STOC papers should be listed in the same format (see the difference between [6] and [20]). Sherali-Adams should be capital, etc.}
+%DIFDELCMD < %%%
+\rajko{\DIFdel{Make references consistent. For example, all STOC papers should be listed in the same format (see the difference between }%DIFDELCMD < [%%%
+\DIFdel{6}%DIFDELCMD < ] %%%
+\DIFdel{and }%DIFDELCMD < [%%%
+\DIFdel{20}%DIFDELCMD < ]%%%
+\DIFdel{). Sherali-Adams should be capital, etc.}}
+%DIFAUXCMD
+\DIFdelend 
 
 % \newpage
 \bibliographystyle{abbrv}
