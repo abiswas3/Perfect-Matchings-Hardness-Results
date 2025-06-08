@@ -409,7 +409,7 @@ When $G$ is an $\EnDeeLambda$ graph, we will we make use of Theorem \ref{thm:emb
 This gives us the following corollary.
 \begin{corollary} \label{cor:embedding_top}
   For every $D \in \mathbb{N}$ there exist $d_0, n_0 \in \Naturals, \epsilon, \alpha \in (0,1)$, such that the following holds. 
-  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ is a constant \rajko{We don't need that $d$ is constant.} and $\lambda < \epsilon d$, and $n \ge n_0$. 
+  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$, and $\lambda < \epsilon d$, and $n \ge n_0$. 
   Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/20$, and $H$ is any graph with maximum degree at most $D$ and at most $\alpha \frac{n}{\log n}$ vertices.
 Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ such that $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
@@ -445,7 +445,7 @@ Let $\xi$ be as given by \nameref{thm:embedding_top}. Using the bound on the dif
                                     &\le \lambda \sqrt{|S||T|} + \frac{2 \lambda}{b} |S||T| \le \xi |S||T|p. 
     \end{align*}
 
-In the last step we used the fact that $d$ is a constant \rajko{Where did you use that $d$ is constant?}, and that $\lambda < \epsilon d$.  \rajko{Please fix this sentence:} This and the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get our upper bound.
+With the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get the upper bound in the last step.
     % \rajko{Feel free to expand the previous calculation and explain it in more detail.}
     % \ari{What is the value of $\xi$ that makes this work? And $\xi \in (0,1)$ right? I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work. I added the $E(G[B])$ clause to the corollary. Where do we exploit the fact that $|B|>n/10$ in the corollary or the sets $\Size{S},\Size{T} \ge \xi n$??}
     % \rajko{I removed $E(G[B])$ from the statement. It follows from the lower bound on $B$ and the fact that $d$ is sufficiently large. $\xi$ is given by the Embedding Theorem; you take $\epsilon$ to be sufficiently small with respect to $\xi$. How small? It doesn't matter, it is clear that sufficiently small works. The lower bound on $B$, $S$ and $T$ is used to derive that sufficiently small $\epsilon$ works.}
@@ -517,7 +517,7 @@ The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minim
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
   For every $C > 0$ there exists $d_0 = d_0(C)$ such that the following holds.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$ and $d \ge d_0$, where $\epsilon < 1/100C^{3/2}$.
-If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C > \frac{9d}{10}$ \rajko{If we are only using $\delta_{G'} > 9d/10$, then there is not need to mention $C$ at all in the statement.}, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
+If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge \frac{9d}{10}$, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
 \end{lemma}
 
 \begin{proof}
