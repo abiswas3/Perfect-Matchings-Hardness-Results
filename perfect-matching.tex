@@ -151,8 +151,7 @@ The degree of a proof $\Proof$ is
 
 Note that $s_i^2(x) \ge 0$ for any $x$ by definition. 
 Therefore, if there were to exist some $x^{\star}$ such that $p_i(x^{\star}) = 0$ for all $p_i \in \Axioms$, then $\sum_{i \in [m]} t_i(x^\star)p_i(x^\star) = 0$. 
-This would imply that $h \ge 0$, but our proof $\Proof$ shows that $h = -1$.
-This chain of reasoning implies that $-1 \ge 0$, which we know is impossible. 
+This would imply that $h \ge 0$, but our proof $\Proof$ shows that $h = -1$. 
 Therefore, the existence of the set of polynomials $\Proof$ act as a formal proof of the claim that the set of polynomials equations in $\Axioms$ is unsatisfiable.
 
 \begin{definition}[Complexity Of SoS Refutation]
@@ -269,7 +268,7 @@ $$
 % \end{proof}
 
 We make use of the following two well known criteria of Tutte \cite{tutte1952factors, tutte1947factorization}. 
-Note that both of the lemmata ask for properties which are stronger than what Tutte criteria requires\footnote{More specifically, in the Tutte criterion $q(G \setminus S)$ denotes the number of \emph{odd} sized connected components in the graph $G \setminus S$.}; however, they are easier to state and verify in our application. We denote with $q(G)$ the number of connected components in a graph $G$.
+Note that both of the lemmata ask for properties which are stronger than what Tutte criteria requires\footnote{More specifically, in the Tutte criterion $q(G)$ denotes the number of \emph{odd} sized connected components.}; however, they are easier to state and verify in our application. We denote with $q(G)$ the number of connected components in a graph $G$.
 % The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively. \rajko{Please cite the original work, not lecture notes.}
 
 \begin{lemma}[Tutte's Criterion]\label{lemma:tutte-criterion}
@@ -279,11 +278,12 @@ If a graph $G$ has  \emph{even} number of vertices and for every subset $S \subs
 \begin{lemma}[Tutte's Generalised Criterion]\label{lemma:tutte-criterion-factor}
   Let $f \in \Naturals$ be even. Suppose $G$ is a graph such that for every pair of disjoint sets $S, T \subseteq V(G)$ the following holds:
 
-  \[ |S|f \geq \OddComponents{G \setminus (S \cup T)} + \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}). \]
+  \[ \OddComponents{G \setminus (S \cup T)} \le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}). \]
   Then $G$ contains a spanning subgraph $G' \subseteq G$ which if $f$-regular.
 \end{lemma}
 
 
+\newpage
 
 \subsection{Probabilistic Tools}
 
@@ -403,15 +403,15 @@ For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the fol
 where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$, $H^\sigma$ has at most $\alpha n$ vertices, and $\sigma(e) \ge \log n$ for every $e \in E(H)$.
 \end{theorem}
 
-In simple words, we are given some graph $H$ with an upper bound $D$ on its maximal degree.
-If we feed the embedding theorem an input parameter $D \in \Naturals$, then it can come up with constants $\alpha, \xi \in (0,1)$ and $C > 0$, such that we can topologically embed $H$ into any graph $G$ properties listed in inequality \eqref{eq:props}.
+% In simple words, we are given some graph $H$ with an upper bound $D$ on its maximal degree.
+% If we feed the embedding theorem an input parameter $D \in \Naturals$, then it can come up with constants $\alpha, \xi \in (0,1)$ and $C > 0$, such that we can topologically embed $H$ into any graph $G$ properties listed in inequality \eqref{eq:props}.
 When $G$ is an $\EnDeeLambda$ graph, we will we make use of Theorem \ref{thm:embedding_top} to show that $G$ satisfies the required properties, thereby contains $H$ as a topological minor.
 This gives us the following corollary.
 \begin{corollary} \label{cor:embedding_top}
   For every $D \in \mathbb{N}$ there exist $d_0, n_0 \in \Naturals, \epsilon, \alpha \in (0,1)$, such that the following holds. 
-  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ is a constant and $\lambda < \epsilon d$, and $n \ge n_0$. 
+  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ is a constant \rajko{We don't need that $d$ is constant.} and $\lambda < \epsilon d$, and $n \ge n_0$. 
   Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/20$, and $H$ is any graph with maximum degree at most $D$ and at most $\alpha \frac{n}{\log n}$ vertices.
-Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ and $\sigma(e)$ is odd for every $e \in E(H)$.
+Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ such that $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
 
 
@@ -445,14 +445,12 @@ Let $\xi$ be as given by \nameref{thm:embedding_top}. Using the bound on the dif
                                     &\le \lambda \sqrt{|S||T|} + \frac{2 \lambda}{b} |S||T| \le \xi |S||T|p. 
     \end{align*}
 
-In the last step we used the fact that $d$ is a constant, and that $\lambda < \epsilon d$.  This and the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get our upper bound.
+In the last step we used the fact that $d$ is a constant \rajko{Where did you use that $d$ is constant?}, and that $\lambda < \epsilon d$.  \rajko{Please fix this sentence:} This and the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get our upper bound.
     % \rajko{Feel free to expand the previous calculation and explain it in more detail.}
     % \ari{What is the value of $\xi$ that makes this work? And $\xi \in (0,1)$ right? I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work. I added the $E(G[B])$ clause to the corollary. Where do we exploit the fact that $|B|>n/10$ in the corollary or the sets $\Size{S},\Size{T} \ge \xi n$??}
     % \rajko{I removed $E(G[B])$ from the statement. It follows from the lower bound on $B$ and the fact that $d$ is sufficiently large. $\xi$ is given by the Embedding Theorem; you take $\epsilon$ to be sufficiently small with respect to $\xi$. How small? It doesn't matter, it is clear that sufficiently small works. The lower bound on $B$, $S$ and $T$ is used to derive that sufficiently small $\epsilon$ works.}
     Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. 
-As $G[B]$ has at least $Cn$ edges (by \nameref{lemma:expanders-mixing-lemma}), we satisfy all the constraints to invoke the \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
-Note that $\sigma(e) \le 2 + \log n$, and we know that $H$ has at most $\alpha \frac{n}{\log n}$ vertices. 
-Thus, $H^\sigma$ has at most $\BigO{|B|}$ vertices. 
+As $G[B]$ has at least $Cn$ edges (by \nameref{lemma:expanders-mixing-lemma}), $\sigma(e) \le 2 + \log n$, and $H$ has at most $\alpha \frac{n}{\log n}$ vertices, we can invoke \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
 \end{proof}
 
 \section{Perfect matching and regular subgraphs}
@@ -464,11 +462,11 @@ As described earlier, the second ingredient in our hardness proof is showing tha
 
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
 Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. 
-For any $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, then for all $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components. 
+Suppose $U \subseteq V(G)$ is such that $\delta(G[U]) \ge \cTilde$. Then for all $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components, that is, $q(G[U \setminus S]) \le |S|$.
 \end{lemma}
 
 \begin{proof}
-  Fix arbitrary $U \subseteq V(G)$, and let $\delta(G[U]) \ge \cTilde$.
+  Consider some $U \subseteq V(G)$ such that $\delta(G[U]) \ge \cTilde$.
   % We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
   Consider some $S \subseteq U$.
   We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components.
@@ -477,7 +475,7 @@ Thus, we can assume $|S| < |U|/2$.
  We claim the following:
  %that if $e_G(X, Y) \ge 1$ for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$,
  \begin{equation}
-  \text{If }\CutEdges{X}{Y}{G} \ge 1 \text{ for every partition $X \cup Y = U \setminus S$, $|X|,|Y| \ge |S|/3$,  then }  q(G[U \setminus S] \le |S|. \label{eq:mini-claim}
+  \text{If }\CutEdges{X}{Y}{G} \ge 1 \text{ for every partition $X \cup Y = U \setminus S$, $|X|,|Y| \ge |S|/3$,  then }  q(G[U \setminus S]) \le |S|. \label{eq:mini-claim}
  \end{equation}
 
 \flushleft
@@ -514,10 +512,12 @@ Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$.
 For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the \nameref{lemma:tutte-criterion}, and therefore $G[U]$ contains a perfect matching.  
 \end{corollary}
 
+The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
+
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
   For every $C > 0$ there exists $d_0 = d_0(C)$ such that the following holds.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$ and $d \ge d_0$, where $\epsilon < 1/100C^{3/2}$.
-If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C > \frac{9d}{10}$, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
+If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C > \frac{9d}{10}$ \rajko{If we are only using $\delta_{G'} > 9d/10$, then there is not need to mention $C$ at all in the statement.}, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
 \end{lemma}
 
 \begin{proof}
