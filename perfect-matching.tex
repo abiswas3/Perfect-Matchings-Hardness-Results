@@ -515,9 +515,10 @@ For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, the
 \end{corollary}
 
 The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
+In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting a constant number of edges from the $\EnDeeLambda$ graph $G$.
 
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
-  For every $C > 0$ there exists $d_0 = d_0(C)$ such that the following holds.
+  For every $C > 1$ there exists $d_0 = d_0(C)$ such that the following holds.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$ and $d \ge d_0$, where $\epsilon < 1/100C^{3/2}$.
 If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge \frac{9d}{10}$, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
 \end{lemma}
@@ -530,9 +531,9 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge \frac{9d}{10}$, t
     \OddComponents{G' \setminus (S \cup T)} &\le \Size{S}f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S}) \label{eq:main-goal}
   \end{align}
 
-  As $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C > 0$, we have that $\epsilon < 1/50$.
+  As $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C > 1$, we have that $\epsilon < 1/50$.
 This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/50$.
-Additionally, we are also given that $G'$ has minimal degree $\MinimalDegree{G'} \ge d - C >  9d/10$, therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can concluce that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
+Additionally, we also assume that $G'$ has minimal degree $\MinimalDegree{G'} \ge  9d/10$, therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can concluce that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
 Thus, to prove \eqref{eq:main-goal}, it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S})   \\
@@ -556,17 +557,17 @@ Thus, to prove \eqref{eq:main-goal}, it suffices to show
   
 Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} and $\lambda < \epsilon d$.
 Equation \eqref{eq:algebra} comes from the fact that $\Size{S}\Size{T} \leq \left(\frac{\Size{S}+\Size{T}}{2}\right)^2 \le n\frac{(\Size{S}+\Size{T})}{4}$.
-Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$.
+Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$, $C >1$ and $d_0$ is set large enough (which we can assume as it is set as a function of $C$, which ensures that $d$ is large enough).
 Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives us what we want.
 
-\textbf{Case 2}: \ari{Comment from referee: Maybe state that in case 2 you are using that $f >= 2$ similarly to how you stated the upper bound in case 1?  } If $\Size{S} > \Size{T}$, then 
+\textbf{Case 2}: If $\Size{S} > \Size{T}$, and as $f \ge 2$, then
   \begin{align}
     \Size{S}f +  \Size{T}(d-C-f)  &\ge 2\Size{S} +\Size{T}(d-C-2) \label{eq:to-show-2}
   \end{align}
   
   To show Equation \eqref{eq:to-show}, it suffices to show that
 \begin{align}
-  \CutEdges{S}{T}{G} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
+  \CutEdges{S}{T}{G'} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
 \end{align}
 
 Now we distinguish between two cases.
@@ -578,12 +579,29 @@ Now we distinguish between two cases.
   }
 
 \item{
-$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
+$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n - \frac{\Size{S}}{C+3} < n\left(\frac{C+3}{C+4}\right)$.
 Now using the \nameref{lemma:expanders-mixing-lemma}
 
-\[ \CutEdges{S}{T}{G'} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+\begin{align}
+\CutEdges{S}{T}{G'} &\le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}}	\\[8pt]
+&< d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} \label{eq:thing-to-upperbound}
+\end{align}
 
-which gives us Equation \eqref{eq:to-show-3}.
+Now, as $\Size{T} < \Size{S}$, we have that $\Size{T} + \Size{T}(d-C-3) < \Size{S} + \Size{T}(d-C-3)$, so if we show that the RHS of inequality \eqref{eq:thing-to-upperbound} is at most $\Size{T} + \Size{T}(d-C-3)$ we are done.
+Thus, now we want to show that 
+\begin{align}
+d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} &< 	\Size{T} + \Size{T}(d-C-3) \label{eq:new-thing-to-show}
+\end{align}
+
+To show that \eqref{eq:new-thing-to-show} holds we re-arrange the inequality to see that we need the following condition on $d$.
+\begin{align}
+ \epsilon d \sqrt{(C+3)} &< d\left(1 - \frac{(C+3)}{(C+4)}\right) -C-2 \\[8pt]
+ &= d\left(\frac{1}{(C+4)}\right) -C-2 \\[8pt]
+ d&> \frac{(C+4)(C+2)}{1 - \epsilon(C+4)\sqrt{C+3}} \label{eq:cond-on-d}
+\end{align} 
+
+As $\epsilon = \frac{1}{100C^{3/2}}$ and $100C^{3/2} > (C+4)\sqrt{C+3}$ for $C>1$, we have $\epsilon(C+4)\sqrt{C+3} < 1$
+To make \eqref{eq:new-thing-to-show} hold, it suffices to make $d$ a large enough constant such that \eqref{eq:cond-on-d} holds.
   }
   
 \end{enumerate}
@@ -611,7 +629,7 @@ For sufficiently small constant $\alpha \in (0,1)$, let $\HardInstance$ denote t
 \end{align}
 }
 
-\item{From equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}, $\Size{B} > n/20$, with room to spare and $\Size{E(G[B])} \ge nd/20 = Cn$.
+\item{From equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}, $\Size{B} > n/20$, with room to spare and $\Size{E(G[B])} \ge nd/20$.
     By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
     We can describe $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness of refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
@@ -621,7 +639,7 @@ Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Compl
 Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$. 
   }
 
-\item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$, we can invoke Corollary \ref{cor:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
+\item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$ (with room to spare), we can invoke Corollary \ref{cor:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
 }
   
 \item{
