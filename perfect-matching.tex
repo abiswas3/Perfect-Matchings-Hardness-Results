@@ -54,7 +54,7 @@ the research community has invested a significant effort in proving lower bounds
 %these proof systems.
 In this work, we focus on the algebraic and semi-algebraic proof systems of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
-In PC, the coefficientcs can be over an arbitrary field $\Field$ and in the SoS the coefficients are  over the reals.
+In PC, the coefficientcs can be over an arbitrary, but fixed field $\Field$ and in the SoS the coefficients are  over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
 In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials.
 Two common measures of the complexity of the proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
