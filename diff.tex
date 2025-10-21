@@ -1,9 +1,7 @@
 \documentclass[11pt]{article}
-\usepackage{xcolor}
-\usepackage[normalem]{ulem}
-\usepackage{xcolor}
-\usepackage[normalem]{ulem}
-%DIF ADD perfect-matching.tex   Sun Jun  8 00:33:13 2025
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL old.tex   Tue Oct 21 02:38:23 2025
+%DIF ADD new.tex   Tue Oct 21 02:38:38 2025
 \usepackage[margin=1in]{geometry} % Adjust margins as needed
 \input{base_template}
 \input{theorem}
@@ -16,11 +14,7 @@
 
 
 \author[1]{Ari Biswas}
-%DIF 14c14
-%DIF < \author[2]{Rajko Nenadov}
-%DIF -------
-\author[2]{Rajko Nenadov\thanks{Research supported by the Marsden Fund of the Royal Society of New Zealand.}} %DIF > 
-%DIF -------
+\author[2]{Rajko Nenadov\thanks{Research supported by the Marsden Fund of the Royal Society of New Zealand.}}
 \affil[1]{\small University Of Warwick, United Kingdom}
 \affil[2]{\small University Of Auckland, New Zealand}
 
@@ -30,8 +24,8 @@
 %DIF UNDERLINE PREAMBLE %DIF PREAMBLE
 \RequirePackage[normalem]{ulem} %DIF PREAMBLE
 \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
-\providecommand{\DIFadd}[1]{\textcolor{shin-ryoku}{#1}}%DIF PREAMBLE\uwave{#1}}} %DIF PREAMBLE
-\providecommand{\DIFdel}[1]{\textcolor{verylightgray}{\sout{#1}}}                      %DIF PREAMBLE\sout{#1}}}                      %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
 %DIF SAFE PREAMBLE %DIF PREAMBLE
 \providecommand{\DIFaddbegin}{} %DIF PREAMBLE
 \providecommand{\DIFaddend}{} %DIF PREAMBLE
@@ -71,17 +65,8 @@
 This work studies the complexity of refuting the existence of a perfect matching in spectral expanders with an odd number of vertices, in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
 Austrin and Risse [SODA, 2021] showed that refuting perfect matchings in sparse $d$-regular \emph{random} graphs, in the above proof systems, with high probability requires proofs with degree $\Omega(n/\log n)$. 
 We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graphs with a mild spectral gap.
-\DIFdelbegin \rajko{\DIFdel{I shortened the abstract. I think this is catchy enough, and straight to the point.}}
-%DIFAUXCMD
-\DIFdelend % Additionally, as Austrin and Risse do for random graphs, we show that the hardness of refuting a more general class of formulae, which includes both perfect matchings and \emph{even-colouring} formulas, also reduces to the hardness of refuting perfect matchings in spectral expanders, thereby settling an open problem of Buss and Nordstr\"{o}m.
-\DIFdelbegin \rajko{\DIFdel{Add somewhere for me: ``Research supported by the Marsden Fund of the Royal Society of New Zealand.''}}
-%DIFAUXCMD
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\rajko{\DIFdel{Please make Lemma, Corollary, and Theorem to be of the same colour as Lemma. I find Corollary yellow distracting, and Theorem is too dark.}}
-%DIFAUXCMD
-\DIFdelend \end{abstract}
+% Additionally, as Austrin and Risse do for random graphs, we show that the hardness of refuting a more general class of formulae, which includes both perfect matchings and \emph{even-colouring} formulas, also reduces to the hardness of refuting perfect matchings in spectral expanders, thereby settling an open problem of Buss and Nordstr\"{o}m.
+\end{abstract}
 
 \section{Introduction}
 
@@ -110,10 +95,10 @@ the research community has invested a significant effort in proving lower bounds
 %these proof systems.
 In this work, we focus on the algebraic and semi-algebraic proof systems of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
-In PC, the coefficientcs can be over an arbitrary field $\Field$ and in the SoS the coefficients are  over the reals.
+In PC, the coefficientcs can be over an arbitrary\DIFaddbegin \DIFadd{, but fixed }\DIFaddend field $\Field$ and in the SoS the coefficients are  over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
 In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials.
-Two common measures of the complexity of the proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
+Two common measures of the complexity of \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{a semi-algebraic }\DIFaddend proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
 Trade-offs between the two are well known; in particular, a lower bound on the degree implies a comparatively strong lower bound on the size of the proof.
 Therefore, in this work we focus on the former. We denote the smallest maximum degree over all proofs that refute $\Axioms$ in PC and SoS, with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$, respectively.
 One motivation for proving lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
@@ -125,9 +110,9 @@ Apart from being a natural problem in its own right, perfect matchings are also 
 Assuming at most one pigeon fits in a single hole, the pigeon hole principle says $m$ pigeons cannot fit in $n < m$ holes.
 If we construct the complete bipartite graph with the left vertices as $m$ pigeons and the right vertices as $n < m$ holes, proving the pigeon hole principle amounts to proving that such bipartite graph does not have a perfect matching.
 There are other formulations of the pigeon hole principle (see the survey by Razborov \citep{razbarov2002pgp}), and almost all of them have short proofs in the sum of squares proof system.
-In contrast, Tseitin formulae is known to require long proofs. The Tseitin formula over a graph claims that there is a spanning subgraph in which every vertex has odd degree.
+In contrast, Tseitin formulae \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{are }\DIFaddend known to require long proofs. The Tseitin formula over a graph claims that there is a spanning subgraph in which every vertex has odd degree.
 If a graph has a perfect matching, then the subgraph described by the matching ensures that every vertex has odd degree.
-However, formally refuting Tseitin formulae for expander graphs with odd number of vertices, in the SoS proof system, requires degree linear in the number of vertices in the graph \cite{grigoriev2001linear}.
+However, formally refuting Tseitin formulae for expander graphs with \DIFaddbegin \DIFadd{an }\DIFaddend odd number of vertices, in the SoS proof system, requires degree linear in the number of vertices in the graph \cite{grigoriev2001linear}.
 % The exact complexity of refuting the perfect matching principle for expander graphs, however, remains unknown.
 Given its close connections to the pigeon-hole and Tseitin, and the different behaviour of the two formulae, it is natural to determine the complexity of refuting perfect matchings for non-bipartite graphs.
 
@@ -155,7 +140,7 @@ When $|V|$ is odd, $G$ trivially does not contain a perfect matching. How diffic
 % Their lower bound technique critically relies on the randomness of sampling, and therefore they can only only provide average case lower bounds.
 They conjecture (see \citep[Section 6]{Austrin_2022}) that the hardness results should also apply to general expander graphs but leave showing so as an open problem.
 In this work, we verify this by extending their result to all $d$-regular spectral expanders, that is, $d$-regular graphs with a mild condition on the spectral gap.
-In fact, similar to Austrin and Risse, we reduce the hardness of refuting $\Card{G, \vec{t}}$, for any odd value $t$, to the hardness of refuting $\Card{G, \vec{1}}$.
+In fact, similar to Austrin and Risse, we reduce the hardness of refuting $\Card{G, \vec{t}}$, \DIFaddbegin \DIFadd{where $\vec{t} = (t, \ldots, t)$, }\DIFaddend for any odd value $t$, to the hardness of refuting $\Card{G, \vec{1}}$\DIFaddbegin \DIFadd{, where $\vec{1} = (1, \ldots, 1)$}\DIFaddend .
 As another special case, this answers the \emph{even-colouring} case when $t = d/2$ is odd, a problem posed by Buss and Nordstr\"{o}m \citep[Open Problem 7.7]{buss2021proof}, which asks, \textit{``Are even colouring formulas over expander graphs hard for polynomial calculus over fields of characteristic distinct from 2 ?''}
 Formally, we prove the following (for the definition of $(n, d, \lambda)$-graphs see Section \ref{sec:graph-theory-prelims}).
 
@@ -170,13 +155,14 @@ Formally, we prove the following (for the definition of $(n, d, \lambda)$-graphs
 \paragraph{Proof overview.}
 We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction (see Definition \ref{def:affine-restriction}) $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree.
 An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$ with $\lambda \le \epsilon d$ for some universal small constant $\epsilon \in (0,1)$, such that all paths corresponding to the embedding have odd length.
-The main technical ingredient of Austrin and Risse is also similar embedding theorem, but one that critically relies on the underlying graph being random.
+The main technical ingredient of Austrin and Risse is also \DIFaddbegin \DIFadd{a 	}\DIFaddend similar embedding theorem, but one that critically relies on the underlying graph being random.
 As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ (see \cite[Theorem A]{tikhomirov2016spectralgapdenserandom}), our embedding theorem subsumes that of \cite{Austrin_2022}.
 Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching.
 This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$.
 To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph.
 Austrin and Risse achieve this using the contiguity property of random regular graphs. Instead, we provide a significantly simpler and shorter argument based on Tutte's criterion.\par
-The rest of the document as is structured as follows. In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity required.
+The rest of the document \DIFdelbegin \DIFdel{as }\DIFdelend is structured as follows. 
+In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity\DIFdelbegin \DIFdel{required}\DIFdelend .
 In Section \ref{sec:embed-machinery}, we describe the machinery for finding a desired topological embedding.
 In Section \ref{sec:matching-machinery}, we prove conditions under which the residual graph has a perfect matching or, more generally, a $(t-1)$-regular spaning subgraph.
 In Section \ref{sec:main-proof}, we use the tools from the previous sections to prove Theorem \ref{thm:general-hardness-result}. 
@@ -189,76 +175,59 @@ In Section \ref{sec:related-work} we briefly discuss a few other lower bounds us
 \subsection{Proof Complexity Preliminaries}
 \label{sec:proof-system-prelims}
 
-Let $\Axioms = \{ p_1 = 0, \dots, p_m = 0\}$ be a set of polynomial equations\DIFaddbegin \footnote{\DIFadd{The sum of squares proof system is a semi-algebraic proof system where $\Axioms$ may also contain inequalities of the form $p_i(x) \ge 0$. 
+Let $\Axioms = \{ p_1 = 0, \dots, p_m = 0\}$ be a set of polynomial equations\footnote{The sum of squares proof system is a semi-algebraic proof system where $\Axioms$ may also contain inequalities of the form $p_i(x) \ge 0$. 
 However, we only need equality constraints to express the existence of Perfect Matchings over graphs. 
-Therefore to simplify our exposition, we write all our definitions using equality constraints only.}}\DIFaddend , which we refer to as axioms, over variables $\vec{X} = \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n\}$.
-\DIFdelbegin \DIFdel{We will always assume that the axioms $x_i^2 - x_i = 0$ and $\bar{x}_i^2 - \bar{x}_i = 0$ are included in $\Axioms$ for all $i \in [m]$, which ensures that $x_i \in \bit$ for all $i\in [m]$.
-Additionally, we will also assume that $1 - x_i - \bar{x}_i=0$ is also include for all $i \in [m]$, which ensures that the bar elements are bit complements of the non-bar elements.
-}\DIFdelend %DIF >  We will always assume that the axioms $x_i^2 - x_i = 0$ and $\bar{x}_i^2 - \bar{x}_i = 0$ are included in $\Axioms$ for all $i \in [n]$, which ensures that $x_i \in \bit$ for all $i\in [n]$.
+Therefore to simplify our exposition, we write all our definitions using equality constraints only.}, which we refer to as axioms, over variables $\vec{X} = \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n\}$.
+% We will always assume that the axioms $x_i^2 - x_i = 0$ and $\bar{x}_i^2 - \bar{x}_i = 0$ are included in $\Axioms$ for all $i \in [n]$, which ensures that $x_i \in \bit$ for all $i\in [n]$.
 
-\DIFdelbegin %DIFDELCMD < \begin{definition}[Sum Of Squares Proofs]%%%
-\DIFdelend \DIFaddbegin \begin{definition}[Sum Of Squares Refutation]\DIFaddend  Given a set of \DIFaddbegin \DIFadd{$m$ polynomial }\DIFaddend equality constraints $\Axioms$ \DIFaddbegin \DIFadd{over the reals}\DIFaddend , a Sum of Squares (SoS) \DIFdelbegin \DIFdel{proof of $h \geq 0$ from $\Axioms$ }\DIFdelend \DIFaddbegin \DIFadd{refutation }\DIFaddend is a set of polynomials $\Proof = (t_1, \dots, t_m; s_1, \dots, s_a)$ such that
+\begin{definition}[Sum Of Squares Refutation]\label{def:sum-of-squares} 
+Given a set of $m$ polynomial equality constraints $\Axioms$ over the reals, a Sum of Squares (SoS) refutation is a \DIFdelbegin \DIFdel{set }\DIFdelend \DIFaddbegin \DIFadd{sequence }\DIFaddend of polynomials $\Proof = (t_1, \dots, t_m; s_1, \dots, s_a)$ such that
 
-\DIFdelbegin \[ \DIFdel{\sum_{i \in [m]} t_ip_i+ \sum_{i \in [a]} s_i^2 = h}\]%DIFAUXCMD
-\DIFdelend \DIFaddbegin \[ \DIFadd{h \Def \sum_{i \in [m]} t_ip_i+ \sum_{i \in [a]} s_i^2 = -1}\]\DIFaddend 
-\DIFaddbegin 
+\[ h \Def \sum_{i \in [m]} t_ip_i+ \sum_{i \in [a]} s_i^2 = -1\]
 
-\DIFaddend The degree of a proof $\Proof$ is
+The degree of a proof $\Proof$ is
 
 \[ \Degree{\Proof} \Def \max\left\{\max_{i \in [m]} \Degree{t_i} + \Degree{p_i}, \max_{i \in [a]} 2\Degree{s_i}\right\}\]
 
-
 \end{definition}
 
-\DIFdelbegin \rajko{\DIFdel{Can you briefly explain why does this prove $h \ge 0$?}}
-%DIFAUXCMD
-%DIFDELCMD < 
-
-%DIFDELCMD < \begin{definition}[SoS Refutation]
-%DIFDELCMD < %%%
-\DIFdel{An SoS refutation of $\Axioms$ is a proof of $-1 \geq 0$ derived from }\DIFdelend \DIFaddbegin \DIFadd{Note that $s_i^2(x) \ge 0$ for any $x$ by definition. 
+Note that $s_i^2(x) \ge 0$ for any $x$ by definition. 
 Therefore, if there were to exist some $x^{\star}$ such that $p_i(x^{\star}) = 0$ for all $p_i \in \Axioms$, then $\sum_{i \in [m]} t_i(x^\star)p_i(x^\star) = 0$. 
-This would imply that $h \ge 0$, but our proof $\Proof$ shows that $h = -1$.
-This chain of reasoning implies that $-1 \ge 0$, which we know is impossible. 
-Therefore, the existence of the set of polynomials $\Proof$ act as a formal proof of the claim that the set of polynomials equations in }\DIFaddend $\Axioms$ \DIFdelbegin \DIFdel{. }\DIFdelend \DIFaddbegin \DIFadd{is unsatisfiable.
-}
-
-\begin{definition}[Complexity Of SoS Refutation]
-\DIFaddend If we let $\Pi$ denote the set of all valid SoS refutations \DIFdelbegin \DIFdel{of }\DIFdelend \DIFaddbegin \DIFadd{for }\DIFaddend $\Axioms$, then \DIFdelbegin %DIFDELCMD < 
+This would imply that $h \ge 0$, but our proof $\Proof$ shows that $h = -1$. 
+Therefore, the existence of the set of polynomials $\Proof$ act as a formal proof of the claim that the set of \DIFdelbegin \DIFdel{polynomials }\DIFdelend \DIFaddbegin \DIFadd{polynomial }\DIFaddend equations in $\Axioms$ is unsatisfiable.
+\DIFdelbegin %DIFDELCMD < 
 
 %DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \DIFadd{the complexity of refuting $\Axioms$ in the SoS proof system is given by 
-}\DIFaddend \[ \Degree{\Axioms \SOS \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
+\DIFdelend \begin{definition}[Complexity Of SoS Refutation]
+If we let $\Pi$ denote the set of all valid SoS refutations for $\Axioms$, then the complexity of refuting $\Axioms$ in the SoS proof system is given by 
+\[ \Degree{\Axioms \SOS \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
 
 \end{definition}
 
-Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} based on the following inference rules.
+Polynomial Calculus (PC) is a dynamic version of the static Nullstellensatz proof system \citep[Section 1.3]{fleming2019semialgebraic} \DIFaddbegin \DIFadd{operating over an arbitrary but fixed field, }\DIFaddend based on the following inference rules.
 \begin{enumerate}
-	\item From \DIFdelbegin \DIFdel{polynomials }\DIFdelend \DIFaddbegin \DIFadd{polynomial equations }\DIFaddend $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
-	\DIFdelbegin \rajko{\DIFdel{You mean polynomial equations, not polynomials?}}
-	%DIFAUXCMD
-\DIFdelend \item From polynomial $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
+	\item From polynomial equations $f=0$ and $g=0$ where $f,g \in \Field[\vec{X}]$ we can derive $\alpha f + \beta g = 0$ for $\alpha, \beta \in \Field$.
+	\item From polynomial $f=0$ where $f \in \Field[\vec{X}]$, we can derive $xf=0$ where $x \in \vec{X}$.
 \end{enumerate}
 
 \begin{definition}[Polynomial Calculus Refutations]\label{def:poly-calc-refutations}
-A Polynomial Calculus (PC) refutation of $\Axioms$ over is a set of polynomials $\Proof = t_1, \dots, t_l$	such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules.
+A Polynomial Calculus (PC) refutation of $\Axioms$ over \DIFdelbegin \DIFdel{is a set of polynomials $\Proof = t_1, \dots, t_l$	}\DIFdelend \DIFaddbegin \DIFadd{$\Field$ is a sequence of polynomials $\Proof = (t_1, \dots, t_l)$	}\DIFaddend such that $t_l = 1$, and for each $i \neq l$, either (1) $t_i \in \Axioms$, or (2) $t_i$ is derived from $\{t_j\}_{j < i}$ using the above rules.
 The degree of the proof is given by $\Degree{\Proof} = \max_{i \in l}\Degree{t_i}$. If we let $\Pi$ denote the set of all PC refutations of $\Axioms$, then
 
 \[ \Degree{\Axioms \PC \bot} \Def \min_{\Proof \in \Pi}\Degree{\Proof}\]
 \end{definition}
-\DIFdelbegin \DIFdel{Since we always }\DIFdelend \DIFaddbegin 
 
-\DIFadd{To ensure boolean variables, we }\DIFaddend assume the axioms \DIFdelbegin \DIFdel{contain constraints that restrict the variables to a boolean range by adding constraints }\DIFdelend \DIFaddbegin \DIFadd{$\Axioms$ always contain the equations }\DIFaddend $x_i^2 - x_i=0$ \DIFdelbegin \DIFdel{to the axioms}\DIFdelend \DIFaddbegin \DIFadd{and $\bar{x}^2_i - \bar{x}_i = 0$ for all $i \in [n]$. 
-Equivalently}\DIFaddend , we can \DIFdelbegin \DIFdel{alternatively }\DIFdelend \DIFaddbegin \DIFadd{also }\DIFaddend just work in the ring $\Field[x_1, \dots, \bar{x}_n]/(x_1^2 - x_1, \dots, \bar{x}_n^2 - \bar{x}_n)$ of \DIFdelbegin \DIFdel{multilinear }\DIFdelend \DIFaddbegin \DIFadd{multi-linear }\DIFaddend polynomials.
+To ensure \DIFdelbegin \DIFdel{boolean }\DIFdelend \DIFaddbegin \DIFadd{Boolean }\DIFaddend variables, we assume the axioms $\Axioms$ always contain the equations $x_i^2 - x_i=0$ and $\bar{x}^2_i - \bar{x}_i = 0$ for all $i \in [n]$. 
+Equivalently, we can also just work in the ring $\Field[x_1, \dots, \bar{x}_n]/(x_1^2 - x_1, \dots, \bar{x}_n^2 - \bar{x}_n)$ of multi-linear polynomials.
 Multi-linearity implies that the degree of any proof can be at most $n$ i.e a proof of degree $\BigOmega{n}$ is the largest lower bound one can hope to achieve.
-\DIFaddbegin \DIFadd{Additionally, we will also assume that $1 - x_i - \bar{x}_i=0$ is also included in $\Axioms$, for all $i \in [n]$, which ensures that the bar elements are bit complements of the non-bar elements.
-}\DIFaddend The following lemma is by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case. 
+Additionally, we will also assume that $1 - x_i - \bar{x}_i=0$ is also included in $\Axioms$, for all $i \in [n]$, which ensures that the bar elements are bit complements of the non-bar elements.
+The following lemma is by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear} and gives an instance where perfect matching is hard to refute in the worst case. 
 
-\begin{lemma}[Worst Case Hard Instance For PC]Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
+\begin{lemma}[Worst Case Hard Instance For PC]\label{lemma:worst-case-instance-PC}Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that Polynomial Calculus over any field of characteristic different from 2 requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
 A description of the  worst case hard instance for SoS can be found in \citep[Theorem A.3]{Austrin_2022}.
 
-\begin{lemma}[Worst Case Hard Instance For SOS]
+\begin{lemma}[Worst Case Hard Instance For SOS]\label{lemma:worst-case-instance-sos}
 Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and maximum degree $\MaxDegree{H}= 5$ such that SoS refutations requires degree $\Theta(n)$ to refute $\Card{H, \vec{1}}$.
 \end{lemma}
 
@@ -266,7 +235,7 @@ Given any odd $n \in \Naturals$, there exists a graph $H$ with $n$ vertices and 
 
 An important lemma we will need is that given a set of axioms $\Axioms$ over the ring $\Field[x_1, \dots, x_n]$, a partial assignment of variables can only make refuting $\Axioms$ easier.
 Given a set of $m$ polynomial equality constraints $\Axioms$ over boolean variables $\{x_1, \dots, x_n\}$, let the family of functions $\{f_i: \bit^n \rightarrow \{\True,\False\} \}_{i \in [m]}$, denote predicates for satisfiability for each constraint.
-For example, given $\alpha \in \bit^n$, $f_i(\alpha) = \True$ if the $i$'th polynomial constraint $\axiom_i \in \Axioms$ is satisfied i.e $p_i(\alpha) = 0$.
+For example, given $\alpha \in \bit^n$, $f_i(\alpha) = \True$ if the $i$'th polynomial constraint $\axiom_i \in \Axioms$ is satisfied i.e \DIFdelbegin \DIFdel{$p_i(\alpha) = 0$}\DIFdelend \DIFaddbegin \DIFadd{$q_i(\alpha) = 0$}\DIFaddend .
 We say $\Axioms$ is satisfied if $\exists \alpha \in \bit^n$ such that $f_i(\alpha) = \True \iff \axiom_i(\alpha)=0$ for all $i \in [m]$.
 Given a map $\rho: \{x_1, \dots, x_n \} \rightarrow \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n, 1, 0 \}$, the restriction of a function $f: \bit^n \rightarrow \bit$, denoted by $f|_\rho$, is defined as $f|_\rho(x_1, \dots, x_n) = f(\rho(x_1), \dots, \rho(x_n))$.
 Similarly, the restriction of formula $\Axioms$ is defined as $\Axioms|_\rho = \{f_{1}|_\rho, \dots, f_{m}|_\rho \}$.
@@ -274,13 +243,13 @@ Two formula $\Axioms$ and $\Axioms'$ are equivalent if they are element-wise equ
 For example, $\Axioms = \{f_a, f_b, \True \}$ and $\Axioms' = \{f_a, f_b\}$ are equivalent, denoted as $\Axioms \equiv \Axioms'$.
 
 
-\begin{definition}[Affine Restriction]
+\begin{definition}[Affine Restriction]\label{def:affine-restriction}
 We say that an axiom $\Axioms'$ is an
 affine restriction of $\Axioms$ if there is a map $\rho : \{x_1,\dots,x_n\} \rightarrow \{x_1, \dots, x_n, \bar{x}_1, \dots, \bar{x}_n, 1, 0 \}$ such that $\Axioms \equiv \Axioms|_{\rho}$.
 \end{definition}
 
 
-\begin{lemma}
+\begin{lemma}\label{lemma:affine_restriction}
 Let $\Axioms, \Axioms'$ be axioms such that $\Axioms'$ is an affine restriction of $\Axioms$, and each axiom
 of $\Axioms$ depends on a constant number of variables, then
 \begin{enumerate}
@@ -290,14 +259,13 @@ of $\Axioms$ depends on a constant number of variables, then
 \end{lemma}
 
 The proof for the above lemma can be found in \citep[Lemma 2.2]{Austrin_2022}.
-What the above lemma says is that if we have a graph $G$ with odd vertices woth constant degree, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
+What the above lemma says is that if we have a graph $G$ with odd vertices \DIFdelbegin \DIFdel{woth }\DIFdelend \DIFaddbegin \DIFadd{with }\DIFaddend constant degree, that has a perfect matching on a subset of even vertices on the graph, then the size of the proof to refute $\PM{G}$ is at least as large as refuting a perfect matching in $G$ with the even vertices removed.
 
 
 \subsection{Graph Theory Preliminaries}
+\label{sec:graph-theory-prelims}
 
-
-We use standard graph theoretic notation. For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. For a vertex $v \in \Vertices{\Graph}$, \DIFdelbegin \rajko{\DIFdel{You used $\Gamma_E$ a few times in the paper. I've changed that to $\Gamma_G$.}} %DIFAUXCMD
-\DIFdelend we use $\Neighbourhood{G}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ in $G$, and $\degree{G}{v} := |\Neighbourhood{G}{v}|$. Given two sets $S, T \subseteq \Vertices{G}$, we  use $\CutEdges{S}{T}{G}$ to denote the number of edges in $G$ with one endpoint in $S$ and one endpoint in $T$.  Note that we do not require $S$ and $T$ to be disjoint; in case they are not disjoint, every edge with both endpoints in $S \cap T$ is counted twice in $\CutEdges{S}{T}{G}$. If the graph $G$ is clear from the context, we omit the subscript. Given $W \subseteq V(G)$, we denote with $G[W]$ the subgraph of $G$ induced by $W$. We say that a subgraph $G' \subseteq G$ is \emph{spanning} if $V(G') = V(G)$.
+We use standard graph theoretic notation. For a graph $\Graph$, we use $\Vertices{\Graph}$ and $\Edges{\Graph}$ to denote the vertices and edges of $\Graph$. For a vertex $v \in \Vertices{\Graph}$, we use $\Neighbourhood{G}{v} = \{ u \in \Vertices{\Graph} : (u,v) \in E' \}$ to denote the neighbourhood of $v$ in $G$, and $\degree{G}{v} := |\Neighbourhood{G}{v}|$. Given two sets $S, T \subseteq \Vertices{G}$, we  use $\CutEdges{S}{T}{G}$ to denote the number of edges in $G$ with one endpoint in $S$ and one endpoint in $T$.  Note that we do not require $S$ and $T$ to be disjoint; in case they are not disjoint, every edge with both endpoints in $S \cap T$ is counted twice in $\CutEdges{S}{T}{G}$. If the graph $G$ is clear from the context, we omit the subscript. Given $W \subseteq V(G)$, we denote with $G[W]$ the subgraph of $G$ induced by $W$. We say that a subgraph $G' \subseteq G$ is \emph{spanning} if $V(G') = V(G)$.
 
 Next, we give a definition of pseudorandom graphs.
 
@@ -344,22 +312,22 @@ $$
 % \end{proof}
 
 We make use of the following two well known criteria of Tutte \cite{tutte1952factors, tutte1947factorization}. 
-Note that both of the lemmata ask for properties which are stronger than what Tutte criteria requires\DIFaddbegin \footnote{\DIFadd{More specifically, in the Tutte criterion $q(G \setminus S)$ denotes the number of }\emph{\DIFadd{odd}} \DIFadd{sized connected components in the graph $G \setminus S$.}}\DIFaddend ; however, they are easier to state and verify in our application. We denote with $q(G)$ the number of connected components in a graph $G$.
+Note that both of the lemmata ask for properties which are stronger than what Tutte criteria requires\footnote{More specifically, in the Tutte criterion $q(G)$ denotes the number of \emph{odd} sized connected components.}; however, they are easier to state and verify in our application. We denote with $q(G)$ the number of connected components in a graph $G$.
 % The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively. \rajko{Please cite the original work, not lecture notes.}
 
 \begin{lemma}[Tutte's Criterion]\label{lemma:tutte-criterion}
-If a graph $G$ has  \emph{even} number of vertices and for every \DIFdelbegin \DIFdel{$S \subseteq V(G)$ we have $\OddComponents{G[V(G) \setminus S]} \leq |S|$}\DIFdelend \DIFaddbegin \DIFadd{subset $S \subseteq G$ we have $\OddComponents{G \setminus S} \leq |S|$}\DIFaddend , then $G$ contains a perfect matching.
+If a graph $G$ has  \emph{even} number of vertices and for every subset $S \subseteq G$ we have $\OddComponents{G \setminus S} \leq |S|$, then $G$ contains a perfect matching.
 \end{lemma}
 
-\begin{lemma}[Tutte's Generalised Criterion]
+\begin{lemma}[Tutte's Generalised Criterion]\label{lemma:tutte-criterion-factor}
   Let $f \in \Naturals$ be even. Suppose $G$ is a graph such that for every pair of disjoint sets $S, T \subseteq V(G)$ the following holds:
 
-  \DIFdelbegin \[ \DIFdel{|S|f \geq \OddComponents{G[S \cup T]} + \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}). }\]%DIFAUXCMD
-\DIFdelend \DIFaddbegin \[ \DIFadd{|S|f \geq \OddComponents{G \setminus (S \cup T)} + \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}). }\]\DIFaddend 
+  \[ \OddComponents{G \setminus (S \cup T)} \le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}). \]
   Then $G$ contains a spanning subgraph $G' \subseteq G$ which if $f$-regular.
 \end{lemma}
 
 
+\newpage
 
 \subsection{Probabilistic Tools}
 
@@ -418,20 +386,18 @@ Then
 
 
 The proof of \nameref{lemma:mult-chernoff} and \nameref{lemma:lll}
-can be found in any textbook on randomised algorithms (for example, see \citep[Chapter 1, Chapter 7]{mitzenmacher2017probability}). The following is the main result of this section. 
-\DIFdelbegin \rajko{\DIFdel{$\tilde O$ is not commonly used in mathematics. We also don't care about the exact value.}}
-%DIFAUXCMD
-%DIFDELCMD < 
+can be found in any textbook on randomised algorithms (for example, see \citep[Chapter 1, Chapter 7]{mitzenmacher2017probability}). 
+The following \DIFdelbegin \DIFdel{is the main result of this section.
+}\DIFdelend \DIFaddbegin \DIFadd{lemma is by \mbox{%DIFAUXCMD
+\citep[Lemma 4.3]{Austrin_2022}}\hskip0pt%DIFAUXCMD
+, re-derived here for completeness.
+}
 
-%DIFDELCMD < %%%
-\DIFdelend \begin{lemma} 
-For every $0 < c < 1$ and \DIFdelbegin \DIFdel{$\epsilon > 0$}\DIFdelend \DIFaddbegin \DIFadd{$\gamma> 0$}\DIFaddend , there exists $d_0$ such that the following holds. If $G$ is a $d$-regular graph, for some $d \ge d_0$, then there exists a subset $A \subseteq V(G)$ such that
-\DIFdelbegin \begin{displaymath}
-    \DIFdel{cd - \epsilon d \leq \left| \Neighbourhood{G}{v} \cap A \right| \leq cd + \epsilon d 
-}\end{displaymath}%DIFAUXCMD
-\DIFdelend \DIFaddbegin $$
-    \DIFadd{cd - \gamma d \leq \left| \Neighbourhood{G}{v} \cap A \right| \leq cd + \gamma d 
-}$$\DIFaddend 
+\DIFaddend \begin{lemma} \label{thm:partition}
+For every $0 < c < 1$ and $\gamma> 0$, there exists $d_0$ such that the following holds. If $G$ is a $d$-regular graph, for some $d \ge d_0$, then there exists a subset $A \subseteq V(G)$ such that
+$$
+    cd - \gamma d \leq \left| \Neighbourhood{G}{v} \cap A \right| \leq cd + \gamma d 
+$$
 for every $v \in V(G)$.
 % on $n$ vertices, with $d \in [d_0, n-1]$, there exists and a  sets $\red{A}$ and $\green{B}$ is a $(c, \epsilon)$ balanced cut of $G$.
 \end{lemma}
@@ -440,7 +406,7 @@ We prove the existence of such a partition $A \subseteq V(G)$ using the probabil
 % We refer to elements in $\RedA$ as red nodes, and elements in $\GreenB$ as green nodes.
 For each $v \in \Vertices{\Graph}$, we toss an independent coin $X_i$ with bias $c$.
 We include $v$ in $A$ if and only if $X_i = 1$. Thus, $\vec{X} \Def (X_1, \dots, X_n) \in \bit^n$ is a random variable that describes how we choose $A$. For any $v \in V$, let $Y_v \Def |\Neighbourhood{G}{v} \cap \RedA|$ denote the random variable that counts the number of neighbours of $v$ in $A$.
-Define \DIFdelbegin \DIFdel{$\delta \Def \epsilon / c$}\DIFdelend \DIFaddbegin \DIFadd{$\delta \Def \gamma / c$}\DIFaddend , and for every $v \in V$ let $E_v = \Indicator{|Y_v - d c | \geq \delta c d}$ denote the bad event that $v$ has too many or too few neighbours in $A$.
+Define $\delta \Def \gamma / c$, and for every $v \in V$ let $E_v = \Indicator{|Y_v - d c | \geq \delta c d}$ denote the bad event that $v$ has too many or too few neighbours in $A$.
 Observe that the dependency graph of events $\{ E_v \}_{v \in V}$ has maximum degree at most $d^2$ (only vertices at most two hops away from $v$ affect how many of $v$'s neighbours are in $A$; there at most $d^2$ such vertices).
 % To see why, for any node $v$, let $u$ and $w$ denote vertices exactly 2 hops\footnote{A node $a$ is $k$ hops away from another node $b$ if the shortest path between $a$ and $b$ has $k$ edges.} and at least 3 hops away from $v$ respectively. The colour of $u$'s neighbours, directly affects how many red neighbours $v$ can have.
 % However, as the colours for each node is sampled independently, the colour of $w$ or its neighbours do not affect $v$'s neighbours.
@@ -456,7 +422,7 @@ For $d$ sufficiently large we have $\beta \leq 1/(4d^2)$, and so $\beta d^2 \leq
 %As described earlier, we do this by topologically embedding the above hard instance $H$ into $G$ while preserving the hardness of the original instance.
 
 % \begin{remark}
-%   
+%   \label{remark:edge-dist}
 % For this section, and the next, we invoke Lemma \ref{thm:partition} with parameters. $c=3/4$ and $\epsilon=1/16$.
 % Reviewing the properties of a balanced sets with $c=3/4$ and $\epsilon=1/16$, we have that every vertex $u$ in any $\EnDeeLambda$ graph  $G=(V,E)$,
 
@@ -464,45 +430,44 @@ For $d$ sufficiently large we have $\beta \leq 1/(4d^2)$, and so $\beta d^2 \leq
 % \end{remark}
 
 \section{Topological embedding}
-
+\label{sec:embed-machinery}
 
 In this section we describe the topological embedding result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}. We start with a necessary definition.
 
-\begin{definition}[Sub-divisions]
+\begin{definition}[Sub-divisions]\label{def:subdivisions}
 Given a graph $H$ and a function $\sigma: \Edges{H} \rightarrow \Naturals$, the $\sigma$-subdivision of $H$, denoted by $\Subdivision{H}{\sigma}$, is the graph obtained by replacing each edge in $\Edges{H}$ with a path of length $\sigma(e)$ joining the end points of $e$ such that all these paths are mutually vertex disjoint, except at the end points.
 \end{definition}
 
 If a graph $G$ contains $H^{\sigma}$ for some $\sigma: \Edges{H} \to \Naturals$, then we say $G$ contains $H$ as a \emph{topological minor}. In our application, it will be important that we can control the parity of $\sigma(e)$. The following result follows directly from \cite[Theorem 1]{draganic22rolling}. 
 
-% \ari{It would be nice if you could write a short paragraph about why this theorem is true. 
-% I know they can go find the original reference, so if you think this would be easy then please add something. 
-% }
-% \rajko{What do you mean ``why this theorem is true''? You mean the intuition? That I can't give in one paragraph. If you mean why does it follow from [11, Theorem 1], that is rather straightforward and needs no explanation.}
 
-\begin{theorem}[Embedding Theorem] 
-For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $S, T \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
-\DIFdelbegin \begin{displaymath}
-    \DIFdel{\bigl| e_{G}(S, T) - |S||T|p \bigr| \le \xi |S||T| p, 
-}\end{displaymath}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \begin{align}
-  \DIFadd{\bigl| e_{G}(S, T) - |S||T|p \bigr| \le \xi |S||T| p \label{eq:props}
-}\end{align}\DIFaddend 
-where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$, $H^\sigma$ has at most $\alpha n$ vertices, and $\sigma(e) \ge \log n$ for every $e \in E(H)$.
-\end{theorem}
-
-\DIFdelbegin \DIFdel{We }\DIFdelend \DIFaddbegin \DIFadd{In simple words, we are given some graph $H$ with an upper bound $D$ on its maximal degree.
-If we feed the embedding theorem an input parameter $D \in \Naturals$, then it can come up with constants $\alpha, \xi \in (0,1)$ and $C > 0$, such that we can topologically embed $H$ into any graph $G$ properties listed in inequality \eqref{eq:props}.
-When $G$ is an $\EnDeeLambda$ graph, we will we }\DIFaddend make use of Theorem \ref{thm:embedding_top} \DIFdelbegin \DIFdel{through the }\DIFdelend \DIFaddbegin \DIFadd{to show that $G$ satisfies the required properties, thereby contains $H$ as a topological minor.
-This gives us the }\DIFaddend following corollary.
+%DIF <  \ari{It would be nice if you could write a short paragraph about why this theorem is true. 
+%DIF <  I know they can go find the original reference, so if you think this would be easy then please add something. 
+%DIF <  }
+%DIF <  \rajko{What do you mean ``why this theorem is true''? You mean the intuition? That I can't give in one paragraph. If you mean why does it follow from [11, Theorem 1], that is rather straightforward and needs no explanation.}
 \DIFdelbegin %DIFDELCMD < 
 
 %DIFDELCMD < %%%
-\DIFdelend \begin{corollary} 
-  For every $D \in \mathbb{N}$ there exist \DIFdelbegin \DIFdel{$d_0 \in \Naturals, \epsilon \in (0,1)$}\DIFdelend \DIFaddbegin \DIFadd{$d_0, n_0 \in \Naturals, \epsilon, \alpha \in (0,1)$}\DIFaddend , such that the following holds. 
-  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$ \DIFaddbegin \DIFadd{is a constant }\DIFaddend and $\lambda < \epsilon d$\DIFaddbegin \DIFadd{, and $n \ge n_0$}\DIFaddend . 
-  Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/20$\DIFdelbegin \DIFdel{. Then the induced subgraph $G[B]$ contains $H^{\sigma}$, where }\DIFdelend \DIFaddbegin \DIFadd{, and }\DIFaddend $H$ is any graph with maximum degree at most $D$ and at most \DIFdelbegin \DIFdel{$\alpha n / (11 \log n)$ vertices}\rajko{\DIFdel{What is $\alpha$?}}%DIFAUXCMD
-\DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{$\alpha \frac{n}{\log n}$ vertices.
-Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ }\DIFaddend and $\sigma(e)$ is odd for every $e \in E(H)$.
+\DIFdelend \begin{theorem}[Embedding Theorem] \label{thm:embedding_top}
+For every $D \in \mathbb{N}$ there exist $\alpha, \xi, C > 0$, such that the following holds. Suppose $G$ is a graph with $n$ vertices and $m \ge Cn$ edges such that for every pair of disjoint subsets $S, T \subseteq V(G)$ of size $|S|, |T| \ge \xi n$, we have
+\DIFdelbegin \begin{align*}
+  \DIFdel{\bigl| e_{G}(S, T) - |S||T|p \bigr| \le \xi |S||T| p %DIFDELCMD < \label{eq:props}%%%
+}\end{align*}%DIFAUXCMD
+\DIFdelend \DIFaddbegin \begin{align*}
+  \DIFadd{\bigl| e_{G}(S, T) - |S||T|p \bigr| \le \xi |S||T| p \label{eq:props}
+}\end{align*}\DIFaddend 
+where $p = m / \binom{n}{2}$. Then $G$ contains $H^{\sigma}$, where $H$ is any graph with maximum degree at most $D$, $H^\sigma$ has at most $\alpha n$ vertices, and $\sigma(e) \ge \log n$ for every $e \in E(H)$.
+\end{theorem}
+
+% In simple words, we are given some graph $H$ with an upper bound $D$ on its maximal degree.
+% If we feed the embedding theorem an input parameter $D \in \Naturals$, then it can come up with constants $\alpha, \xi \in (0,1)$ and $C > 0$, such that we can topologically embed $H$ into any graph $G$ properties listed in inequality \eqref{eq:props}.
+When $G$ is an $\EnDeeLambda$ graph, we will we make use of Theorem \ref{thm:embedding_top} to show that $G$ satisfies the required properties, thereby contains $H$ as a topological minor.
+This gives us the following corollary.
+\begin{corollary} \label{cor:embedding_top}
+  For every $D \in \mathbb{N}$ there exist $d_0, n_0 \in \Naturals, \epsilon, \alpha \in (0,1)$, such that the following holds. 
+  Suppose $G$ is an $(n,d,\lambda)$-graph where $d \ge d_0$, and $\lambda < \epsilon d$, and $n \ge n_0$. 
+  Let $B \subseteq V(G)$ be a subset of size $|B| \ge n/20$, and $H$ is any graph with maximum degree at most $D$ and at most $\alpha \frac{n}{\log n}$ vertices.
+Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ such that $\sigma(e)$ is odd for every $e \in E(H)$.
 \end{corollary}
 
 
@@ -517,12 +482,7 @@ Dividing both sides with $b(b-1)$, and observing that $\frac{db^2}{n(b-1)b} = \f
 \left| \frac{2m}{b(b-1)} - \frac{d}{n} - \frac{d}{n(b-1)} \right| &\le \frac{\lambda}{b-1}  \label{eq:eml-post-process}
 \end{align}
 
-\DIFdelbegin \DIFdel{where }\rajko{\DIFdel{where?}}
-%DIFAUXCMD
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdelend From this we have 
+From this we have 
 \begin{align}
   \left| p - \frac{d}{n}\right| &= \left| p - \frac{d}{n} - \frac{d}{n(b-1)} + \frac{d}{n(b-1)}\right|  \\
                                 &\le \left| p - \frac{d}{n} - \frac{d}{n(b-1)} \right| + \frac{1}{(b-1)} \label{eq:triangle}\\
@@ -532,53 +492,46 @@ Dividing both sides with $b(b-1)$, and observing that $\frac{db^2}{n(b-1)b} = \f
 
 Let us briefly justify each step: \eqref{eq:triangle} comes from the triangle inquality and  $d/n \le 1$;
 Equation \eqref{eq:final} comes from Equation \eqref{eq:eml-post-process};
-the last inequality comes from the fact that $b \in \BigOmega{n}$, so the inequality holds for $n$ large enough.\\
+the last inequality comes from the \DIFdelbegin \DIFdel{fact }\DIFdelend \DIFaddbegin \DIFadd{assumption }\DIFaddend that $b \in \BigOmega{n}$, so the inequality holds for $n$ large enough.\\
 
-Let $\xi$ be as given by \nameref{thm:embedding_top}. Using the bound on the difference between $p$ and $d/n$, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
+Let $\xi$ be as given by \DIFaddbegin \DIFadd{the }\DIFaddend \nameref{thm:embedding_top}. Using the bound on the difference between $p$ and $d/n$, for every disjoint subsets $S, T \subseteq B$ of size $|S|,|T| \ge \xi n$, for $\lambda < \epsilon d$ where $\epsilon$ is sufficiently small, we have
 
 \begin{align*}
   \Bigl| \CutEdges{S}{T}{G}  - p|S||T| \Bigr| &\le \left| \CutEdges{S}{T}{G} - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
                                     &\le \lambda \sqrt{|S||T|} + \frac{2 \lambda}{b} |S||T| \le \xi |S||T|p. 
     \end{align*}
 
-\DIFaddbegin \DIFadd{In the last step we used the fact that $d$ is a constant, and that $\lambda < \epsilon d$.  This and the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get our upper bound.
-    }\DIFaddend % \rajko{Feel free to expand the previous calculation and explain it in more detail.}
+With the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get the upper bound in the last step.
+    % \rajko{Feel free to expand the previous calculation and explain it in more detail.}
     % \ari{What is the value of $\xi$ that makes this work? And $\xi \in (0,1)$ right? I am struggling to make this a universal constant, and $\xi = \BigO{\epsilon}$ does not work. I added the $E(G[B])$ clause to the corollary. Where do we exploit the fact that $|B|>n/10$ in the corollary or the sets $\Size{S},\Size{T} \ge \xi n$??}
     % \rajko{I removed $E(G[B])$ from the statement. It follows from the lower bound on $B$ and the fact that $d$ is sufficiently large. $\xi$ is given by the Embedding Theorem; you take $\epsilon$ to be sufficiently small with respect to $\xi$. How small? It doesn't matter, it is clear that sufficiently small works. The lower bound on $B$, $S$ and $T$ is used to derive that sufficiently small $\epsilon$ works.}
     Let $\sigma: E(H) \to \Naturals$ be the constant function where $\sigma(e)$ is the smallest odd integer larger than $\log n$. 
-\DIFdelbegin \DIFdel{Note that $\sigma(e) \le 2 + \log n$, thus $H^\sigma$ has at most $\alpha n / 10 \le \alpha |B|$ vertices. }\DIFdelend As $G[B]$ has at least $Cn$ edges (by \nameref{lemma:expanders-mixing-lemma}), we \DIFdelbegin \DIFdel{can invoke }\DIFdelend \DIFaddbegin \DIFadd{satisfy all the constraints to invoke the }\DIFaddend \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
-\DIFaddbegin \DIFadd{Note that $\sigma(e) \le 2 + \log n$, and we know that $H$ has at most $\alpha \frac{n}{\log n}$ vertices. 
-Thus, $H^\sigma$ has at most $\BigO{|B|}$ vertices. 
-}\DIFaddend \end{proof}
+As $G[B]$ has at least $Cn$ edges (by \DIFaddbegin \DIFadd{the }\DIFaddend \nameref{lemma:expanders-mixing-lemma}), $\sigma(e) \le 2 + \log n$, and $H$ has at most $\alpha \frac{n}{\log n}$ vertices, we can invoke \DIFaddbegin \DIFadd{the }\DIFaddend \nameref{thm:embedding_top} to conclude that $G[B]$ contains $H^\sigma$.
+\end{proof}
 
 \section{Perfect matching and regular subgraphs}
-
+\label{sec:matching-machinery}
 % Next we prove a lemma that shows that even sized subsets of expander graph with large minimal degree contain perfect matchings.
 % has two parts.
 % The first is an embedding theorem that allows us to transfer hardness of a worst case instance.
 As described earlier, the second ingredient in our hardness proof is showing that a certain residual graph contains a perfect matching or a spanning $(t-1)$-regular subgraph. In this section we state and prove these ingredients.
 
-\begin{lemma}[Perfect Matching Lemma]
+\begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
 Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. 
-\DIFdelbegin \DIFdel{If }\DIFdelend \DIFaddbegin \DIFadd{For any }\DIFaddend $U \subseteq V(G)$\DIFdelbegin \DIFdel{is of even size and }\DIFdelend \DIFaddbegin \DIFadd{, if }\DIFaddend $\delta(G[U]) \ge \cTilde$, then \DIFdelbegin \DIFdel{$G[U]$ satisfies the property of }%DIFDELCMD < \nameref{lemma:tutte-criterion}%%%
-\DIFdel{. Consequently, $G[U]$ contains a perfect matching}\DIFdelend \DIFaddbegin \DIFadd{for all $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components}\DIFaddend . 
+Suppose $U \subseteq V(G)$ is such that $\delta(G[U]) \ge \cTilde$. Then for all $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components, that is, $q(G[U \setminus S]) \le |S|$.
 \end{lemma}
 
 \begin{proof}
-  \DIFdelbegin \DIFdel{Suppose }\DIFdelend \DIFaddbegin \DIFadd{Fix arbitrary }\DIFaddend $U \subseteq V(G)$\DIFdelbegin \DIFdel{is of even size and }\DIFdelend \DIFaddbegin \DIFadd{, and let }\DIFaddend $\delta(G[U]) \ge \cTilde$.
-  \DIFdelbegin \DIFdel{We show that $G[U]$ satisfies the property of }%DIFDELCMD < \nameref{lemma:tutte-criterion}%%%
-\DIFdel{.
-  }\DIFdelend %DIF >  We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
+  Consider some $U \subseteq V(G)$ such that $\delta(G[U]) \ge \cTilde$.
+  % We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
   Consider some $S \subseteq U$.
   We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components.
   If $|S| \ge |U|/2$ then as $G[U \setminus S]$ has fewer than $|S|$ vertices, so the the upper bound on connected components trivially holds. 
 Thus, we can assume $|S| < |U|/2$.
  We claim the following:
- \DIFdelbegin \rajko{\DIFdel{Rephrased}}
- %DIFAUXCMD
-\DIFdelend %that if $e_G(X, Y) \ge 1$ for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$,
+ %that if $e_G(X, Y) \ge 1$ for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$,
  \begin{equation}
-  \text{If }\CutEdges{X}{Y}{G} \ge 1 \text{ for every partition $X \cup Y = U \setminus S$, $|X|,|Y| \ge |S|/3$,  then }  q(G[U \setminus S] \le |S|. \label{eq:mini-claim}
+  \text{If }\CutEdges{X}{Y}{G} \ge 1 \text{ for every partition $X \cup Y = U \setminus S$, $|X|,|Y| \ge |S|/3$,  then }  q(G[U \setminus S]) \le |S|. \label{eq:mini-claim}
  \end{equation}
 
 \flushleft
@@ -609,42 +562,34 @@ These steps are justified as follows: The first equation follows from the \namer
 Equation \eqref{eq:smaller-than-one} comes from $\Size{S} < \frac{n}{2}$; and  Equation \eqref{eq:upper-bound-S} comes the assumption $\lambda < d/50$.
 \end{proof}
 
-\DIFdelbegin \rajko{\DIFdel{Rephrased the statement of the next lemma.}}
-%DIFAUXCMD
-\DIFdelend \DIFaddbegin \DIFadd{As an immediate corollary of Lemma \ref{thm:perfect-matching} we get the following corollary
-}\begin{corollary}\label{cor:perfect-matching}
-\DIFadd{Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. 
-For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the }\nameref{lemma:tutte-criterion}\DIFadd{, and therefore $G[U]$ contains a perfect matching.  
-}\end{corollary}
+As an immediate corollary of Lemma \ref{thm:perfect-matching} we get the following corollary
+\begin{corollary}\label{cor:perfect-matching}
+Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. 
+For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the \nameref{lemma:tutte-criterion}, and therefore $G[U]$ contains a perfect matching.  
+\end{corollary}
 
-\DIFaddend \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
-  For every $C > 0$ there exists $d_0 = d_0(C)$ such that the following holds.
+The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
+\DIFaddbegin \DIFadd{In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting a constant number of edges from the $\EnDeeLambda$ graph $G$.
+}\DIFaddend 
+
+\begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
+  For every \DIFdelbegin \DIFdel{$C > 0$ }\DIFdelend \DIFaddbegin \DIFadd{$C > 1$ }\DIFaddend there exists $d_0 = d_0(C)$ such that the following holds.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$ and $d \ge d_0$, where $\epsilon < 1/100C^{3/2}$.
-If $G' \subseteq G$ has minimum degree \DIFdelbegin \DIFdel{$\MinimalDegree{G'} \ge d - C$}\DIFdelend \DIFaddbegin \DIFadd{$\MinimalDegree{G'} \ge d - C > \frac{9d}{10}$}\DIFaddend , then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
+If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge \frac{9d}{10}$, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$.
 \end{lemma}
 
 \begin{proof}
   We prove this lemma using the \nameref{lemma:tutte-criterion-factor}.
   We need to show that for any pair of disjoint sets $S, T \subseteq \Vertices{G'}$, we have
-\DIFdelbegin \rajko{\DIFdel{$q(S \cup T)$ should be $q(G'[S \cup T])$. Change throughout the proof.}}
-  %DIFAUXCMD
-\begin{align*}
-\DIFdel{\OddComponents{S \cup T} }&\DIFdel{\le \Size{S}f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S}).
-  }\end{align*}%DIFAUXCMD
-\DIFdelend \DIFaddbegin 
 
   \begin{align}
-    \DIFadd{\OddComponents{G' \setminus (S \cup T)} }&\DIFadd{\le \Size{S}f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S}) \label{eq:main-goal}
-  }\end{align}\DIFaddend 
+    \OddComponents{G' \setminus (S \cup T)} &\le \Size{S}f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S}) \label{eq:main-goal}
+  \end{align}
 
-  As \DIFaddbegin \DIFadd{$\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C > 0$, we have that $\epsilon < 1/50$.
-This implies that }\DIFaddend $G$ is an $\EnDeeLambda$ graph with \DIFdelbegin \DIFdel{$\lambda < \epsilon d < d/50$ and }\DIFdelend \DIFaddbegin \DIFadd{$\lambda < d/50$.
-Additionally, we are also given that }\DIFaddend $G'$ has minimal degree \DIFdelbegin \DIFdel{$\MinimalDegree{G'} \ge d - C >  11d/16$, by the Lemma above }\rajko{\DIFdel{Properly reference the lemma by its number}}%DIFAUXCMD
-\DIFdel{, $G$' satisfies the  }%DIFDELCMD < \nameref{lemma:tutte-criterion}%%%
-\DIFdel{, }\rajko{\DIFdel{This is not what Tutte's criterion states, so explain it}} %DIFAUXCMD
-\DIFdel{that is $\OddComponents{S \cup T} \le \Size{S \cup T} = |S| + |T|$.
-  Thus, }\DIFdelend \DIFaddbegin \DIFadd{$\MinimalDegree{G'} \ge d - C >  9d/10$, therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can concluce that }$$\DIFadd{\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|}$$
-\DIFadd{Thus, to prove \eqref{eq:main-goal}, }\DIFaddend it suffices to show
+  As $\epsilon < \nicefrac{1}{100C^{3/2}}$ and \DIFdelbegin \DIFdel{$C > 0$}\DIFdelend \DIFaddbegin \DIFadd{$C > 1$}\DIFaddend , we have that $\epsilon < 1/50$.
+This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/50$.
+Additionally, we \DIFdelbegin \DIFdel{are also given }\DIFdelend \DIFaddbegin \DIFadd{also assume }\DIFaddend that $G'$ has minimal degree \DIFdelbegin \DIFdel{$\MinimalDegree{G'} \ge d - C >  9d/10$}\DIFdelend \DIFaddbegin \DIFadd{$\MinimalDegree{G'} \ge  9d/10$}\DIFaddend , therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can concluce that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
+Thus, to prove \eqref{eq:main-goal}, it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S})   \\
               &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{G'}  \label{eq:to-show}
@@ -655,13 +600,8 @@ Additionally, we are also given that }\DIFaddend $G'$ has minimal degree \DIFdel
     \Size{S}f + \Size{T}(d-C-f)  &\ge (\Size{S} + \Size{T})(d/2 -C) \label{eq:to-show-1}
   \end{align}
 
-  \DIFdelbegin \rajko{\DIFdel{You need some text between these two align enviroments. Explain what is it that you want to show.}}
-%DIFAUXCMD
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \DIFadd{The condition described by the inequality \eqref{eq:to-show} is satisfied via the following analysis.
-}\DIFaddend \begin{align}
+  The condition described by the inequality \eqref{eq:to-show} is satisfied via the following analysis.
+\begin{align}
   |S| + |T| + \CutEdges{S}{T}{G'} &\le  |S| + |T| + |S||T|\frac{d}{n} + \epsilon d \sqrt{\Size{S}\Size{T}} \label{eq:eml}\\
                                  &\le |S| + |T| + \frac{d}{4}(\Size{S} + \Size{T}) + \epsilon d \frac{1}{2}(\Size{S} + \Size{T}) \label{eq:algebra}\\
                                  &\le (\Size{S} + \Size{T})\left(\frac{d}{4} + 1 + \frac{
@@ -672,17 +612,19 @@ Additionally, we are also given that }\DIFaddend $G'$ has minimal degree \DIFdel
 
 Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} and $\lambda < \epsilon d$.
 Equation \eqref{eq:algebra} comes from the fact that $\Size{S}\Size{T} \leq \left(\frac{\Size{S}+\Size{T}}{2}\right)^2 \le n\frac{(\Size{S}+\Size{T})}{4}$.
-Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$.
+Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$\DIFaddbegin \DIFadd{, $C >1$ and $d_0$ is set large enough (which we can assume as it is set as a function of $C$, which ensures that $d$ is large enough)}\DIFaddend .
 Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives us what we want.
 
-\textbf{Case 2}: If $\Size{S} > \Size{T}$, then 
-  \begin{align}
-    f\Size{S} +  \Size{T}(d-C-f)  &\ge 2\Size{S} +\Size{T}(d-C-2) \label{eq:to-show-2}
+\textbf{Case 2}: If $\Size{S} > \Size{T}$, \DIFdelbegin \DIFdel{then 
+  }\DIFdelend \DIFaddbegin \DIFadd{and as $f \ge 2$, then
+  }\DIFaddend \begin{align}
+    \DIFdelbegin \DIFdel{f}\DIFdelend \Size{S}\DIFaddbegin \DIFadd{f }\DIFaddend +  \Size{T}(d-C-f)  &\ge 2\Size{S} +\Size{T}(d-C-2) \label{eq:to-show-2}
   \end{align}
 
   To show Equation \eqref{eq:to-show}, it suffices to show that
 \begin{align}
-  \CutEdges{S}{T}{G} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
+  \DIFdelbegin %DIFDELCMD < \CutEdges{S}{T}{G} %%%
+\DIFdelend \DIFaddbegin \CutEdges{S}{T}{G'} \DIFaddend \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
 \end{align}
 
 Now we distinguish between two cases.
@@ -693,14 +635,43 @@ Now we distinguish between two cases.
     If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then we trivially have $\CutEdges{S}{T}{G'} \leq \Size{T}d$, and Equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
   }
 
-\item{
-$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
+\DIFdelbegin %DIFDELCMD < \item{
+%DIFDELCMD < $ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n\left(1 - \frac{1}{C+3}\right)$.
+%DIFDELCMD < Now using the \nameref{lemma:expanders-mixing-lemma}
+%DIFDELCMD < 
+
+%DIFDELCMD < \[ \CutEdges{S}{T}{G'} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+%DIFDELCMD < 
+
+%DIFDELCMD < which gives us Equation \eqref{eq:to-show-3}.
+%DIFDELCMD <   }
+%DIFDELCMD <   %%%
+\DIFdelend \DIFaddbegin \item{
+$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n - \frac{\Size{S}}{C+3} < n\left(\frac{C+3}{C+4}\right)$.
 Now using the \nameref{lemma:expanders-mixing-lemma}
 
-\[ \CutEdges{S}{T}{G'} \le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \le \frac{(C-1)d}{D}\Size{T} + \epsilon d \Size{T}\sqrt{C} < \Size{T}(d-c)\]
+\begin{align}
+\CutEdges{S}{T}{G'} &\le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}}	\\[8pt]
+&< d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} \label{eq:thing-to-upperbound}
+\end{align}
 
-which gives us Equation \eqref{eq:to-show-3}.
+Now, as $\Size{T} < \Size{S}$, we have that $\Size{T} + \Size{T}(d-C-3) < \Size{S} + \Size{T}(d-C-3)$, so if we show that the RHS of inequality \eqref{eq:thing-to-upperbound} is at most $\Size{T} + \Size{T}(d-C-3)$ we are done.
+Thus, now we want to show that 
+\begin{align}
+d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} &< 	\Size{T} + \Size{T}(d-C-3) \label{eq:new-thing-to-show}
+\end{align}
+
+To show that \eqref{eq:new-thing-to-show} holds we re-arrange the inequality to see that we need the following condition on $d$.
+\begin{align}
+ \epsilon d \sqrt{(C+3)} &< d\left(1 - \frac{(C+3)}{(C+4)}\right) -C-2 \\[8pt]
+ &= d\left(\frac{1}{(C+4)}\right) -C-2 \\[8pt]
+ d&> \frac{(C+4)(C+2)}{1 - \epsilon(C+4)\sqrt{C+3}} \label{eq:cond-on-d}
+\end{align} 
+
+As $\epsilon = \frac{1}{100C^{3/2}}$ and $100C^{3/2} > (C+4)\sqrt{C+3}$ for $C>1$, we have $\epsilon(C+4)\sqrt{C+3} < 1$
+To make \eqref{eq:new-thing-to-show} hold, it suffices to make $d$ a large enough constant such that \eqref{eq:cond-on-d} holds.
   }
+  \DIFaddend 
 
 \end{enumerate}
 \end{proof}  
@@ -714,63 +685,71 @@ In this section we prove Theorem \ref{thm:general-hardness-result}. As $\Card{G,
 
 \begin{proof}[Proof of Theorem \ref{thm:general-hardness-result}]
 Let $G=(V,E)$ be an $\EnDeeLambda$-graph on an odd number of vertices with $\lambda < \epsilon d$, where $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C=6$. 
-\DIFdelbegin \DIFdel{Let }\DIFdelend \DIFaddbegin \DIFadd{For sufficiently small constant $\alpha \in (0,1)$, let }\DIFaddend $\HardInstance$ denote the graph on \DIFdelbegin \DIFdel{$h=\frac{n}{D \log n}$ }\DIFdelend \DIFaddbegin \DIFadd{$h=\alpha\frac{n}{\log n}$ }\DIFaddend vertices as given by Lemma \ref{lemma:worst-case-instance-sos} (to show lower bounds for PC, we use $H$ from Lemma \ref{lemma:worst-case-instance-PC}). Recall that any SoS proof which refutes $\PM{H}$ has degree $\BigOmega{h}$. We now make use of $H$ to show the hardness of refuting $\Card{G, \vec{t}}$. The idea is to find a restriction $\rho$ such that $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$. We achieve this through the following steps.
-\DIFdelbegin \rajko{\DIFdel{You have $\Gamma_G$ and $\Gamma_E$. Please use $\Gamma_G$ consistently. }}
-%DIFAUXCMD
-\DIFdelend 
+For sufficiently small constant $\alpha \in (0,1)$, let $\HardInstance$ denote the graph on $h=\alpha\frac{n}{\log n}$ vertices as given by Lemma \ref{lemma:worst-case-instance-sos} (to show lower bounds for PC, we use $H$ from Lemma \ref{lemma:worst-case-instance-PC}). Recall that any SoS proof which refutes $\PM{H}$ has degree $\BigOmega{h}$. We now make use of $H$ to show the hardness of refuting $\Card{G, \vec{t}}$. The idea is to find a restriction $\rho$ such that $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$. We achieve this through the following steps.
 
 \begin{enumerate}
-\item{Invoke Lemma  \ref{thm:partition} with parameters $c=0.925$ and \DIFdelbegin \DIFdel{$\epsilon = 0.025$ }\DIFdelend \DIFaddbegin \DIFadd{$\gamma = 0.025$ }\DIFaddend to get \DIFdelbegin \DIFdel{a subset }\DIFdelend \DIFaddbegin \DIFadd{subsets }\DIFaddend $A \subseteq V(G)$ \DIFaddbegin \DIFadd{and $B = G \setminus A$, }\DIFaddend such that for every $u \in V(G)$ we have
+\DIFdelbegin %DIFDELCMD < \item{Invoke Lemma  \ref{thm:partition} with parameters $c=0.925$ and $\gamma = 0.025$ to get subsets $A \subseteq V(G)$ and $B = G \setminus A$, such that for every $u \in V(G)$ we have
+%DIFDELCMD < % $u \in V$: \begin{displaymath} and \end{displaymath}
+%DIFDELCMD <     
+
+%DIFDELCMD < \begin{align*} 
+%DIFDELCMD < 0.9d  &\leq   \Size{\Neighbourhood{G}{u} \cap \RedA} \leq 0.95d \label{eq:size_nbr_A}\\[5pt]
+%DIFDELCMD < 0.05d  &\leq   \Size{\Neighbourhood{G}{u} \cap \GreenB} \leq 0.1d 
+%DIFDELCMD < \label{eq:size_nbr_B}
+%DIFDELCMD < \end{align*}
+%DIFDELCMD < }
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \item{Invoke Lemma  \ref{thm:partition} with parameters $c=0.925$ and $\gamma = 0.025$ to get subsets $A \subseteq V(G)$ and $B = \Vertices{G} \setminus A$, such that for every $u \in V(G)$ we have
 % $u \in V$: $$ and $$
 
-\DIFdelbegin \begin{align*} 
-\DIFdel{0.9d  }&\DIFdel{\leq   \Size{\Neighbourhood{G}{u} \cap \RedA} \leq 0.95d }\\[5pt]
-\DIFdel{0.05d  }&\DIFdel{\leq   \Size{\Neighbourhood{E}{u} \cap \GreenB} \leq 0.1d 
-}\end{align*}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \begin{align} 
-\DIFadd{0.9d  }&\DIFadd{\leq   \Size{\Neighbourhood{G}{u} \cap \RedA} \leq 0.95d \label{eq:size_nbr_A}}\\[5pt]
-\DIFadd{0.05d  }&\DIFadd{\leq   \Size{\Neighbourhood{G}{u} \cap \GreenB} \leq 0.1d 
+\begin{align} 
+0.9d  &\leq   \Size{\Neighbourhood{G}{u} \cap \RedA} \leq 0.95d \label{eq:size_nbr_A}\\[5pt]
+0.05d  &\leq   \Size{\Neighbourhood{G}{u} \cap \GreenB} \leq 0.1d 
 \label{eq:size_nbr_B}
-}\end{align}\DIFaddend 
+\end{align}
 }
+\DIFaddend 
 
-\item{\DIFdelbegin \DIFdel{Let $B = V(G) \setminus A$. }\rajko{\DIFdel{$B$ should be defined earlier.}} %DIFAUXCMD
-\DIFdelend From \DIFdelbegin \DIFdel{the partition lemma above }\rajko{\DIFdel{Not the partition lemma itself, but (25) and (26)}}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \DIFadd{equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}}\DIFaddend , $\Size{B} > n/20$, with room to spare and \DIFdelbegin \DIFdel{$\Size{E(G[B])} \ge nd/20$}\DIFdelend \DIFaddbegin \DIFadd{$\Size{E(G[B])} \ge nd/20 = Cn$}\DIFaddend .
-    \DIFdelbegin \DIFdel{$G[B]$ }\rajko{\DIFdel{Why is $G[B]$ a sentence on its own?}}%DIFAUXCMD
-\DIFdel{.
-    }\DIFdelend By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
+\DIFdelbegin %DIFDELCMD < \item{From equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}, $\Size{B} > n/20$, with room to spare and $\Size{E(G[B])} \ge nd/20 = Cn$.
+%DIFDELCMD <     By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
+%DIFDELCMD <     We can describe $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
+%DIFDELCMD <     Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
+%DIFDELCMD < To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
+%DIFDELCMD < We use as shorthand $\mathcal{Y} = (y_e)_{e \in E(H)}$ and $\Complement{\mathcal{Y}} = (\Complement{y}_e)_{e \in E(H)}$.
+%DIFDELCMD < Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Complement{\mathcal{Y}} \}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$.
+%DIFDELCMD < Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$. 
+%DIFDELCMD <   }
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \item{From equations \eqref{eq:size_nbr_A} and \eqref{eq:size_nbr_B}, $\Size{B} > n/20$, with room to spare and $\Size{E(G[B])} \ge nd/20$.
+    By Corollary \ref{cor:embedding_top}, $G[B]$ contains $H^{\sigma}$ such that each $\sigma(e)$ is odd. Let us denote a subgraph of $G[B]$ corresponding to $H^{\sigma}$ by $G_{\EmbeddingFunc}$.
     We can describe $G_\EmbeddingFunc$ as a function $\EmbeddingFunc: V(H) \to B$ together with a collection of pairwise vertex-disjoint (other than at the endpoints) paths  $\Path{\Embedding{u}}{\Embedding{v}}$ in $G[B]$, for $(u,v) \in E(H)$.
-    Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness in refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
+    Observe that it is at least as hard to refute\footnote{Note that this by itself does not guarantee it is hard to refute $\PM{G}$. We need item (3) and this to show hardness of refuting $\PM{G}$.} $\PM{G_{\EmbeddingFunc}}$ as it is to refute $\PM{H}$.
 To see why, let $y_1, \dots, y_{E(H)}$ denote the variables for the $\PM{H}$ formulae for each edge of $H$.
 We use as shorthand $\mathcal{Y} = (y_e)_{e \in E(H)}$ and $\Complement{\mathcal{Y}} = (\Complement{y}_e)_{e \in E(H)}$.
 Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Complement{\mathcal{Y}} \}$ as follows. For each $(u,v) \in E(H)$, let $\rho'(x_e) = y_{u,v}$ where $e$ is the first edge on the path $\Path{\Embedding{u}}{\Embedding{v}}$.
 Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$. 
   }
+\DIFaddend 
 
-\item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$, we can invoke \DIFdelbegin \DIFdel{the }%DIFDELCMD < \nameref{thm:perfect-matching} %%%
-\DIFdelend \DIFaddbegin \DIFadd{Corollary \ref{cor:perfect-matching} }\DIFaddend to conclude $G[U]$ has a perfect matching $M$. 
+\DIFdelbegin %DIFDELCMD < \item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$, we can invoke Corollary \ref{cor:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
+%DIFDELCMD < }
+%DIFDELCMD <   %%%
+\DIFdelend \DIFaddbegin \item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$ (with room to spare), we can invoke Corollary \ref{cor:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
 }
+  \DIFaddend 
 
-\item{
-  Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in \Edges{G_{\EmbeddingFunc}} \cup M$, where $M$ is the perfect matching from the step above. As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $5$ edges in this process. Thus, we have $\MinimalDegree{G'} \ge d - 5$. As $\lambda < \epsilon d$, by \nameref{lemma:f-factor} we have that \DIFdelbegin \DIFdel{$G$ }\DIFdelend \DIFaddbegin \DIFadd{$G'$ }\DIFaddend contains a $(t-1)$-regular spanning subgraph \DIFdelbegin \DIFdel{$G'$}\DIFdelend \DIFaddbegin \DIFadd{$G''$}\DIFaddend . \DIFdelbegin \rajko{\DIFdel{The last sentence is wrong. You want to say that $G'$ contains a $(t-1)$-regular spanning subgraph. Consequently, the definition of $\rho$ is not correct.}}%DIFAUXCMD
-\DIFdelend }
+\DIFdelbegin %DIFDELCMD < \item{
+%DIFDELCMD <   Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in \Edges{G_{\EmbeddingFunc}} \cup M$, where $M$ is the perfect matching from the step above. As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $5$ edges in this process. Thus, we have $\MinimalDegree{G'} \ge d - 5$. As $\lambda < \epsilon d$, by \nameref{lemma:f-factor} we have that $G'$ contains a $(t-1)$-regular spanning subgraph $G''$. }
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \item{
+  Consider the subgraph $G' \subseteq G$ obtained by deleting all edges $e \in \Edges{G_{\EmbeddingFunc}} \cup M$, where $M$ is the perfect matching from the step above. As $\MaxDegree{H} \leq 5$, every vertex $u \in G$ loses at most $5$ edges in this process. Thus, we have $\MinimalDegree{G'} \ge d - 5$. As $\lambda < \epsilon d$, by the \nameref{lemma:f-factor} we have that $G'$ contains a $(t-1)$-regular spanning subgraph $G''$. }
+\DIFaddend 
 
 \end{enumerate}
 
 We finally define $\rho$ as follows:
-\DIFdelbegin \[
-\DIFdel{\rho(x_e) =
-\left\{
-\begin{array}{@{}cl}
-\rho'(e) & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
-1 & \text{if } e \in M \cup E(G') \\
-0 & \text{otherwise}
-\end{array}
-\right.
-}\]%DIFAUXCMD
-\DIFdelend \DIFaddbegin \[
-\DIFadd{\rho(x_e) =
+\[
+\rho(x_e) =
 \left\{
 \begin{array}{@{}cl}
 \rho'(e) & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
@@ -778,7 +757,7 @@ We finally define $\rho$ as follows:
 0 & \text{otherwise}
 \end{array}
 \right.
-}\]\DIFaddend 
+\]
 Then $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$, thus our theorem follows from Lemma \ref{lemma:affine_restriction}.
 \end{proof}
 
@@ -800,20 +779,10 @@ In this work, we use the embedding theorem by Dragani\'c, Krivelevich, and Nenad
 In summary, we show degree lower bounds for refuting $\Card{G, \vec{t}}$ for odd $t$ in $\EnDeeLambda$ graphs in the SoS and PC proof systems.
 There is still a $\log n$ gap between the largest possible proof in such systems, and our lower bounds (similar to Austrin and Risse).
 It is not inherently clear that such a gap should exist.
-The gap is artefact of $d$ being constant, which makes the graphs are sparse i.e we need $\Theta(\log n)$ edges to form a path between any two nodes.
+The gap is artefact of $d$ being constant, which makes the graphs \DIFdelbegin \DIFdel{are }\DIFdelend sparse i.e we need $\Theta(\log n)$ edges to form a path between any two nodes.
 This implies, that $\BigOmega{n/\log n}$ is the largest hard instance we can topologically embed in any graph.
 Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement without using a smaller hard instance.
 We leave the issue of resolving the tightness of our lower bound as an open problem for future work.
-\DIFdelbegin %DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\rajko{\DIFdel{Make references consistent. For example, all STOC papers should be listed in the same format (see the difference between }%DIFDELCMD < [%%%
-\DIFdel{6}%DIFDELCMD < ] %%%
-\DIFdel{and }%DIFDELCMD < [%%%
-\DIFdel{20}%DIFDELCMD < ]%%%
-\DIFdel{). Sherali-Adams should be capital, etc.}}
-%DIFAUXCMD
-\DIFdelend 
 
 % \newpage
 \bibliographystyle{abbrv}
