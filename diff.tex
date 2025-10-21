@@ -1,7 +1,9 @@
 \documentclass[11pt]{article}
-%DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL old.tex   Tue Oct 21 02:38:23 2025
-%DIF ADD new.tex   Tue Oct 21 02:38:38 2025
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+%DIF ADD new.tex   Tue Oct 21 02:42:42 2025
 \usepackage[margin=1in]{geometry} % Adjust margins as needed
 \input{base_template}
 \input{theorem}
@@ -24,8 +26,8 @@
 %DIF UNDERLINE PREAMBLE %DIF PREAMBLE
 \RequirePackage[normalem]{ulem} %DIF PREAMBLE
 \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
-\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
-\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{\textcolor{shin-ryoku}{#1}}%DIF PREAMBLE\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{\textcolor{verylightgray}{\sout{#1}}}                      %DIF PREAMBLE\sout{#1}}}                      %DIF PREAMBLE
 %DIF SAFE PREAMBLE %DIF PREAMBLE
 \providecommand{\DIFaddbegin}{} %DIF PREAMBLE
 \providecommand{\DIFaddend}{} %DIF PREAMBLE
@@ -569,7 +571,7 @@ For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, the
 \end{corollary}
 
 The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
-\DIFaddbegin \DIFadd{In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting a constant number of edges from the $\EnDeeLambda$ graph $G$.
+\DIFaddbegin \DIFadd{In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting $C$ edges from the $\EnDeeLambda$ graph $G$.
 }\DIFaddend 
 
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
