@@ -52,15 +52,16 @@ the research community has invested a significant effort in proving lower bounds
 %Thus, in an attempt to separate $\NP$ from $\CoNP$, the primary goal of proof complexity is to prove lower bounds for proof systems listed as high up in Figure \ref{fig:example-proof-systems} as possible.
 % We refer the reader to \citep{krajicek2019proof, ProofComplexityLecNotesPaul} for more details. 
 %these proof systems.
-In this work, we focus on the algebraic and semi-algebraic proof systems of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
+In this work, we focus on the algebraic and semi-algebraic proof systems\footnote{Similar to the work of Austrin and Risse \citep{Austrin_2022}, our lower bounds also extend to bounded depth Frege proof systems. However, the key technical component in this work is the graph theoretic techniques proposed for embedding carefully chosen hard instances into the host graph.
+As this applies broadly across proof systems, we restrict our preliminaries to PC and SoS for brevity.} of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
 In PC, the equations can be over an arbitrary, but fixed field $\Field$ and in the SoS the coefficients are  over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
 In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials.
-Two common measures of the complexity of a semi-algebraic proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
-Trade-offs between the two are well known; in particular, a lower bound on the degree implies a comparatively strong lower bound on the size of the proof.
-\ari{Need more details here}.
-Therefore, in this work we focus on the former. We denote the smallest maximum degree over all proofs that refute $\Axioms$ in PC and SoS, with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$, respectively.
+Two common measures of the complexity of a semi-algebraic proof are size (the number of monomials appearing in the proof) and the degree (the largest degree of the proof polynomials that refute $Q$).
+Trade-offs between the two are well known; in particular, any degree $d$ proof has size at most $n^{\BigO{d}}$.
+Therefore, in this work we focus on the former\footnote{Note that exponential size lower bounds only follow from degree lower bounds $d \gg \sqrt{n}$, as $d = O(\sqrt{n})$ yields only subexponential size bounds $n^{O(\sqrt{n})} = 2^{\BigO{\sqrt{n}\log n}}$.
+}. We denote the smallest maximum degree over all proofs that refute $\Axioms$ in PC and SoS, with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$, respectively.
 One motivation for proving lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
 Similarly, upper bounding the proof length has led to the fruitful discovery of many efficient algorithms.
 The SoS proof system is of particular interest because of its close connection to the sum-of-squares hierarchy of semi-definite programming.
@@ -115,12 +116,13 @@ Formally, we prove the following (for the definition of $(n, d, \lambda)$-graphs
 \paragraph{Proof overview.}
 We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction (see Definition \ref{def:affine-restriction}) $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree.
 An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$ with $\lambda \le \epsilon d$ for some universal small constant $\epsilon \in (0,1)$, such that all paths corresponding to the embedding have odd length.
-The main technical ingredient of Austrin and Risse is also a 	similar embedding theorem, but one that critically relies on the underlying graph being random.
-As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ (see \cite[Theorem A]{tikhomirov2016spectralgapdenserandom}), our embedding theorem subsumes that of \cite{Austrin_2022}.
+The main technical ingredient of Austrin and Risse is also a similar embedding theorem.
 Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching.
 This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$.
 To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph.
-Austrin and Risse achieve this using the contiguity property of random regular graphs. Instead, we provide a significantly simpler and shorter argument based on Tutte's criterion.\par
+Austrin and Risse achieve this using the contiguity property of random regular graphs (and hence their hardness result for $\Card{G, \vec{t}}$ critically relies on randomness). 
+Instead, we provide a significantly simpler and shorter argument based on Tutte's criterion.
+ As a random $d$-regular graph is with high probability an $(n, d, \lambda)$-graph with $\lambda = \Theta(\sqrt{d})$ (see \cite[Theorem A]{tikhomirov2016spectralgapdenserandom}), our embedding theorem readily applies in the context of \citep{Austrin_2022}.\par
 The rest of the document is structured as follows. 
 In section \ref{sec:prelims}, we describe the requisite background from graph theory and proof complexity.
 In Section \ref{sec:embed-machinery}, we describe the machinery for finding a desired topological embedding.
