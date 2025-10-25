@@ -41,7 +41,7 @@ Perhaps the most fundamental problem in computation is to provide an answer to t
 In trying to answer this question, we must first describe what constitutes a valid proof. That is, we must describe the language in which the proof is written (axioms), and the rules for checking it (the verifier).
 Each set of rules for writing and checking a proof defines a proof system.
 Therefore, a precise restatement of the question above is the following:  ``\textit{Given a true statement $A$ and a proof system $S$, what is the length of a shortest $\Proof \in S$ that proves $A$?}''
-If we could show that there exists a proof system $S$, such that for \emph{any} true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$ and consequently $\P = \NP$. 
+If we could show that there exists a proof system $S$, such that for \emph{any} true statement $A$, the length of the shortest proof in $S$ is upper bounded by some polynomial in the length of $A$, it would imply that $\CoNP = \NP$ and consequently the polynomial hierarchy collapes to $\NP$. 
 Conversely, if we could show large proof size lower bounds for some $A$ in \emph{all} proof systems, it would lead to a formal proof of the widely believed conjecture that $\P \neq \NP$.
 Unfortunately, such lower  bounds for \emph{arbitrary} proof systems are out of reach.
 As an intermediate step,
@@ -54,11 +54,12 @@ the research community has invested a significant effort in proving lower bounds
 %these proof systems.
 In this work, we focus on the algebraic and semi-algebraic proof systems of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
-In PC, the coefficientcs can be over an arbitrary, but fixed field $\Field$ and in the SoS the coefficients are  over the reals.
+In PC, the equations can be over an arbitrary, but fixed field $\Field$ and in the SoS the coefficients are  over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
 In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials.
 Two common measures of the complexity of a semi-algebraic proof are the length of the sequence and the largest degree of the proof polynomials that refute $Q$ (see Section \ref{sec:proof-system-prelims} for more formal details).
 Trade-offs between the two are well known; in particular, a lower bound on the degree implies a comparatively strong lower bound on the size of the proof.
+\ari{Need more details here}.
 Therefore, in this work we focus on the former. We denote the smallest maximum degree over all proofs that refute $\Axioms$ in PC and SoS, with $\Degree{Q \PC \bot}$ and $\Degree{Q \SOS \bot}$, respectively.
 One motivation for proving lower bounds for algebraic proof systems, as opposed to propositional proof systems, is that often they imply lower bounds for a broad family of related algorithms for solving combinatorial optimisation problems.
 Similarly, upper bounding the proof length has led to the fruitful discovery of many efficient algorithms.
