@@ -511,12 +511,13 @@ For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, the
 \end{corollary}
 
 The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
-In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting $C$ edges from the $\EnDeeLambda$ graph $G$. \rajko{We delete at most $C$ edges incident to each vertex.}
+In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting at most $C$ edges incident on each vertex of the $\EnDeeLambda$ graph $G$.
 
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
   For every $C > 1$ there exists $d_0 = d_0(C)$ such that the following holds.
 Suppose $G$ is an $\EnDeeLambda$ graph with $\lambda < \epsilon d$ and $d \ge d_0$, where $\epsilon < 1/100C^{3/2}$.
-If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge \frac{9d}{10}$, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$. \rajko{This is rather confusing statement. Why not just say $\MinimalDegree{G'} \ge d - C$? In the proof we can then use that this implies $\delta_{G'} \ge 9d/10$, but for the statement that is not important.} 
+If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$ contains a spanning $f$-regular subgraph for any even $2 \le f \le d/2$. 
+% \rajko{This is rather confusing statement. Why not just say $\MinimalDegree{G'} \ge d - C$? In the proof we can then use that this implies $\delta_{G'} \ge 9d/10$, but for the statement that is not important.} 
 \end{lemma}
 
 \begin{proof}
@@ -527,9 +528,10 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge \frac{9d}{10}$, t
     \OddComponents{G' \setminus (S \cup T)} &\le \Size{S}f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S}) \label{eq:main-goal}
   \end{align}
 
-  As $\epsilon < \nicefrac{1}{100C^{3/2}}$ and $C > 1$, we have that $\epsilon < 1/50$ \rajko{Even better, we have $\epsilon < 1/100$ :)}.
-This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/50$.
-Additionally, we also assume that $G'$ has minimal degree $\MinimalDegree{G'} \ge  9d/10$ \rajko{Let us mention that this follows from $\delta_{G'} \ge \delta_G - C$ and $d \ge d_0(C)$}, therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can conclude that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
+  As $\epsilon < \frac{1}{100C^{3/2}}$ and $C > 1$, we have that $\epsilon < 1/100$. 
+This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/50$ (with room to spare).
+We set $d_0 := d_0(C)$ large enough such that for all $d \ge d_0$, even after deleting at most $C$ edges incident on each vertex of the $d$-regular graph $G$ to get $G'$, we have the minimum degree of $G'$, $\MinimalDegree{G'} \ge  \MinimalDegree{G} - C > 9d/10$.
+Therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can conclude that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
 Thus, to prove \eqref{eq:main-goal}, it suffices to show
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S})   \\
