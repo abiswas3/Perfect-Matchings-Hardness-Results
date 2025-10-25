@@ -281,7 +281,7 @@ If a graph $G$ has  \emph{even} number of vertices and for every subset $S \subs
 \begin{lemma}[Tutte's Generalised Criterion]\label{lemma:tutte-criterion-factor}
   Let $f \in \Naturals$ be even. Suppose $G$ is a graph such that for every pair of disjoint sets $S, T \subseteq V(G)$ the following holds:
 
-  \[ \OddComponents{G \setminus (S \cup T)} \le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}). \]
+  \[ \OddComponents{G \setminus (S \cup T)} \le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S}) \]
   Then $G$ contains a spanning subgraph $G' \subseteq G$ which if $f$-regular.
 \end{lemma}
 
@@ -307,7 +307,7 @@ Let $E_1,...,E_n$ be a set of events, and assume that the following hold:
 \begin{enumerate}
 \item The degree of the dependency graph given by $(E_1, \dots, E_n)$ is bounded by $d$.
 
-\item For all $i \in [n]$, $\PProb{E_i}{\Dist} \leq \beta$
+\item For all $i \in [n]$, $\PProb{E_i}{\Dist} \leq \beta.$
 
 \item $\beta \leq \frac{1}{4d}$.
 \end{enumerate}
@@ -420,7 +420,7 @@ Then the induced sub-graph $G[B]$ contains $H^{\sigma}$ such that $\sigma(e)$ is
   Let $m$ denote the number of edges in the induced subgraph $G[B]$, which gives us $2m = \CutEdges{B}{B}{G}$.
 Denote $b \Def \Size{B}$ and Define $p = m / \binom{b}{2}$. By the \nameref{lemma:expanders-mixing-lemma}, we have
 
-\[ \left| 2m - \frac{d}{n}b^2 \right| \le \lambda b. \]
+\[ \left| 2m - \frac{d}{n}b^2 \right| \le \lambda b \]
 Dividing both sides with $b(b-1)$, and observing that $\frac{db^2}{n(b-1)b} = \frac{d}{n}\frac{b}{b-1} = \frac{d}{n}(1 + \frac{1}{b-1})$, we further get
 
 \begin{align}
@@ -432,7 +432,7 @@ From this we have
   \left| p - \frac{d}{n}\right| &= \left| p - \frac{d}{n} - \frac{d}{n(b-1)} + \frac{d}{n(b-1)}\right|  \\
                                 &\le \left| p - \frac{d}{n} - \frac{d}{n(b-1)} \right| + \frac{1}{(b-1)} \label{eq:triangle}\\
                                 &\le \frac{\lambda}{(b-1)} + \frac{1}{(b-1)}  \label{eq:final} \\
-  & \le \frac{2\lambda}{b}. 
+  & \le \frac{2\lambda}{b}
 \end{align}
 
 Let us briefly justify each step: \eqref{eq:triangle} comes from the triangle inquality and  $d/n \le 1$;
@@ -443,7 +443,7 @@ Let $\xi$ be as given by the \nameref{thm:embedding_top}. Using the bound on the
 
 \begin{align*}
   \Bigl| \CutEdges{S}{T}{G}  - p|S||T| \Bigr| &\le \left| \CutEdges{S}{T}{G} - \frac{d}{n}|S||T| \right| + \left| \frac{d}{n}|S||T| - p|S||T| \right| \\
-                                    &\le \lambda \sqrt{|S||T|} + \frac{2 \lambda}{b} |S||T| \le \xi |S||T|p. 
+                                    &\le \lambda \sqrt{|S||T|} + \frac{2 \lambda}{b} |S||T| \le \xi |S||T|p 
     \end{align*}
 
 With the lower bounds on $S,T$ and $B$, we can make $\epsilon$ sufficiently small with respect to $\xi$ to get the upper bound in the last step.
@@ -501,7 +501,7 @@ Now, consider some arbitrary partition $X \cup Y$ of $U \setminus S$, and withou
 &\le \frac{d}{n} |X| \frac{(n-|S|)}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| \label{eq:upper-bound-X}  \\
 &< \frac{d|X|}{2} + \frac{d|X||S|}{2n} + 3 \lambda |X|\\
 &< \frac{d}{2}|X| + \frac{d}{4}|X| + 3 \lambda |X| \label{eq:smaller-than-one} \\
-&< \cTilde|X|.  \label{eq:upper-bound-S}
+&< \cTilde|X|  \label{eq:upper-bound-S}
 \end{align}
 These steps are justified as follows: The first equation follows from the \nameref{lemma:expanders-mixing-lemma}; Equation \eqref{eq:upper-bound-X} comes from Equation \eqref{eq:upp-X} and $|X| \ge |S|/3$;
 Equation \eqref{eq:smaller-than-one} comes from $\Size{S} < \frac{n}{2}$; and  Equation \eqref{eq:upper-bound-S} comes the assumption $\lambda < d/50$.
