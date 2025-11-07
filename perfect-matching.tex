@@ -55,7 +55,7 @@ the research community has invested a significant effort in proving lower bounds
 In this work, we focus on the algebraic and semi-algebraic proof systems\footnote{Similar to the work of Austrin and Risse \citep{Austrin_2022}, our lower bounds also extend to bounded depth Frege proof systems. However, the key technical component in this work is the graph theoretic techniques proposed for embedding carefully chosen hard instances into the host graph.
 As this applies broadly across proof systems, we restrict our preliminaries to PC and SoS for brevity.} of \emph{polynomial calculus (PC)} and \emph{sum of squares (SoS)}. %\citep{boazCourse,parrilo2000structured}.
 In algebraic proof systems, we are given a set $\Axioms =\{\axiom_i(\vec{x}) \text{ } |\text{ } i \in [m] \}$ of $m$ polynomial equations\footnote{Semi-algebraic proof systems also allow for inequalities but we will not deal with inequality constraints in this paper.} over $n$ variables $\vec{x} = \{x_1, \dots, x_n\}$.
-In PC, the equations can be over an arbitrary, but fixed field $\Field$ and in the SoS the coefficients are  over the reals.
+In PC, the equations can be over an arbitrary, but fixed field $\Field$, and in the SoS the coefficients are  over the reals.
 We say a proof $\Proof$ is a refutation of $\Axioms$, if it is a proof of the claim (in the specified language) that there exists no assignment of $\vec{x} \in \Field^n$ that satisfies \emph{all} the polynomial equations in $\Axioms$.
 In PC and SoS, the proof $\Proof$ is itself expressed as a sequence of polynomials.
 Two common measures of the complexity of a semi-algebraic proof are size (the number of monomials appearing in the proof) and the degree (the largest degree of the proof polynomials that refute $Q$).
@@ -116,7 +116,7 @@ Formally, we prove the following (for the definition of $(n, d, \lambda)$-graphs
 \paragraph{Proof overview.}
 We follow the overall approach of Austrin and Risse \cite{Austrin_2022}. Very briefly, the strategy is to obtain an affine restriction (see Definition \ref{def:affine-restriction}) $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$ where $H$ is some graph for which refuting $\PM{H}$ requires large degree.
 An example of such $H$ is given by Buss, Grigoriev, and Impagliazzo \cite{buss1999linear}. We now describe how to find such a restriction in more details: Using a result of Dragani\'c, Krivelevich, and Nenadov \cite{draganic22rolling}, we show that $H$ topologically embeds into a given expander graph $G$ with $\lambda \le \epsilon d$ for some universal small constant $\epsilon \in (0,1)$, such that all paths corresponding to the embedding have odd length.
-The main technical ingredient of Austrin and Risse is also a similar embedding theorem.
+The main technical ingredient of Austrin and Risse is also a similar embedding theorem, albeit a significantly more complicated one.
 Moreover, we show that one can find such an embedding so that the subgraph of $G$ induced by vertices which are not part of the embedding has a perfect matching.
 This allows us to use the restriction argument to transfer the hardness of $\PM{H}$ into the hardness of $\PM{G}$.
 To extend this to hardness of $\Card{G, \vec{t}}$ for an odd $3 \le t \leq d$, it suffices to show that the graph $G'$ obtained from $G$ by removing all edges that participate in the embedding and the matching contains a $(t-1)$-regular spanning subgraph.
@@ -514,7 +514,7 @@ For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, the
 \end{corollary}
 
 The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
-In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting at most $C$ edges incident on each vertex of the $\EnDeeLambda$ graph $G$.
+%In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting at most $C$ edges incident on each vertex of the $\EnDeeLambda$ graph $G$.
 
 \begin{lemma}[Regular Subgraph Lemma]\label{lemma:f-factor}
   For every $C > 1$ there exists $d_0 = d_0(C)$ such that the following holds.
@@ -532,10 +532,10 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
   \end{align}
 
   As $\epsilon < \frac{1}{100C^{3/2}}$ and $C > 1$, we have that $\epsilon < 1/100$. 
-This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/50$ (with room to spare).
-We set $d_0 := d_0(C)$ large enough such that for all $d \ge d_0$, even after deleting at most $C$ edges incident on each vertex of the $d$-regular graph $G$ to get $G'$, we have the minimum degree of $G'$, $\MinimalDegree{G'} \ge  \MinimalDegree{G} - C > 9d/10$.
-Therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied, from which we can conclude that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
-Thus, to prove \eqref{eq:main-goal}, it suffices to show
+This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/100$.
+We set $d_0 := d_0(C)$ large enough such that for all $d \ge d_0$, even after deleting at most $C$ edges incident on each vertex of the $d$-regular graph $G$ to get $G'$, we have the minimum degree of $G'$ to be $\MinimalDegree{G'} \ge  d - C > 9d/10$.
+Therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied \rajko{No! That lemma considers induced subgraphs, whereas here we consider graphs obtained by removing edges. I suggest changing the statement of that lemma to apply to subgraphs of induced graphs. Then it will be sufficient for both applications. Most likely nothing needs to be changed in the proof, but please double check.}, from which we can conclude that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
+Thus, to prove \eqref{eq:main-goal}, it suffices to show \rajko{First line: shouldn't it be $\Gamma_{G'}(w)$?} \rajko{The second line is not equality, as we only have lower bound on the minimum degree.}
   \begin{align}
     |S| + |T| &\le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G}{w} \setminus S})   \\
               &=\Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{G'}  \label{eq:to-show}
@@ -655,7 +655,7 @@ We finally define $\rho$ as follows:
 \begin{array}{@{}cl}
 \rho'(e) & \text{if } e \in \Edges{G_{\EmbeddingFunc}} \\
 1 & \text{if } e \in M \cup E(G'') \\
-0 & \text{otherwise}
+0 & \text{otherwise.}
 \end{array}
 \right.
 \]
@@ -669,8 +669,7 @@ Then $\Card{G, \vec{t}}|_\rho \equiv \PM{H}$, thus our theorem follows from Lemm
 In propositional\footnote{As opposed to algebraic proof complexity} proof complexity, there a few prior examples of the strategy of embedding a worst case instance into a host graph to show lower bounds for a larger class of objects \cite{itsykson2021Near, pitassi2016PolyLogFrege}.
 Pitassi, Rossman, Servedio and Tan show Tseitin lower bounds for Frege proof systems \citep{pitassi2016PolyLogFrege} by relying on the embedding result by Rubinfeld and Kleinberg \citep{kleinberg1996short}, which allows one to embed any bounded degree graph $H$ of size $\BigO{n/\poly(\log n)}$ into an expander graph on $n$ vertices as a minor (not necessarily a topological one). 
 Krivelevich and Nenadov simplify and improve the above embedding theorem to allow for embedding any graph $H$ with size $\BigO{n/\log n}$ as an ordinary minor \citep{krivelevich2021completeMinors}.
-However, embedding a hard instance $H$ into $G$ as an ordinary minor does not guarantee that the hardness of $H$ is preserved.
-It is entirely possible that one of the edge contractions to obtain the minor results in $H$ now being easy to refute.
+However, embedding a hard instance $H$ into $G$ as an ordinary minor does not guarantee that the hardness of $H$ is preserved in the setting considered in this paper. In particular, it is entirely possible that one of the edge contractions to obtain the minor results in $H$ now being easy to refute.
 Thus, these embedding theorems cannot be directly applied.
 Instead, as described in section \ref{sec:main-proof}, one way to preserve hardness is to use  embedding theorems that allow for topological embeddings that allow for edge sub-divisions of odd size \citep{draganic22rolling, nenadov2023routing}.
 In order to get a topological embedding, Austrin and Risse modify the ordinary embedding theorem in \citep{krivelevich2021completeMinors} but critically rely on the host graph being random.
