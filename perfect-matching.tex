@@ -275,7 +275,7 @@ Note that both of the lemmata ask for properties which are stronger than what Tu
 % The full proofs for \nameref{lemma:expanders-mixing-lemma} can be found in \citep[Theorem 2.11]{krivelevich2006pseudo}. Proofs for the \nameref{lemma:tutte-criterion} and \nameref{lemma:tutte-criterion-factor} can be found in \citep{genmatchings2025} and \citep{tutte1954short}, respectively. \rajko{Please cite the original work, not lecture notes.}
 
 \begin{lemma}[Tutte's Criterion]\label{lemma:tutte-criterion}
-If a graph $G$ has  \emph{even} number of vertices and for every subset $S \subseteq G$ we have $\OddComponents{G \setminus S} \leq |S|$, then $G$ contains a perfect matching.
+If a graph $G$ has \emph{even} number of vertices and for every subset $S \subseteq \Vertices{G}$ we have $\OddComponents{G \setminus S} \leq |S|$, then $G$ contains a perfect matching.
 \end{lemma}
 
 \begin{lemma}[Tutte's Generalised Criterion]\label{lemma:tutte-criterion-factor}
@@ -461,40 +461,59 @@ As $G[B]$ has at least $Cn$ edges (by the \nameref{lemma:expanders-mixing-lemma}
 % The first is an embedding theorem that allows us to transfer hardness of a worst case instance.
 As described earlier, the second ingredient in our hardness proof is showing that a certain residual graph contains a perfect matching or a spanning $(t-1)$-regular subgraph. In this section we state and prove these ingredients.
 
+\ari{Check how to use notation.}
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
-Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. 
-Suppose $U \subseteq V(G)$ is such that $\delta(G[U]) \ge \cTilde$. Then for all $S \subseteq U$, $G[U \setminus S]$ has at most $|S|$ connected components, that is, $q(G[U \setminus S]) \le |S|$.
+Given a constant $C \ge 0$, and define $d_0 = d_0(C)$ such that $d_0(0.95 - 0.9) > C$. 
+For all  $(n, d, \lambda)$-graphs $G$ with $d > d_0$ and $\lambda < d/50$  the following holds.
+For any $U \subseteq V(G)$, with $\delta(G[U]) \ge 0.95d$, let $H$ be a subgraph obtained by deleting at most $C$ edges incident on every vertex of $G[U]$. 
+Then for all $S \subseteq U$, $H\setminus S$ has at most $|S|$ connected components, that is, $q(H \setminus S) \le |S|$.
 \end{lemma}
 
 \begin{proof}
-  Consider some $U \subseteq V(G)$ such that $\delta(G[U]) \ge \cTilde$.
+  Let $U \subseteq V(G)$ with $\delta(G[U]) \ge 0.95d$ and  let $H \subseteq G[U]$ be the subgraph obtained by deleting at most $C$ edges incident on any vertex of $G[U]$. 
+  Given $C \ge 0$, we can make $d_0 := d_0(C)$ large enough such that such that $\delta(H) \ge \cTilde$.
   % We show that $G[U]$ satisfies the property of \nameref{lemma:tutte-criterion}.
   Consider some $S \subseteq U$.
-  We aim to show that $G[U \setminus S]$ has at most $|S|$ connected components.
-  If $|S| \ge |U|/2$ then as $G[U \setminus S]$ has fewer than $|S|$ vertices, so the the upper bound on connected components trivially holds. 
-Thus, we can assume $|S| < |U|/2$.
- We claim the following:
- %that if $e_G(X, Y) \ge 1$ for every partition $X \cup Y$ of $U \setminus S$ such that $|X|, |Y| \ge |S|/3$,
- \begin{equation}
-  \text{If }\CutEdges{X}{Y}{G} \ge 1 \text{ for every partition $X \cup Y = U \setminus S$, $|X|,|Y| \ge |S|/3$,  then }  q(G[U \setminus S]) \le |S|. \label{eq:mini-claim}
- \end{equation}
+  We aim to show that the graph $H \setminus S$ has at most $|S|$ connected components.
+  If $|S| \ge |U|/2$ then as $H \setminus S$ has fewer than $|S|$ vertices, so the the upper bound on connected components trivially holds. \\
 
+\flushleft
+Thus, for the remainder of the proof we can safely assume $|S| < |U|/2$.
+ We claim the following:
+
+% For every partition $X \cup Y = U \setminus S$, with $|X|,|Y| \ge |S|/3$,
+%  \begin{equation}
+%   \text{If }\CutEdges{X}{Y}{H} \ge 1 \implies  q(H \setminus S) \le |S|. \label{eq:mini-claim}
+%  \end{equation}
+%
+\begin{equation}
+  \text{For every partition } X \cup Y = U \setminus S,\text{ with } |X|,|Y| \ge |S|/3,
+  \quad
+  \CutEdges{X}{Y}{H} \ge 1 \implies  q(H \setminus S) \le |S|.
+\label{eq:mini-claim}
+\end{equation}
 \flushleft
 To see why, assume towards a contradiction that there exists an edge between \emph{every} partition $X \cup Y = U \setminus S$, where $|X|, |Y| \ge \Size{S}/3$, \emph{and} $G[U \setminus S]$ has more than $|S|$ connected components. Denote the  vertex sets of these components by $C_1, \ldots, C_k$, for some $k > |S|$.
 Let $X^\star := C_1 \cup \ldots \cup C_{s}$ and $Y^\star := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$.
 By construction, even if each component $C_i$ is a singleton set, we get that  $\Size{X^\star}, \Size{Y^\star} \ge \Size{S}/3$.
-Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$. Therefore, we have found a correct sized partition of $U \setminus S$ without an edge between them, which contradicts our assumption. \\
+Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$. Therefore, we have found a partition $X^\star \cup Y^\star = U \setminus S$ with $|X^\star|, |Y^\star| \ge |S|/3$ without an edge between them, which contradicts our assumption. 
+To complete our proof, it suffices to show $e_H(X, Y) \geq 1$.\\
 \flushleft
-Now, consider some arbitrary partition $X \cup Y$ of $U \setminus S$, and without loss of generality assume $|X| \le |Y|$. Then
+Consider some arbitrary partition $X \cup Y$ of $U \setminus S$, with $|X|, |Y| \ge |S|/3$, and without loss of generality assume $|X| \le |Y|$. 
+Then by a simple counting argument
 \begin{equation}
 |X| \le (|U| - |S|)/2 \le (n - |S|)/2  \label{eq:upp-X}
 \end{equation}
 
   We will show that
     \begin{equation} \label{eq:edge_bound}
-        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < \cTilde|X|
+        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < 0.9d|X|
     \end{equation}
-    as then the minimum degree assumption on $G[U]$ implies there has to be at least one edge with one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$. By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $G[U\setminus S]$ has at most $\Size{S}$ connected components, which would complete the proof.
+  We were given that $\delta(G[U]) \ge 0.95d$, as $d$ is large enough, we have that $0.95d|X| - 0.9d|X| > C|X|$ edges must have one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$.
+Now as we construct $H$ by deleting at most $C$ edges incident on each vertex of $U$.
+So even if we removed all $C|X|$ of the edges described above, we will still have at least one edge with end point in $X$ and the other endpoint in $Y$. 
+That is we have $e_H(X,Y) \ge 1$.
+By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $H\setminus S$ has at most $\Size{S}$ connected components, which would complete the proof.
     Equation \eqref{eq:edge_bound} is derived as follows: 
 \begin{align}
   \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} &\le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}        \\
@@ -509,8 +528,8 @@ Equation \eqref{eq:smaller-than-one} comes from $\Size{S} < \frac{n}{2}$; and  E
 
 As an immediate corollary of Lemma \ref{thm:perfect-matching} we get the following corollary
 \begin{corollary}\label{cor:perfect-matching}
-Suppose $G$ is an $(n, d, \lambda)$-graph, where $\lambda < d/50$. 
-For any even sized subset $U \subseteq V(G)$, if $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the \nameref{lemma:tutte-criterion}, and therefore $G[U]$ contains a perfect matching.  
+Suppose $G$ is an $(n, d, \lambda)$-graph with $\lambda < d/50$. 
+For any \textit{even} sized subset $U \subseteq V(G)$ with subgraph $H \subseteq G[U]$, if $\delta(H) \ge \cTilde$, then $H$ satisfies the \nameref{lemma:tutte-criterion}, and therefore $H$ contains a perfect matching.  
 \end{corollary}
 
 The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
