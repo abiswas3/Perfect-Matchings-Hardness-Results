@@ -24,7 +24,6 @@
 This work studies the complexity of refuting the existence of a perfect matching in spectral expanders with an odd number of vertices, in the Polynomial Calculus (PC) and Sum of Squares (SoS) proof system.
 Austrin and Risse [SODA, 2021] showed that refuting perfect matchings in sparse $d$-regular \emph{random} graphs, in the above proof systems, with high probability requires proofs with degree $\Omega(n/\log n)$. 
 We extend their result by showing the same lower bound holds for \emph{all} $d$-regular graphs with a mild spectral gap.
-% Additionally, as Austrin and Risse do for random graphs, we show that the hardness of refuting a more general class of formulae, which includes both perfect matchings and \emph{even-colouring} formulas, also reduces to the hardness of refuting perfect matchings in spectral expanders, thereby settling an open problem of Buss and Nordstr\"{o}m.
 \end{abstract}
 
 \section{Introduction}
@@ -463,39 +462,27 @@ As $G[B]$ has at least $Cn$ edges (by the \nameref{lemma:expanders-mixing-lemma}
 As described earlier, the second ingredient in our hardness proof is showing that a certain residual graph contains a perfect matching or a spanning $(t-1)$-regular subgraph. In this section we state and prove these ingredients.
 
 \begin{lemma}[Perfect Matching Lemma]\label{thm:perfect-matching}
-Given a constant $C \ge 0$, define $d_0 = d_0(C)$ such that $d_0(0.95 - 0.9) > C$. 
-For all  $(n, d, \lambda)$-graphs $G$ with $d > d_0$ and $\lambda < d/50$  the following holds.
-For any $U \subseteq V(G)$, with $\delta(G[U]) \ge 0.95d$, let $H$ be a subgraph obtained by deleting at most $C$ incidental edges  per vertex of $G[U]$. 
-Then for all $S \subseteq U$, $H\setminus S$ has at most $|S|$ connected components, that is, $q(H \setminus S) \le |S|$.
+Let $G$ be an  $(n, d, \lambda)$-graph with $\lambda < d/50$, and suppose $G' \subseteq G$ satisfies $\delta(G') \ge 0.9d$. Then for all $S \subseteq V(G')$, $G' \setminus S$ has at most $|S|$ connected components, that is, $q(G' \setminus S) \le |S|$. Therefore, if $G'$ has an even number of vertices then it contains a perfect matching.
 \end{lemma}
 
 \begin{proof}
-  Let $U \subseteq V(G)$ with $\delta(G[U]) \ge 0.95d$ and  let $H \subseteq G[U]$ be the subgraph obtained by deleting at most $C$ edges incident on any vertex of $G[U]$. 
-  Consider some $S \subseteq U$.
-  We aim to show that the graph $H \setminus S$ has at most $|S|$ connected components.
-  If $|S| \ge |U|/2$ then as $H \setminus S$ has fewer than $|S|$ vertices, so the the upper bound on connected components trivially holds. \\
+  Let $U = V(G')$.  We aim to show that the graph $G' \setminus S$ has at most $|S|$ connected components. If $|S| \ge |U|/2$ then $G' \setminus S$ has at most $|S|$ vertices, so the the upper bound on connected components trivially holds. For the remainder of the proof we can assume $|S| < |U|/2$.
 
-\flushleft
-Thus, for the remainder of the proof we can safely assume $|S| < |U|/2$.
- We claim the following:
-
-% For every partition $X \cup Y = U \setminus S$, with $|X|,|Y| \ge |S|/3$,
-%  \begin{equation}
-%   \text{If }\CutEdges{X}{Y}{H} \ge 1 \implies  q(H \setminus S) \le |S|. \label{eq:mini-claim}
-%  \end{equation}
-%
+  \noindent
+  We claim the following:
 \begin{equation}
   \text{For every partition } X \cup Y = U \setminus S,\text{ with } |X|,|Y| \ge |S|/3,
   \quad
-  \CutEdges{X}{Y}{H} \ge 1 \implies  q(H \setminus S) \le |S|.
+  \CutEdges{X}{Y}{G'} \ge 1 \implies  q(G' \setminus S) \le |S|.
 \label{eq:mini-claim}
 \end{equation}
 \flushleft
-To see why, assume towards a contradiction that there exists an edge between \emph{every} partition $X \cup Y = U \setminus S$, where $|X|, |Y| \ge \Size{S}/3$, \emph{and} $H \setminus S$ has more than $|S|$ connected components. Denote the  vertex sets of these components by $C_1, \ldots, C_k$, for some $k > |S|$.
+To see why, assume towards a contradiction that there exists an edge in $G'$ between \emph{every} partition $X \cup Y = U \setminus S$, where $|X|, |Y| \ge \Size{S}/3$, \emph{and} $G' \setminus S$ has more than $|S|$ connected components. Denote the  vertex sets of these components by $C_1, \ldots, C_k$, for some $k > |S|$.
 Let $X^\star := C_1 \cup \ldots \cup C_{s}$ and $Y^\star := C_{s+1} \cup \ldots \cup C_{k}$, where $s = \lfloor |S|/2 \rfloor \ge |S|/3$.
 By construction, even if each component $C_i$ is a singleton set, we get that  $\Size{X^\star}, \Size{Y^\star} \ge \Size{S}/3$.
 Now as all $C_i$'s are disjoint connected components, there can be no edge between $X^\star$ and $Y^\star$. Therefore, we have found a partition $X^\star \cup Y^\star = U \setminus S$ with $|X^\star|, |Y^\star| \ge |S|/3$ without an edge between them, which contradicts our assumption that all appropriately sized partitions have at least one edge between them.
-To complete our proof, it suffices to show $e_H(X, Y) \geq 1$.\\
+
+To complete our proof, it suffices to show $e_{G'}(X, Y) \geq 1$ for every partition $X \cup Y = U \setminus S$ with $|X|, |Y| \ge |S|/3$.\\
 \flushleft
 Consider some arbitrary partition $X \cup Y$ of $U \setminus S$, with $|X|, |Y| \ge |S|/3$, and without loss of generality assume $|X| \le |Y|$. 
 Then by a simple counting argument we get
@@ -503,18 +490,20 @@ Then by a simple counting argument we get
 |X| \le (|U| - |S|)/2 \le (n - |S|)/2  \label{eq:upp-X}
 \end{equation}
 
-  We will show that
-    \begin{equation} \label{eq:edge_bound}
-        \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < 0.9d|X|
-    \end{equation}
-  We were given that $\delta(G[U]) \ge 0.95d$, as $d \ge d_0$, we have that at least $0.95d|X| - 0.9d|X| > C|X|$ edges must have one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$.
-  We construct $H$ by deleting at most $C$ edges incident on each vertex of $U$.
-  So even if we removed $C|X|$ many edges described above, we will still have at least one edge with end point in $X$ and the other endpoint in $Y$.
-That is we have $e_H(X,Y) \ge 1$.
-By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $H\setminus S$ has at most $\Size{S}$ connected components, which would complete the proof.
-    Equation \eqref{eq:edge_bound} is derived as follows: 
+%   We will show that
+%     \begin{equation} \label{eq:edge_bound}
+%         \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < 0.9d|X|
+%     \end{equation}
+% Note that we indeed consider edges in $G$ and not merely in $G'$. Once we establish this inequality, by the assumption on $\delta(G')$ we conclude that there is an edge in $G'$ with one vertex in $X$ and the other in $V(G') \setminus (X \cup S) = Y$.
+% We were given that $\delta(G[U]) \ge 0.95d$, as $d \ge d_0$, we have that at least $0.95d|X| - 0.9d|X| > C|X|$ edges must have one endpoint in $X$ and the other in $U \setminus (X \cup S) = Y$.
+%   We construct $H$ by deleting at most $C$ edges incident on each vertex of $U$.
+%   So even if we removed $C|X|$ many edges described above, we will still have at least one edge with end point in $X$ and the other endpoint in $Y$.
+% That is we have $e_H(X,Y) \ge 1$.
+% By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $H\setminus S$ has at most $\Size{S}$ connected components, which would complete the proof.
+We have: 
 \begin{align}
-  \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} &\le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}        \\
+\CutEdges{X}{X}{G'} + \CutEdges{X}{S}{G'} &\le \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} \nonumber \\
+   &\le \frac{d}{n}|X|^2 + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{|X||S|}        \\
 &\le \frac{d}{n} |X| \frac{(n-|S|)}{2} + \lambda |X| + \frac{d}{n}|X||S| + \lambda\sqrt{3} |X| \label{eq:upper-bound-X}  \\
 &< \frac{d|X|}{2} + \frac{d|X||S|}{2n} + 3 \lambda |X|\\
 &< \frac{d}{2}|X| + \frac{d}{4}|X| + 3 \lambda |X| \label{eq:smaller-than-one} \\
@@ -522,20 +511,26 @@ By claim \eqref{eq:mini-claim}, the existence of such an edge implies that $H\se
 \end{align}
 These steps are justified as follows: The first equation follows from the \nameref{lemma:expanders-mixing-lemma}; Equation \eqref{eq:upper-bound-X} comes from Equation \eqref{eq:upp-X} and $|X| \ge |S|/3$;
 Equation \eqref{eq:smaller-than-one} comes from $\Size{S} < \frac{n}{2}$; and  Equation \eqref{eq:upper-bound-S} comes the assumption $\lambda < d/50$.
+ % We will show that
+%     \begin{equation} \label{eq:edge_bound}
+%         \CutEdges{X}{X}{G} + \CutEdges{X}{S}{G} < 0.9d|X|
+%     \end{equation}
+% Note that we indeed consider edges in $G$ and not merely in $G'$. Once we establish this inequality, 
+By the assumption $\delta(G') > 0.9d$ we conclude that there is an edge in $G'$ with one vertex in $X$ and the other in $V(G') \setminus (X \cup S) = Y$.
 \end{proof}
 
-As an immediate corollary of Lemma \ref{thm:perfect-matching} we get the following corollary about induced subgraphs of $\EnDeeLambda$ graphs with high minimal degree.
+% As an immediate corollary of Lemma \ref{thm:perfect-matching} we get the following corollary about induced subgraphs of $\EnDeeLambda$ graphs with high minimal degree.
 
-\begin{corollary}\label{cor:perfect-matching}
-Suppose $G$ is an $(n, d, \lambda)$-graph with $\lambda < d/50$. 
-For any \emph{even} sized subset $U \subseteq V(G)$ with $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the \nameref{lemma:tutte-criterion}, and therefore $G[U]$ contains a perfect matching.  
-\end{corollary}
-\begin{proof}
-The proof is identical to proof of Lemma \ref{thm:perfect-matching}.
-More specifically, equation \eqref{eq:edge_bound} and our assumption that $\delta(G[U]) \ge 0.9d$, proves that $\CutEdges{X}{Y}{G} \ge 1$.
-This allows us to invoke Claim \eqref{eq:mini-claim}.
-Finally applying the \nameref{lemma:tutte-criterion}, this completes the proof.
-\end{proof}
+% \begin{corollary}\label{cor:perfect-matching}
+% Suppose $G$ is an $(n, d, \lambda)$-graph with $\lambda < d/50$. 
+% For any \emph{even} sized subset $U \subseteq V(G)$ with $\delta(G[U]) \ge \cTilde$, then $G[U]$ satisfies the \nameref{lemma:tutte-criterion}, and therefore $G[U]$ contains a perfect matching.  
+% \end{corollary}
+% \begin{proof}
+% The proof is identical to proof of Lemma \ref{thm:perfect-matching}.
+% More specifically, equation \eqref{eq:edge_bound} and our assumption that $\delta(G[U]) \ge 0.9d$, proves that $\CutEdges{X}{Y}{G} \ge 1$.
+% This allows us to invoke Claim \eqref{eq:mini-claim}.
+% Finally applying the \nameref{lemma:tutte-criterion}, this completes the proof.
+% \end{proof}
 
 The next lemma shows that subgraphs of $(n, d, \lambda)$-graphs with large minimum degree contain regular spanning subgraphs.
 %In the lemma below, the parameter $C$ should be read as the subgraph $G'$ obtained by deleting at most $C$ edges incident on each vertex of the $\EnDeeLambda$ graph $G$.
@@ -558,17 +553,19 @@ If $G' \subseteq G$ has minimum degree $\MinimalDegree{G'} \ge d - C$, then $G'$
   As $\epsilon < \frac{1}{100C^{3/2}}$ and $C > 1$, we have that $\epsilon < 1/100$. 
 This implies that $G$ is an $\EnDeeLambda$ graph with $\lambda < d/100$.
 We set $d_0 := d_0(C)$ large enough such that for all $d \ge d_0$, even after deleting at most $C$ edges incident on each vertex of the $d$-regular graph $G$ to get $G'$, we have the minimum degree of $G'$ to be $\MinimalDegree{G'} \ge  d - C > 9d/10$.
-Therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied with $G'$ and $G$ playing the role $H$ and $G[U]$ respectively, in the lemma statement.
+Therefore the conditions of Lemma \ref{thm:perfect-matching} are satisfied,
 % \rajko{No! That lemma considers induced subgraphs, whereas here we consider graphs obtained by removing edges. I suggest changing the statement of that lemma to apply to subgraphs of induced graphs. Then it will be sufficient for both applications. Most likely nothing needs to be changed in the proof, but please double check.}, 
-From this we can conclude that $$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
-Thus, to prove \eqref{eq:main-goal}, it suffices to show 
+thus
+$$\OddComponents{G' \setminus (S \cup T)} \le \Size{S \cup T} = |S| + |T|$$
+To prove \eqref{eq:main-goal}, it suffices to show 
 % \rajko{First line: shouldn't it be $\Gamma_{G'}(w)$?} \rajko{The second line is not equality, as we only have lower bound on the minimum degree.}
   \begin{align}
-    |S| + |T| &\le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S})   \\
-              &\le \Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{G'}  \label{eq:to-show}
+    |S| + |T|  &\le \Size{S}f - \Size{T}f + \Size{T}(d-C) - \CutEdges{S}{T}{G'}  \label{eq:to-show}  \\ 
+    &\le |S|f - \sum_{w \in T} (f - \Size{\Neighbourhood{G'}{w} \setminus S}) \nonumber
   \end{align}  
+We distinguish a few cases.
 
-  \textbf{Case 1}: If $\Size{S} \leq \Size{T}$, and as $f \leq d/2$, we have 
+  \paragraph{Case 1:} Suppose $\Size{S} \leq \Size{T}$. As $f \leq d/2$, we have 
   \begin{align}
     \Size{S}f + \Size{T}(d-C-f)  &\ge (\Size{S} + \Size{T})(d/2 -C) \label{eq:to-show-1}
   \end{align}
@@ -583,12 +580,11 @@ Thus, to prove \eqref{eq:main-goal}, it suffices to show
                                  &\le \Size{S}f - \Size{T}(d-C-f) \label{eq:plug}
  \end{align}  
   
-Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} and $\lambda < \epsilon d$.
+Equation \eqref{eq:eml} comes from the \nameref{lemma:expanders-mixing-lemma} and $\lambda < \epsilon d$, together with an obvious upper bound $e_{G'}(S, T) \le e_G(S, T)$.
 Equation \eqref{eq:algebra} comes from the fact that $\Size{S}\Size{T} \leq \left(\frac{\Size{S}+\Size{T}}{2}\right)^2 \le n\frac{(\Size{S}+\Size{T})}{4}$.
-Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$, $C >1$ and $d_0$ is set large enough (which we can assume as it is set as a function of $C$, which ensures that $d$ is large enough).
-Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives us what we want.
+Equation \eqref{eq:eps-assumption} comes from $\epsilon < \nicefrac{1}{100C^{3/2}}$, $C >1$ and $d_0$ being sufficiently large. Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives us what we want.
 
-\textbf{Case 2}: If $\Size{S} > \Size{T}$, and as $f \ge 2$, then
+\paragraph{Case 2:} Suppose $\Size{S} > \Size{T}$. As $f \ge 2$, we have
   \begin{align}
     \Size{S}f +  \Size{T}(d-C-f)  &\ge 2\Size{S} +\Size{T}(d-C-2) \label{eq:to-show-2}
   \end{align}
@@ -598,38 +594,44 @@ Equation \eqref{eq:plug} follows from Equation \eqref{eq:to-show-1} which gives 
   \CutEdges{S}{T}{G'} \leq \Size{S} + \Size{T}(d-C-3) \label{eq:to-show-3}
 \end{align}
 
-Now we distinguish between two cases.
+Now we distinguish between two subcases.
 
 \begin{enumerate}
 
 \item{
-    If $\Size{T} \le \nicefrac{\Size{S}}{C+3}$, then we trivially have $\CutEdges{S}{T}{G'} \leq \Size{T}d$, and Equation \eqref{eq:to-show-3} follows from $\Size{S} \geq (C+3)\Size{T}$.
+    If $\Size{T} \le \frac{\Size{S}}{C+3}$, then Equation \eqref{eq:to-show-3} follows from a trivial bound $\CutEdges{S}{T}{G'} \leq \Size{T}d$.
+    %and  follows from $\Size{S} \geq (C+3)\Size{T}$.
   }
 
 \item{
-$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$, this assumption implies that $\Size{S} < n - \frac{\Size{S}}{C+3} < n\left(\frac{C+3}{C+4}\right)$.
-Now using the \nameref{lemma:expanders-mixing-lemma}
-
+$ \frac{\Size{S}}{C+3} < \Size{T} < \Size{S}$. As $\Size{S} + \Size{T} < n$ we have $\Size{S} < n - \frac{\Size{S}}{C+3}$, thus $|S| < n\left(\frac{C+3}{C+4}\right)$.
+Using the \nameref{lemma:expanders-mixing-lemma}, we have
 \begin{align}
-\CutEdges{S}{T}{G'} &\le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}}	\\[8pt]
-&< d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} \label{eq:thing-to-upperbound}
+\CutEdges{S}{T}{G} \le \CutEdges{S}{T}{G'} &\le \frac{d}{n}\Size{S}\Size{T} + \epsilon d \sqrt{\Size{S}\Size{T}} \nonumber	\\[8pt]
+&< d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} \nonumber  \\
+&= |T|d \left( \frac{C+3}{C+4} + \varepsilon \sqrt{C+3} \right) \nonumber \\
+&< |T|d\left( \frac{C+3}{C+4} + \frac{1}{2(C+4)} \right) = |T|d\left( 1 - \frac{1}{2(C+4)}\right) \nonumber
 \end{align}
+where the penultimate inequality follows from the upper bound on $\varepsilon$. For $d$ sufficiently large in terms of $C$ we obviously have
+$$
+    |T|d \left(1 - \frac{1}{2(C+4)}\right) < |T|d - |T|(C + 3) < |S| + |T|(d - C - 3)
+$$
+hence \label{eq:to-show-3} is satisfied.
+% As $\Size{T} < \Size{S}$, we have that $\Size{T} + \Size{T}(d-C-3) < \Size{S} + \Size{T}(d-C-3)$, so if we show that the RHS of inequality \eqref{eq:thing-to-upperbound} is at most $\Size{T} + \Size{T}(d-C-3)$ we are done.
+% Thus, now we want to show that 
+% \begin{align}
+% d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} &< 	\Size{T} + \Size{T}(d-C-3) \label{eq:new-thing-to-show}
+% \end{align}
 
-Now, as $\Size{T} < \Size{S}$, we have that $\Size{T} + \Size{T}(d-C-3) < \Size{S} + \Size{T}(d-C-3)$, so if we show that the RHS of inequality \eqref{eq:thing-to-upperbound} is at most $\Size{T} + \Size{T}(d-C-3)$ we are done.
-Thus, now we want to show that 
-\begin{align}
-d\frac{(C+3)}{(C+4)}\Size{T} + \epsilon d \Size{T}\sqrt{(C+3)} &< 	\Size{T} + \Size{T}(d-C-3) \label{eq:new-thing-to-show}
-\end{align}
+% To show that \eqref{eq:new-thing-to-show} holds we re-arrange the inequality to see that we need the following condition on $d$:
+% \begin{align}
+%  \epsilon d \sqrt{(C+3)} &< d\left(1 - \frac{(C+3)}{(C+4)}\right) -C-2 \\[8pt]
+%  &= d\left(\frac{1}{(C+4)}\right) -C-2 \\[8pt]
+%  d&> \frac{(C+4)(C+2)}{1 - \epsilon(C+4)\sqrt{C+3}} \label{eq:cond-on-d}
+% \end{align} 
 
-To show that \eqref{eq:new-thing-to-show} holds we re-arrange the inequality to see that we need the following condition on $d$.
-\begin{align}
- \epsilon d \sqrt{(C+3)} &< d\left(1 - \frac{(C+3)}{(C+4)}\right) -C-2 \\[8pt]
- &= d\left(\frac{1}{(C+4)}\right) -C-2 \\[8pt]
- d&> \frac{(C+4)(C+2)}{1 - \epsilon(C+4)\sqrt{C+3}} \label{eq:cond-on-d}
-\end{align} 
-
-As $\epsilon = \frac{1}{100C^{3/2}}$ and $100C^{3/2} > (C+4)\sqrt{C+3}$ for $C>1$, we have $\epsilon(C+4)\sqrt{C+3} < 1$
-To make \eqref{eq:new-thing-to-show} hold, it suffices to make $d$ a large enough constant such that \eqref{eq:cond-on-d} holds.
+% As $\epsilon = \frac{1}{100C^{3/2}}$ and $100C^{3/2} > (C+4)\sqrt{C+3}$ for $C>1$, we have $\epsilon(C+4)\sqrt{C+3} < 1$
+% To make \eqref{eq:new-thing-to-show} hold, it suffices to make $d$ a large enough constant such that \eqref{eq:cond-on-d} holds.
   }
   
 \end{enumerate}
@@ -667,7 +669,7 @@ Define a mapping $\rho': \Edges{G_\EmbeddingFunc} \to \{0,1, \mathcal{Y}, \Compl
 Map each variable $x_e$ for $e \in \Path{\Embedding{u}}{\Embedding{v}}$ alternately to $y_{u,v}$ or $\bar{y}_{u,v}$, such that the edges of the path adjacent to $\Embedding{u}$ and $\Embedding{v}$ are set to $y_{u,v}$. This is always possible as $\Path{u}{v}$ has odd length. Observe that $\PM{G_\EmbeddingFunc}|_{\rho'} \equiv \PM{H}$. 
   }
 
-\item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$ (with room to spare), we can invoke Corollary \ref{cor:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
+\item{ As $n$ is odd and $\Size{\Vertices{G_{\EmbeddingFunc}}}$ is odd, we have that $U = \Vertices{G} \setminus \Vertices{G_{\EmbeddingFunc}}$ has even size. From \eqref{eq:size_nbr_A} we have that $G[U]$ has minimum degree at least $\cTilde$. As $\lambda < d/50$ (with room to spare), we can invoke Lemma \ref{thm:perfect-matching} to conclude $G[U]$ has a perfect matching $M$. 
 }
   
 \item{
@@ -706,7 +708,7 @@ In this work, we use the embedding theorem by Dragani\'c, Krivelevich, and Nenad
 In summary, we show degree lower bounds for refuting $\Card{G, \vec{t}}$ for odd $t$ in $\EnDeeLambda$ graphs in the SoS and PC proof systems.
 There is still a $\log n$ gap between the largest possible proof in such systems, and our lower bounds (similar to Austrin and Risse).
 It is not inherently clear that such a gap should exist.
-The gap is artefact of $d$ being constant, which makes the graphs sparse i.e we need $\Theta(\log n)$ edges to form a path between any two nodes.
+The gap is an artefact of $d$ being constant, which makes the graphs sparse i.e we need $\Theta(\log n)$ edges to form a path between any two nodes.
 This implies, that $\BigOmega{n/\log n}$ is the largest hard instance we can topologically embed in any graph.
 Thus, if the worst case lower for refuting perfect matchings was indeed $\Omega(n)$, we would need a more direct proof of the statement without using a smaller hard instance.
 We leave the issue of resolving the tightness of our lower bound as an open problem for future work.
